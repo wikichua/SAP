@@ -1,0 +1,12 @@
+protected function scope{%field_variable%}Method()
+    {
+        $options = [];
+        $list = {%model_option_query%};
+        foreach ($list as ${%map_value%} => ${%map_text%}) {
+            $options[] = [
+                'value' => ${%map_value%},
+                'text' => ${%map_text%},
+            ];
+        }
+        return $options;
+    }

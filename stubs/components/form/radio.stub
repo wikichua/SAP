@@ -1,0 +1,9 @@
+<b-form-group label="{%label%}:" label-for="{%field%}">
+      <b-form-radio-group
+      	v-model="formdata.{%field%}"
+        name="{%field%}"
+        {%attributes_tag%}
+                :options="{%option_key%}"
+      ></b-form-radio-group>
+            <div v-if="allerrors.{%field%}" :class="['invalid-feedback']">{{ allerrors.{%field%}[0] }}</div>
+    </b-form-group>

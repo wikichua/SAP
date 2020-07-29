@@ -1,0 +1,33 @@
+<?php
+
+namespace {%model_namespace%};
+
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class {%model_class%} extends Eloquent
+{
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \Wikichua\VAM\Http\Traits\ModelScopes;
+    use \Wikichua\VAM\Http\Traits\DynamicFillable;
+    use \Wikichua\VAM\Http\Traits\UserTimezone;
+
+    protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'created_by',
+        'updated_by',
+        {%fillable_array%}
+    ];
+    {%table_declared%}
+
+    {%model_appends%}
+
+    {%model_casts%}
+
+    {%relationships%}
+
+    {%user_timezones%}
+
+    {%mutators%}
+
+    {%search_scopes%}
+}

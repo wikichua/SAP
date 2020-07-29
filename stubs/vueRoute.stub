@@ -1,0 +1,26 @@
+import { routes } from '../routes';
+// {%model_variable%} routes
+routes.push({
+    path: '/{%model_variable%}',
+    component: require('../components/{%model_variable%}/ListComponent.vue').default,
+    name: '{%model_variable%}.index',
+    props: true
+});
+routes.push({
+    path: '/{%model_variable%}/create',
+    component: require('../components/{%model_variable%}/CreateComponent.vue').default,
+    name: '{%model_variable%}.create',
+    props: true
+});
+routes.push({
+    path: '/{%model_variable%}/:id/show',
+    component: require('../components/{%model_variable%}/ShowComponent.vue').default,
+    name: '{%model_variable%}.show',
+    props: true
+});
+routes.push({
+    path: '/{%model_variable%}/:id/edit',
+    component: require('../components/{%model_variable%}/EditComponent.vue').default,
+    name: '{%model_variable%}.edit',
+    props: true
+});

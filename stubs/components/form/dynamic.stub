@@ -1,0 +1,10 @@
+<b-form-group label="{%label%}:" label-for="{%field%}">
+            <b-form-input
+              id="{%field%}"
+              name="{%field%}"
+              v-model="formdata.{%field%}"
+              :class="(allerrors.{%field%} ? 'is-invalid ' : '') + ' {%class_tag%}'"
+              {%attributes_tag%}
+            ></b-form-input>
+            <div v-if="allerrors.{%field%}" :class="['invalid-feedback']">{{ allerrors.{%field%}[0] }}</div>
+          </b-form-group>

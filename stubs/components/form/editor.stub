@@ -1,0 +1,12 @@
+<b-form-group label="{%label%}:" label-for="{%field%}">
+            <vue-editor
+            id="{%field%}"
+            name="{%field%}"
+            use-custom-image-handler
+            @image-added="$handleImageAdded"
+            v-model="formdata.{%field%}"
+            {%attributes_tag%}
+            :class="(allerrors.{%field%} ? 'is-invalid ' : '') + ' {%class_tag%}'">
+            </vue-editor>
+            <div v-if="allerrors.{%field%}" :class="['invalid-feedback']">{{ allerrors.{%field%}[0] }}</div>
+          </b-form-group>

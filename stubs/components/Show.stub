@@ -1,0 +1,42 @@
+<template>
+  <div class="container-fluid">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item">
+        <h1>{%model_string%}</h1>
+      </li>
+    </ol>
+    <div class="card mb-4">
+      <div class="card-body">
+        {%read_fields%}
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <b-button variant="danger" :to="{ name: vueRouteList }">Back</b-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { mapGetters } from "vuex";
+export default {
+  props: ["id"],
+  data() {
+    return {
+      vueRouteList: "{%model_variable%}.index",
+      apiRouteShow: "{%model_variable%}.show"
+    };
+  },
+  methods: {},
+  mounted() {},
+  beforeMount() {
+    this.$store.dispatch(
+      "getItem",
+      this.$parent.route(this.apiRouteShow, this.id)
+    );
+  },
+  computed: {
+    ...mapGetters(["allerrors", "success", "formdata", "settings", "models"])
+  }
+};
+</script>
