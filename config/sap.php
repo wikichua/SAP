@@ -26,9 +26,10 @@ return [
         'setting' => '\Wikichua\SAP\Models\Setting',
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
     ],
-    'components' => [ // auto prepended with sap-
-        'menu' => \Wikichua\SAP\View\Components\Menu::class,
-        'datatable' => \Wikichua\SAP\View\Components\Datatable::class,
-    ],
+    // 'components' => [ // auto prepended with sap-
+    //     'menu' => \Wikichua\SAP\View\Components\Menu::class,
+    //     'datatable' => \Wikichua\SAP\View\Components\Datatable::class,
+    //     'input-field' => \Wikichua\SAP\View\Components\InputField::class,
+    // ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
 ];

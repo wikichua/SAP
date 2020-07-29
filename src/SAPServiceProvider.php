@@ -101,8 +101,13 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadComponents()
     {
-        foreach (config('sap.components') as $slug => $class) {
-            Blade::component('sap-' . $slug, $class);
+        // foreach (config('sap.components') as $slug => $class) {
+        //     Blade::component('sap-' . $slug, $class);
+        // }
+        foreach (File::files(__DIR__ . '/View/Components/') as $file) {
+            $basename = str_replace('.' . $file->getExtension(), '', $file->getBasename());
+            $class = config('sap.component_namespace') . '\\' . $basename;
+            Blade::component('sap-' . \Str::snake($basename,'-'), get_class(new $class));
         }
     }
 
