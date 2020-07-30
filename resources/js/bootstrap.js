@@ -40,14 +40,3 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('m
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-// bootstrap-select
-require('bootstrap-select');
-
-window.moment = require('moment');
-window.daterangepicker = require('daterangepicker');
-moment().format();
-
-const swal = window.swal = require('sweetalert2');
-
-const Handlebars = window.Handlebars = require("handlebars");

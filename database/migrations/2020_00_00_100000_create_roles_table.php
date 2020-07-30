@@ -14,6 +14,8 @@ class CreateRolesTable extends Migration
             $table->string('name')->index();
             $table->boolean('admin')->default(false)->index();
             $table->timestamps();
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
 
         // create role user relation table

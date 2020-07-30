@@ -6,8 +6,6 @@ use Illuminate\View\Component;
 
 class InputField extends Component
 {
-    public $args;
-    
     public function __construct()
     {
     }

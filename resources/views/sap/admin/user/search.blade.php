@@ -11,28 +11,39 @@
                 <div class="form-group">
                     <label for="created_at">Created At</label>
                     <input type="text" class="form-control filterInput" name="created_at"
-                        id="created_at" value="{{ old('filter.created_at') }}">
+                        id="created_at">
                 </div>
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control filterInput" name="name"
-                        id="name" value="{{ old('filter.name') }}">
+                        id="name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" class="form-control filterInput" name="email"
-                        id="email" value="{{ old('filter.email') }}">
+                        id="email">
+                </div>
+                <div class="form-group">
+                    <label for="status">Type</label>
+                    <select name="status" id="status" class="selectpicker form-control filterInput"
+                        data-style="border bg-white" data-live-search="true">
+                        <option value="">Please Select</option>
+                        @foreach(settings('user_types') as $key => $val)
+                            <option value="{{ $key }}">
+                                {{ $val }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" id="status" class="selectpicker form-control filterInput"
                         data-style="border bg-white" data-live-search="true" multiple>
                         <option value="">Please Select</option>
-                        @foreach(settings('user_status') as $key
-                            => $val)
-                            <option value="{{ $key }}"
-                                {{ is_array(old('filter.status')) && in_array($key, old('filter.status')) ? 'selected' : '' }}>
-                                {{ $key }} - {{ $val }}</option>
+                        @foreach(settings('user_status') as $key => $val)
+                            <option value="{{ $key }}">
+                                {{ $key }} - {{ $val }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -55,6 +66,7 @@
         });
         $('#created_at').daterangepicker({
             "autoApply": true,
+            "autoUpdateInput": false,
             ranges: {
                 'Today': [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

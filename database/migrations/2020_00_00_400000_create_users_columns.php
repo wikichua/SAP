@@ -12,8 +12,10 @@ class CreateUsersColumns extends Migration
     {
         // create columns
         Schema::table('users', function (Blueprint $table) {
-            $table->string('type')->default('user');
+            $table->string('type')->default('User');
             $table->string('timezone')->default(config('app.timezone'))->index();
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
 
         // create default admin user
@@ -21,6 +23,7 @@ class CreateUsersColumns extends Migration
             'name' => 'Admin',
             'email' => 'admin@email.com',
             'password' => Hash::make('admin123'),
+            'type' => 'Admin',
         ]);
 
         // give default admin user default admin role

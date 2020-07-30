@@ -1,0 +1,4 @@
+<b-form-group label="{%label%}:" label-for="{%field%}">
+    <b-form-timepicker name="{%field%}" v-model="formdata.{%field%}" locale="en" {%attributes_tag%} :state="Boolean(formdata.{%field%})" :class="(allerrors.{%field%} ? 'is-invalid ' : '') + ' {%class_tag%}'"></b-form-timepicker>
+            <div v-if="allerrors.{%field%}" :class="['invalid-feedback']">{{ allerrors.{%field%}[0] }}</div>
+          </b-form-group>

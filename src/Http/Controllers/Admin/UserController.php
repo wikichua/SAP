@@ -26,7 +26,7 @@ class UserController extends Controller
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''),$request->get('direction', ''))
                 ->with('roles');
-            $paginated = $models->paginate(1);
+            $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.user.actions',compact('model'))->render();
             }
@@ -36,13 +36,15 @@ class UserController extends Controller
             if ($request->get('sort','') != '') {
                 $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
             }
-            $links = $paginated->onEachSide(10)->links()->render();
-            return compact('paginated','links');
+            $links = $paginated->onEachSide(5)->links()->render();
+            $currentUrl = $request->fullUrl();
+            return compact('paginated','links','currentUrl');
         }
         $getUrl = route('user.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
-            ['title' => 'Email Address', 'data' => 'email', 'sortable' => true],
+            ['title' => 'Email', 'data' => 'email', 'sortable' => true],
+            ['title' => 'Type', 'data' => 'type', 'sortable' => true],
             ['title' => 'Roles', 'data' => 'roles_string'],
             ['title' => '', 'data' => 'actionsView'],
         ];
@@ -51,7 +53,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $roles = app(config('sap.models.role'))->all()->sortBy('name');
+        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
         return view('sap::admin.user.create', compact('roles'));
     }
 
@@ -62,22 +64,28 @@ class UserController extends Controller
             'email' => 'required',
             'type' => 'required',
             'roles' => 'required',
+            'password_confirmation' => 'required',
+            'password' => ['required','confirmed'],
         ]);
 
         $request->merge([
             'password' => bcrypt($request->get('password')),
+            'roles' => array_values($request->get('roles',[])),
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
         ]);
 
-        $user = app(config('sap.models.user'))->create($request->all());
-        $user->roles()->sync($request->get('roles'));
+        $model = app(config('sap.models.user'))->create($request->all());
+        $model->roles()->sync($request->get('roles'));
 
-        activity('Created User: ' . $user->id, $request->all(), $user);
+        activity('Created User: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'User created.',
-            'redirectTo' => '/user/' . $user->id . '/show',
+            'flash' => 'User Created.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('user.list'),
         ]);
     }
 
@@ -86,19 +94,20 @@ class UserController extends Controller
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $model->rolesShow = $model->roles->sortBy('name')->implode('name', ', ');
         $model->rolesSelected = $model->roles()->pluck('roles.id');
-        return response()->json($user);
+        return response()->json($model);
     }
 
     public function edit(Request $request, $id)
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
-        $roles = app(config('sap.models.role'))->all()->sortBy('name');
-        return view('sap::admin.user.update', compact('roles', 'model'));
+        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
+        return view('sap::admin.user.edit', compact('roles', 'model'));
     }
 
     public function update(Request $request, $id)
     {
-        $user = app(config('sap.models.user'))->query()->findOrFail($id);
+        $model = app(config('sap.models.user'))->query()->findOrFail($id);
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -106,22 +115,33 @@ class UserController extends Controller
             'roles' => 'required',
         ]);
 
-        $user->update($request->all());
-        $user->roles()->sync($request->get('roles'));
+        $request->merge([
+            'roles' => array_values($request->get('roles',[])),
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Updated User: ' . $user->id, $request->all(), $user);
+        $model->update($request->all());
+        $model->roles()->sync($request->get('roles'));
+
+        activity('Updated User: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'User Updated.',
-            'redirectTo' => '/user/' . $user->id . '/edit',
+            'flash' => 'User Updated.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('user.edit',[$model->id]),
         ]);
+    }
+
+    public function editPassword(Request $request, $id)
+    {
+        return view('sap::admin.user.editPassword',compact('id'));
     }
 
     public function updatePassword(Request $request, $id)
     {
-        $user = app(config('sap.models.user'))->query()->findOrFail($id);
+        $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $request->validate([
             'password' => 'required|confirmed',
             'password_confirmation' => 'required',
@@ -129,31 +149,35 @@ class UserController extends Controller
 
         $request->merge([
             'password' => bcrypt($request->get('password')),
+            'updated_by' => auth()->id(),
         ]);
 
-        $user->update($request->all());
+        $model->update($request->all());
 
-        activity('Updated User Password: ' . $user->id, $request->all(), $user);
+        activity('Updated User Password: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'User Password Updated.',
-            'redirectTo' => '/user',
+            'flash' => 'User Password Updated.',
+            'reload' => true,
+            'relist' => false,
+            'redirect' => false,
         ]);
     }
 
     public function destroy($id)
     {
-        $user = app(config('sap.models.user'))->query()->findOrFail($id);
-        $user->delete();
+        $model = app(config('sap.models.user'))->query()->findOrFail($id);
+        $model->delete();
 
-        activity('Deleted User: ' . $user->id, [], $user);
+        activity('Deleted User: ' . $model->id, [], $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'User deleted.',
+            'flash' => 'User Deleted.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
         ]);
     }
 }

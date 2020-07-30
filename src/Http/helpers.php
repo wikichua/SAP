@@ -64,7 +64,7 @@ if (!function_exists('activity')) {
         }
 
         // create model
-        app(config('vam.models.activity_log'))->create([
+        app(config('sap.models.activity_log'))->create([
             'user_id' => auth()->check() ? auth()->user()->id : null,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,

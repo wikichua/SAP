@@ -141,7 +141,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div id="overlayLoader">
+                      <div class="w-100 d-flex justify-content-center align-items-center">
+                        <div class="spinner"></div>
+                      </div>
+                    </div>
                     <!-- Page Heading -->
                     @yield('container')
 
@@ -191,9 +195,9 @@
             </div>
         </div>
     </div>
-
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="{{ asset('js/datatableformhandling.min.js') }}"></script>
     @stack('scripts')
 </body>
 

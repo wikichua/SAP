@@ -24,6 +24,11 @@ class User extends Authenticatable
         return $this->roles->sortBy('name')->implode('name', ', ');
     }
 
+    public function scopeFilterType($query, $search)
+    {
+        return $query->where('type', $search);
+    }
+
     public function scopeFilterName($query, $search)
     {
         return $query->where('name', 'like', "%{$search}%");

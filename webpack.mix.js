@@ -11,11 +11,13 @@ mix.webpackConfig({
 
 mix.js("resources/js/app.js", "public/js")
     .scripts([
-        'resources/js/sb-admin-2.js'
+        'resources/js/jCookie.js',
+        'resources/js/sb-admin-2.js',
+        'resources/js/jquery.easing.js'
     ], 'public/js/all.js')
     .scripts([
-        'resources/js/datatable.js'
-    ], 'public/js/datatable.min.js')
+        'resources/js/datatableformhandling.js'
+    ], 'public/js/datatableformhandling.min.js')
     .styles([
         'resources/sass/sb-admin-2.css'
     ], 'public/css/all.css')

@@ -4,7 +4,7 @@ namespace Wikichua\SAP\View\Components;
 
 use Illuminate\View\Component;
 
-class SelectField extends Component
+class CheckboxesField extends Component
 {
     public function __construct()
     {
@@ -12,6 +12,6 @@ class SelectField extends Component
 
     public function render()
     {
-        return view('sap::components.select-field');
+        return view('sap::components.checkboxes-field');
     }
 }

@@ -30,7 +30,6 @@
   @{{/each}}
 </script>
 <script>
-  const url = '{{ $attributes['url'] }}';
+  url = '{{ $attributes['url'] }}';
 </script>
-<script type="text/javascript" src="{{ asset('js/datatable.min.js') }}"></script>
 @endpush

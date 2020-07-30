@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::group(['middleware' => ['web', 'auth', 'can:Access Admin Panel']], function () {
+    Route::group(['prefix' => '{%model_variable%}'], function () {
+        Route::view('', 'vam::layouts.panel')->middleware('can:Read {%model_strings%}');
+        Route::view('{{%model_variable%}}/show', 'vam::layouts.panel')->middleware('can:Read {%model_strings%}');
+        Route::view('create', 'vam::layouts.panel')->middleware('can:Create {%model_strings%}');
+        Route::view('{{%model_variable%}}/edit', 'vam::layouts.panel')->middleware('can:Update {%model_strings%}');
+    });
+    Route::group(['prefix' => 'api/{%model_variable%}', 'namespace' => config('vam.custom_controller_namespace')], function () {
+        Route::match(['get', 'head'], 'list', '{%model_class%}Controller@index')->name('{%model_variable%}.index');
+        Route::match(['post'], 'store', '{%model_class%}Controller@store')->name('{%model_variable%}.store');
+        Route::match(['get', 'head'], '{{%model_variable%}}/read', '{%model_class%}Controller@show')->name('{%model_variable%}.show');
+        Route::match(['put', 'patch'], '{{%model_variable%}}/update', '{%model_class%}Controller@update')->name('{%model_variable%}.update');
+        Route::match(['delete'], '{{%model_variable%}}/delete', '{%model_class%}Controller@destroy')->name('{%model_variable%}.destroy');
+
+        Route::match(['get', 'head'], 'modelList', '{%model_class%}Controller@getModelList')->name('{%model_variable%}.modelList');
+    });
+});
