@@ -59,11 +59,6 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $(document).on('click', '#filterBtn', function(event) {
-            event.preventDefault();
-            loadDatatable('{{ $getUrl }}',null,null,$('.filterInput').serialize());
-            $('#filterModalCenter').modal('hide');
-        });
         $('#created_at').daterangepicker({
             "autoApply": true,
             "autoUpdateInput": false,

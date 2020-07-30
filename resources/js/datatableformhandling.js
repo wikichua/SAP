@@ -149,4 +149,10 @@ $(document).ready(function() {
             commitPost(form);
         }
     });
+    // search btn trigger
+    $(document).on('click', '#filterBtn', function(event) {
+        event.preventDefault();
+        loadDatatable(url,null,null,$('.filterInput').serialize());
+        $('#filterModalCenter').modal('hide');
+    });
 });

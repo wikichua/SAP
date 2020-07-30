@@ -92,9 +92,7 @@ class UserController extends Controller
     public function show($id)
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
-        $model->rolesShow = $model->roles->sortBy('name')->implode('name', ', ');
-        $model->rolesSelected = $model->roles()->pluck('roles.id');
-        return response()->json($model);
+        return view('sap::admin.user.show', compact('model'));
     }
 
     public function edit(Request $request, $id)

@@ -8,9 +8,9 @@
         <div class="bg-white py-2 collapse-inner rounded">
             {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
             <a class="collapse-item" href="{{ route('user.list') }}">User</a>
-            {{-- <a class="collapse-item" href="{{ route('role') }}">Role</a>
-            <a class="collapse-item" href="{{ route('permission') }}">Permission</a>
-            <a class="collapse-item" href="{{ route('setting') }}">Setting</a> --}}
+            {{-- <a class="collapse-item" href="{{ route('role') }}">Role</a> --}}
+            <a class="collapse-item" href="{{ route('permission.list') }}">Permission</a>
+            {{-- <a class="collapse-item" href="{{ route('setting') }}">Setting</a> --}}
         </div>
     </div>
 </li>

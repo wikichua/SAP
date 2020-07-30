@@ -55,7 +55,7 @@ class Setting extends Model
     public function getAllSettings()
     {
         $sets = [];
-        $settings = app(config('vam.models.setting'))->query()->pluck('value', 'key');
+        $settings = app(config('sap.models.setting'))->query()->pluck('value', 'key');
         foreach ($settings as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {

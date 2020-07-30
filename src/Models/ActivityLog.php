@@ -19,7 +19,7 @@ class ActivityLog extends Model
     // user relationship
     public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'))->withDefault(['name' => null]);
+        return $this->belongsTo(config('sap.models.user'))->withDefault(['name' => null]);
     }
 
     // dynamic model

@@ -13,13 +13,13 @@ class Permission extends Model
     // roles relationship
     public function roles()
     {
-        return $this->belongsToMany(config('vam.models.role'));
+        return $this->belongsToMany(config('sap.models.role'));
     }
 
     // users relationship
     public function users()
     {
-        return $this->belongsToMany(config('auth.providers.users.model'));
+        return $this->belongsToMany(config('sap.models.user'));
     }
 
     // create permission group
@@ -31,5 +31,25 @@ class Permission extends Model
                 'name' => $name,
             ]);
         }
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+    public function modifier()
+    {
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
+
+    public function scopeFilterName($query, $search)
+    {
+        return $query->where('name', 'like', "%{$search}%");
+    }
+
+    public function scopeFilterGroup($query, $search)
+    {
+        return $query->where('group', 'like', "%{$search}%");
     }
 }
