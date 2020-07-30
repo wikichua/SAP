@@ -20,20 +20,7 @@
                 <x-sap-input-field type="email" name="email" id="email" label="Email" :class="[]"/>
                 <x-sap-input-field type="password" name="password" id="password" label="Password" :class="[]"/>
                 <x-sap-input-field type="password" name="password_confirmation" id="password_confirmation" label="Confirm Password" :class="[]"/>
-                <div class="form-group">
-                    <label for="user_type">Type</label>
-                    <select name="user_type" id="user_type" class="selectpicker form-control @error('user_type') is-invalid @enderror" data-style="border bg-white" data-live-search="false">
-                        <option value=""></option>
-                        @foreach(settings('user_types') as $key => $val)
-                        <option value="{{ $key }}">{{ $val }}</option>
-                        @endforeach
-                    </select>
-                    @error('user_type')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+                <x-sap-select-field name="type" id="type" label="Type" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('user_types')"/>
                 <div class="form-group">
                     <label>Roles</label>
                     <div class="form-control-plaintext">
@@ -62,7 +49,7 @@ $(function() {
     $(document).on('submit', 'form[data-ajax-form]', function(event) {
         event.preventDefault();
         let form = $(this);
-        console.log(form);
+        console.log(form[0]);
         let action = form.attr('action');
         if (_.isUndefined(action) === false) {
             let _method = form.find('input[name=_method]').val();
@@ -72,7 +59,7 @@ $(function() {
             axios.request({
 				method: _method,
 				url: action,
-				data: form,
+				data: new FormData(form[0]),
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'X-Requested-With': 'XMLHttpRequest'
