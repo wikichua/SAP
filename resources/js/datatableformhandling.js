@@ -152,7 +152,10 @@ $(document).ready(function() {
     // search btn trigger
     $(document).on('click', '#filterBtn', function(event) {
         event.preventDefault();
-        loadDatatable(url,null,null,$('.filterInput').serialize());
+        loadDatatable(url, null, null, $('.filterInput').serialize());
         $('#filterModalCenter').modal('hide');
     });
+    // init selectpicker
+    $('.selectpicker').selectpicker();
+
 });

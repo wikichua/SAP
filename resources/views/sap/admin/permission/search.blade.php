@@ -20,8 +20,15 @@
                 </div>
                 <div class="form-group">
                     <label for="group">Group</label>
-                    <input type="text" class="form-control filterInput" name="group"
-                        id="group">
+                    <select name="group" id="group" class="selectpicker form-control filterInput"
+                        data-style="border bg-white" data-live-search="true" multiple>
+                        <option value="">Please Select</option>
+                        @foreach(app(config('sap.models.permission'))->query()->groupby('group')->pluck('group','group') as $key => $val)
+                            <option value="{{ $key }}">
+                                {{ $val }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -35,6 +42,18 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
+        $('#created_at').daterangepicker({
+            "autoUpdateInput": false,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            "alwaysShowCalendars": true
+        });
     });
 </script>
 @endpush

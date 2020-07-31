@@ -1,2 +1,8 @@
-@include('sap::layouts.menus.dashboard')
-@include('sap::layouts.menus.admin')
+<x-sap-menu menu="dashboard" />
+<x-sap-menu menu="admin" :active-patterns="[
+        'user.*',
+        'permission.*',
+        'role.*',
+        'setting.*',
+        'activity_log.*',
+    ]"/>

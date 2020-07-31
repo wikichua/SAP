@@ -1,0 +1,1 @@
+<a class="collapse-item {{ $menuActive? 'active':'' }}" href="{{ $attributes['href'] }}">{{ $slot }}</a>

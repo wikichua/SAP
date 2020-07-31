@@ -60,7 +60,6 @@
 <script>
     $(document).ready(function () {
         $('#created_at').daterangepicker({
-            "autoApply": true,
             "autoUpdateInput": false,
             ranges: {
                 'Today': [moment(), moment()],
@@ -72,7 +71,6 @@
             },
             "alwaysShowCalendars": true
         });
-        $('.selectpicker').selectpicker();
     });
 </script>
 @endpush

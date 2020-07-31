@@ -103,3 +103,8 @@ if (!function_exists('pushered')) {
         $pusher->trigger((sha1($channel != '' ? $channel : env("APP_NAME"))), sha1($event), $data);
     }
 }
+
+function isMenuActive($patterns = [])
+{
+    return preg_match('/admin.dashboard.*/', request()->route()->getName())? 'active':'';
+}
