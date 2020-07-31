@@ -7,14 +7,44 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth_admin', 'can:Access Admin Panel']);
+        $this->middleware('intend_url')->only(['index', 'read']);
+        $this->middleware('can:Create Roles')->only(['create', 'store']);
+        $this->middleware('can:Read Roles')->only(['index', 'read']);
+        $this->middleware('can:Update Roles')->only(['edit', 'update']);
+        $this->middleware('can:Delete Roles')->only('delete');
+    }
+    
     public function index(Request $request)
     {
-        $fields = collect($request->get('fields'))->where('filterable', true)->pluck('key')->all();
-        $filter = $request->get('filter', '');
-        $sortBy = $request->get('sortBy', '');
-        $sortDesc = $request->get('sortDesc', '');
-        $roles = app(config('vam.models.role'))->query()->filter($filter, $fields)->sorting($sortBy, $sortDesc)->paginate($request->get('size', 20));
-        return response()->json($roles);
+        if ($request->ajax()) {
+            $models = app(config('sap.models.role'))->query()
+                ->filter($request->get('filters', ''))
+                ->sorting($request->get('sort', ''),$request->get('direction', ''))
+                ->with('roles');
+            $paginated = $models->paginate(25);
+            foreach ($paginated as $model) {
+                $model->actionsView = view('sap::admin.role.actions',compact('model'))->render();
+            }
+            if ($request->get('filters','') != '') {
+                $paginated->appends(['filters' => $request->get('filters','')]);
+            }
+            if ($request->get('sort','') != '') {
+                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            }
+            $links = $paginated->onEachSide(5)->links()->render();
+            $currentUrl = $request->fullUrl();
+            return compact('paginated','links','currentUrl');
+        }
+        $getUrl = route('role.list');
+        $html = [
+            ['title' => 'Name', 'data' => 'name', 'sortable' => true],
+            ['title' => 'Is Admin', 'data' => 'admin', 'sortable' => true],
+            ['title' => '', 'data' => 'actionsView'],
+        ];
+        return view('sap::admin.role.index', compact('html','getUrl'));
     }
 
     public function store(Request $request)

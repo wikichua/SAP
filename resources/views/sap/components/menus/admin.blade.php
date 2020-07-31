@@ -11,7 +11,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
             {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
             <x-sap-menu-item :href="route('user.list')" active-pattern="user.*">User</x-sap-menu-item>
-            {{-- <a class="collapse-item" href="{{ route('role') }}">Role</a> --}}
+            <x-sap-menu-item :href="route('role.list')" active-pattern="role.*">Role</x-sap-menu-item>
             <x-sap-menu-item :href="route('permission.list')" active-pattern="permission.*">Permission</x-sap-menu-item>
             {{-- <a class="collapse-item" href="{{ route('setting') }}">Setting</a> --}}
         </div>

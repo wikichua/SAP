@@ -21,7 +21,6 @@ class PermissionController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.permission'))->query()
-                ->where('id', '!=', 1)
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''),$request->get('direction', ''))
                 ->with('roles');

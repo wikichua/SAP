@@ -15,4 +15,24 @@ class Role extends Model
     {
         return $this->belongsToMany(config('sap.models.permission'));
     }
+
+    public function creator()
+    {
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+    public function modifier()
+    {
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
+
+    public function scopeFilterName($query, $search)
+    {
+        return $query->where('name', 'like', "%{$search}%");
+    }
+
+    public function scopeFilterAdmin($query, $search)
+    {
+        return $query->where('admin', $search);
+    }
 }
