@@ -7,14 +7,48 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth_admin', 'can:Access Admin Panel']);
+        $this->middleware('intend_url')->only(['index', 'read']);
+        $this->middleware('can:Create Settings')->only(['create', 'store']);
+        $this->middleware('can:Read Settings')->only(['index', 'read']);
+        $this->middleware('can:Update Settings')->only(['edit', 'update']);
+        $this->middleware('can:Delete Settings')->only('delete');
+    }
+
     public function index(Request $request)
     {
-        $fields = collect($request->get('fields'))->where('filterable', true)->pluck('key')->all();
-        $filter = $request->get('filter', '');
-        $sortBy = $request->get('sortBy', '');
-        $sortDesc = $request->get('sortDesc', '');
-        $settings = app(config('vam.models.setting'))->query()->filter($filter, $fields)->sorting($sortBy, $sortDesc)->paginate($request->get('size', 20));
-        return response()->json($settings);
+        if ($request->ajax()) {
+            $models = app(config('sap.models.setting'))->query()
+                ->filter($request->get('filters', ''))
+                ->sorting($request->get('sort', ''),$request->get('direction', ''));
+            $paginated = $models->paginate(25);
+            foreach ($paginated as $model) {
+                $model->actionsView = view('sap::admin.setting.actions',compact('model'))->render();
+            }
+            if ($request->get('filters','') != '') {
+                $paginated->appends(['filters' => $request->get('filters','')]);
+            }
+            if ($request->get('sort','') != '') {
+                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            }
+            $links = $paginated->onEachSide(5)->links()->render();
+            $currentUrl = $request->fullUrl();
+            return compact('paginated','links','currentUrl');
+        }
+        $getUrl = route('setting.list');
+        $html = [
+            ['title' => 'Key', 'data' => 'key', 'sortable' => true],
+            ['title' => 'Value', 'data' => 'value', 'sortable' => true],
+            ['title' => '', 'data' => 'actionsView'],
+        ];
+        return view('sap::admin.setting.index', compact('html','getUrl'));
+    }
+
+    public function create(Request $request)
+    {
+        return view('sap::admin.setting.create');
     }
 
     public function store(Request $request)
@@ -27,27 +61,34 @@ class SettingController extends Controller
             $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
         }
 
-        $setting = app(config('vam.models.setting'))->create($request->all());
+        $model = app(config('sap.models.setting'))->create($request->all());
 
-        activity('Created Setting: ' . $setting->id, $request->all(), $setting);
+        activity('Created Setting: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $setting->id,
             'status' => 'success',
-            'message' => 'Setting created.',
-            'redirectTo' => '/setting/' . $setting->id . '/show',
+            'flash' => 'Setting Created.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('setting.list'),
         ]);
     }
 
     public function show($id)
     {
-        $setting = app(config('vam.models.setting'))->query()->findOrFail($id);
-        return response()->json($setting);
+        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
+        return view('sap::admin.setting.show', compact('model'));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
+        return view('sap::admin.setting.edit', compact('model'));
     }
 
     public function update(Request $request, $id)
     {
-        $setting = app(config('vam.models.setting'))->query()->findOrFail($id);
+        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
         $request->validate([
             'key' => 'required',
         ]);
@@ -56,29 +97,32 @@ class SettingController extends Controller
             $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
         }
 
-        $setting->update($request->all());
+        $model->update($request->all());
 
-        activity('Updated Setting: ' . $setting->id, $request->all(), $setting);
+        activity('Updated Setting: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $setting->id,
             'status' => 'success',
-            'message' => 'Setting Updated.',
-            'redirectTo' => '/setting/' . $setting->id . '/show',
+            'flash' => 'Setting Updated.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('setting.edit',[$model->id]),
         ]);
     }
 
     public function destroy($id)
     {
-        $setting = app(config('vam.models.setting'))->query()->findOrFail($id);
-        $setting->delete();
+        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
+        $model->delete();
 
-        activity('Deleted Setting: ' . $setting->id, [], $setting);
+        activity('Deleted Setting: ' . $model->id, [], $model);
 
         return response()->json([
-            'id' => $setting->id,
             'status' => 'success',
-            'message' => 'Setting deleted.',
+            'flash' => 'Setting Deleted.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
         ]);
     }
 }
