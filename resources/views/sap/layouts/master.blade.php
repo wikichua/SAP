@@ -133,13 +133,13 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Page Heading -->
+                    @yield('container')
                     <div id="overlayLoader">
                       <div class="w-100 d-flex justify-content-center align-items-center">
                         <div class="spinner"></div>
                       </div>
                     </div>
-                    <!-- Page Heading -->
-                    @yield('container')
 
                 </div>
                 <!-- /.container-fluid -->

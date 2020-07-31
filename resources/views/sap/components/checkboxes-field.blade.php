@@ -5,23 +5,46 @@
 	if (isset($checked) && !is_array($checked)) {
 		$checked = [$checked];
 	}
+    $isGroup = isset($isGroup)? $isGroup:false;
+    if ($isGroup) {
+        $groupOptions = $options;
+    }
 @endphp
 <div class="form-group">
     <label for="{{ $id }}">{{ $label }}</label>
-    <div class="form-control form-control-plaintext {{ implode(' ',$class) }} {{ isset($data) && is_array($data)? implode(' data-',$data):'' }}">
-        @foreach($options as $key => $val)
-        <div class="custom-control custom-checkbox">
-            <input 
-	            type="checkbox"
-	            name="{{ $name }}[{{ $key }}]"
-	            id="{{ $id }}-{{ $key }}"
-	            class="custom-control-input"
-	            value="{{ $key }}"
-	            {{ isset($checked) && in_array($key, $checked)? 'checked':'' }}
-            >
-            <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }}</label>
-        </div>
-        @endforeach
+    <div class="form-control h-auto {{ implode(' ',$class) }} {{ isset($data) && is_array($data)? implode(' data-',$data):'' }}" name="{{ $name }}">
+        @if ($isGroup)
+            @foreach ($groupOptions as $group => $options)
+            <b class="d-block{{ !$loop->first ? ' mt-3' : '' }}">{{ $group }}</b>
+                @foreach($options as $key => $val)
+                <div class="custom-control custom-control-inline custom-checkbox">
+                    <input 
+                        type="checkbox"
+                        name="{{ $name }}[{{ $key }}]"
+                        id="{{ $id }}-{{ $key }}"
+                        class="custom-control-input"
+                        value="{{ $key }}"
+                        {{ isset($checked) && in_array($key, $checked)? 'checked':'' }}
+                    >
+                    <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }}</label>
+                </div>
+                @endforeach
+            @endforeach
+        @else
+            @foreach($options as $key => $val)
+            <div class="custom-control custom-checkbox">
+                <input 
+    	            type="checkbox"
+    	            name="{{ $name }}[{{ $key }}]"
+    	            id="{{ $id }}-{{ $key }}"
+    	            class="custom-control-input"
+    	            value="{{ $key }}"
+    	            {{ isset($checked) && in_array($key, $checked)? 'checked':'' }}
+                >
+                <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }}</label>
+            </div>
+            @endforeach
+        @endif
     </div>
     <div>
         <span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>

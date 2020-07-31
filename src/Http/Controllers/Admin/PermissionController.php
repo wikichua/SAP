@@ -49,8 +49,7 @@ class PermissionController extends Controller
 
     public function create(Request $request)
     {
-        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
-        return view('sap::admin.permission.create', compact('roles'));
+        return view('sap::admin.permission.create');
     }
 
     public function store(Request $request)

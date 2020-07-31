@@ -18,9 +18,8 @@
                 @csrf
                 <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" value=""/>
                 <x-sap-select-field name="admin" id="admin" label="Is Admin" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[false=>'No',true=>'Yes']" :selected="[]"/>
-                <button type="submit" class="btn btn-primary">
-                Submit
-                </button>
+				<x-sap-checkboxes-field name="permissions" id="permissions" label="Permissions" :class="[]" :options="$group_permissions" isGroup="true"/>
+              	<button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
@@ -28,7 +27,7 @@
 @endsection
 @push('scripts')
 <script>
-	$(document).ready(function() {
-	});
+    $(document).ready(function() {
+    });
 </script>
 @endpush

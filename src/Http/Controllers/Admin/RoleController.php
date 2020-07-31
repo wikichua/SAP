@@ -26,6 +26,8 @@ class RoleController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.role.actions',compact('model'))->render();
+                $permissions = $model->permissions()->pluck('name')->toArray();
+                $model->permissionsView = view('sap::admin.role.permissionList',compact('permissions'))->render();
             }
             if ($request->get('filters','') != '') {
                 $paginated->appends(['filters' => $request->get('filters','')]);
@@ -41,6 +43,7 @@ class RoleController extends Controller
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Is Admin', 'data' => 'isAdmin'],
+            ['title' => 'Permissions', 'data' => 'permissionsView'],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.role.index', compact('html','getUrl'));
@@ -48,8 +51,14 @@ class RoleController extends Controller
 
     public function create(Request $request)
     {
-        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
-        return view('sap::admin.role.create', compact('roles'));
+        $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
+        $group_permissions = [];
+        foreach ($permissions as $group => $perms) {
+            foreach ($perms as $perm) {
+                $group_permissions[$group][$perm->id] = $perm->name;
+            }
+        }
+        return view('sap::admin.role.create', compact('group_permissions'));
     }
 
     public function store(Request $request)
@@ -57,14 +66,17 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required',
             'admin' => 'required',
+            'permissions' => 'required',
         ]);
 
         $request->merge([
             'created_by' => auth()->id(),
             'updated_by' => auth()->id(),
+            'permissions' => array_values($request->get('permissions',[]))
         ]);
 
         $model = app(config('sap.models.role'))->create($request->all());
+        $model->permissions()->sync($request->get('permissions'));
 
         activity('Created Role: ' . $model->id, $request->all(), $model);
 
@@ -86,7 +98,14 @@ class RoleController extends Controller
     public function edit(Request $request, $id)
     {
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
-        return view('sap::admin.role.edit', compact('model'));
+        $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
+        $group_permissions = [];
+        foreach ($permissions as $group => $perms) {
+            foreach ($perms as $perm) {
+                $group_permissions[$group][$perm->id] = $perm->name;
+            }
+        }
+        return view('sap::admin.role.edit', compact('model','group_permissions'));
     }
 
     public function update(Request $request, $id)
@@ -100,9 +119,11 @@ class RoleController extends Controller
 
         $request->merge([
             'updated_by' => auth()->id(),
+            'permissions' => array_values($request->get('permissions',[]))
         ]);
 
         $model->update($request->all());
+        $model->permissions()->sync($request->get('permissions'));
 
         activity('Updated Role: ' . $model->id, $request->all(), $model);
 

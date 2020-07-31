@@ -46,7 +46,7 @@ const flashMessage = function() {
 const commitPost = function(form) {
     let action = form.attr('action');
     if (_.isUndefined(action) === false) {
-        form.find('.form-control').removeClass('is-invalid').addClass('is-valid');
+        form.find('.form-control,.form-control-plaintext').removeClass('is-invalid').addClass('is-valid');
         axios.request({
             method: 'POST',
             url: action,
