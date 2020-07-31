@@ -22,8 +22,7 @@ class RoleController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.role'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''))
-                ->with('roles');
+                ->sorting($request->get('sort', ''),$request->get('direction', ''));
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.role.actions',compact('model'))->render();
@@ -41,83 +40,94 @@ class RoleController extends Controller
         $getUrl = route('role.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
-            ['title' => 'Is Admin', 'data' => 'admin', 'sortable' => true],
+            ['title' => 'Is Admin', 'data' => 'isAdmin'],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.role.index', compact('html','getUrl'));
+    }
+
+    public function create(Request $request)
+    {
+        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
+        return view('sap::admin.role.create', compact('roles'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
+            'admin' => 'required',
         ]);
 
-        $role = app(config('vam.models.role'))->create($request->all());
-        $role->permissions()->sync($request->get('permissions'));
+        $request->merge([
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Created Role: ' . $role->id, $request->all(), $role);
+        $model = app(config('sap.models.role'))->create($request->all());
+
+        activity('Created Role: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $role->id,
             'status' => 'success',
-            'message' => 'Role created.',
-            'redirectTo' => '/role/' . $role->id . '/show',
+            'flash' => 'Role Created.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('role.list'),
         ]);
     }
 
     public function show($id)
     {
-        $role = app(config('vam.models.role'))->query()->findOrFail($id);
-        $role->permissions = $role->permissions->sortBy('id');
-        $role->permissionsSelected = $role->permissions()->pluck('permissions.id');
-        $role->permissionsShow = $role->permissions->sortBy('id')->implode('name', ', ');
-        return response()->json($role);
+        $model = app(config('sap.models.role'))->query()->findOrFail($id);
+        return view('sap::admin.role.show', compact('model'));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $model = app(config('sap.models.role'))->query()->findOrFail($id);
+        return view('sap::admin.role.edit', compact('model'));
     }
 
     public function update(Request $request, $id)
     {
-        $role = app(config('vam.models.role'))->query()->findOrFail($id);
+        $model = app(config('sap.models.role'))->query()->findOrFail($id);
+
         $request->validate([
             'name' => 'required',
+            'admin' => 'required',
         ]);
 
-        $role->update($request->all());
-        $role->permissions()->sync($request->get('permissions'));
+        $request->merge([
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Updated Role: ' . $role->id, $request->all(), $role);
+        $model->update($request->all());
+
+        activity('Updated Role: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $role->id,
             'status' => 'success',
-            'message' => 'Role Updated.',
-            'redirectTo' => '/role/' . $role->id . '/show',
+            'flash' => 'Role Updated.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('role.edit',[$model->id]),
         ]);
     }
 
     public function destroy($id)
     {
-        $role = app(config('vam.models.role'))->query()->findOrFail($id);
-        $role->delete();
+        $model = app(config('sap.models.role'))->query()->findOrFail($id);
+        $model->delete();
 
-        activity('Deleted Role: ' . $role->id, [], $role);
+        activity('Deleted Role: ' . $model->id, [], $model);
 
         return response()->json([
-            'id' => $role->id,
             'status' => 'success',
-            'message' => 'Role deleted.',
+            'flash' => 'Role Deleted.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
         ]);
-    }
-
-    public function checkboxes(Request $request)
-    {
-        $bootstrapVueCheckboxes = [];
-        foreach (app(config('vam.models.role'))->orderBy('name')->get() as $role) {
-            $bootstrapVueCheckboxes[] = [
-                'value' => $role->id,
-                'text' => $role->name,
-            ];
-        }
-        return response()->json($bootstrapVueCheckboxes);
     }
 }
