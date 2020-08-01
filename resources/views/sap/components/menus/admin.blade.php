@@ -17,7 +17,7 @@
             <x-sap-menu-item :href="route('role.list')" active-pattern="role.*">Role</x-sap-menu-item>
             <x-sap-menu-item :href="route('permission.list')" active-pattern="permission.*">Permission</x-sap-menu-item>
             <x-sap-menu-item :href="route('setting.list')" active-pattern="setting.*">Setting</x-sap-menu-item>
-            {{-- <x-sap-menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item> --}}
+            <x-sap-menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>
         </div>
     </div>
 </li>

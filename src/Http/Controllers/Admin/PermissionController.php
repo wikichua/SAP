@@ -22,8 +22,7 @@ class PermissionController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.permission'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''))
-                ->with('roles');
+                ->sorting($request->get('sort', ''),$request->get('direction', ''));
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.permission.actions',compact('model'))->render();

@@ -13,6 +13,13 @@
 				    @case('list')
 				        {!! implode('<br>', $value) !!}
 				        @break
+				    @case('json')
+				        @forelse ($value as $k => $v)
+				        	<li class="list-unstyled">{!! $k !!} : {!! $v !!}</li>
+				        @empty
+				        	Null
+				        @endforelse
+				        @break
 				    @default
 				        {!! $value !!}
 				@endswitch
