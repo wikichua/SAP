@@ -5,6 +5,7 @@
 	if (isset($selected) && !is_array($selected)) {
 		$selected = [$selected];
 	}
+    $options = is_array($options)? collect($options)->toArray():[$options => $options];
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>

@@ -5,7 +5,7 @@
 	if (isset($checked) && !is_array($checked)) {
 		$checked = [$checked];
 	}
-    $options = is_array($options)? $options:[$options];
+    $options = is_array($options)? $options:[$options => $options];
     $isGroup = isset($isGroup)? $isGroup:false;
     if ($isGroup) {
         $groupOptions = $options;

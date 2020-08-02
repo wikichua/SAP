@@ -70,7 +70,7 @@ class SapMake extends Command
     protected function reinstate()
     {
         $config_form = $this->config['form'];
-        $scopeModelLists = $model_keys = $setting_keys = $table_fields = $search_scopes = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
+        $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
 
         foreach ($config_form as $field => $options) {
             $this->replaces['{%field_variable%}'] = studly_case($field);
@@ -89,12 +89,20 @@ class SapMake extends Command
                 $table_fields[] = "['title' => '{$options['label']}', 'data' => '{$field}', 'sortable' => {$sort_boolean_string}, 'filterable' => {$search_boolean_string}]";
             }
             $scopes = [];
+            $searches = [];
             if ($options['search']) {
                 $scopes[] = 'public function scopeFilter' . studly_case($field) . '($query, $search)';
                 $scopes[] = $this->indent() . '{';
                 $scopes[] = $this->indent() . '    return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
                 $scopes[] = $this->indent() . '}';
                 $search_scopes[] = implode(PHP_EOL, $scopes) . PHP_EOL;
+
+                // TODO to make this into stub, usually only date range, text and multiple select
+                $searches[] = '<div class="form-group">';
+                $searches[] = $this->indent() . '<label for="created_at">'.$options['label'].'</label>';
+                $searches[] = $this->indent() . '<input type="text" class="form-control filterInput" name="'.$field.'" id="'.$field.'">';
+                $searches[] = $this->indent() . '</div>';
+                $search_fields[] = implode(PHP_EOL, $searches) . PHP_EOL;
             }
 
             if (!empty($options['relationship'])) {
@@ -122,14 +130,9 @@ class SapMake extends Command
             }
 
             $replace_for_form['{%option_key%}'] = '';
-
-            if (isset($options['model_options']) && is_array($options['model_options']) && count($options['model_options'])) {
-                $replace_for_form['{%model_option_query%}'] = $options['model_options']['query'];
-                $replace_for_form['{%map_text%}'] = $options['model_options']['map_text'];
-                $replace_for_form['{%map_value%}'] = $options['model_options']['map_value'];
-                $stub = $this->stub_path . '/scopeModelList.stub';
-                $stub = str_replace(array_keys($this->replaces), $this->replaces, $this->indent() . $this->files->get($stub));
-                $scopeModelLists[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+            $select_options = '';
+            if (isset($options['model_options']) && $options['model_options'] != '') {
+                $replace_for_form['{%model_option_query%}'] = $select_options = $options['model_options'];
                 $model_keys[] = "{$field}";
                 $replace_for_form['{%option_key%}'] = "models['{$field}']";
             } else {
@@ -142,37 +145,30 @@ class SapMake extends Command
                     $settings_options_up[] = "app(config('sap.models.setting'))->create(['key' => '$setting_key','value' => [" . implode(',', $opts) . "]]);";
                     $settings_options_down[] = "app(config('sap.models.setting'))->where('key','$setting_key')->forceDelete();";
                     $replace_for_form['{%option_key%}'] = "settings['{$setting_key}']";
+                    $select_options = "settings('{$setting_key}')";
                 }
             }
 
             $replace_for_form['{%label%}'] = $options['label'];
             $replace_for_form['{%field%}'] = $field;
+            $replace_for_form['{%type%}'] = '';
+            if ($options['type'] == 'json') {
+                $replace_for_form['{%type%}'] = $type;
+            }
             $replace_for_form['{%model_variable%}'] = $this->replaces['{%model_variable%}'];
             $replace_for_form['{%attributes_tag%}'] = implode(' ', $options['attributes']);
             $replace_for_form['{%class_tag%}'] = implode(' ', $options['class']);
 
-            $stub = $this->stub_path . '/components/form/plaintext.stub';
-            if (!$this->files->exists($stub)) {
-                $this->error('Plaintext stub file not found: <info>' . $stub . '</info>');
-                return;
-            }
-            $stub = $this->files->get($stub);
-            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-
+            $read_stub = '<x-sap-display-field type="text" name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="{%type%}"/>';
+            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
+            $form_stub = '';
             switch ($options['type']) {
                 case 'email':
                 case 'number':
                 case 'password':
                 case 'text':
                 case 'url':
-                    $replace_for_form['{%input_type%}'] = $options['type'];
-                    $stub = $this->stub_path . '/components/form/dynamic.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Dynamic stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                    $form_stub = '<x-sap-input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 // case 'date':
                 //     $stub = $this->stub_path . '/components/form/date.stub';
@@ -201,15 +197,9 @@ class SapMake extends Command
                 //     $stub = $this->files->get($stub);
                 //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
                 //     break;
-                // case 'select':
-                //     $stub = $this->stub_path . '/components/form/select.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Select stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
+                case 'select':
+                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="[]"/>';
+                    break;
                 // case 'radio':
                 //     $stub = $this->stub_path . '/components/form/radio.stub';
                 //     if (!$this->files->exists($stub)) {
@@ -241,6 +231,7 @@ class SapMake extends Command
                     $this->error('Input Type not supported: <info>' . $field . ':' . $options['type'] . '</info>');
                     break;
             }
+            $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
         }
 
         foreach ($this->config['appends'] as $key => $value) {
@@ -261,13 +252,13 @@ class SapMake extends Command
         $this->replaces['{%user_timezones%}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';
         $this->replaces['{%validations_create%}'] = isset($validations['create']) ? trim(implode(PHP_EOL, $validations['create'])) : '';
         $this->replaces['{%validations_update%}'] = isset($validations['update']) ? trim(implode(PHP_EOL, $validations['update'])) : '';
-        $this->replaces['{%form_fields%}'] = isset($form_fields) ? trim(implode(PHP_EOL . $this->indent(3), $form_fields)) : '';
-        $this->replaces['{%read_fields%}'] = isset($read_fields) ? trim(implode(PHP_EOL . $this->indent(3), $read_fields)) : '';
+        $this->replaces['{%form_fields%}'] = isset($form_fields) ? trim(implode(PHP_EOL . $this->indent(4), $form_fields)) : '';
+        $this->replaces['{%read_fields%}'] = isset($read_fields) ? trim(implode(PHP_EOL . $this->indent(4), $read_fields)) : '';
         $this->replaces['{%settings_options_up%}'] = isset($settings_options_up) ? trim(implode(PHP_EOL . $this->indent(2), $settings_options_up)) : '';
         $this->replaces['{%settings_options_down%}'] = isset($settings_options_down) ? trim(implode(PHP_EOL . $this->indent(2), $settings_options_down)) : '';
         $this->replaces['{%search_scopes%}'] = isset($search_scopes) ? trim(implode(PHP_EOL . $this->indent(1), $search_scopes)) : '';
+        $this->replaces['{%search_fields%}'] = isset($search_fields) ? trim(implode(PHP_EOL . $this->indent(1), $search_fields)) : '';
         $this->replaces['{%table_fields%}'] = isset($table_fields) ? trim(implode(',' . PHP_EOL . $this->indent(3) . "  ", $table_fields)) . ',' : '';
-        $this->replaces['{%scopeModelLists%}'] = isset($scopeModelLists) ? trim(implode(PHP_EOL, $scopeModelLists)) : '';
 
         $this->model();
         $this->route();
@@ -343,23 +334,24 @@ class SapMake extends Command
     }
     protected function views()
     {
-        $component_files = ['create'];
-        foreach ($component_files as $mode) {
-            $component_stub = $this->stub_path . '/components/' . $mode . '.stub';
-            if (!$this->files->exists($component_stub)) {
-                $this->error('View stub file not found: <info>' . $component_stub . '</info>');
+        $view_files = ['search','index','edit','create'];
+        foreach ($view_files as $mode) {
+            $view_stub = $this->stub_path . '/views/' . $mode . '.stub';
+            if (!$this->files->exists($view_stub)) {
+                $this->error('View stub file not found: <info>' . $view_stub . '</info>');
                 return;
             }
-            $component_path = resource_path('js/components/' . $this->replaces['{%model_variable%}']);
-            if (!$this->files->exists($component_path)) {
-                $this->files->makeDirectory($component_path, 0755, true);
+            $view_path = resource_path('views/'.config('sap.custom_view_dir').'/' . $this->replaces['{%model_variable%}']);
+
+            if (!$this->files->exists($view_path)) {
+                $this->files->makeDirectory($view_path, 0755, true);
             }
 
-            $component_file = resource_path('js/components/' . $this->replaces['{%model_variable%}'] . '/' . $mode . 'Component.vue');
-            $component_stub = $this->files->get($component_stub);
+            $view_file = resource_path('views/'.config('sap.custom_view_dir').'/' . $this->replaces['{%model_variable%}'] . '/' . $mode . '.blade.php');
+            $view_stub = $this->files->get($view_stub);
 
-            $this->files->put($component_file, $this->replaceholder($component_stub));
-            $this->line('Vue component file created: <info>' . $component_file . '</info>');
+            $this->files->put($view_file, $this->replaceholder($view_stub));
+            $this->line('View file created: <info>' . $view_file . '</info>');
         }
     }
     protected function migration()

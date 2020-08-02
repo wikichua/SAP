@@ -8,28 +8,7 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="created_at">Created At</label>
-                    <input type="text" class="form-control filterInput" name="created_at"
-                        id="created_at">
-                </div>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control filterInput" name="name"
-                        id="name">
-                </div>
-                <div class="form-group">
-                    <label for="group">Group</label>
-                    <select name="group" id="group" class="selectpicker form-control filterInput"
-                        data-style="border bg-white" data-live-search="true" multiple>
-                        <option value="">Please Select</option>
-                        @foreach(app(config('sap.models.permission'))->query()->groupby('group')->pluck('group','group') as $key => $val)
-                            <option value="{{ $key }}">
-                                {{ $val }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                {%search_fields%}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary btn-sm" id="filterBtn">

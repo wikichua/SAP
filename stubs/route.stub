@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web', 'auth', 'can:Access Admin Panel']], function () {
-    Route::group(['prefix' => '{%model_variable%}', 'namespace' => config('sap.custom_controller_namespace') . '\Admin'], function () {
+    Route::group(['prefix' => '{%model_variable%}', 'namespace' => config('sap.custom_controller_namespace')], function () {
         Route::match(['get', 'head'], 'list', '{%model_class%}Controller@index')->name('{%model_variable%}.list');
         
         Route::match(['get', 'head'], '{{%model_variable%}}/read', '{%model_class%}Controller@show')->name('{%model_variable%}.show');

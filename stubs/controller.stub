@@ -39,7 +39,7 @@ class {%model_class%}Controller extends Controller
             $currentUrl = $request->fullUrl();
             return compact('paginated','links','currentUrl');
         }
-        $getUrl = route('{%model_string%}.list');
+        $getUrl = route('{%model_variable%}.list');
         $html = [
             {%table_fields%}
             ['title' => '', 'data' => 'actionsView'],

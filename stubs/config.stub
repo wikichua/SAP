@@ -320,11 +320,8 @@ return [
                 'update' => 'required',
             ],
             // 'options' => "app('App\User')->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
-            'model_options' => [ // if both options and model_options are set at same time, model_options will be priority and ignored options
-                'query' => "app('App\User')->query()->pluck('name','id')",
-                'map_value' => "id", // according to bootstrap-vue, object contextual is obsoleted
-                'map_text' => "name", // according to bootstrap-vue, object contextual is obsoleted
-            ],
+            // if both options and model_options are set at same time, model_options will be priority and ignored options
+            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()", 
             'casts' => '',
             'mutators' => [
                 'get' => '',
@@ -354,11 +351,8 @@ return [
                 'update' => 'required',
             ],
             // 'options' => "app('App\User')->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
-            'model_options' => [ // if both options and model_options are set at same time, model_options will be priority and ignored options
-                'query' => "app('App\User')->query()->pluck('name','id')",
-                'map_value' => "id", // according to bootstrap-vue, object contextual is obsoleted
-                'map_text' => "name", // according to bootstrap-vue, object contextual is obsoleted
-            ],
+            // if both options and model_options are set at same time, model_options will be priority and ignored options
+            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()",
             'casts' => '',
             'mutators' => [
                 'get' => '',
