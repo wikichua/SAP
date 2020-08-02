@@ -7,37 +7,53 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        $user = auth()->user();
-        $user->rolesShow = $user->roles->sortBy('name')->implode('name', ', ');
-        $user->rolesSelected = $user->roles()->pluck('roles.id');
-        return response()->json($user);
+        $model = auth()->user();
+        return view('sap::admin.profile.show',compact('model'));
+    }
+
+    public function edit(Request $request)
+    {
+        $model = auth()->user();
+        return view('sap::admin.profile.edit', compact('model'));
     }
 
     public function update(Request $request)
     {
-        $user = auth()->user();
+        $model = auth()->user();
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
         ]);
 
-        $user->update($request->all());
+        $request->merge([
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Updated Profile: ' . $user->id, $request->all(), $user);
+        $model->update($request->all());
+
+        activity('Updated User: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'Profile Updated.',
-            'reloadPage' => true,
+            'flash' => 'Profile Updated.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('profile.edit',[$model->id]),
         ]);
+    }
+
+    public function editPassword(Request $request)
+    {
+        $model = auth()->user();
+        return view('sap::admin.profile.editPassword',compact('model'));
     }
 
     public function updatePassword(Request $request)
     {
-        $user = auth()->user();
+        $model = auth()->user();
         $request->validate([
             'current_password' => 'required|current_password',
             'password' => 'required|confirmed',
@@ -46,17 +62,19 @@ class ProfileController extends Controller
 
         $request->merge([
             'password' => bcrypt($request->get('password')),
+            'updated_by' => auth()->id(),
         ]);
 
-        $user->update($request->all());
+        $model->update($request->all());
 
-        activity('Update Profile Password: ' . $user->id, $request->all(), $user);
+        activity('Update Profile Password: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => $user->id,
             'status' => 'success',
-            'message' => 'Profile Password Updated.',
-            'reloadPage' => true,
+            'flash' => 'Password Updated.',
+            'reload' => true,
+            'relist' => false,
+            'redirect' => false,
         ]);
     }
 }

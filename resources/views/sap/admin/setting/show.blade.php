@@ -14,16 +14,14 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('permission.store') }}" enctype="multipart/form-data">
-                @csrf
-                <x-sap-display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
-                <x-sap-display-field type="text" name="name" id="name" label="Name" :value="$model->name"/>
-                <x-sap-display-field type="text" name="group" id="group" label="Group" :value="$model->group"/>
-                <x-sap-display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
-                <x-sap-display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name"/>
-                <x-sap-display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
-                <x-sap-display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name"/>
-            </form>
+            @csrf
+            <x-sap-display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
+            <x-sap-display-field type="text" name="name" id="name" label="Name" :value="$model->name"/>
+            <x-sap-display-field type="text" name="group" id="group" label="Group" :value="$model->group"/>
+            <x-sap-display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
+            <x-sap-display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name"/>
+            <x-sap-display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
+            <x-sap-display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name"/>
         </div>
     </div>
 </div>
