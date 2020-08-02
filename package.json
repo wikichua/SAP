@@ -26,9 +26,11 @@
         "@fortawesome/fontawesome-free": "^5.14.0",
         "bootstrap-daterangepicker": "^3.1.0",
         "bootstrap-select": "^1.13.18",
+        "codemirror": "^5.56.0",
         "daterangepicker": "^3.1.0",
         "handlebars": "^4.7.6",
         "moment": "^2.27.0",
+        "summernote": "^0.8.18",
         "sweetalert2": "^9.17.1"
     }
 }

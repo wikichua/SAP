@@ -18,10 +18,10 @@
             @foreach ($groupOptions as $group => $options)
             <b class="d-block{{ !$loop->first ? ' mt-3' : '' }}">{{ $group }}</b>
                 @foreach($options as $key => $val)
-                <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-checkbox">
+                <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-radio">
                     <input 
-                        type="checkbox"
-                        name="{{ $name }}[{{ $key }}]"
+                        type="radio"
+                        name="{{ $name }}"
                         id="{{ $id }}-{{ $key }}"
                         class="custom-control-input"
                         value="{{ $key }}"
@@ -33,16 +33,16 @@
             @endforeach
         @else
             @foreach($options as $key => $val)
-            <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-checkbox">
+            <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-radio">
                 <input 
-    	            type="checkbox"
-    	            name="{{ $name }}[{{ $key }}]"
+    	            type="radio"
+    	            name="{{ $name }}"
     	            id="{{ $id }}-{{ $key }}"
     	            class="custom-control-input"
     	            value="{{ $key }}"
     	            {{ isset($checked) && in_array($key, $checked)? 'checked':'' }}
                 >
-                <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }}</label>
+                <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }} haha</label>
             </div>
             @endforeach
         @endif

@@ -6,7 +6,7 @@ import {
 require('bootstrap-select');
 
 window.moment = require('moment');
-window.daterangepicker = require('daterangepicker');
+window.daterangepicker = require('bootstrap-daterangepicker');
 moment().format();
 
 import swal from 'sweetalert2';
@@ -24,3 +24,4 @@ const Toast = window.Toast = Swal.mixin({
 });
 
 const Handlebars = window.Handlebars = require("handlebars");
+require('summernote/dist/summernote-bs4');

@@ -148,8 +148,9 @@ return [
             'type' => 'number',
             'class' => [],
             'attributes' => [
-                'min = "1"',
-                'max = "100"',
+                'min' => 1,
+                'max' => 100,
+                'test' => 'hello world',
             ],
             'list' => false,
             'search' => false,
@@ -232,7 +233,8 @@ return [
             'label' => 'Hobbies',
             'type' => 'checkbox',
             'class' => [],
-            'attributes' => ['stacked', 'switches'],
+            'attributes' => [],
+            'stacked' => true,
             'list' => false,
             'search' => false,
             'migration' => 'json:{%field%}|nullable',
@@ -259,6 +261,7 @@ return [
             'type' => 'radio',
             'class' => [],
             'attributes' => [],
+            'stacked' => false,
             'list' => false,
             'search' => false,
             'migration' => 'string:{%field%}|nullable|default:',
@@ -335,13 +338,11 @@ return [
 
         // important notes. grabbing from model is still not available. added TODO list
         'another_user_id' => [
-            'label' => 'Another User',
-            'type' => 'vselect', // do u know select2? https://vue-select.org/
+            'label' => 'Another Users',
+            'type' => 'select',
             'class' => [],
             'attributes' => [
-                'taggable', // if u want the tag feature
-                'multiple', // multiple values
-                'push-tags', // add additional tag
+                'multiple' => 'multiple'
                 ],
             'list' => false,
             'search' => false,

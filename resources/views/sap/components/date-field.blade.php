@@ -5,7 +5,7 @@
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
-	<input type="{{ $type }}"
+	<input type="text"
 		class="form-control {{ implode(' ',$class) }}"
 		id="{{ $id }}"
 		name="{{ $name }}"
@@ -17,3 +17,15 @@
 	>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
+
+@push('scripts')
+<script>
+$(function() {
+	$('#{{ $id }}').daterangepicker({
+	    "singleDatePicker": true,
+	    "showDropdowns": true,
+	    "autoApply": true
+	});
+});
+</script>
+@endpush

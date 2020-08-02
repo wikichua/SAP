@@ -5,15 +5,12 @@
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
-	<input type="{{ $type }}"
-		class="form-control {{ implode(' ',$class) }}"
+	<textarea class="form-control {{ implode(' ',$class) }}"
 		id="{{ $id }}"
 		name="{{ $name }}"
 		@foreach ($attribute_tags as $attr_key => $attr_val)
 			{{ $attr_key }} = "{{ $attr_val }}"
 		@endforeach
-		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}
-		value="{{ isset($value)? $value:'' }}" 
-	>
+		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}>{{ $value ?? '' }}</textarea>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>

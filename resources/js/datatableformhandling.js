@@ -96,6 +96,22 @@ const commitPost = function(form) {
         });
     }
 };
+const onImageUpload = async function(file, editor) {
+    let formData = new FormData();
+    formData.append('image', file, file.name);
+    await axios({
+        url: route('editor.upload_image'),
+        method: "POST",
+        data: formData
+    })
+    .then(result => {
+        let url = result.data.url; // Get url from response
+        editor.summernote('insertImage', url);
+    })
+    .catch(err => {
+        console.error(err);
+    });
+};
 $(document).ready(function() {
     // display flash-message
     _.attempt(flashMessage);

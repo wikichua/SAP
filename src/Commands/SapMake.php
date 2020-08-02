@@ -156,11 +156,19 @@ class SapMake extends Command
                 $replace_for_form['{%type%}'] = $type;
             }
             $replace_for_form['{%model_variable%}'] = $this->replaces['{%model_variable%}'];
-            $replace_for_form['{%attributes_tag%}'] = implode(' ', $options['attributes']);
-            $replace_for_form['{%class_tag%}'] = implode(' ', $options['class']);
+            $replace_for_form['{%attributes_tag%}'] = '';
+            if (count($options['attributes'])) {
+                $temp_attrs = [];
+                foreach ($options['attributes'] as $attr_key => $attr_val) {
+                    $temp_attrs[] = "'{$attr_key}'=>'{$attr_val}'";
+                }
+                $replace_for_form['{%attributes_tag%}'] = implode(', ', $temp_attrs);
+            }
+            $replace_for_form['{%class_tag%}'] = "'".implode("',\n'" , $options['class'])."'";
 
             $read_stub = '<x-sap-display-field type="text" name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="{%type%}"/>';
             $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
+
             $form_stub = '';
             switch ($options['type']) {
                 case 'email':
@@ -168,17 +176,12 @@ class SapMake extends Command
                 case 'password':
                 case 'text':
                 case 'url':
-                    $form_stub = '<x-sap-input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[]" :value="$model->{%field%} ?? \'\'"/>';
+                case 'time':
+                    $form_stub = '<x-sap-input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
-                // case 'date':
-                //     $stub = $this->stub_path . '/components/form/date.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Date stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
+                case 'date':
+                    $form_stub = '<x-sap-date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    break;
                 // case 'file':
                 //     $stub = $this->stub_path . '/components/form/file.stub';
                 //     if (!$this->files->exists($stub)) {
@@ -188,45 +191,21 @@ class SapMake extends Command
                 //     $stub = $this->files->get($stub);
                 //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
                 //     break;
-                // case 'textarea':
-                //     $stub = $this->stub_path . '/components/form/textarea.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Textarea stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
-                case 'select':
-                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="[]"/>';
+                case 'textarea':
+                    $form_stub = '<x-sap-textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
-                // case 'radio':
-                //     $stub = $this->stub_path . '/components/form/radio.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Radio stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
-                // case 'checkbox':
-                //     $stub = $this->stub_path . '/components/form/checkbox.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Checkbox stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
-                // case 'editor':
-                //     $stub = $this->stub_path . '/components/form/editor.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('Editor stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
+                case 'select':
+                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="[]"/>';
+                    break;
+                case 'radio':
+                    $form_stub = '<x-sap-radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="[]" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
+                    break;
+                case 'checkbox':
+                    $form_stub = '<x-sap-checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="[]" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
+                    break;
+                case 'editor':
+                    $form_stub = '<x-sap-editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    break;
                 default:
                     $this->error('Input Type not supported: <info>' . $field . ':' . $options['type'] . '</info>');
                     break;
