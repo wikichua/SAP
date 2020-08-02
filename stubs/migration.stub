@@ -18,12 +18,12 @@ class Vam{%model%}Table extends Migration
         });
 
         {%settings_options_up%}
-        app(config('vam.models.permission'))->createGroup('{%model_strings%}', ['Create {%model_strings%}', 'Read {%model_strings%}', 'Update {%model_strings%}', 'Delete {%model_strings%}']);
+        app(config('sap.models.permission'))->createGroup('{%model_strings%}', ['Create {%model_strings%}', 'Read {%model_strings%}', 'Update {%model_strings%}', 'Delete {%model_strings%}']);
     }
     public function down()
     {
         {%settings_options_down%}
-        app(config('vam.models.permission'))->where('group', '{%model_strings%}')->delete();
+        app(config('sap.models.permission'))->where('group', '{%model_strings%}')->delete();
         Schema::dropIfExists('{%table_name%}');
     }
 }

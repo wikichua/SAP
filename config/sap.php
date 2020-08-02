@@ -2,7 +2,7 @@
 
 return [
     /* customization */
-    'custom_controller_namespace' => 'App\Http\Controllers\Admin',
+    'custom_controller_namespace' => 'App\Http\Controllers',
     'custom_controller_dir' => 'Http/Controllers/Admin',
     /* end customization */
 
@@ -19,6 +19,7 @@ return [
     'controller_namespace' => '\Wikichua\SAP\Http\Controllers',
     'component_namespace' => '\Wikichua\SAP\View\Components',
     'routes_dir' => 'routes/web.php',
+    'sub_route_dir' => 'routes/routers',
     'models' => [
         'user' => '\App\User',
         'role' => '\Wikichua\SAP\Models\Role',

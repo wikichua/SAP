@@ -1,4 +1,4 @@
-protected function scope{%field_variable%}Method()
+public function scope{%field_variable%}List()
     {
         $options = [];
         $list = {%model_option_query%};

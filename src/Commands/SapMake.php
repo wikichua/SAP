@@ -58,9 +58,6 @@ class SapMake extends Command
         $this->replaces['{%table_declared%}'] = '';
         $this->replaces['{%menu_name%}'] = $this->replaces['{%model_strings%}'];
         $this->replaces['{%menu_icon%}'] = $this->config['menu_icon'];
-        $this->replaces['{%scopeModelMethods%}'] = '';
-        $this->replaces['{%dispatch_getSettingsList%}'] = '';
-        $this->replaces['{%dispatch_getModelsList%}'] = '';
 
         if (isset($this->config['table_name']) && $this->config['table_name'] != '') {
             $this->replaces['{%table_name%}'] = $this->config['table_name'];
@@ -73,7 +70,7 @@ class SapMake extends Command
     protected function reinstate()
     {
         $config_form = $this->config['form'];
-        $apiScoopModelMethodRoute = $scopeModelMethods = $model_keys = $setting_keys = $table_fields = $search_scopes = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
+        $scopeModelLists = $model_keys = $setting_keys = $table_fields = $search_scopes = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
 
         foreach ($config_form as $field => $options) {
             $this->replaces['{%field_variable%}'] = studly_case($field);
@@ -89,13 +86,13 @@ class SapMake extends Command
             if ($options['list']) {
                 $search_boolean_string = $options['search'] ? 'true' : 'false';
                 $sort_boolean_string = isset($options['sortable']) && $options['sortable'] ? 'true' : 'false';
-                $table_fields[] = '{ key: "' . $field . '", label: "' . $options['label'] . '", sortable: ' . $sort_boolean_string . ', filterable: ' . $search_boolean_string . ' }';
+                $table_fields[] = "['title' => '{$options['label']}', 'data' => '{$field}', 'sortable' => {$sort_boolean_string}, 'filterable' => {$search_boolean_string}]";
             }
             $scopes = [];
             if ($options['search']) {
                 $scopes[] = 'public function scopeFilter' . studly_case($field) . '($query, $search)';
                 $scopes[] = $this->indent() . '{';
-                $scopes[] = $this->indent() . '    return $query->where(\'{$field}\', \'like\', "%{$search}%");';
+                $scopes[] = $this->indent() . '    return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
                 $scopes[] = $this->indent() . '}';
                 $search_scopes[] = implode(PHP_EOL, $scopes) . PHP_EOL;
             }
@@ -130,9 +127,9 @@ class SapMake extends Command
                 $replace_for_form['{%model_option_query%}'] = $options['model_options']['query'];
                 $replace_for_form['{%map_text%}'] = $options['model_options']['map_text'];
                 $replace_for_form['{%map_value%}'] = $options['model_options']['map_value'];
-                $stub = $this->stub_path . '/scopeModelMethod.stub';
+                $stub = $this->stub_path . '/scopeModelList.stub';
                 $stub = str_replace(array_keys($this->replaces), $this->replaces, $this->indent() . $this->files->get($stub));
-                $scopeModelMethods[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                $scopeModelLists[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
                 $model_keys[] = "{$field}";
                 $replace_for_form['{%option_key%}'] = "models['{$field}']";
             } else {
@@ -177,87 +174,69 @@ class SapMake extends Command
                     $stub = $this->files->get($stub);
                     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
                     break;
-                case 'date':
-                    $stub = $this->stub_path . '/components/form/date.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Date stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'time':
-                    $stub = $this->stub_path . '/components/form/time.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Time stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'file':
-                    $stub = $this->stub_path . '/components/form/file.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('File stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'textarea':
-                    $stub = $this->stub_path . '/components/form/textarea.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Textarea stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'select':
-                    $stub = $this->stub_path . '/components/form/select.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Select stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'vselect':
-                    $stub = $this->stub_path . '/components/form/vselect.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('VSelect stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'radio':
-                    $stub = $this->stub_path . '/components/form/radio.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Radio stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'checkbox':
-                    $stub = $this->stub_path . '/components/form/checkbox.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Checkbox stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
-                case 'editor':
-                    $stub = $this->stub_path . '/components/form/editor.stub';
-                    if (!$this->files->exists($stub)) {
-                        $this->error('Editor stub file not found: <info>' . $stub . '</info>');
-                        return;
-                    }
-                    $stub = $this->files->get($stub);
-                    $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                    break;
+                // case 'date':
+                //     $stub = $this->stub_path . '/components/form/date.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Date stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'file':
+                //     $stub = $this->stub_path . '/components/form/file.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('File stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'textarea':
+                //     $stub = $this->stub_path . '/components/form/textarea.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Textarea stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'select':
+                //     $stub = $this->stub_path . '/components/form/select.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Select stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'radio':
+                //     $stub = $this->stub_path . '/components/form/radio.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Radio stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'checkbox':
+                //     $stub = $this->stub_path . '/components/form/checkbox.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Checkbox stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
+                // case 'editor':
+                //     $stub = $this->stub_path . '/components/form/editor.stub';
+                //     if (!$this->files->exists($stub)) {
+                //         $this->error('Editor stub file not found: <info>' . $stub . '</info>');
+                //         return;
+                //     }
+                //     $stub = $this->files->get($stub);
+                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
+                //     break;
                 default:
                     $this->error('Input Type not supported: <info>' . $field . ':' . $options['type'] . '</info>');
                     break;
@@ -271,17 +250,6 @@ class SapMake extends Command
             $mutator[] = 'public function get' . $key_name . 'Attribute($value)' . " {\n";
             $mutator[] = $this->indent(2) . $this->replaceholder($value) . "\n" . $this->indent(1) . "}";
             $mutators[] = implode('', $mutator);
-        }
-
-        if (count($setting_keys) > 0) {
-            $dispatch_str = 'this.$store.dispatch("getSettingsList", ' . json_encode($setting_keys) . ');';
-            $this->replaces['{%dispatch_getSettingsList%}'] = $dispatch_str . PHP_EOL . $this->indent(1) . "// you may now access with this.settings.<setting_key> or this.settings['<setting_key>']";
-        }
-
-        if (count($model_keys) > 0) {
-            $url = 'this.$parent.route("' . $this->replaces['{%model_variable%}'] . '.modelList",' . json_encode(['key' => $model_keys]) . ')';
-            $dispatch_str = 'this.$store.dispatch("getModelsList", ' . $url . ');';
-            $this->replaces['{%dispatch_getModelsList%}'] = $dispatch_str . PHP_EOL . $this->indent(1) . "// you may now access with this.models.<field> or this.models['<field>']";
         }
 
         $this->replaces['{%fillable_array%}'] = implode(",\n" . $this->indent(2), $fillables);
@@ -298,13 +266,14 @@ class SapMake extends Command
         $this->replaces['{%settings_options_up%}'] = isset($settings_options_up) ? trim(implode(PHP_EOL . $this->indent(2), $settings_options_up)) : '';
         $this->replaces['{%settings_options_down%}'] = isset($settings_options_down) ? trim(implode(PHP_EOL . $this->indent(2), $settings_options_down)) : '';
         $this->replaces['{%search_scopes%}'] = isset($search_scopes) ? trim(implode(PHP_EOL . $this->indent(1), $search_scopes)) : '';
-        $this->replaces['{%table_fields%}'] = isset($table_fields) ? trim(implode(',' . PHP_EOL . $this->indent(2) . "  ", $table_fields)) . ',' : '';
-        $this->replaces['{%scopeModelMethods%}'] = isset($scopeModelMethods) ? trim(implode(PHP_EOL, $scopeModelMethods)) : '';
+        $this->replaces['{%table_fields%}'] = isset($table_fields) ? trim(implode(',' . PHP_EOL . $this->indent(3) . "  ", $table_fields)) . ',' : '';
+        $this->replaces['{%scopeModelLists%}'] = isset($scopeModelLists) ? trim(implode(PHP_EOL, $scopeModelLists)) : '';
 
         $this->model();
+        $this->route();
         $this->controller();
-        $this->apiRoute();
         $this->menu();
+        $this->views();
 
         if ($this->config['migration']) {
             if (isset($migration_codes) && count($migration_codes)) {
@@ -312,6 +281,21 @@ class SapMake extends Command
             }
             $this->migration();
         }
+    }
+    protected function route()
+    {
+        if (!$this->files->exists(app_path('../' . config('sap.sub_route_dir')))) {
+            $this->files->makeDirectory(app_path('../' . config('sap.sub_route_dir')), 0755, true);
+        }
+        $route_file = config('sap.sub_route_dir') . '/' . $this->replaces['{%model_variable%}'] . 'Routes.php';
+        $route_stub = $this->stub_path . '/route.stub';
+        if (!$this->files->exists($route_stub)) {
+            $this->error('API Route stub file not found: <info>' . $route_stub . '</info>');
+            return;
+        }
+        $route_stub = $this->files->get($route_stub);
+        $this->files->put($route_file, $this->replaceholder($route_stub));
+        $this->line('API Route file created: <info>' . $route_file . '</info>');
     }
     protected function menu()
     {
@@ -321,12 +305,11 @@ class SapMake extends Command
             return;
         }
         $menu_stub = $this->files->get($menu_stub);
-        $toWriteInFile = resource_path('js/components/SideBarComponent.vue');
+        $toWriteInFile = resource_path('views/vendor/sap/components/menu.blade.php');
         $toWriteInFileContent = $this->files->get($toWriteInFile);
         $replaceContent = $this->replaceholder($menu_stub);
-
         if (strpos($toWriteInFileContent, $replaceContent) === false) {
-            $replaceContent = str_replace('<!--DoNotRemoveMe-->', $replaceContent . "\n" . $this->indent(2) . "<!--DoNotRemoveMe-->", $toWriteInFileContent);
+            $replaceContent = str_replace('<!--DoNotRemoveMe-->', $replaceContent . "\n" . $this->indent(0) . "<!--DoNotRemoveMe-->", $toWriteInFileContent);
             $this->files->put($toWriteInFile, $replaceContent);
             $this->line('Menu included: <info>' . config('sap.routes_dir') . '</info>');
         }
@@ -357,6 +340,27 @@ class SapMake extends Command
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>' . $controller_file . '</info>');
+    }
+    protected function views()
+    {
+        $component_files = ['create'];
+        foreach ($component_files as $mode) {
+            $component_stub = $this->stub_path . '/components/' . $mode . '.stub';
+            if (!$this->files->exists($component_stub)) {
+                $this->error('View stub file not found: <info>' . $component_stub . '</info>');
+                return;
+            }
+            $component_path = resource_path('js/components/' . $this->replaces['{%model_variable%}']);
+            if (!$this->files->exists($component_path)) {
+                $this->files->makeDirectory($component_path, 0755, true);
+            }
+
+            $component_file = resource_path('js/components/' . $this->replaces['{%model_variable%}'] . '/' . $mode . 'Component.vue');
+            $component_stub = $this->files->get($component_stub);
+
+            $this->files->put($component_file, $this->replaceholder($component_stub));
+            $this->line('Vue component file created: <info>' . $component_file . '</info>');
+        }
     }
     protected function migration()
     {

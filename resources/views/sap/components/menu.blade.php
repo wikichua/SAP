@@ -6,3 +6,4 @@
         'setting.*',
         'activity_log.*',
     ]"/>
+<!--DoNotRemoveMe-->

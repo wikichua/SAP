@@ -8,14 +8,48 @@ use {%model_namespace%}\{%model_class%};
 
 class {%model_class%}Controller extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth_admin', 'can:Access Admin Panel']);
+        $this->middleware('intend_url')->only(['index', 'read']);
+        $this->middleware('can:Create {model_strings}')->only(['create', 'store']);
+        $this->middleware('can:Read {model_strings}')->only(['index', 'read']);
+        $this->middleware('can:Update {model_strings}')->only(['edit', 'update']);
+        $this->middleware('can:Delete {model_strings}')->only('delete');
+    }
+
     public function index(Request $request)
     {
-        $fields = collect($request->get('fields'))->where('filterable', true)->pluck('key')->all();
-        $filter = $request->get('filter', '');
-        $sortBy = $request->get('sortBy', '');
-        $sortDesc = $request->get('sortDesc', '');
-        ${%model_variables%} = {%model_class%}::query()->filter($filter, $fields)->sorting($sortBy, $sortDesc)->paginate($request->get('size', 20));
-        return response()->json(${%model_variables%});
+        if ($request->ajax()) {
+            $models = {%model_class%}::query()
+                ->filter($request->get('filters', ''))
+                ->sorting($request->get('sort', ''),$request->get('direction', ''));
+            $paginated = $models->paginate(25);
+            foreach ($paginated as $model) {
+                $model->actionsView = view('admin.{%model_variable%}.actions',compact('model'))->render();
+            }
+            if ($request->get('filters','') != '') {
+                $paginated->appends(['filters' => $request->get('filters','')]);
+            }
+            if ($request->get('sort','') != '') {
+                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            }
+            $links = $paginated->onEachSide(5)->links()->render();
+            $currentUrl = $request->fullUrl();
+            return compact('paginated','links','currentUrl');
+        }
+        $getUrl = route('{%model_string%}.list');
+        $html = [
+            {%table_fields%}
+            ['title' => '', 'data' => 'actionsView'],
+        ];
+        return view('admin.{%model_variable%}.index', compact('html','getUrl'));
+    }
+
+    public function create(Request $request)
+    {
+        return view('admin.{%model_variable%}.create');
     }
 
     public function store(Request $request)
@@ -24,76 +58,69 @@ class {%model_class%}Controller extends Controller
             {%validations_create%}
         ]);
 
-        ${%model_variable%} = {%model_class%}::create($request->all());
+        $request->merge([
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Created {%model_class%}: ' . ${%model_variable%}->id, $request->all(), ${%model_variable%});
+        $model = {%model_class%}::query()->create($request->all());
+
+        activity('Created {%model_class%}: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => ${%model_variable%}->id,
             'status' => 'success',
-            'message' => '{%model_class%} created.',
-            'redirectTo' => '/{%model_variable%}/' . ${%model_variable%}->id . '/show',
+            'flash' => '{%model_class%} Created.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('{%model_variable%}.list'),
         ]);
     }
 
-    public function show($id)
+    public function show({%model_class%} $model)
     {
-        ${%model_variable%} = {%model_class%}::query()->findOrFail($id);
-        return response()->json(${%model_variable%});
+        return view('admin.{%model_variable%}.show', compact('model'));
     }
 
-    public function update(Request $request, $id)
+    public function edit(Request $request, {%model_class%} $model)
     {
-        ${%model_variable%} = {%model_class%}::query()->findOrFail($id);
+        return view('admin.{%model_variable%}.edit', compact('model'));
+    }
+
+    public function update(Request $request, {%model_class%} $model)
+    {
         $request->validate([
             {%validations_update%}
         ]);
 
-        ${%model_variable%}->update($request->all());
+        $request->merge([
+            'updated_by' => auth()->id(),
+        ]);
 
-        activity('Updated {%model_class%}: ' . ${%model_variable%}->id, $request->all(), ${%model_variable%});
+        $model->update($request->all());
+
+        activity('Updated {%model_class%}: ' . $model->id, $request->all(), $model);
 
         return response()->json([
-            'id' => ${%model_variable%}->id,
             'status' => 'success',
-            'message' => '{%model_class%} Updated.',
-            'redirectTo' => '/{%model_variable%}/' . ${%model_variable%}->id . '/show',
+            'flash' => '{%model_class%} Updated.',
+            'reload' => false,
+            'relist' => false,
+            'redirect' => route('{%model_variable%}.edit',[$model->id]),
         ]);
     }
 
-    public function destroy($id)
+    public function destroy({%model_class%} $model)
     {
-        ${%model_variable%} = {%model_class%}::query()->findOrFail($id);
-        ${%model_variable%}->delete();
+        $model->delete();
 
-        activity('Deleted {%model_class%}: ' . ${%model_variable%}->id, [], ${%model_variable%});
+        activity('Deleted {%model_class%}: ' . $model->id, [], $model);
 
         return response()->json([
-            'id' => ${%model_variable%}->id,
             'status' => 'success',
-            'message' => '{%model_class%} deleted.',
+            'flash' => '{%model_class%} Deleted.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
         ]);
     }
-
-    public function getModelList(Request $request)
-    {
-        if ($request->get('key', '') == '') {
-            return [];
-        }
-
-        if (is_array($request->get('key'))) {
-            $keys = $request->get('key');
-        } else {
-            $keys = [$request->get('key')];
-        }
-
-        $lists = [];
-        foreach ($keys as $key) {
-            $method = "scope" . studly_case($key) . "Method";
-            $lists[$key] = method_exists($this, $method) ? $this->{$method}() : [];
-        }
-        return response()->json($lists);
-    }
-
-    {%scopeModelMethods%}
 }
