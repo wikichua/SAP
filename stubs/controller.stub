@@ -57,7 +57,7 @@ class {%model_class%}Controller extends Controller
         $request->validate([
             {%validations_create%}
         ]);
-
+        {%upload_strings%}
         $request->merge([
             'created_by' => auth()->id(),
             'updated_by' => auth()->id(),
@@ -91,7 +91,7 @@ class {%model_class%}Controller extends Controller
         $request->validate([
             {%validations_update%}
         ]);
-
+        {%upload_strings%}
         $request->merge([
             'updated_by' => auth()->id(),
         ]);

@@ -70,7 +70,7 @@ class SapMake extends Command
     protected function reinstate()
     {
         $config_form = $this->config['form'];
-        $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
+        $upload_strings = $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
 
         foreach ($config_form as $field => $options) {
             $this->replaces['{%field_variable%}'] = studly_case($field);
@@ -155,7 +155,7 @@ class SapMake extends Command
             if ($options['type'] == 'json') {
                 $replace_for_form['{%type%}'] = $type;
             }
-            $replace_for_form['{%model_variable%}'] = $this->replaces['{%model_variable%}'];
+            $replace_for_form['{%model_variable%}'] = $model_variable = $this->replaces['{%model_variable%}'];
             $replace_for_form['{%attributes_tag%}'] = '';
             if (count($options['attributes'])) {
                 $temp_attrs = [];
@@ -205,7 +205,33 @@ class SapMake extends Command
                     break;
             }
             $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
+        
+            if ($options['type'] == 'file') {
+                if (isset($options['attributes']['multiple']) && $options['attributes']['multiple'] == 'multiple') {
+                    $upload_strings[] = <<<EOT
+        \$uploaded_files = [];
+        if (\$request->hasFile('$field')) {
+            foreach(\$request->file('$field') as \$key => \$file)
+            {
+                \$uploaded_files[] = str_replace('public', 'storage', \$request->file('$field.'.\$key)->store('public/$model_variable'));
+            }
+            \$request->merge([
+                '$field' => \$uploaded_files,
+            ]);
         }
+EOT;
+                } else {
+                    $upload_strings[] = <<<EOT
+        if (\$request->hasFile('$field')) {
+            \$request->merge([
+                '$field' => str_replace('public', 'storage', \$request->file('$field')->store('public/$model_variable')),
+            ]);
+        }
+EOT;
+                }
+            }
+
+        } // end foreach
 
         foreach ($this->config['appends'] as $key => $value) {
             $appends[] = "'{$key}'";
@@ -232,6 +258,7 @@ class SapMake extends Command
         $this->replaces['{%search_scopes%}'] = isset($search_scopes) ? trim(implode(PHP_EOL . $this->indent(1), $search_scopes)) : '';
         $this->replaces['{%search_fields%}'] = isset($search_fields) ? trim(implode(PHP_EOL . $this->indent(1), $search_fields)) : '';
         $this->replaces['{%table_fields%}'] = isset($table_fields) ? trim(implode(',' . PHP_EOL . $this->indent(3) . "  ", $table_fields)) . ',' : '';
+        $this->replaces['{%upload_strings%}'] = isset($upload_strings) ? trim(implode(PHP_EOL . "  ", $upload_strings)): '';
 
         $this->model();
         $this->route();
