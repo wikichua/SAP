@@ -51,7 +51,7 @@ return [
             'type' => 'file',
             'class' => [],
             'attributes' => [
-                'multiple',
+                'multiple' => 'multiple',
             ],
             'list' => true,
             'search' => true,

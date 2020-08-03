@@ -182,26 +182,20 @@ class SapMake extends Command
                 case 'date':
                     $form_stub = '<x-sap-date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
-                // case 'file':
-                //     $stub = $this->stub_path . '/components/form/file.stub';
-                //     if (!$this->files->exists($stub)) {
-                //         $this->error('File stub file not found: <info>' . $stub . '</info>');
-                //         return;
-                //     }
-                //     $stub = $this->files->get($stub);
-                //     $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $stub);
-                //     break;
+                case 'file':
+                    $form_stub = '<x-sap-file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    break;
                 case 'textarea':
                     $form_stub = '<x-sap-textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'select':
-                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="[]"/>';
+                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
                     break;
                 case 'radio':
-                    $form_stub = '<x-sap-radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="[]" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
+                    $form_stub = '<x-sap-radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
                     break;
                 case 'checkbox':
-                    $form_stub = '<x-sap-checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="[]" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
+                    $form_stub = '<x-sap-checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked']? 1:0).'"/>'; 
                     break;
                 case 'editor':
                     $form_stub = '<x-sap-editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
@@ -313,7 +307,7 @@ class SapMake extends Command
     }
     protected function views()
     {
-        $view_files = ['search','index','edit','create'];
+        $view_files = ['search','index','edit','create','show','actions'];
         foreach ($view_files as $mode) {
             $view_stub = $this->stub_path . '/views/' . $mode . '.stub';
             if (!$this->files->exists($view_stub)) {
