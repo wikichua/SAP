@@ -10,9 +10,9 @@
 1. A new Laravel related project (completedly new)
 2. Composer require laravel/ui (no need installing the auth scaffolding)
 3. A working NPM in your machine
-4. Knowledge in jQuery, Bootstrap, Axios, Sass, & all Laravel stuffs...
+4. Knowledge in jQuery, Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
 
-### Todo List
+### Current Version
 
 1. Activity Logging
 1. Preset Authentication (exactly from Laravel scaffolding)
@@ -28,7 +28,9 @@
 1. Swal and Toast integrated
 1. Select, Radio or Checkbox options will be added to settings table during migration
 1. Select, Radio or Checkbox model options will be generated codes in controller and both create and edit component.
-1. Select2
+
+### Todo List
+1. 
 
 ## Installation
 
@@ -72,7 +74,7 @@ Then you continue in your terminal
 ```bash
 $ php artisan migrate
 $ php artisan ziggy:generate resources/js/ziggy.js
-$ npm install --save --no-bin-links && npm run dev
+$ npm install --save && npm run dev
 ```
 
 > php artisan vendor:publish --tag=sap.install --force
@@ -80,10 +82,13 @@ $ npm install --save --no-bin-links && npm run dev
 You will see this..
 
 ```bash
-Copied Directory [/vendor/wikichua/sap/resources/js] To [/resources/js]
-Copied Directory [/vendor/wikichua/sap/resources/sass] To [/resources/sass]
-Copied File [/vendor/wikichua/sap/package.json] To [/package.json]
-Copied File [/vendor/wikichua/sap/webpack.mix.js] To [/webpack.mix.js]
+Copied File [/packages/wikichua/sap/resources/views/sap/components/menu.blade.php] To [/resources/views/vendor/sap/components/menu.blade.php]
+Copied Directory [/packages/wikichua/sap/resources/views/sap/components/menus] To [/resources/views/vendor/sap/components/menus]
+Copied Directory [/packages/wikichua/sap/resources/js] To [/resources/js]
+Copied Directory [/packages/wikichua/sap/resources/sass] To [/resources/sass]
+Copied File [/packages/wikichua/sap/package.json] To [/package.json]
+Copied File [/packages/wikichua/sap/webpack.mix.js] To [/webpack.mix.js]
+
 ```
 
 Scary but yeah, it does overwrited if you already had modified those in your files (Suggest to backup those before publishing with --force):
@@ -96,13 +101,13 @@ Optional Publishing..
 
 If you wish to ammend the auth layout at your wish or even change the admin theme layout..
 
-> php artisan vendor:publish --tag=vam.view
+> php artisan vendor:publish --tag=sap.view
 
 What about the config? Namespaces?
 
-> php artisan vendor:publish --tag=vam.config
+> php artisan vendor:publish --tag=sap.config
 
-However, I prefer to use vam.config to toggle the availability for auth routes.
+However, I prefer to use sap.config to toggle the availability for auth routes.
 
 ```php
 'hidden_auth_route_names' => [
@@ -121,7 +126,7 @@ So if you wish to use your own route declarations, just turn all of those to **_
 This is how I normall do
 
 ```bash
-art vendor:publish --tag=vam.install --force && art ziggy:generate && npm run watch-poll
+art vendor:publish --tag=sap.install --force && art ziggy:generate && npm run watch-poll
 ```
 
 ## Usage
@@ -129,9 +134,9 @@ art vendor:publish --tag=vam.install --force && art ziggy:generate && npm run wa
 ### Creating new module
 
 ```bash
-$ php artisan vam:config <ModelName>
-$ php artisan vam:make <ModelName>
-$ php artisan ziggy:generate
+$ php artisan sap:config <ModelName>
+$ php artisan sap:make <ModelName>
+$ php artisan ziggy:generate resources/js/ziggy.js
 $ npm install && npm run dev
 ```
 
@@ -143,17 +148,17 @@ art ziggy:generate && npm run watch-poll
 
 #### Config
 
-You may get the sample of config file once vam:config called.
+You may get the sample of config file once sap:config called.
 Do advise if that's confusing, I will then make a wiki.md for that.
 In case of you getting "Config file is not ready".
-This indicating your config generated from vam:config is still work in progress.
+This indicating your config generated from sap:config is still work in progress.
 
 ```php
     'ready' => false, // set true when you are ready to generate CRUD
 ```
 
-Once you have done your config, you can switch that to true. Of course after vam:make is done, this section will be turned to true automatically.
-This could prevent you from accidentally run vam:make again.
+Once you have done your config, you can switch that to true. Of course after sap:make is done, this section will be turned to true automatically.
+This could prevent you from accidentally run sap:make again.
 
 You may access with this auto populated login
 
@@ -170,26 +175,27 @@ But it's still good using it so all you need to do is
 1. Npm run prod
 1. Push to your repo and all set to go
 
-#### Sample of the vam:make output
+#### Sample of the sap:make output
 
 ```bash
-$ art vam:config Test
-    Config file created: config/vam/TestConfig.php
-$ art vam:make Test --force
+$ art sap:config Test
+    Config file created: config/sap/TestConfig.php
+$ art sap:make Test --force
+    Config file created: config/sap/TestConfig.php
     Config Test Found! Initiating!
-    Model file created: /codes/vam/app/Test.php
-    Controller file created: /codes/vam/app/Http/Controllers/Admin/TestController.php
+    Model file created: /home/wikichua/codes/sap/app/Test.php
     API Route file created: routes/routers/testRoutes.php
-    VUE Route file created: /codes/vam/resources/js/routers/testRoutes.js
+    Controller file created: /home/wikichua/codes/sap/app/Http/Controllers/Admin/TestController.php
     Menu included: routes/web.php
-    Vue component file created: /codes/vam/resources/js/components/test/ListComponent.vue
-    Vue component file created: /codes/vam/resources/js/components/test/CreateComponent.vue
-    Vue component file created: /codes/vam/resources/js/components/test/EditComponent.vue
-    Vue component file created: /codes/vam/resources/js/components/test/ShowComponent.vue
-    Menu included: routes/web.php
-    Migration file created: /codes/vam/database/migrations/2020_06_05_000000_VamTestTable.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/search.blade.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/index.blade.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/edit.blade.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/create.blade.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/show.blade.php
+    View file created: /home/wikichua/codes/sap/resources/views/admin/test/actions.blade.php
+    Migration file created: /home/wikichua/codes/sap/database/migrations/2020_08_04_000000_sapTestTable.php
     Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!
-    Config has changed: /codes/vam/config/vam/TestConfig.php
+    Config has changed: /home/wikichua/codes/sap/config/sap/TestConfig.php
 ```
 
 ## Security
@@ -205,13 +211,13 @@ If you discover any security related issues, please email wikichua@gmail.com ins
 
 license. Please see the [license file](license.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/wikichua/vam.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/wikichua/vam.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/wikichua/vam/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/wikichua/sap.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/wikichua/sap.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/wikichua/sap/master.svg?style=flat-square
 [ico-styleci]: https://styleci.io/repos/12345678/shield
-[link-packagist]: https://packagist.org/packages/wikichua/vam
-[link-downloads]: https://packagist.org/packages/wikichua/vam
-[link-travis]: https://travis-ci.org/wikichua/vam
+[link-packagist]: https://packagist.org/packages/wikichua/sap
+[link-downloads]: https://packagist.org/packages/wikichua/sap
+[link-travis]: https://travis-ci.org/wikichua/sap
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/wikichua
 [link-contributors]: ../../contributors
