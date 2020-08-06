@@ -9,7 +9,7 @@
                     <h3 class="m-0 font-weight-bold text-primary">{%model_class%} Listing</h3>
                 </div>
                 <div class="btn-group" role="group">
-                    @can('Read {%model_strings%}')
+                    @can('Create {%model_strings%}')
                     <a class="btn btn-outline-secondary" href="{{ route('{%model_variable%}.create') }}">
                         <i class="fas fa-folder-plus mr-2"></i>New
                     </a>

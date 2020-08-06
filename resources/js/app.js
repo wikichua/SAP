@@ -24,4 +24,7 @@ const Toast = window.Toast = Swal.mixin({
 const Handlebars = window.Handlebars = require("handlebars");
 require('summernote/dist/summernote-bs4');
 require('gijgo/js/gijgo');
-const FileUploadWithPreview = window.FileUploadWithPreview = require('file-upload-with-preview/src/file-upload-with-preview').default;
+require('bootstrap-fileinput/js/fileinput');
+require('bootstrap-fileinput/js/plugins/piexif');
+require('bootstrap-fileinput/js/plugins/purify');
+require('bootstrap-fileinput/js/plugins/sortable');

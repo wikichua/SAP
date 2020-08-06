@@ -11,7 +11,7 @@
 		@foreach ($attribute_tags as $attr_key => $attr_val)
 			{{ $attr_key }} = "{{ $attr_val }}"
 		@endforeach
-		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}>{{ $value ?? '' }}</textarea>
+		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}>{!! $value ?? '' !!}</textarea>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
 

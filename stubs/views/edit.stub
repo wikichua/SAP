@@ -4,9 +4,9 @@
     <div class="card-header py-3">
         <div class="btn-toolbar justify-content-between" role="toolbar">
             <div class="btn-group" role="group">
-                <a href="{{ route('permission.list') }}" class="btn btn-link">
+                <a href="{{ route('{%model_variable%}.list') }}" class="btn btn-link">
                 <i class="fas fa-angle-double-left mr-2"></i></a>
-                <h3 class="m-0 font-weight-bold text-primary">Edit Permission</h3>
+                <h3 class="m-0 font-weight-bold text-primary">Edit {%model_class%}</h3>
             </div>
             <div class="btn-group" role="group">
             </div>
@@ -14,11 +14,10 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('permission.update',[$model->id]) }}" enctype="multipart/form-data">
+            <form novalidate data-ajax-form method="POST" action="{{ route('{%model_variable%}.update',[$model->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
-                <x-sap-input-field type="text" name="group" id="group" label="Group" :class="[]" :value="$model->group"/>
-                <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
+                {%form_fields%}
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

@@ -5,15 +5,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['web', 'auth', 'can:Access Admin Panel']], function () {
     Route::group(['prefix' => '{%model_variable%}', 'namespace' => config('sap.custom_controller_namespace')], function () {
         Route::match(['get', 'head'], 'list', '{%model_class%}Controller@index')->name('{%model_variable%}.list');
-        
-        Route::match(['get', 'head'], '{{%model_variable%}}/read', '{%model_class%}Controller@show')->name('{%model_variable%}.show');
+
+        Route::match(['get', 'head'], '{model}/read', '{%model_class%}Controller@show')->name('{%model_variable%}.show');
 
         Route::match(['get', 'head'], 'create', '{%model_class%}Controller@create')->name('{%model_variable%}.create');
         Route::match(['post'], 'store', '{%model_class%}Controller@store')->name('{%model_variable%}.store');
-        
-        Route::match(['get', 'head'], '{{%model_variable%}}/edit', '{%model_class%}Controller@edit')->name('{%model_variable%}.edit');
-        Route::match(['put', 'patch'], '{{%model_variable%}}/update', '{%model_class%}Controller@update')->name('{%model_variable%}.update');
-        
-        Route::match(['delete'], '{{%model_variable%}}/delete', '{%model_class%}Controller@destroy')->name('{%model_variable%}.destroy');
+
+        Route::match(['get', 'head'], '{model}/edit', '{%model_class%}Controller@edit')->name('{%model_variable%}.edit');
+        Route::match(['put', 'patch'], '{model}/update', '{%model_class%}Controller@update')->name('{%model_variable%}.update');
+
+        Route::match(['delete'], '{model}/delete', '{%model_class%}Controller@destroy')->name('{%model_variable%}.destroy');
     });
 });
