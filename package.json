@@ -28,6 +28,7 @@
         "bootstrap-select": "^1.13.18",
         "codemirror": "^5.56.0",
         "daterangepicker": "^3.1.0",
+        "file-upload-with-preview": "^4.0.8",
         "gijgo": "^1.9.13",
         "handlebars": "^4.7.6",
         "moment": "^2.27.0",

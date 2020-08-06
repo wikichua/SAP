@@ -191,6 +191,9 @@ class SapMake extends Command
                 case 'date':
                     $form_stub = '<x-sap-date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
+                case 'image':
+                    $form_stub = '<x-sap-image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    break;
                 case 'file':
                     $form_stub = '<x-sap-file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
@@ -215,7 +218,7 @@ class SapMake extends Command
             }
             $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
 
-            if ('file' == $options['type']) {
+            if (in_array($options['type'], ['file', 'image'])) {
                 if (isset($options['attributes']['multiple']) && 'multiple' == $options['attributes']['multiple']) {
                     $upload_strings[] = <<<EOT
         \$uploaded_files = [];

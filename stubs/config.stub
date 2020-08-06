@@ -27,9 +27,28 @@ return [
             'user_timezone' => false,
         ],
 
+        'resume' => [
+            'label' => 'Resume',
+            'type' => 'file',
+            'class' => [],
+            'attributes' => [],
+            'list' => true,
+            'search' => true,
+            'migration' => 'text:{%field%}|nullable',
+            'validation' => [
+                'create' => 'required',
+                'update' => 'required',
+            ],
+            'options' => [],
+            'casts' => '',
+            'mutators' => [],
+            'relationship' => '',
+            'user_timezone' => false,
+        ],
+
         'photo' => [
             'label' => 'Photo',
-            'type' => 'file',
+            'type' => 'image',
             'class' => [],
             'attributes' => [],
             'list' => true,
@@ -48,7 +67,7 @@ return [
 
         'galleries' => [
             'label' => 'Gallery',
-            'type' => 'file',
+            'type' => 'image',
             'class' => [],
             'attributes' => [
                 'multiple' => 'multiple',
@@ -324,7 +343,7 @@ return [
             ],
             // 'options' => "app('App\User')->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
             // if both options and model_options are set at same time, model_options will be priority and ignored options
-            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()", 
+            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()",
             'casts' => '',
             'mutators' => [
                 'get' => '',
@@ -342,7 +361,7 @@ return [
             'type' => 'select',
             'class' => [],
             'attributes' => [
-                'multiple' => 'multiple'
+                'multiple' => 'multiple',
                 ],
             'list' => false,
             'search' => false,
@@ -364,12 +383,9 @@ return [
             ],
             'user_timezone' => false,
         ],
-
     ],
 
     'appends' => [
         'status_name' => 'return settings(\'{%model_variable%}_status\')[$this->attributes[\'status\']];',
     ],
-
-
 ];

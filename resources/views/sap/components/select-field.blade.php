@@ -9,10 +9,10 @@
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
-    <select 
+    <select
     	name="{{ $name }}"
     	id="{{ $id }}"
-    	class="selectpicker form-control {{ implode(' ',$class) }}"
+    	class="selectpicker form-control {{ implode(' ',$class) }}
         @foreach ($attribute_tags as $attr_key => $attr_val)
             {{ $attr_key }} = "{{ $attr_val }}"
         @endforeach

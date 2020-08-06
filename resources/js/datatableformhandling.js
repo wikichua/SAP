@@ -47,6 +47,7 @@ const commitPost = function(form) {
     let action = form.attr('action');
     if (_.isUndefined(action) === false) {
         form.find('.form-control,.form-control-plaintext').removeClass('is-invalid').addClass('is-valid');
+        $('.invalid-feedback').hide();
         axios.request({
             method: 'POST',
             url: action,
@@ -84,7 +85,7 @@ const commitPost = function(form) {
             let message = resp.message;
             _.forEach(errors, function(array, fieldname) {
                 $('[name=' + fieldname + ']').addClass('is-invalid');
-                $('#' + fieldname + '-alert').html(_.join(array, "<br>"));
+                $('#' + fieldname + '-alert').html(_.join(array, "<br>")).show();
             });
             Toast.fire({
                 icon: 'error',
