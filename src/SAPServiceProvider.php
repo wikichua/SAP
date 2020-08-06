@@ -2,24 +2,24 @@
 
 namespace Wikichua\SAP;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class SAPServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/sap', 'sap');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadRoutesFrom(__DIR__ . '/web.php');
+        $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/web.php');
 
         $this->app['router']->aliasMiddleware('https_protocol', 'Wikichua\SAP\Middleware\HttpsProtocol');
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
@@ -39,11 +39,11 @@ class SAPServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/sap.php', 'sap');
+        $this->mergeConfigFrom(__DIR__.'/../config/sap.php', 'sap');
 
         // Register the service the package provides.
         $this->app->singleton('sap', function ($app) {
-            return new SAP;
+            return new SAP();
         });
     }
 
@@ -56,26 +56,26 @@ class SAPServiceProvider extends ServiceProvider
     {
         // Publishing the configuration file.
         $this->publishes([
-            __DIR__ . '/../config/sap.php' => config_path('sap.php'),
+            __DIR__.'/../config/sap.php' => config_path('sap.php'),
         ], 'sap.config');
 
         // Publishing the views.
         $this->publishes([
-            __DIR__ . '/../resources/views/sap' => base_path('resources/views/vendor/sap'),
+            __DIR__.'/../resources/views/sap' => base_path('resources/views/vendor/sap'),
         ], 'sap.view');
 
         $this->publishes([
-            __DIR__ . '/../resources/views/sap/components' => base_path('resources/views/vendor/sap/components'),
+            __DIR__.'/../resources/views/sap/components' => base_path('resources/views/vendor/sap/components'),
         ], 'sap.component');
 
         // Publishing the resources.
         $this->publishes([
-            __DIR__ . '/../resources/views/sap/components/menu.blade.php' => base_path('resources/views/vendor/sap/components/menu.blade.php'),
-            __DIR__ . '/../resources/views/sap/components/menus' => base_path('resources/views/vendor/sap/components/menus'),
-            __DIR__ . '/../resources/js' => base_path('resources/js'),
-            __DIR__ . '/../resources/sass' => base_path('resources/sass'),
-            __DIR__ . '/../package.json' => base_path('package.json'),
-            __DIR__ . '/../webpack.mix.js' => base_path('webpack.mix.js'),
+            __DIR__.'/../resources/views/sap/components/menu.blade.php' => base_path('resources/views/vendor/sap/components/menu.blade.php'),
+            __DIR__.'/../resources/views/sap/components/menus' => base_path('resources/views/vendor/sap/components/menus'),
+            __DIR__.'/../resources/js' => base_path('resources/js'),
+            __DIR__.'/../resources/sass' => base_path('resources/sass'),
+            __DIR__.'/../package.json' => base_path('package.json'),
+            __DIR__.'/../webpack.mix.js' => base_path('webpack.mix.js'),
         ], 'sap.install');
 
         // Publishing the translation files.
@@ -92,7 +92,7 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadRoutes()
     {
-        foreach (File::files(__DIR__ . '/routers/') as $file) {
+        foreach (File::files(__DIR__.'/routers/') as $file) {
             Route::middleware('web')
                 // ->namespace(config('sap.controller_namespace'))
                 ->group($file->getPathname());
@@ -110,10 +110,10 @@ class SAPServiceProvider extends ServiceProvider
         // foreach (config('sap.components') as $slug => $class) {
         //     Blade::component('sap-' . $slug, $class);
         // }
-        foreach (File::files(__DIR__ . '/View/Components/') as $file) {
-            $basename = str_replace('.' . $file->getExtension(), '', $file->getBasename());
-            $class = config('sap.component_namespace') . '\\' . $basename;
-            Blade::component('sap-' . \Str::snake($basename,'-'), get_class(new $class));
+        foreach (File::files(__DIR__.'/View/Components/') as $file) {
+            $basename = str_replace('.'.$file->getExtension(), '', $file->getBasename());
+            $class = config('sap.component_namespace').'\\'.$basename;
+            Blade::component('sap-'.\Str::snake($basename, '-'), get_class(new $class()));
         }
     }
 
@@ -137,7 +137,7 @@ class SAPServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('settings')) {
             foreach (app(config('sap.models.setting'))->all() as $setting) {
-                Config::set('settings.' . $setting->key, $setting->value);
+                Config::set('settings.'.$setting->key, $setting->value);
             }
         }
     }

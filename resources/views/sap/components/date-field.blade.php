@@ -13,7 +13,7 @@
 			{{ $attr_key }} = "{{ $attr_val }}"
 		@endforeach
 		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}
-		value="{{ isset($value)? $value:'' }}" 
+		value="{{ isset($value)? $value:'' }}"
 	>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
@@ -21,11 +21,7 @@
 @push('scripts')
 <script>
 $(function() {
-	$('#{{ $id }}').daterangepicker({
-	    "singleDatePicker": true,
-	    "showDropdowns": true,
-	    "autoApply": true
-	});
+	$('#{{ $id }}').datepicker({ uiLibrary: 'bootstrap4', modal: true, header: true, footer: true });
 });
 </script>
 @endpush
