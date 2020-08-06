@@ -19,7 +19,7 @@
             <b class="d-block{{ !$loop->first ? ' mt-3' : '' }}">{{ $group }}</b>
                 @foreach($options as $key => $val)
                 <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-radio">
-                    <input 
+                    <input
                         type="radio"
                         name="{{ $name }}"
                         id="{{ $id }}-{{ $key }}"
@@ -34,7 +34,7 @@
         @else
             @foreach($options as $key => $val)
             <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-radio">
-                <input 
+                <input
     	            type="radio"
     	            name="{{ $name }}"
     	            id="{{ $id }}-{{ $key }}"
@@ -42,7 +42,7 @@
     	            value="{{ $key }}"
     	            {{ isset($checked) && in_array($key, $checked)? 'checked':'' }}
                 >
-                <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }} haha</label>
+                <label for="{{ $id }}-{{ $key }}" class="custom-control-label">{{ $val }}</label>
             </div>
             @endforeach
         @endif

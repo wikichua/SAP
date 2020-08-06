@@ -21,7 +21,7 @@
 @push('scripts')
 <script>
 $(function() {
-	$('#{{ $id }}').datepicker({ uiLibrary: 'bootstrap4', modal: true, header: true, footer: true });
+	$('#{{ $id }}').datepicker({ uiLibrary: 'bootstrap4', modal: true, header: true, footer: true, format: 'yyyy-mm-dd' });
 });
 </script>
 @endpush

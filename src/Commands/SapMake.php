@@ -159,9 +159,9 @@ class SapMake extends Command
             $replace_for_form['{%label%}'] = $options['label'];
             $replace_for_form['{%field%}'] = $field;
             $replace_for_form['{%type%}'] = '';
-            if ('json' == $options['type']) {
-                $replace_for_form['{%type%}'] = $type;
-            }
+            // if ('json' == $options['type']) {
+            //     $replace_for_form['{%type%}'] = $type;
+            // }
             $replace_for_form['{%model_variable%}'] = $model_variable = $this->replaces['{%model_variable%}'];
             $replace_for_form['{%attributes_tag%}'] = '';
             if (count($options['attributes'])) {
@@ -225,8 +225,9 @@ class SapMake extends Command
         if (\$request->hasFile('$field')) {
             foreach(\$request->file('$field') as \$key => \$file)
             {
-                \$uploaded_files[] = str_replace('public', 'storage', \$request->file('$field.'.\$key)->store('public/$model_variable'));
+                \$uploaded_files[] = str_replace('public', 'storage', \$request->file('$field.'.\$key)->store('public/$model_variable/$field'));
             }
+            unset(\$request['$field']);
             \$request->merge([
                 '$field' => \$uploaded_files,
             ]);
@@ -235,8 +236,10 @@ EOT;
                 } else {
                     $upload_strings[] = <<<EOT
         if (\$request->hasFile('$field')) {
+            \$path = str_replace('public', 'storage', \$request->file('$field')->store('public/$model_variable/$field'));
+            unset(\$request['$field']);
             \$request->merge([
-                '$field' => str_replace('public', 'storage', \$request->file('$field')->store('public/$model_variable')),
+                '$field' => \$path,
             ]);
         }
 EOT;

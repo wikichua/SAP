@@ -63,9 +63,9 @@ class {%model_class%}Controller extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        $model = {%model_class%}::query()->create($request->all());
+        $model = {%model_class%}::query()->create($request->input());
 
-        activity('Created {%model_class%}: ' . $model->id, $request->all(), $model);
+        activity('Created {%model_class%}: ' . $model->id, $request->input(), $model);
 
         return response()->json([
             'status' => 'success',
@@ -96,9 +96,9 @@ class {%model_class%}Controller extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        $model->update($request->all());
+        $model->update($request->input());
 
-        activity('Updated {%model_class%}: ' . $model->id, $request->all(), $model);
+        activity('Updated {%model_class%}: ' . $model->id, $request->input(), $model);
 
         return response()->json([
             'status' => 'success',
