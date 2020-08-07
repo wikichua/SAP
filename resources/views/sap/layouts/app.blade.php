@@ -9,6 +9,9 @@
 @push('scripts')
 <script>
 $(function() {
+    $(document).on("change", ".image-file", function(e) {
+        previewImage($(this));
+    });
 });
 </script>
 @endpush

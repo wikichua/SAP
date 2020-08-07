@@ -113,6 +113,20 @@ const onImageUpload = async function(file, editor) {
         console.error(err);
     });
 };
+const previewImage = function ($this) {
+    let dom = $this.get(0);
+    let previewDiv = $this.closest('.input-group').find('.img-preview').empty();
+    if (dom.files) {
+        var filesAmount = dom.files.length;
+        for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).addClass('img-thumbnail col-1').appendTo(previewDiv);
+            }
+            reader.readAsDataURL(dom.files[i]);
+        }
+    }
+}
 $(document).ready(function() {
     // display flash-message
     _.attempt(flashMessage);
@@ -174,5 +188,4 @@ $(document).ready(function() {
     });
     // init selectpicker
     $('.selectpicker').selectpicker();
-
 });

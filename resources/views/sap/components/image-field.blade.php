@@ -11,12 +11,14 @@
 @endphp
 <div class="form-group">
     <label for="{{ $id }}">{{ $label }}</label>
-    <div class="input-group mb-1">
+    @foreach ($values as $val)
+        <div class="input-group mb-1">
         <div class="custom-file">
             <input type="file"
                 class="image-file custom-file-input form-control {{ implode(' ', $class) }}"
                 id="{{ $is_mulitple? $id:'' }}"
                 name="{{ $name }}{{ $is_mulitple? '[]':'' }}"
+                value="{{ $val }}"
             >
             <label class="custom-file-label" for="{{ $id }}">Choose file</label>
         </div>
@@ -26,7 +28,13 @@
             <button type="button" class="del-{{ $id }} btn btn-outline-danger mr-2"><i class="fas fa-minus"></i></button>
         </div>
         @endif
+        <div class="col-12 mt-1 d-flex justify-content-around img-preview">
+            @if ($val != '')
+            <img src="{{ asset($val) }}" class="img-thumbnail col-1">
+            @endif
+        </div>
     </div>
+    @endforeach
     <span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
 
@@ -47,6 +55,7 @@
         <button type="button" class="del-{{ $id }} btn btn-outline-danger mr-2"><i class="fas fa-minus"></i></button>
     </div>
     @endif
+    <div class="col-12 mt-1 d-flex justify-content-around img-preview"></div>
 </div>
 </script>
 <script>
