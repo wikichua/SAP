@@ -11,68 +11,49 @@
 @endphp
 <div class="form-group">
     <label for="{{ $id }}">{{ $label }}</label>
-    @foreach ($values as $val)
         <div class="input-group mb-1">
         <div class="custom-file">
             <input type="file"
                 class="image-file custom-file-input form-control {{ implode(' ', $class) }}"
-                id="{{ $is_mulitple? $id:'' }}"
+                id="{{ $id }}"
+                {{ $is_mulitple? 'multiple':'' }}
                 name="{{ $name }}{{ $is_mulitple? '[]':'' }}"
-                value="{{ $val }}"
+                accept="image/*"
             >
             <label class="custom-file-label" for="{{ $id }}">Choose file</label>
         </div>
-        @if ($is_mulitple)
-        <div class="input-group-append">
-            <button type="button" class="add-{{ $id }} btn btn-outline-primary"><i class="fas fa-plus"></i></button>
-            <button type="button" class="del-{{ $id }} btn btn-outline-danger mr-2"><i class="fas fa-minus"></i></button>
+    </div>
+    <div class="row">
+        <div class="col-6 mt-1 img-uploaded">
+            <h6>Uploaded</h6>
+            <div class="row">
+                @foreach ($values as $k => $val)
+                @if ($val != '')
+                <div class="col-2">
+                    <button type="button" class="text-danger btn btn-link position-absolute text-decoration-none font-weight-bolder">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                    <a href="{{ asset($val) }}" target="_blank" class="btn btn-link text-decoration-none font-weight-bolder">
+                        <img src="{{ asset($val) }}" class="img-thumbnail">
+                    </a>
+                </div>
+                @endif
+                @endforeach
+            </div>
         </div>
-        @endif
-        <div class="col-12 mt-1 d-flex justify-content-around img-preview">
-            @if ($val != '')
-            <img src="{{ asset($val) }}" class="img-thumbnail col-1">
-            @endif
+        <div class="col-6 mt-1 img-preview">
+            <h6>Pending</h6>
+            <div class="row">
+            </div>
         </div>
     </div>
-    @endforeach
     <span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
 
 @push('scripts')
-<script id="{{ $id }}-upload-template" type="text/x-lodash-template">
-<div class="input-group mb-1">
-    <div class="custom-file">
-        <input type="file"
-            class="image-file custom-file-input form-control {{ implode(' ', $class) }}"
-            id="{{ $is_mulitple? $id:'' }}"
-            name="{{ $name }}{{ $is_mulitple? '[]':'' }}"
-        >
-        <label class="custom-file-label" for="{{ $id }}">Choose file</label>
-    </div>
-    @if ($is_mulitple)
-    <div class="input-group-append">
-        <button type="button" class="add-{{ $id }} btn btn-outline-primary"><i class="fas fa-plus"></i></button>
-        <button type="button" class="del-{{ $id }} btn btn-outline-danger mr-2"><i class="fas fa-minus"></i></button>
-    </div>
-    @endif
-    <div class="col-12 mt-1 d-flex justify-content-around img-preview"></div>
-</div>
-</script>
 <script>
 $(function() {
-    $(document).on('click', '.add-{{ $id }}', function(event) {
-        event.preventDefault();
-        let uploadTemplate = $("#{{ $id }}-upload-template").html();
-        let templateFn = _.template(uploadTemplate);
-        let templateHTML = templateFn();
-        $(this).closest('.input-group').after(templateHTML);
-    });
-    $(document).on('click', '.del-{{ $id }}', function(event) {
-        event.preventDefault();
-        if ($(this).closest('.form-group').find('.input-group').length > 1) {
-            $(this).closest('.input-group').remove();
-        }
-    });
+
 });
 </script>
 @endpush
