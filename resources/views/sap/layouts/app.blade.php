@@ -5,3 +5,10 @@
         @yield('content')
     </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+});
+</script>
+@endpush
