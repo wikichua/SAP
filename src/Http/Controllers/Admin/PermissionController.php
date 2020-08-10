@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
@@ -22,20 +23,20 @@ class PermissionController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.permission'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
-                $model->actionsView = view('sap::admin.permission.actions',compact('model'))->render();
+                $model->actionsView = view('sap::admin.permission.actions', compact('model'))->render();
             }
-            if ($request->get('filters','') != '') {
-                $paginated->appends(['filters' => $request->get('filters','')]);
+            if ($request->get('filters', '') != '') {
+                $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort','') != '') {
-                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            if ($request->get('sort', '') != '') {
+                $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
-            return compact('paginated','links','currentUrl');
+            return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('permission.list');
         $html = [
@@ -43,7 +44,7 @@ class PermissionController extends Controller
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
-        return view('sap::admin.permission.index', compact('html','getUrl'));
+        return view('sap::admin.permission.index', compact('html', 'getUrl'));
     }
 
     public function create(Request $request)
@@ -66,6 +67,8 @@ class PermissionController extends Controller
         $model = app(config('sap.models.permission'))->create($request->all());
 
         activity('Created Permission: ' . $model->id, $request->all(), $model);
+
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',
@@ -105,12 +108,14 @@ class PermissionController extends Controller
 
         activity('Updated Permission: ' . $model->id, $request->all(), $model);
 
+        Cache::flush();
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Updated.',
             'reload' => false,
             'relist' => false,
-            'redirect' => route('permission.edit',[$model->id]),
+            'redirect' => route('permission.edit', [$model->id]),
         ]);
     }
 
@@ -120,6 +125,8 @@ class PermissionController extends Controller
         $model->delete();
 
         activity('Deleted Permission: ' . $model->id, [], $model);
+
+        Cache::flush();
 
         return response()->json([
             'status' => 'success',

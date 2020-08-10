@@ -13,7 +13,7 @@
     	name="{{ $name }}"
     	id="{{ $id }}"
     	class="selectpicker form-control {{ implode(' ',$class) }}
-        @foreach ($attribute_tags as $attr_key => $attr_val)
+        @foreach (isset($attribute_tags)? $attribute_tags:[] as $attr_key => $attr_val)
             {{ $attr_key }} = "{{ $attr_val }}"
         @endforeach
     	{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}

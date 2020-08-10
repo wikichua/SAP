@@ -9,7 +9,7 @@
 		class="form-control {{ implode(' ',$class) }}"
 		id="{{ $id }}"
 		name="{{ $name }}"
-		@foreach ($attribute_tags as $attr_key => $attr_val)
+		@foreach (isset($attribute_tags)? $attribute_tags:[] as $attr_key => $attr_val)
 			{{ $attr_key }} = "{{ $attr_val }}"
 		@endforeach
 		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}

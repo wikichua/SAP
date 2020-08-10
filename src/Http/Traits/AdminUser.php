@@ -3,6 +3,7 @@
 namespace Wikichua\SAP\Http\Traits;
 
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Cache;
 use Wikichua\SAP\Notifications\ResetAdminPassword;
 
 trait AdminUser
@@ -28,15 +29,20 @@ trait AdminUser
     // combined user + role permissions
     public function flatPermissions()
     {
-        return $this->permissions->merge($this->roles->flatMap(function ($role) {
-            return $role->permissions;
-        }));
+        return Cache::remember('permissions.'.auth()->id(), (60*60*24), function () {
+            return $this->permissions->merge($this->roles->flatMap(function ($role) {
+                return $role->permissions;
+            }));
+        });
     }
 
     // check if user has permission
     public function hasPermission($name)
     {
-        return $this->roles->contains('admin', true) || $this->flatPermissions()->contains('name', $name);
+        $isAdmin = Cache::remember('isAdmin.'.auth()->id(), (60*60*24), function () {
+            $this->roles->contains('admin', true);
+        });
+        return $isAdmin || $this->flatPermissions()->contains('name', $name);
     }
 
     // use admin url in password reset email link
