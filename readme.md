@@ -30,7 +30,7 @@
 1. Select, Radio or Checkbox model options will be generated codes in controller and both create and edit component.
 
 ### Todo List
-1. 
+1.
 
 ## Installation
 
@@ -67,6 +67,7 @@ class User extends \Wikichua\SAP\Models\User
     use \Wikichua\SAP\Http\Traits\ModelScopes;
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Laravel\Sanctum\HasApiTokens;
 ```
 
 Then you continue in your terminal

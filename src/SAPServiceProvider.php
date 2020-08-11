@@ -21,12 +21,14 @@ class SAPServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/web.php');
+        $this->loadRoutesFrom(__DIR__.'/api.php');
 
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
         $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\SAP\Middleware\AuthAdmin');
 
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\HttpsProtocol::class);
+        $this->app['router']->pushMiddlewareToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -75,13 +77,14 @@ class SAPServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views/sap/components/menus' => base_path('resources/views/vendor/sap/components/menus'),
         ], 'sap.menus');
-
         $this->publishes([
             __DIR__.'/../resources/views/sap/components/menu.blade.php' => base_path('resources/views/vendor/sap/components/menu.blade.php'),
             __DIR__.'/../resources/js' => base_path('resources/js'),
             __DIR__.'/../resources/sass' => base_path('resources/sass'),
             __DIR__.'/../package.json' => base_path('package.json'),
             __DIR__.'/../webpack.mix.js' => base_path('webpack.mix.js'),
+            app_path('../vendor/laravel/sanctum/database/migrations') => database_path('migrations'),
+            app_path('../vendor/laravel/sanctum/config/sanctum.php') => config_path('sanctum.php'),
         ], 'sap.install');
 
         // Publishing the translation files.
