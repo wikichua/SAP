@@ -4,6 +4,13 @@
         $$key = $val;
     }
 @endphp
+@canany([
+    'Read Users',
+    'Read Roles',
+    'Read Permissions',
+    'Read Settings',
+    'Read Activity Logs',
+])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
         aria-controls="{{ $id }}">
@@ -31,3 +38,4 @@
         </div>
     </div>
 </li>
+@endcanany
