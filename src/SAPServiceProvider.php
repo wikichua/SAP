@@ -73,8 +73,11 @@ class SAPServiceProvider extends ServiceProvider
 
         // Publishing the resources.
         $this->publishes([
-            __DIR__.'/../resources/views/sap/components/menu.blade.php' => base_path('resources/views/vendor/sap/components/menu.blade.php'),
             __DIR__.'/../resources/views/sap/components/menus' => base_path('resources/views/vendor/sap/components/menus'),
+        ], 'sap.menus');
+
+        $this->publishes([
+            __DIR__.'/../resources/views/sap/components/menu.blade.php' => base_path('resources/views/vendor/sap/components/menu.blade.php'),
             __DIR__.'/../resources/js' => base_path('resources/js'),
             __DIR__.'/../resources/sass' => base_path('resources/sass'),
             __DIR__.'/../package.json' => base_path('package.json'),
