@@ -39,10 +39,7 @@ trait AdminUser
     // check if user has permission
     public function hasPermission($name)
     {
-        $isAdmin = Cache::remember('isAdmin.'.auth()->id(), (60*60*24), function () {
-            $this->roles->contains('admin', true);
-        });
-        return $isAdmin || $this->flatPermissions()->contains('name', $name);
+        return $this->flatPermissions()->contains('name', $name) || $this->roles->contains('admin', true);
     }
 
     // use admin url in password reset email link
