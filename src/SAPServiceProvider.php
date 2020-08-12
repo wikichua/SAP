@@ -106,9 +106,20 @@ class SAPServiceProvider extends ServiceProvider
                 // ->namespace(config('sap.controller_namespace'))
                 ->group($file->getPathname());
         }
+        foreach (File::files(__DIR__.'/routers/api') as $file) {
+            Route::middleware('api')
+                // ->namespace(config('sap.controller_namespace'))
+                ->group($file->getPathname());
+        }
         if (File::exists(app_path('../routes/routers'))) {
             foreach (File::files(app_path('../routes/routers/')) as $file) {
                 Route::middleware('web')
+                    ->group($file->getPathname());
+            }
+        }
+        if (File::exists(app_path('../routes/routers/api'))) {
+            foreach (File::files(app_path('../routes/routers/api')) as $file) {
+                Route::middleware('api')
                     ->group($file->getPathname());
             }
         }

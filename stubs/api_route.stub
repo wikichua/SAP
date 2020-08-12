@@ -1,0 +1,12 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+Route::group(['prefix' => 'api'], function () {
+    Route::group(['prefix' => '{%model_variable%}', 'middleware' => ['auth:sanctum'], 'namespace' => config('sap.custom_api_controller_namespace')], function () {
+        Route::match(['get', 'head'], 'list', '{%model_class%}Controller@index')->name('api.{%model_variable%}.list');
+        Route::match(['get', 'head'], '{model}/read', '{%model_class%}Controller@show')->name('api.{%model_variable%}.show');
+        Route::match(['post'], 'store', '{%model_class%}Controller@store')->name('api.{%model_variable%}.store');
+        Route::match(['put', 'patch'], '{model}/update', '{%model_class%}Controller@update')->name('api.{%model_variable%}.update');
+        Route::match(['delete'], '{model}/delete', '{%model_class%}Controller@destroy')->name('api.{%model_variable%}.destroy');
+    });
+});

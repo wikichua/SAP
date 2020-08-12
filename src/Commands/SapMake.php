@@ -50,6 +50,7 @@ class SapMake extends Command
     protected function initReplacer()
     {
         $this->replaces['{%custom_controller_namespace%}'] = config('sap.custom_controller_namespace');
+        $this->replaces['{%custom_api_controller_namespace%}'] = config('sap.custom_api_controller_namespace');
 
         $this->replaces['{%model%}'] = $this->model;
         $this->replaces['{%model_namespace%}'] = ucfirst(str_replace('/', '\\', config('sap.model_namespace')));
@@ -276,7 +277,9 @@ EOT;
 
         $this->model();
         $this->route();
+        $this->api_route();
         $this->controller();
+        $this->api_controller();
         $this->menu();
         $this->views();
 
@@ -297,7 +300,22 @@ EOT;
         $route_stub = $this->stub_path.'/route.stub';
         if (!$this->files->exists($route_stub)) {
             $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
+            return;
+        }
+        $route_stub = $this->files->get($route_stub);
+        $this->files->put($route_file, $this->replaceholder($route_stub));
+        $this->line('Route file created: <info>'.$route_file.'</info>');
+    }
 
+    protected function api_route()
+    {
+        if (!$this->files->exists(app_path('../'.config('sap.sub_api_route_dir')))) {
+            $this->files->makeDirectory(app_path('../'.config('sap.sub_api_route_dir')), 0755, true);
+        }
+        $route_file = config('sap.sub_api_route_dir').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
+        $route_stub = $this->stub_path.'/api_route.stub';
+        if (!$this->files->exists($route_stub)) {
+            $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
             return;
         }
         $route_stub = $this->files->get($route_stub);
@@ -346,13 +364,28 @@ EOT;
         $controller_stub = $this->stub_path.'/controller.stub';
         if (!$this->files->exists($controller_stub)) {
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
-
             return;
         }
         $controller_file = app_path(config('sap.custom_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
+    }
+
+    protected function api_controller()
+    {
+        if (!$this->files->exists(app_path(config('sap.custom_api_controller_dir')))) {
+            $this->files->makeDirectory(app_path(config('sap.custom_api_controller_dir')), 0755, true);
+        }
+        $controller_stub = $this->stub_path.'/api_controller.stub';
+        if (!$this->files->exists($controller_stub)) {
+            $this->error('Api Controller stub file not found: <info>'.$controller_stub.'</info>');
+            return;
+        }
+        $controller_file = app_path(config('sap.custom_api_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
+        $controller_stub = $this->files->get($controller_stub);
+        $this->files->put($controller_file, $this->replaceholder($controller_stub));
+        $this->line('Api Controller file created: <info>'.$controller_file.'</info>');
     }
 
     protected function views()
