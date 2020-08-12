@@ -24,7 +24,8 @@
         "laravel/helpers": "^1.2",
         "tightenco/ziggy": "^0.9.4",
         "barryvdh/laravel-debugbar": "^3.3",
-        "laravel/sanctum": "^2.4"
+        "laravel/sanctum": "^2.4",
+        "lab404/laravel-impersonate": "^1.7"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

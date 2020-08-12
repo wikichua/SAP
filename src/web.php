@@ -62,5 +62,6 @@ Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_nam
         if (!config('sap.hidden_auth_route_names.logout', false)) {
             Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         }
+        Route::impersonate();
     });
 });

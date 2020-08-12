@@ -16,5 +16,10 @@
             </button>
         </form>
         @endcan
+
+        @can('Impersonate Users')
+        <a href="{{ route('impersonate', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-people-arrows"></i></a>
+        @endcan
+
     @endif
 </div>

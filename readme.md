@@ -68,6 +68,7 @@ class User extends \Wikichua\SAP\Models\User
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
     use \Laravel\Sanctum\HasApiTokens;
+    use \Lab404\Impersonate\Models\Impersonate;
 ```
 
 Then you continue in your terminal
