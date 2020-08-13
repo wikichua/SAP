@@ -21,6 +21,5 @@ const Toast = window.Toast = Swal.mixin({
   }
 });
 
-const Handlebars = window.Handlebars = require("handlebars");
 require('summernote/dist/summernote-bs4');
 require('gijgo/js/gijgo');

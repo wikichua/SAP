@@ -3,7 +3,7 @@
     <label for="name" class="col-md-2 col-form-label">Value</label>
     <div class="form-control h-auto">
         <div id="singleValue">
-            <textarea name="value" id="value" class="form-control border-0 " rows="1">{{ $model->value ?? '' }}</textarea>
+            <textarea name="value" id="value" class="form-control border-0 " rows="1">{{ isset($model->value) && !is_array($model->value)?  $model->value:'' }}</textarea>
         </div>
         <div id="multipleValues" style="display: none;">
             @if (isset($model->value) && is_array($model->value))
@@ -37,13 +37,13 @@
                         <button type="button" class="minusRow btn btn-outline-danger"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-            </div>  
+            </div>
             @endif
         </div>
     </div>
 </div>
 @push('scripts')
-<script id="template" type="text/x-handlebars-template">
+<script id="template" type="text/x-lodash-template">
 <div class="row mb-1">
     <div class="col-4 d-flex justify-content-center">
         <input type="text" name="indexes[]" class="form-control" required placeholder="index">
@@ -57,14 +57,15 @@
             <button type="button" class="minusRow btn btn-outline-danger"><i class="fa fa-minus"></i></button>
         </div>
     </div>
-</div> 
+</div>
 </script>
 <script>
 $(function () {
     $(document).on('click','.addRow',function() {
-        var template = Handlebars.compile($('#template').html());
-        var html = template();
-        $(this).closest('.row').after(html);
+        var template = $('#template').html();
+        var templateFn = _.template(template);
+        var templateHTML = templateFn();
+        $(this).closest('.row').after(templateHTML);
     });
     $(document).on('click','.minusRow',function() {
         if ($('#multipleValues').find('.row').length > 1) {
