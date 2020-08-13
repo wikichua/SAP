@@ -10,6 +10,7 @@
     'Read Permissions',
     'Read Settings',
     'Read Activity Logs',
+    'Read System Logs',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -34,6 +35,9 @@
             @endcan
             @can('Read Activity Logs')
             <x-sap-menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>
+            @endcan
+            @can('Read System Logs')
+            <x-sap-menu-item :href="route('system_log.list')" active-pattern="system_log.*">System Log</x-sap-menu-item>
             @endcan
         </div>
     </div>

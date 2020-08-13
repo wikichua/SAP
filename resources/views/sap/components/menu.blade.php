@@ -5,5 +5,6 @@
         'role.*',
         'setting.*',
         'activity_log.*',
+        'system_log.*',
     ]"/>
 <!--DoNotRemoveMe-->
