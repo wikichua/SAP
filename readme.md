@@ -14,6 +14,7 @@
 
 ### Current Version
 
+1. Theme using https://startbootstrap.com/themes/sb-admin-2/
 1. Activity Logging
 1. Preset Authentication (exactly from Laravel scaffolding)
 1. Permission & Role (Authorization)
