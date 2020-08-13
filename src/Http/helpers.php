@@ -32,7 +32,7 @@ function rebuildUrl($url, $params = [])
         if ($parsedUrl['path'] == null) {
             $url .= '/';
         }
-        $separator = ($parsedUrl['query'] == NULL) ? '?' : '&';
+        $separator = ($parsedUrl['query'] == null) ? '?' : '&';
         return $url .= $separator . http_build_query($params);
     }
     return $url;

@@ -28,6 +28,9 @@
 1. Swal and Toast integrated
 1. Select, Radio or Checkbox options will be added to settings table during migration
 1. Select, Radio or Checkbox model options will be generated codes in controller and both create and edit component.
+1. Pusher
+1. PHP Debug Bar
+1. User Impersonate
 
 ### Todo List
 1.
@@ -198,6 +201,21 @@ $ art sap:make Test --force
     Migration file created: /home/wikichua/codes/sap/database/migrations/2020_08_04_000000_sapTestTable.php
     Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!
     Config has changed: /home/wikichua/codes/sap/config/sap/TestConfig.php
+```
+
+#### Usage of Pusher (It's not broadcasting from Laravel original but...)
+```php
+    pushered('hello string');
+    pushered(['hello array','hello array again']);
+    pushered(['message' => 'hello message']);
+    pushered(['message' => 'hello message']);
+    pushered([
+        'title' => 'hello title',
+        'message' => 'hello message',
+        'icon' => asset('your/logo'),
+        'link' => 'http://link.com',
+        'timeout' => 5000,
+    ]);
 ```
 
 ## Security

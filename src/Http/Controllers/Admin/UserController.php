@@ -24,21 +24,21 @@ class UserController extends Controller
             $models = app(config('sap.models.user'))->query()
                 ->where('id', '!=', 1)
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''))
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
                 ->with('roles');
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
-                $model->actionsView = view('sap::admin.user.actions',compact('model'))->render();
+                $model->actionsView = view('sap::admin.user.actions', compact('model'))->render();
             }
-            if ($request->get('filters','') != '') {
-                $paginated->appends(['filters' => $request->get('filters','')]);
+            if ($request->get('filters', '') != '') {
+                $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort','') != '') {
-                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            if ($request->get('sort', '') != '') {
+                $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
-            return compact('paginated','links','currentUrl');
+            return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('user.list');
         $html = [
@@ -48,12 +48,12 @@ class UserController extends Controller
             ['title' => 'Roles', 'data' => 'roles_string'],
             ['title' => '', 'data' => 'actionsView'],
         ];
-        return view('sap::admin.user.index', compact('html','getUrl'));
+        return view('sap::admin.user.index', compact('html', 'getUrl'));
     }
 
     public function create(Request $request)
     {
-        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
+        $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
         return view('sap::admin.user.create', compact('roles'));
     }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
 
         $request->merge([
             'password' => bcrypt($request->get('password')),
-            'roles' => array_values($request->get('roles',[])),
+            'roles' => array_values($request->get('roles', [])),
             'created_by' => auth()->id(),
             'updated_by' => auth()->id(),
         ]);
@@ -98,7 +98,7 @@ class UserController extends Controller
     public function edit(Request $request, $id)
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
-        $roles = app(config('sap.models.role'))->pluck('name','id')->sortBy('name');
+        $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
         return view('sap::admin.user.edit', compact('roles', 'model'));
     }
 
@@ -114,7 +114,7 @@ class UserController extends Controller
         ]);
 
         $request->merge([
-            'roles' => array_values($request->get('roles',[])),
+            'roles' => array_values($request->get('roles', [])),
             'updated_by' => auth()->id(),
         ]);
 
@@ -128,13 +128,13 @@ class UserController extends Controller
             'flash' => 'User Updated.',
             'reload' => false,
             'relist' => false,
-            'redirect' => route('user.edit',[$model->id]),
+            'redirect' => route('user.edit', [$model->id]),
         ]);
     }
 
     public function editPassword(Request $request, $id)
     {
-        return view('sap::admin.user.editPassword',compact('id'));
+        return view('sap::admin.user.editPassword', compact('id'));
     }
 
     public function updatePassword(Request $request, $id)
