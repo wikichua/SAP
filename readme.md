@@ -31,6 +31,7 @@
 1. Pusher
 1. PHP Debug Bar
 1. User Impersonate
+1. Log Viewer (I call it system loging)
 
 ### Todo List
 1.
