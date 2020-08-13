@@ -9,7 +9,7 @@ const loadDatatable = function(url, sort, direction, filters) {
     if (_.isUndefined(filters) === false) {
         params['filters'] = filters;
     }
-    let rowTemplate = Handlebars.compile($('#row-template').html());
+    let rowTemplate = _.template($('#row-template').html());
     axios.get(url, {
         params: params,
         onUploadProgress: function(progressEvent) {
@@ -21,8 +21,8 @@ const loadDatatable = function(url, sort, direction, filters) {
         let links = resp.links;
         let rowHtml = rowTemplate({ data: data });
         $('#datatable-row').html(rowHtml);
-        let paginationTemplate = Handlebars.compile(links);
-        let paginationHtml = paginationTemplate(resp);
+        let paginationTemplate = _.template(links);
+        let paginationHtml = paginationTemplate();
         $('#datatable-pagination').html(paginationHtml);
         currentUrl = resp.currentUrl;
     }).catch((error) => {

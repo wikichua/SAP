@@ -6,7 +6,7 @@
     <tr>
       @foreach ($data as $el)
       <th>
-        <a href="#" @if(isset($el['sortable']) && $el['sortable']) data-key="{{ $el['data'] }}" data-direction="asc" @endif class="sortable text-white text-decoration-none"> 
+        <a href="#" @if(isset($el['sortable']) && $el['sortable']) data-key="{{ $el['data'] }}" data-direction="asc" @endif class="sortable text-white text-decoration-none">
           {{ $el['title'] }} @if(isset($el['sortable']) && $el['sortable']) <i class="icon fa fa-fw"></i> @endif
         </a>
       </th>
@@ -20,16 +20,17 @@
 <div id="datatable-pagination" class="d-flex justify-content-center"></div>
 
 @push('scripts')
-<script id="row-template" type="text/x-handlebars-template">
-  @{{#each data}}
+<script id="row-template" type="text/x-lodash-template">
+  <% _.forEach(data, function(el) { %>
   <tr>
     @foreach ($data as $el)
-    <th>@{{{ @php echo $el['data']; @endphp }}}</th>
+    <th><%= el.{{ $el['data'] }} %></th>
     @endforeach
   </tr>
-  @{{/each}}
+  <% }); %>
 </script>
 <script>
+
   url = '{{ $attributes['url'] }}';
 </script>
 @endpush

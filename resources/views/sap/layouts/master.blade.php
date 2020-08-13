@@ -105,6 +105,7 @@
     <script src="{{ asset('js/datatableformhandling.min.js') }}"></script>
     <script>
     $(function() {
+        @if (env('PUSHER_APP_KEY') != '')
         Pusher.logToConsole = true;
         let pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
           cluster: 'ap1',
@@ -148,6 +149,7 @@
         }
         let channel = pusher.subscribe('{{ sha1(env('APP_NAME')) }}');
         channel.bind('{{ sha1('general') }}', pusher_callback);
+        @endif
     });
     </script>
     @stack('scripts')

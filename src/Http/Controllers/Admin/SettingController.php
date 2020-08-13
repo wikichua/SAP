@@ -22,20 +22,21 @@ class SettingController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.setting'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
-                $model->actionsView = view('sap::admin.setting.actions',compact('model'))->render();
+                $model->actionsView = view('sap::admin.setting.actions', compact('model'))->render();
+                $model->value = is_array($model->value)? implode('<br>', $model->value):$model->value;
             }
-            if ($request->get('filters','') != '') {
-                $paginated->appends(['filters' => $request->get('filters','')]);
+            if ($request->get('filters', '') != '') {
+                $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort','') != '') {
-                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            if ($request->get('sort', '') != '') {
+                $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
-            return compact('paginated','links','currentUrl');
+            return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('setting.list');
         $html = [
@@ -43,7 +44,7 @@ class SettingController extends Controller
             ['title' => 'Value', 'data' => 'value', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
-        return view('sap::admin.setting.index', compact('html','getUrl'));
+        return view('sap::admin.setting.index', compact('html', 'getUrl'));
     }
 
     public function create(Request $request)
@@ -106,7 +107,7 @@ class SettingController extends Controller
             'flash' => 'Setting Updated.',
             'reload' => false,
             'relist' => false,
-            'redirect' => route('setting.edit',[$model->id]),
+            'redirect' => route('setting.edit', [$model->id]),
         ]);
     }
 
