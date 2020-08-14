@@ -11,4 +11,8 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.index');
     }
+    public function chatify(Request $request)
+    {
+        return view('sap::admin.dashboard.chatify');
+    }
 }

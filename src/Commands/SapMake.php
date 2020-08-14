@@ -44,7 +44,7 @@ class SapMake extends Command
         $this->line('<info>Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!</info>');
         $this->line('Config has changed: <info>'.$config_file.'</info>');
 
-        $this->alert("Now remember to run php artisan ziggy:generate && npm run production\nafter you have done adjusting your vue component\nor business in your controler & model.");
+        $this->alert("Now remember to run php artisan ziggy:generate resources/js/ziggy.js && npm run production\nafter you have done adjusting your crud component\nor business in your controler & model.");
     }
 
     protected function initReplacer()

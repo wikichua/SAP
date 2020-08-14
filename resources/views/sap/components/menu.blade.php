@@ -7,4 +7,7 @@
         'activity_log.*',
         'system_log.*',
     ]"/>
+@if (Route::has('chatify'))
+<x-sap-menu menu="chatify" />
+@endif
 <!--DoNotRemoveMe-->
