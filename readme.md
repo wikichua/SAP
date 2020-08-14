@@ -33,7 +33,7 @@
 1. PHP Debug Bar
 1. User Impersonate
 1. Log Viewer (I call it system loging)
-1. Chatify (Forked from )
+1. Chatify (Forked from https://github.com/munafio/chatify)
 
 ### Todo List
 1.
