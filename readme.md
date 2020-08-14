@@ -167,6 +167,10 @@ In case munafio/chatify yet supporting latest pusher version...
     }
 ```
 
+```bash
+$ php artisan vendor:publish --tag=chatify-assets --force
+```
+
 ## Usage
 
 ### Creating new module
