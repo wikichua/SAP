@@ -33,6 +33,7 @@
 1. PHP Debug Bar
 1. User Impersonate
 1. Log Viewer (I call it system loging)
+1. Chatify (Forked from )
 
 ### Todo List
 1.
@@ -134,6 +135,36 @@ This is how I normall do
 
 ```bash
 art vendor:publish --tag=sap.install --force && art ziggy:generate && npm run watch-poll
+```
+
+### To exclude php debugbar render on ur API url
+
+At your debugbar.php
+
+```php
+    'except' => [
+        'telescope*',
+        'horizon*',
+        'chatify*',
+        'api*',
+    ],
+```
+
+In case munafio/chatify yet supporting latest pusher version...
+
+```json
+"repositories": {
+        "munafio/chatify": {
+            "type": "git",
+            "url": "https://github.com/wikichua/chatify.git"
+        }
+    }
+```
+
+```json
+"require": {
+        "munafio/chatify": "dev-master",
+    }
 ```
 
 ## Usage

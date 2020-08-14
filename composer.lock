@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b63d151c3b905241da5960725115bb9b",
+    "content-hash": "55001a73ea8df309d36076109a88a5c8",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1074,6 +1074,57 @@
                 }
             ],
             "time": "2020-07-23T08:41:23+00:00"
+        },
+        {
+            "name": "munafio/chatify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikichua/chatify.git",
+                "reference": "ee162576410a4142ebb32fa12a6ad3cf25c58646"
+            },
+            "require": {
+                "illuminate/support": "~5|~6|~7",
+                "laravel/helpers": "^1.2",
+                "pusher/pusher-php-server": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chatify\\ChatifyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Chatify": "Chatify\\Facades\\ChatifyMessenger"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chatify\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Munaf A. Mahdi",
+                    "email": "munafaqeelmahdi@gmail.com"
+                }
+            ],
+            "description": "A package for Laravel PHP Framework to add a complete real-time chat system.",
+            "keywords": [
+                "chat",
+                "conversations",
+                "laravel",
+                "messenger",
+                "php",
+                "pusher",
+                "real-time",
+                "realtime"
+            ],
+            "time": "2020-08-14T05:54:23+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -4950,6 +5001,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
@@ -5792,7 +5844,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "munafio/chatify": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
