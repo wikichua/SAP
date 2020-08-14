@@ -20,10 +20,12 @@ class SAPServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/pub.php');
         $this->loadRoutesFrom(__DIR__.'/web.php');
         $this->loadRoutesFrom(__DIR__.'/api.php');
 
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
+        $this->app['router']->aliasMiddleware('auth', 'Wikichua\SAP\Middleware\Authenticate');
         $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\SAP\Middleware\AuthAdmin');
 
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);

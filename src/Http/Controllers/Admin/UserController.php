@@ -75,10 +75,10 @@ class UserController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        $model = app(config('sap.models.user'))->create($request->all());
+        $model = app(config('sap.models.user'))->create($request->input());
         $model->roles()->sync($request->get('roles'));
 
-        activity('Created User: ' . $model->id, $request->all(), $model);
+        activity('Created User: ' . $model->id, $request->input(), $model);
 
         return response()->json([
             'status' => 'success',
@@ -118,10 +118,10 @@ class UserController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        $model->update($request->all());
+        $model->update($request->input());
         $model->roles()->sync($request->get('roles'));
 
-        activity('Updated User: ' . $model->id, $request->all(), $model);
+        activity('Updated User: ' . $model->id, $request->input(), $model);
 
         return response()->json([
             'status' => 'success',

@@ -4,13 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-Route::redirect('', '/dashboard');
-Route::redirect('home', '/dashboard');
-
-
-Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
     if (!config('sap.hidden_auth_route_names.logout', false)) {
-        Route::match(['post'], 'logout', 'Auth\LoginController@logout')->name('logout');
+        Route::match(['post','get'], 'logout', 'Auth\LoginController@logout')->name('logout');
     }
     if (!config('sap.hidden_auth_route_names.password_email', false)) {
         Route::match(['post'], 'password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -54,7 +50,7 @@ Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_nam
         Route::match(['post'], 'register', 'Auth\RegisterController@register');
     });
 
-    Route::group(['middleware' => ['auth', 'can:Access Admin Panel']], function () {
+    Route::group(['middleware' => ['auth_admin', 'can:Access Admin Panel']], function () {
         if (!config('sap.hidden_auth_route_names.password_confirm', false)) {
             Route::match(['get', 'head'], 'password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
         }

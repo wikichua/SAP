@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -18,6 +17,7 @@ class User extends Authenticatable
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
     protected $appends = ['roles_string'];
+    protected $fillable = [];
 
     public function creator()
     {
@@ -52,7 +52,7 @@ class User extends Authenticatable
     public function scopeFilterCreatedAt($query, $search)
     {
         if (\Str::contains($search, ' - ')) { // date range
-            $search = explode(' - ',$search);
+            $search = explode(' - ', $search);
             $start_at = Carbon::parse($search[0])->format('Y-m-d 00:00:00');
             $stop_at = Carbon::parse($search[1])->addDay()->format('Y-m-d 00:00:00');
         } else { // single date

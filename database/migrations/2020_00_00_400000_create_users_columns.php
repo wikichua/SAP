@@ -38,11 +38,13 @@ class CreateUsersColumns extends Migration
             'name' => 'Developer',
             'email' => 'dev@email.com',
             'password' => Hash::make('admin123'),
+            'type' => 'Admin',
         ]);
         $user = app(config('auth.providers.users.model'))->create([
             'name' => 'Manager',
             'email' => 'manager@email.com',
             'password' => Hash::make('admin123'),
+            'type' => 'Admin',
         ]);
         // create permissions
         app(config('sap.models.permission'))->createGroup('Users', ['Create Users', 'Read Users', 'Update Users', 'Delete Users', 'Update Users Password']);

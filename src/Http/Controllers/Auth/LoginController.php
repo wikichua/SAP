@@ -2,6 +2,7 @@
 
 namespace Wikichua\SAP\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -20,5 +21,10 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('sap::auth.login');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password') + ['type' => 'Admin'];
     }
 }

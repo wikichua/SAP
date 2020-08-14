@@ -5,7 +5,7 @@
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
     </div>
-    <form method="POST" class="user" action="{{ route('login') }}">
+    <form method="POST" class="user" action="{{ $loginUrl ?? route('login')  }}">
         @csrf
         <div class="form-group">
             <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
@@ -62,6 +62,6 @@
 
 @push('scripts')
 <script>
-    
+
 </script>
 @endpush

@@ -7,6 +7,7 @@ return [
     'custom_api_controller_namespace' => 'App\Http\Controllers\Api',
     'custom_api_controller_dir' => 'Http/Controllers/Api',
     'custom_view_dir' => 'admin',
+    'custom_admin_path' => 'admin',
     /* end customization */
 
     'hidden_auth_route_names' => [
