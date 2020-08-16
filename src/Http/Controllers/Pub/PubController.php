@@ -15,4 +15,8 @@ class PubController extends Controller
     {
         return view('sap::pub.home');
     }
+    public function chatify(Request $request)
+    {
+        return view('sap::pub.chatify');
+    }
 }

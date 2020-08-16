@@ -25,7 +25,11 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
             </a>
-            {{-- <x-sap-menu></x-sap-menu> --}}
+            {{-- ur own menu here --}}
+            <x-sap-menu menu="menu" label="Dashboard" :route="route('pub.home')" icon="fas fa-fw fa-tachometer-alt" :active-patterns="['pub.home.*']"/>
+            <x-sap-menu menu="menu" label="Chatify" :route="route('pub.chatify')" icon="fab fa-fw fa-rocketchat" :active-patterns="['pub.chatify.*']"/>
+            {{-- ur own menu end --}}
+
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
