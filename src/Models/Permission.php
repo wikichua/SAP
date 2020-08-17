@@ -10,6 +10,9 @@ class Permission extends Model
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
+    protected $appends = ['readUrl','esField'];
+    protected $EsFields = ['name','group'];
+
     // roles relationship
     public function roles()
     {
@@ -51,5 +54,10 @@ class Permission extends Model
     public function scopeFilterGroup($query, $search)
     {
         return $query->where('group', 'like', "%{$search}%");
+    }
+
+    public function getReadUrlAttribute($value)
+    {
+        return $this->readUrl = route('permission.show', $this->id);
     }
 }

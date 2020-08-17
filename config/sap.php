@@ -9,6 +9,10 @@ return [
     'custom_view_dir' => 'admin',
     'custom_admin_path' => 'admin',
     'custom_pub_path' => 'pub',
+    'elasticsearch_models' => [
+        'user' => '\App\User',
+        'permission' => '\Wikichua\SAP\Models\Permission',
+    ],
     /* end customization */
 
     'hidden_auth_route_names' => [
@@ -34,4 +38,8 @@ return [
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
+    'elasticsearch' => [
+        'enabled' => env('ELASTICSEARCH_ENABLED', true),
+        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', "{config('elasticsearch.connections.default.hosts.0.host')}:config('elasticsearch.connections.default.hosts.0.port')")),
+    ],
 ];

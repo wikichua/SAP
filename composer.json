@@ -28,7 +28,9 @@
         "lab404/laravel-impersonate": "^1.7",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
         "pusher/pusher-php-server": "^4.1",
-        "munafio/chatify": "dev-master"
+        "munafio/chatify": "dev-master",
+        "elasticsearch/elasticsearch": "^7.8",
+        "cviebrock/laravel-elasticsearch": "^4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

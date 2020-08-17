@@ -21,24 +21,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], 'password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     }
 
-    Route::post('editor/upload/image', function (Request $request) {
-        $url = '';
-        if ($request->file('image')->isValid()) {
-            $url = asset(
-                str_replace(
-                    'public',
-                    'storage',
-                    $request->file('image')
-                        ->storeAs(
-                            'public/editor',
-                            Str::uuid() . '.' . $request->file('image')->extension()
-                        )
-                )
-            );
-        }
-        return response()->json(compact('url'));
-    })->name('editor.upload_image');
-
     Route::group(['middleware' => ['guest']], function () {
         if (!config('sap.hidden_auth_route_names.login', false)) {
             Route::match(['get', 'head'], 'login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -59,5 +41,25 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
             Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         }
         Route::impersonate();
+
+        Route::match(['post'], 'editor/upload/image', function (Request $request) {
+            $url = '';
+            if ($request->file('image')->isValid()) {
+                $url = asset(
+                    str_replace(
+                        'public',
+                        'storage',
+                        $request->file('image')
+                        ->storeAs(
+                            'public/editor',
+                            Str::uuid() . '.' . $request->file('image')->extension()
+                        )
+                    )
+                );
+            }
+            return response()->json(compact('url'));
+        })->name('editor.upload_image');
+
+        Route::match(['get','post'], '/search', 'Admin\ElasticSearchController@index')->name('global.search');
     });
 });

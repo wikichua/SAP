@@ -21,6 +21,8 @@ class {%model_class%} extends Eloquent
 
     {%model_appends%}
 
+    protected $EsFields = [];
+
     {%model_casts%}
 
     {%relationships%}
@@ -30,4 +32,9 @@ class {%model_class%} extends Eloquent
     {%mutators%}
 
     {%search_scopes%}
+
+    public function getReadUrlAttribute($value)
+    {
+        return $this->readUrl = route('{%model_variable%}.show', $this->id);
+    }
 }
