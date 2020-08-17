@@ -39,7 +39,7 @@ return [
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'elasticsearch' => [
-        'enabled' => env('ELASTICSEARCH_ENABLED', true),
+        'enabled' => env('ELASTICSEARCH_ENABLED', false),
         'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', "localhost:9200")),
     ],
 ];

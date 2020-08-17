@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
+Route::redirect('/', config('sap.custom_admin_path'))->name('home');
+
 Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
     if (!config('sap.hidden_auth_route_names.logout', false)) {
         Route::match(['post','get'], 'logout', 'Auth\LoginController@logout')->name('logout');

@@ -25,7 +25,9 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
             </a>
+
             <x-sap-menu></x-sap-menu>
+
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -37,7 +39,7 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <!-- Topbar Search -->
+                    @if (config('sap.elasticsearch.enabled'))
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="{{ route('global.search') }}">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -48,7 +50,8 @@
                             </div>
                         </div>
                     </form>
-                    <!-- Topbar Navbar -->
+                    @endif
+
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -97,59 +100,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    @routes
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/all.js') }}"></script>
-    <script src="{{ asset('js/datatableformhandling.min.js') }}"></script>
-    <script>
-    $(function() {
-        @if (env('PUSHER_APP_KEY') != '')
-        Pusher.logToConsole = true;
-        let pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
-          cluster: 'ap1',
-          forceTLS: true
-        });
-        let pusher_callback = function(data) {
-            let icon = '{{ asset('sap/logo.png') }}';
-            if (_.isUndefined(data.icon) === false) {
-                icon = data.icon;
-            }
-            let link = '';
-            if (_.isUndefined(data.link) === false) {
-                link = data.link;
-            }
-            let timeout = 5000;
-            if (_.isUndefined(data.timeout) === false) {
-                timeout = data.timeout;
-            }
-            let title = '{{ env('APP_NAME') }} Web Notification';
-            if (_.isUndefined(data.title) === false) {
-                title = data.title;
-            }
-            let message = '';
-            if (_.isUndefined(data.message) === false) {
-                message = data.message;
-            } else if (_.isArray(data)) {
-                message = data.join("\n");
-            } else if (_.isString(data)){
-                message = data;
-            }
-            Push.create(title, {
-                body: message,
-                icon: icon,
-                link: link,
-                timeout: timeout,
-                onClick: function () {
-                    window.focus();
-                    this.close();
-                }
-            });
-        }
-        let channel = pusher.subscribe('{{ sha1(env('APP_NAME')) }}');
-        channel.bind('{{ sha1('general') }}', pusher_callback);
-        @endif
-    });
-    </script>
+    @include('sap::layouts.footer')
     @stack('scripts')
 </body>
 
