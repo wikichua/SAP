@@ -15,6 +15,7 @@ class LoginController extends Controller
 
     public function __construct()
     {
+        $this->redirectTo = route('admin');
         $this->middleware('guest')->except('logout');
     }
 

@@ -170,6 +170,33 @@ protected $EsFields = [];
 ```
 Append in any of your wish to search fields (I somehow found it, date datatype can't search... hmmm...)
 
+Social Lite
+
+In your User.php model
+```php
+protected $casts = [
+    'social' => 'array',
+];
+```
+Then
+```dotenv
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+LINKEDIN_CLIENT_ID=
+LINKEDIN_CLIENT_SECRET=
+
+TWITTER_CLIENT_ID=
+TWITTER_CLIENT_SECRET=
+
+```
+
 In case munafio/chatify yet supporting latest pusher version...
 
 ```json

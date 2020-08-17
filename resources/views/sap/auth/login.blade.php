@@ -11,7 +11,6 @@
             <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
                 placeholder="Enter Email Address..." name="email" value="{{ old('email') }}" required
                 autocomplete="email" autofocus>
-
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -42,6 +41,19 @@
             {{ __('Login') }}
         </button>
     </form>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    </div>
+    @endif
+    @foreach(array_keys(config('services')) as $provider)
+    @if (config("services.{$provider}.client_secret",'') != '')
+    <hr>
+    <a class="btn btn-link" href="{{ route('pub.social.login', [$provider]) }}">Login with {{ ucwords($provider) }}</a>
+    @endif
+    @endforeach
     <hr>
     <div class="text-center">
         @if(Route::has('password.request'))

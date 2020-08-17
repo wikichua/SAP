@@ -11,11 +11,14 @@ Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_nam
         Route::group(['middleware' => ['guest']], function () {
             Route::match(['get', 'head'], 'login', 'LoginController@showLoginForm')->name('pub.login');
             Route::match(['post'], 'login', 'LoginController@login');
+
+            Route::match(['get','post'], 'login/{provider}', 'LoginController@redirectToProvider')->name('pub.social.login');
+            Route::match(['get','post'], 'login/{provider}/callback', 'LoginController@handleProviderCallback')->name('pub.social.callback');
         });
         Route::group(['middleware' => ['auth']], function () {
-            Route::match(['get', 'head'], 'home', 'PubController@home')->name('pub.home');
+            Route::match(['get', 'head'], '/', 'PubController@home')->name('pub.home');
             Route::get('logout', 'LoginController@logout')->name('pub.logout');
-            Route::match(['get', 'head'], '/', 'PubController@chatify')->name('pub.chatify');
+            Route::match(['get', 'head'], '/chatify', 'PubController@chatify')->name('pub.chatify');
         });
     });
 });

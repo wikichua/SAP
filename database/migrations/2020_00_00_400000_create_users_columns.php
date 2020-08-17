@@ -13,6 +13,7 @@ class CreateUsersColumns extends Migration
         // create columns
         Schema::table('users', function (Blueprint $table) {
             $table->string('type')->default('User');
+            $table->json('social')->nullable();
             $table->string('timezone')->default(config('app.timezone'))->index();
             $table->integer('created_by')->nullable()->default(1);
             $table->integer('updated_by')->nullable()->default(1);
@@ -61,8 +62,11 @@ class CreateUsersColumns extends Migration
     {
         // drop columns
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('admin');
+            $table->dropColumn('type');
+            $table->dropColumn('social');
             $table->dropColumn('timezone');
+            $table->dropColumn('created_by');
+            $table->dropColumn('updated_by');
         });
 
         // delete permissions

@@ -47,6 +47,7 @@ class SAPServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/sap.php', 'sap');
+        $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
 
         // Register the service the package provides.
         $this->app->singleton('sap', function ($app) {
