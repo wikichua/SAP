@@ -6,7 +6,7 @@ use Wikichua\SAP\Http\Observers\ElasticSearchObserver;
 
 trait ElasticSearchable
 {
-    public static function bootSearchable()
+    public static function bootElasticSearchable()
     {
         if (config('sap.elasticsearch.enabled', false)) {
             static::observe(ElasticSearchObserver::class);

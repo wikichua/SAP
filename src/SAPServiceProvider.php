@@ -90,8 +90,6 @@ class SAPServiceProvider extends ServiceProvider
             // sanctum
             base_path('vendor/laravel/sanctum/database/migrations') => database_path('migrations'),
             base_path('vendor/laravel/sanctum/config/sanctum.php') => config_path('sanctum.php'),
-            // elasticsearch
-            base_path('vendor/cviebrock/laravel-elasticsearch/config/elasticsearch.php') => config_path('elasticsearch.php'),
         ], 'sap.install');
 
         // Publishing the translation files.

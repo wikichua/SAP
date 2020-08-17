@@ -40,6 +40,6 @@ return [
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'elasticsearch' => [
         'enabled' => env('ELASTICSEARCH_ENABLED', true),
-        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', "{config('elasticsearch.connections.default.hosts.0.host')}:config('elasticsearch.connections.default.hosts.0.port')")),
+        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', "localhost:9200")),
     ],
 ];

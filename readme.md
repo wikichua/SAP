@@ -34,7 +34,7 @@
 1. User Impersonate
 1. Log Viewer (I call it system loging)
 1. Chatify (Forked from https://github.com/munafio/chatify)
-1. Global Search using Elastic Seach (https://github.com/cviebrock/laravel-elasticsearch)
+1. Global Search using Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)
 
 ### Todo List
 1. Advanced filter prebuild text, date range and select

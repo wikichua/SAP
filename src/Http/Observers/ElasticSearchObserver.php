@@ -14,20 +14,24 @@ class ElasticSearchObserver
 
     public function saved($model)
     {
-        $this->elasticsearch->index([
-            'index' => $model->getSearchIndex(),
-            'type' => $model->getSearchType(),
-            'id' => $model->getKey(),
-            'body' => $model->toSearchArray(),
-        ]);
+        if (in_array(get_class($model), config('sap.elasticsearch_models'))) {
+            $this->elasticsearch->index([
+                'index' => $model->getSearchIndex(),
+                'type' => $model->getSearchType(),
+                'id' => $model->getKey(),
+                'body' => $model->toSearchArray(),
+            ]);
+        }
     }
 
     public function deleted($model)
     {
-        $this->elasticsearch->delete([
-            'index' => $model->getSearchIndex(),
-            'type' => $model->getSearchType(),
-            'id' => $model->getKey(),
-        ]);
+        if (in_array(get_class($model), config('sap.elasticsearch_models'))) {
+            $this->elasticsearch->delete([
+                'index' => $model->getSearchIndex(),
+                'type' => $model->getSearchType(),
+                'id' => $model->getKey(),
+            ]);
+        }
     }
 }
