@@ -255,8 +255,8 @@ EOT;
             $mutator[] = $this->indent(2).$this->replaceholder($value)."\n".$this->indent(1).'}';
             $mutators[] = implode('', $mutator);
         }
-        $appends[] = "readUrl";
-        $appends[] = "esField";
+        $appends[] = "'readUrl'";
+        $appends[] = "'esField'";
 
         $this->replaces['{%fillable_array%}'] = implode(",\n".$this->indent(2), $fillables);
         $this->replaces['{%mutators%}'] = implode(",\n".$this->indent(2), $mutators);

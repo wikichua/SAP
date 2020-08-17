@@ -39,6 +39,7 @@
 ### Todo List
 1. Advanced filter prebuild text, date range and select
 1. Social lite
+1. 2FA (email should be enough)
 
 ## Installation
 
@@ -151,6 +152,23 @@ At your debugbar.php
         'api*',
     ],
 ```
+
+Elastic Search...
+Refering to sap.php in your config directory.
+```php
+'elasticsearch_models' => [
+    'user' => '\App\User',
+    'permission' => '\Wikichua\SAP\Models\Permission',
+    ...
+],
+```
+Feel free to add in your desire searchable model in full namespace.
+
+Then in your model
+```php
+protected $EsFields = [];
+```
+Append in any of your wish to search fields (I somehow found it, date datatype can't search... hmmm...)
 
 In case munafio/chatify yet supporting latest pusher version...
 
