@@ -41,19 +41,17 @@
             {{ __('Login') }}
         </button>
     </form>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <div>{{ $error }}</div>
-        @endforeach
-    </div>
-    @endif
-    @foreach(array_keys(config('services')) as $provider)
-    @if (config("services.{$provider}.client_secret",'') != '')
+    @if (preg_match('/'.(config('sap.custom_pub_path')).'.*/', request()->route()->getName()))
     <hr>
-    <a class="btn btn-link" href="{{ route('pub.social.login', [$provider]) }}">Login with {{ ucwords($provider) }}</a>
+        @foreach(array_keys(config('services')) as $provider)
+            @if (config("services.{$provider}.client_secret",'') != '')
+    <div class="text-center">
+        <a class="btn btn-outline-dark btn-user btn-block" href="{{ route('pub.social.login', [$provider]) }}">
+            <i class="fab fa-{{ $provider }} mr-2"></i> Login with {{ ucwords($provider) }}</a>
+    </div>
+            @endif
+        @endforeach
     @endif
-    @endforeach
     <hr>
     <div class="text-center">
         @if(Route::has('password.request'))
