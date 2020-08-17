@@ -8,6 +8,7 @@ return [
     'custom_api_controller_dir' => 'Http/Controllers/Api',
     'custom_view_dir' => 'admin',
     'custom_admin_path' => 'admin',
+    'custom_pub_path' => 'pub',
     /* end customization */
 
     'hidden_auth_route_names' => [
