@@ -33,7 +33,7 @@ return [
             'class' => [],
             'attributes' => [],
             'list' => true,
-            'search' => true,
+            'search' => false,
             'migration' => 'text:{%field%}|nullable',
             'validation' => [
                 'create' => 'required',
@@ -52,7 +52,7 @@ return [
             'class' => [],
             'attributes' => [],
             'list' => true,
-            'search' => true,
+            'search' => false,
             'migration' => 'text:{%field%}|nullable',
             'validation' => [
                 'create' => 'required',
@@ -73,7 +73,7 @@ return [
                 'multiple' => 'multiple',
             ],
             'list' => true,
-            'search' => true,
+            'search' => false,
             'migration' => 'json:{%field%}|nullable',
             'validation' => [
                 'create' => 'required',
@@ -149,7 +149,7 @@ return [
             'class' => [],
             'attributes' => [],
             'list' => true,
-            'search' => true,
+            'search' => false,
             'migration' => 'time:{%field%}|nullable',
             'validation' => [
                 'create' => 'required',
@@ -229,7 +229,7 @@ return [
             'class' => [],
             'attributes' => [],
             'list' => false,
-            'search' => false,
+            'search' => true,
             'migration' => 'string:{%field%}|nullable|default:',
             'validation' => [
                 'create' => 'required',
@@ -255,7 +255,7 @@ return [
             'attributes' => [],
             'stacked' => true,
             'list' => false,
-            'search' => false,
+            'search' => true,
             'migration' => 'json:{%field%}|nullable',
             'validation' => [
                 'create' => 'required',
@@ -282,7 +282,7 @@ return [
             'attributes' => [],
             'stacked' => false,
             'list' => false,
-            'search' => false,
+            'search' => true,
             'migration' => 'string:{%field%}|nullable|default:',
             'validation' => [
                 'create' => 'required',
@@ -309,7 +309,7 @@ return [
             'class' => [],
             'attributes' => [],
             'list' => false,
-            'search' => false,
+            'search' => true,
             'migration' => 'string:{%field%},1|nullable|default:',
             'validation' => [
                 'create' => 'required',
