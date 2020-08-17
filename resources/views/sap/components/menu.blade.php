@@ -10,4 +10,8 @@
 @if (Route::has('chatify'))
 <x-sap-menu menu="chatify" />
 @endif
+@if (Route::has('lfm.home'))
+<x-sap-menu menu="menu" label="File Manager" :route="route('lfm.home')" icon="fas fa-fw fa-folder" :active-patterns="['lfm.*']"/>
+@endif
+
 <!--DoNotRemoveMe-->

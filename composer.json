@@ -31,7 +31,8 @@
         "munafio/chatify": "dev-master",
         "elasticsearch/elasticsearch": "^7.8",
         "cviebrock/laravel-elasticsearch": "^4.2",
-        "laravel/socialite": "^4.4"
+        "laravel/socialite": "^4.4",
+        "unisharp/laravel-filemanager": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

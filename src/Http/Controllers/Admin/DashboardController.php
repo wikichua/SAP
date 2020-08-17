@@ -15,4 +15,8 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.chatify');
     }
+    public function lfm(Request $request)
+    {
+        return view('sap::admin.dashboard.lfm');
+    }
 }

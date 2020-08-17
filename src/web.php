@@ -43,7 +43,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
             Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         }
         Route::impersonate();
-
         Route::match(['post'], 'editor/upload/image', function (Request $request) {
             $url = '';
             if ($request->file('image')->isValid()) {

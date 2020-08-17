@@ -37,6 +37,7 @@
 1. Global Search using Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)
 1. Advanced filter prebuild text, date range and select
 1. Socialite (support github, linkedin, google, facebook, twitter)
+1. File Manager (https://github.com/UniSharp/laravel-filemanager)
 
 ### Todo List
 1.
