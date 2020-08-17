@@ -1,12 +1,11 @@
 <?php
-$custom_pub_path = config('sap.custom_pub_path')!=''? "/{config('sap.custom_pub_path')}/":'';
+$custom_pub_path = config('sap.custom_pub_path')!=''? '/'.config('sap.custom_pub_path').'/':'';
 $redirectUrl = env('APP_URL').$custom_pub_path.'login/{%provider%}/callback';
 return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => str_replace('{%provider%}', 'github', $redirectUrl),
-        'scopes' => ['read:user', 'public_repo'],
     ],
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),

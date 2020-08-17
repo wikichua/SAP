@@ -57,19 +57,13 @@ class LoginController extends Controller
     public function redirectToProvider(string $provider)
     {
         try {
-            $scopes = config("services.$provider.scopes") ?? [];
-            if (count($scopes) === 0) {
-                return Socialite::driver($provider)->redirect();
-            } else {
-                return Socialite::driver($provider)->scopes($scopes)->redirect();
-            }
+            return Socialite::driver($provider)->redirect();
         } catch (\Exception $e) {
             abort(404);
         }
     }
     public function handleProviderCallback(string $provider)
     {
-        dd('here');
         try {
             $data = Socialite::driver($provider)->user();
             return $this->handleSocialUser($provider, $data);
@@ -80,11 +74,11 @@ class LoginController extends Controller
     }
     public function handleSocialUser(string $provider, object $data)
     {
-        $user = User::where([
+        $user = app(config('sap.models.user'))->query()->where([
             "social->{$provider}->id" => $data->id,
         ])->first();
         if (!$user) {
-            $user = User::where([
+            $user = app(config('sap.models.user'))->query()->where([
                 'email' => $data->email,
             ])->first();
         }
@@ -103,17 +97,20 @@ class LoginController extends Controller
     public function createUserWithSocialData(string $provider, object $data)
     {
         try {
-            $user = new User;
-            $user->name = $data->getName();
-            $user->email = $data->getEmail();
-            $user->avatar = $data->getAvatar();
-            $user->type = 'User';
-            $user->social = [
-                $provider => [
-                    'id' => $data->id,
-                    'token' => $data->token,
-                ],
-            ];
+            $params = [
+                    'name' => $data->getName(),
+                    'email' => $data->getEmail(),
+                    'avatar' => $data->getAvatar(),
+                    'password' => bcrypt($data->getEmail()),
+                    'type' => 'User',
+                    'social' => [
+                        $provider => [
+                            'id' => $data->id,
+                            'token' => $data->token,
+                        ],
+                    ],
+                ];
+            $user = app(config('sap.models.user'))->query()->create($params);
             // Check support verify or not
             if ($user instanceof MustVerifyEmail) {
                 $user->markEmailAsVerified();
@@ -124,9 +121,9 @@ class LoginController extends Controller
             return redirect(route('pub.login'))->withErrors(['authentication_deny' => 'Login with '.ucfirst($provider).' failed. Please try again.']);
         }
     }
-    public function socialLogin(User $user)
+    public function socialLogin($user)
     {
-        auth('pub')->loginUsingId($user->id);
+        $this->guard('pub')->loginUsingId($user->id);
         return redirect($this->redirectTo);
     }
 }

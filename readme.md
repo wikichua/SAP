@@ -38,7 +38,6 @@
 
 ### Todo List
 1. Advanced filter prebuild text, date range and select
-1. Social lite
 1. 2FA (email should be enough)
 
 ## Installation

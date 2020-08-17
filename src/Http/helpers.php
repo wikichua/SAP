@@ -106,5 +106,5 @@ if (!function_exists('pushered')) {
 
 function isMenuActive($patterns = [])
 {
-    return preg_match('/admin.dashboard.*/', request()->route()->getName())? 'active':'';
+    return preg_match('/'.(implode('|', $patterns)).'/', request()->route()->getName())? 'active':'';
 }
