@@ -176,9 +176,11 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadBrandsRoutes()
     {
-        foreach (File::directories(resource_path('views/brand')) as $dir) {
-            if (File::exists($dir.'/web.php')) {
-                Route::middleware('web')->group($dir.'/web.php');
+        if (File::exists(resource_path('views/brand'))) {
+            foreach (File::directories(resource_path('views/brand')) as $dir) {
+                if (File::exists($dir.'/web.php')) {
+                    Route::middleware('web')->group($dir.'/web.php');
+                }
             }
         }
     }
