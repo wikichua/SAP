@@ -17,13 +17,6 @@ class SAPServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
-        $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/pub.php');
-        $this->loadRoutesFrom(__DIR__.'/web.php');
-        $this->loadRoutesFrom(__DIR__.'/api.php');
-
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
         $this->app['router']->aliasMiddleware('auth', 'Wikichua\SAP\Middleware\Authenticate');
         $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\SAP\Middleware\AuthAdmin');
@@ -37,11 +30,19 @@ class SAPServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
+        $this->loadBrandsRoutes();
         $this->loadRoutes();
         $this->loadComponents();
         $this->gatePermissions();
         $this->validatorExtensions();
         $this->configSettings();
+
+        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
+        $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/pub.php');
+        $this->loadRoutesFrom(__DIR__.'/web.php');
+        $this->loadRoutesFrom(__DIR__.'/api.php');
     }
 
     public function register()
@@ -169,6 +170,14 @@ class SAPServiceProvider extends ServiceProvider
             foreach (app(config('sap.models.setting'))->all() as $setting) {
                 Config::set('settings.'.$setting->key, $setting->value);
             }
+        }
+    }
+
+    protected function loadBrandsRoutes()
+    {
+        foreach (File::directories(resource_path('views/brand')) as $dir) {
+            Route::middleware('web')
+                ->group($dir.'/web.php');
         }
     }
 }
