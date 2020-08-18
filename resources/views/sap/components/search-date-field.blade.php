@@ -1,9 +1,9 @@
 @php
-	foreach ($attributes as $key => $val) {
-		$$key = $val;
-	}
+foreach ($attributes as $key => $val) {
+  $$key = $val;
+}
 @endphp
-<input type="text"class="form-control filterInput"id="{{ $id }}"name="{{ $name }}">
+<input type="text" class="form-control filterInput" id="{{ $id }}" name="{{ $name }}">
 @push('scripts')
 <script>
     $(document).ready(function () {
@@ -19,6 +19,13 @@
             },
             "alwaysShowCalendars": true
         });
+        $('#{{ $id }}').on('apply.daterangepicker', function(ev, picker) {
+          $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+      });
+
+        $('#{{ $id }}').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+      });
     });
 </script>
 @endpush

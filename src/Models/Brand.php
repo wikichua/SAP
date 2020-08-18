@@ -3,6 +3,7 @@
 namespace Wikichua\SAP\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Brand extends Model
 {
@@ -57,19 +58,32 @@ class Brand extends Model
         return $query->where('name', 'like', "%{$search}%");
     }
 
+    public function scopeFilterDomain($query, $search)
+    {
+        return $query->where('domain', 'like', "%{$search}%");
+    }
+
     public function scopeFilterPublishedAt($query, $search)
     {
-        return $query->where('published_at', 'like', "%{$search}%");
+        $date = $this->getDateFilter($search);
+        return $query->whereBetween('published_at', [
+            $this->inUserTimezone($date['start_at']),
+            $this->inUserTimezone($date['stop_at'])
+        ]);
     }
 
     public function scopeFilterExpiredAt($query, $search)
     {
-        return $query->where('expired_at', 'like', "%{$search}%");
+        $date = $this->getDateFilter($search);
+        return $query->whereBetween('expired_at', [
+            $this->inUserTimezone($date['start_at']),
+            $this->inUserTimezone($date['stop_at'])
+        ]);
     }
 
     public function scopeFilterStatus($query, $search)
     {
-        return $query->where('status', 'like', "%{$search}%");
+        return $query->whereIn('status', $search);
     }
 
     public function getReadUrlAttribute($value)

@@ -3,6 +3,7 @@
 namespace {%custom_model_namespace%};
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Carbon;
 
 class {%model_class%} extends Eloquent
 {

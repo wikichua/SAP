@@ -236,30 +236,33 @@ EOT;
             if ($options['search']) {
                 $scopes[] = 'public function scopeFilter'.studly_case($field).'($query, $search)';
                 $scopes[] = $this->indent().'{';
-                $scopes[] = $this->indent().'    return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
-                $scopes[] = $this->indent().'}';
-                $search_scopes[] = implode(PHP_EOL, $scopes).PHP_EOL;
 
                 $searches[] = '<div class="form-group">';
                 $searches[] = $this->indent().'<label for="'.$field.'">'.$options['label'].'</label>';
                 switch ($options['type']) {
                     case 'date':
+                        $scopes[] = $this->indent().'$date = $this->getDateFilter($search);';
+                        $scopes[] = $this->indent().'return $query->whereBetween(\''.$field.'\', [ $this->inUserTimezone($date[\'start_at\']), $this->inUserTimezone($date[\'stop_at\'])]);';
                         $searches[] = $this->indent().'<x-sap-search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         break;
                     case 'select':
                     case 'radio':
                     case 'checkbox':
+                        $scopes[] = $this->indent().'    return $query->whereIn(\''.$field.'\', $search);';
                         $searches[] = $this->indent().'<x-sap-search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'"/>';
                         break;
                     case 'text':
                     case 'textarea':
+                        $scopes[] = $this->indent().'return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
                         $searches[] = $this->indent().'<x-sap-search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         break;
                 }
-                // $searches[] = $this->indent().'<input type="text" class="form-control filterInput" name="'.$field.'" id="'.$field.'">';
 
                 $searches[] = $this->indent().'</div>';
                 $search_fields[] = implode(PHP_EOL, $searches).PHP_EOL;
+
+                $scopes[] = $this->indent().'}';
+                $search_scopes[] = implode(PHP_EOL, $scopes).PHP_EOL;
             }
         } // end foreach
         foreach ($this->config['appends'] as $key => $value) {
