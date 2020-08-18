@@ -10,10 +10,10 @@ class SapBrand extends Command
     protected $signature = 'sap:brand {brand} {--force}';
     protected $description = 'Make Up The BRAND';
 
-    public function __construct(Filesystem $files)
+    public function __construct()
     {
         parent::__construct();
-        $this->files = $files;
+        $this->files = new Filesystem;
         $this->stub_path = config('sap.stub_path').'/brand';
     }
 
@@ -41,6 +41,7 @@ class SapBrand extends Command
         $this->package();
         $this->webpack();
         $this->others();
+        $this->seed();
         $this->line('<info>If you are using valet...</info>');
         $this->line('<info>Run this...</info>');
         $this->line('<info>cd ./public</info>');
@@ -116,6 +117,28 @@ class SapBrand extends Command
         $stub = $this->files->get($stub);
         $this->files->put($file, $this->replaceholder($stub));
         $this->line('webpack.mix.js file created: <info>'.$file.'</info>');
+    }
+
+    protected function seed()
+    {
+        $msg = 'Migration file created';
+        $migration_stub = $this->stub_path.'/seeding.stub';
+        if (!$this->files->exists($migration_stub)) {
+            $this->error('Migration stub file not found: <info>'.$migration_stub.'</info>');
+            return;
+        }
+        $filename = "sap{$this->brand}Seeding.php";
+        $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
+        foreach ($this->files->files(database_path('migrations/')) as $file) {
+            if (str_contains($file->getPathname(), $filename)) {
+                $migration_file = $file->getPathname();
+                $msg = 'Migration file overwritten';
+            }
+        }
+
+        $migrations_stub = $this->files->get($migration_stub);
+        $this->files->put($migration_file, $this->replaceholder($migrations_stub));
+        $this->line($msg.': <info>'.$migration_file.'</info>');
     }
 
     protected function others()

@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Wikichua\SAP\Commands\SapBrand;
 
 class BrandController extends Controller
 {
@@ -11,16 +12,14 @@ class BrandController extends Controller
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Create {model_strings}')->only(['create', 'store']);
         $this->middleware('can:Read {model_strings}')->only(['index', 'read']);
         $this->middleware('can:Update {model_strings}')->only(['edit', 'update']);
-        $this->middleware('can:Delete {model_strings}')->only('delete');
     }
 
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $models = config('sap.models.brand')->query()
+            $models = app(config('sap.models.brand'))->query()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate(25);
@@ -42,41 +41,10 @@ class BrandController extends Controller
             ['title' => 'Brand Name', 'data' => 'name', 'sortable' => true, 'filterable' => true],
             ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.brand.index', compact('html', 'getUrl'));
-    }
-
-    public function create(Request $request)
-    {
-        return view('sap::admin.brand.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            "name" => "required|min:4",
-            "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
-        ]);
-
-        $request->merge([
-            'created_by' => auth()->id(),
-            'updated_by' => auth()->id(),
-        ]);
-
-        $model = config('sap.models.brand')->query()->create($request->input());
-
-        activity('Created Brand: ' . $model->id, $request->input(), $model);
-
-        return response()->json([
-            'status' => 'success',
-            'flash' => 'Brand Created.',
-            'reload' => false,
-            'relist' => false,
-            'redirect' => route('brand.list'),
-        ]);
     }
 
     public function show($id)
@@ -115,22 +83,6 @@ class BrandController extends Controller
             'reload' => false,
             'relist' => false,
             'redirect' => route('brand.edit', [$model->id]),
-        ]);
-    }
-
-    public function destroy($id)
-    {
-        $model = app(config('sap.models.brand'))->query()->findOrFail($id);
-        $model->delete();
-
-        activity('Deleted Brand: ' . $model->id, [], $model);
-
-        return response()->json([
-            'status' => 'success',
-            'flash' => 'Brand Deleted.',
-            'reload' => false,
-            'relist' => true,
-            'redirect' => false,
         ]);
     }
 }

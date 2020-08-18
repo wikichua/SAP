@@ -21,11 +21,11 @@ class SapBrandTable extends Migration
         });
 
         app(config('sap.models.setting'))->create(['key' => 'brand_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
-        app(config('sap.models.permission'))->createGroup('Brands', ['Create Brands', 'Read Brands', 'Update Brands', 'Delete Brands']);
+        app(config('sap.models.permission'))->createGroup('Brands', ['Read Brands', 'Update Brands']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key','brand_status')->forceDelete();
+        app(config('sap.models.setting'))->where('key', 'brand_status')->forceDelete();
         app(config('sap.models.permission'))->where('group', 'Brands')->delete();
         Schema::dropIfExists('brands');
     }

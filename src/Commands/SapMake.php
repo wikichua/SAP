@@ -434,12 +434,10 @@ EOT;
         $migration_stub = $this->stub_path.'/migration.stub';
         if (!$this->files->exists($migration_stub)) {
             $this->error('Migration stub file not found: <info>'.$migration_stub.'</info>');
-
             return;
         }
         $filename = "sap{$this->model}Table.php";
         $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
-
         foreach ($this->files->files(database_path('migrations/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();

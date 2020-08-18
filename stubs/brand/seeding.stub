@@ -1,0 +1,18 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Sap{%brand_name%}Seeding extends Migration
+{
+    public function up()
+    {
+        app(config('sap.models.brand', $default = null))->query()->create([
+            'name' => '{%brand_name%}',
+            'published_at' => null,
+            'expired_at' => null,
+            'status' => 'P',
+        ]);
+    }
+}

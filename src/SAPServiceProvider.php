@@ -43,6 +43,14 @@ class SAPServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/pub.php');
         $this->loadRoutesFrom(__DIR__.'/web.php');
         $this->loadRoutesFrom(__DIR__.'/api.php');
+
+        // Registering package commands.
+        $this->commands([
+            Commands\SapConfig::class,
+            Commands\SapMake::class,
+            Commands\SapES::class,
+            Commands\SapBrand::class,
+        ]);
     }
 
     public function register()
@@ -101,14 +109,6 @@ class SAPServiceProvider extends ServiceProvider
         /*$this->publishes([
             __DIR__.'/../resources/lang' => resource_path('lang/vendor/sap'),
         ], 'sap.views');*/
-
-        // Registering package commands.
-        $this->commands([
-            Commands\SapConfig::class,
-            Commands\SapMake::class,
-            Commands\SapES::class,
-            Commands\SapBrand::class,
-        ]);
     }
 
     protected function loadRoutes()
