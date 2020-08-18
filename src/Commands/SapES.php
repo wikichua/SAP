@@ -7,7 +7,7 @@ use Elasticsearch\Client;
 
 class SapES extends Command
 {
-    protected $signature = 'sap:es';
+    protected $signature = 'sap:es {--clean}';
     protected $description = 'Reindex models';
     public function __construct(Client $elasticsearch)
     {
@@ -33,15 +33,18 @@ class SapES extends Command
     public function es($model)
     {
         foreach (app($model)->query()->cursor() as $data) {
-            $this->elasticsearch->indices()->delete([
-                'index' => app($model)->getSearchIndex(),
-            ]);
-            $this->elasticsearch->index([
-                'index' => $data->getSearchIndex(),
-                'type' => $data->getSearchType(),
-                'id' => $data->getKey(),
-                'body' => $data->toSearchArray(),
-            ]);
+            if ($this->option('clean')) {
+                $this->elasticsearch->indices()->delete([
+                    'index' => app($model)->getSearchIndex(),
+                ]);
+            } else {
+                $this->elasticsearch->index([
+                    'index' => $data->getSearchIndex(),
+                    'type' => $data->getSearchType(),
+                    'id' => $data->getKey(),
+                    'body' => $data->toSearchArray(),
+                ]);
+            }
             $this->output->write('.');
         }
         $this->output->write("\n");
