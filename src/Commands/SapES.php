@@ -16,11 +16,15 @@ class SapES extends Command
     }
     public function handle()
     {
-        $models = config('sap.elasticsearch_models');
+        $models = esModelsList();
         if (count($models)) {
-            foreach ($models as $name => $model) {
-                $this->info('Indexing all '.$name.'. This might take a while...');
-                $this->es($model);
+            foreach ($models as $model) {
+                if (app($model)->getEsFields() != null) {
+                    $this->info('Indexing all '.$model.'. This might take a while...');
+                    $this->es($model);
+                } else {
+                    $this->error($model . ': EsFields went wrong!');
+                }
             }
         }
         $this->info("\nDone!");
@@ -29,6 +33,9 @@ class SapES extends Command
     public function es($model)
     {
         foreach (app($model)->query()->cursor() as $data) {
+            $this->elasticsearch->indices()->delete([
+                'index' => app($model)->getSearchIndex(),
+            ]);
             $this->elasticsearch->index([
                 'index' => $data->getSearchIndex(),
                 'type' => $data->getSearchType(),
@@ -37,5 +44,6 @@ class SapES extends Command
             ]);
             $this->output->write('.');
         }
+        $this->output->write("\n");
     }
 }

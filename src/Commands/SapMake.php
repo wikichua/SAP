@@ -53,7 +53,7 @@ class SapMake extends Command
         $this->replaces['{%custom_api_controller_namespace%}'] = config('sap.custom_api_controller_namespace');
 
         $this->replaces['{%model%}'] = $this->model;
-        $this->replaces['{%model_namespace%}'] = ucfirst(str_replace('/', '\\', config('sap.model_namespace')));
+        $this->replaces['{%custom_model_namespace%}'] = ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
         $this->replaces['{%model_class%}'] = $this->replaces['{%model%}'];
         $this->replaces['{%model_string%}'] = trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $this->replaces['{%model%}']));
         $this->replaces['{%model_strings%}'] = str_plural($this->replaces['{%model_string%}']);

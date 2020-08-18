@@ -10,7 +10,8 @@ class Setting extends Model
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
-    protected $appends = ['isMultiple', 'rows'];
+    protected $appends = ['isMultiple', 'rows','readUrl','esField'];
+    // protected $EsFields = ['key'];
 
     public function creator()
     {
@@ -65,7 +66,8 @@ class Setting extends Model
         return [
             'index' => null,
             'value' => null,
-        ];;
+        ];
+        ;
     }
     public function getAllSettings()
     {
@@ -84,5 +86,10 @@ class Setting extends Model
             }
         }
         return $sets;
+    }
+
+    public function getReadUrlAttribute($value)
+    {
+        return $this->readUrl = route('setting.show', $this->id);
     }
 }

@@ -26,23 +26,26 @@ class ElasticSearchController extends Controller
 
     private function searchOnElasticsearch(string $query = '')
     {
-        $models = config('sap.elasticsearch_models');
+        $models = esModelsList();
         if (count($models)) {
-            foreach ($models as $name => $model) {
+            foreach ($models as $model) {
+                $name = basename(str_replace('\\', '/', $model));
                 $model = app($model);
-                $item = $this->elasticsearch->search([
-                    'index' => $model->getSearchIndex(),
-                    'type' => $model->getSearchType(),
-                    'body' => [
-                        'query' => [
-                            'multi_match' => [
-                                'fields' => isset($model->EsFields) && is_array($model->EsFields)? $model->EsFields:['name'],
-                                'query' => $query,
+                if ($model->getEsFields() != null) {
+                    $item = $this->elasticsearch->search([
+                        'index' => $model->getSearchIndex(),
+                        'type' => $model->getSearchType(),
+                        'body' => [
+                            'query' => [
+                                'multi_match' => [
+                                    'fields' => isset($model->EsFields) && is_array($model->EsFields)? $model->EsFields:['name'],
+                                    'query' => $query,
+                                ],
                             ],
                         ],
-                    ],
-                ]);
-                $items[$name] = $this->buildCollection($item, $model);
+                    ]);
+                    $items[$name] = $this->buildCollection($item, $model);
+                }
             }
         }
         return view('sap::admin.dashboard.elasticsearch')->with(compact('items'));

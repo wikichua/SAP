@@ -13,6 +13,11 @@ trait ElasticSearchable
         }
     }
 
+    public function getEsFields()
+    {
+        return isset($this->EsFields)? $this->EsFields:null;
+    }
+
     public function getSearchIndex()
     {
         return $this->getTable();

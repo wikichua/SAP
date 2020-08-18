@@ -44,13 +44,31 @@ function findHashTag($string)
     return $matches[1];
 }
 
-// flash message to session [class, message]
-if (!function_exists('flash')) {
-    function flash($data = [])
-    {
-        session()->flash('flash', $data);
+function getModels($path, $namespace)
+{
+    $out = [];
+    $iterator = new \RecursiveDirectoryIterator(
+        $path
+    );
+    foreach ($iterator as $item) {
+        if ($item->isReadable() && $item->isFile() && mb_strtolower($item->getExtension()) === 'php') {
+            $out[] =  $namespace .
+                    str_replace("/", "\\", mb_substr($item->getRealPath(), mb_strlen($path), -4));
+        }
     }
+    return $out;
 }
+
+function esModelsList()
+{
+    return \Cache::remember('esModelsList', (60*60*24), function () {
+        $sap_models = getModels(base_path('packages/wikichua/sap/src/Models'), config('sap.model_namespace'));
+        $app_models = getModels(app_path(), config('sap.custom_model_namespace'));
+        return array_merge($sap_models, $app_models);
+    });
+}
+
+
 
 // create activity log
 if (!function_exists('activity')) {

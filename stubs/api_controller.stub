@@ -4,7 +4,7 @@ namespace {%custom_api_controller_namespace%};
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use {%model_namespace%}\{%model_class%};
+use {%custom_model_namespace%}\{%model_class%};
 
 class {%model_class%}Controller extends Controller
 {

@@ -2,6 +2,7 @@
 
 return [
     /* customization */
+    'custom_model_namespace' => 'App',
     'custom_controller_namespace' => 'App\Http\Controllers\Admin',
     'custom_controller_dir' => 'Http/Controllers/Admin',
     'custom_api_controller_namespace' => 'App\Http\Controllers\Api',
@@ -9,10 +10,6 @@ return [
     'custom_view_dir' => 'admin',
     'custom_admin_path' => 'admin',
     'custom_pub_path' => 'pub',
-    'elasticsearch_models' => [
-        'user' => '\App\User',
-        'permission' => '\Wikichua\SAP\Models\Permission',
-    ],
     /* end customization */
 
     'hidden_auth_route_names' => [
@@ -24,7 +21,7 @@ return [
         'register' => false,
         'logout' => false,
     ],
-    'model_namespace' => 'app',
+    'model_namespace' => '\Wikichua\SAP\Models',
     'controller_namespace' => '\Wikichua\SAP\Http\Controllers',
     'component_namespace' => '\Wikichua\SAP\View\Components',
     'routes_dir' => 'routes/web.php',
