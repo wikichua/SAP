@@ -6,6 +6,7 @@
         'setting.*',
         'activity_log.*',
         'system_log.*',
+        'brand.*',
     ]"/>
 @if (Route::has('chatify'))
 <x-sap-menu menu="chatify" />

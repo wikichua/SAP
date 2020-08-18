@@ -1,0 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::domain('{%brand_string%}.test')->name('{%brand_string%}.')->namespace('\App\Http\Controllers\Brand')->group(function () {
+    Route::get('/', '{%brand_name%}Controller@index')->name('home');
+});

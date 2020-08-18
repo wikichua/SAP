@@ -38,9 +38,13 @@
 1. Advanced filter prebuild text, date range and select
 1. Socialite (support github, linkedin, google, facebook, twitter)
 1. File Manager (https://github.com/UniSharp/laravel-filemanager)
+1. Generate Brand Site with Subdomain
 
 ### Todo List
-1.
+1. Brand Management
+1. Generate Brand while inserting into CRUD at Admin
+1. Component Management
+1. Generate Component while inserting into CRUD at Admin
 
 ## Installation
 

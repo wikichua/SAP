@@ -107,6 +107,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapConfig::class,
             Commands\SapMake::class,
             Commands\SapES::class,
+            Commands\SapBrand::class,
         ]);
     }
 
@@ -176,8 +177,9 @@ class SAPServiceProvider extends ServiceProvider
     protected function loadBrandsRoutes()
     {
         foreach (File::directories(resource_path('views/brand')) as $dir) {
-            Route::middleware('web')
-                ->group($dir.'/web.php');
+            if (File::exists($dir.'/web.php')) {
+                Route::middleware('web')->group($dir.'/web.php');
+            }
         }
     }
 }

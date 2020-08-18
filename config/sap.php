@@ -33,6 +33,7 @@ return [
         'permission' => '\Wikichua\SAP\Models\Permission',
         'setting' => '\Wikichua\SAP\Models\Setting',
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
+        'brand' => '\Wikichua\SAP\Models\Brand',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'elasticsearch' => [
