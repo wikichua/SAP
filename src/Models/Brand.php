@@ -16,6 +16,7 @@ class Brand extends Model
         'created_by',
         'updated_by',
         'name',
+        'domain',
         'published_at',
         'expired_at',
         'status'
@@ -28,7 +29,7 @@ class Brand extends Model
         'esField'
     ];
 
-    protected $EsFields = [];
+    protected $EsFields = ['name','domain'];
 
     protected $casts = [
 

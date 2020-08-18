@@ -8,8 +8,9 @@ class Sap{%brand_name%}Seeding extends Migration
 {
     public function up()
     {
-        app(config('sap.models.brand', $default = null))->query()->create([
+        app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
+            'domain' => '{%domain%}',
             'published_at' => null,
             'expired_at' => null,
             'status' => 'P',

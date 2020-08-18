@@ -145,7 +145,32 @@ This is how I normall do
 art vendor:publish --tag=sap.install --force && art ziggy:generate && npm run watch-poll
 ```
 
-### To exclude php debugbar render on ur API url
+##### Create a brand within your project?
+
+> php artisan sap:brand SubDomain --domain=sub.domain.com
+
+You should be seeing this...
+
+```bash
+Assets copied: /project/resources/views/brand/subDomain/assets
+Web file created: /project/resources/views/brand/subDomain/web.php
+Controller file created: /project/app/Http/Controllers/Brand/SubDomainController.php
+layouts file created: /project/resources/views/brand/subDomain/layouts/main.blade.php
+pages file created: /project/resources/views/brand/subDomain/pages/index.blade.php
+package.json file created: /project/resources/views/brand/subDomain/package.json
+webpack.mix.js file created: /project/resources/views/brand/subDomain/webpack.mix.js
+.gitattributes copied: /project/resources/views/brand/subDomain/.gitattributes
+.gitattributes copied: /project/resources/views/brand/subDomain/.gitignore
+Migration file created: /project/database/migrations/2020_08_18_000000_sapSubDomainSeeding.php
+If you are using valet...
+Run this...
+cd ./public
+valet link sub.domain.com
+valet secure
+
+```
+
+##### To exclude php debugbar render on ur API url
 
 At your debugbar.php
 
@@ -158,7 +183,8 @@ At your debugbar.php
     ],
 ```
 
-Elastic Search...
+##### Elastic Search...
+
 Refering to sap.php in your config directory.
 ```php
 'elasticsearch_models' => [
@@ -174,8 +200,10 @@ Then in your model
 protected $EsFields = [];
 ```
 Append in any of your wish to search fields (I somehow found it, date datatype can't search... hmmm...)
+Run this to reindexing your data into elasticsearch cache.
+> php artisan sap:es
 
-Social Lite
+##### Social Lite
 
 In your User.php model
 ```php
@@ -202,7 +230,7 @@ TWITTER_CLIENT_SECRET=
 
 ```
 
-In case munafio/chatify yet supporting latest pusher version...
+##### In case munafio/chatify yet supporting latest pusher version...
 
 ```json
 "repositories": {
@@ -277,19 +305,19 @@ $ art sap:config Test
 $ art sap:make Test --force
     Config file created: config/sap/TestConfig.php
     Config Test Found! Initiating!
-    Model file created: /home/wikichua/codes/sap/app/Test.php
+    Model file created: /project/app/Test.php
     API Route file created: routes/routers/testRoutes.php
-    Controller file created: /home/wikichua/codes/sap/app/Http/Controllers/Admin/TestController.php
+    Controller file created: /project/app/Http/Controllers/Admin/TestController.php
     Menu included: routes/web.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/search.blade.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/index.blade.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/edit.blade.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/create.blade.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/show.blade.php
-    View file created: /home/wikichua/codes/sap/resources/views/admin/test/actions.blade.php
-    Migration file created: /home/wikichua/codes/sap/database/migrations/2020_08_04_000000_sapTestTable.php
+    View file created: /project/resources/views/admin/test/search.blade.php
+    View file created: /project/resources/views/admin/test/index.blade.php
+    View file created: /project/resources/views/admin/test/edit.blade.php
+    View file created: /project/resources/views/admin/test/create.blade.php
+    View file created: /project/resources/views/admin/test/show.blade.php
+    View file created: /project/resources/views/admin/test/actions.blade.php
+    Migration file created: /project/database/migrations/2020_08_04_000000_sapTestTable.php
     Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!
-    Config has changed: /home/wikichua/codes/sap/config/sap/TestConfig.php
+    Config has changed: /project/config/sap/TestConfig.php
 ```
 
 #### Usage of Pusher (It's not broadcasting from Laravel original but...)

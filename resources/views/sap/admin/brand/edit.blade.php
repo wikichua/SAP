@@ -18,6 +18,7 @@
                 @csrf
                 @method('PATCH')
                 <x-sap-input-field type="text" name="name" id="name" label="Brand Name" :class="['']" :attribute_tags="[]" :value="$model->name ?? ''"/>
+                <x-sap-input-field type="text" name="domain" id="domain" label="Domain" :class="['']" :attribute_tags="[]" :value="$model->domain ?? ''"/>
                 <x-sap-date-field name="published_at" id="published_at" label="Published Date" :class="['']" :attribute_tags="[]" :value="$model->published_at ?? ''"/>
                 <x-sap-date-field name="expired_at" id="expired_at" label="Expired Date" :class="['']" :attribute_tags="[]" :value="$model->expired_at ?? ''"/>
                 <x-sap-select-field name="status" id="status" label="Status" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('brand_status')" :selected="$model->status ?? []"/>

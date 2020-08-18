@@ -39,6 +39,7 @@ class BrandController extends Controller
         $getUrl = route('brand.list');
         $html = [
             ['title' => 'Brand Name', 'data' => 'name', 'sortable' => true, 'filterable' => true],
+            ['title' => 'Domain', 'data' => 'domain', 'sortable' => true, 'filterable' => true],
             ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
@@ -64,6 +65,7 @@ class BrandController extends Controller
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
         $request->validate([
             "name" => "required|min:4",
+            "domain" => "required",
             "published_at" => "required",
             "expired_at" => "required",
             "status" => "required",

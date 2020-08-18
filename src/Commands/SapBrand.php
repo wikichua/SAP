@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 
 class SapBrand extends Command
 {
-    protected $signature = 'sap:brand {brand} {--force}';
+    protected $signature = 'sap:brand {brand} {--domain=} {--force}';
     protected $description = 'Make Up The BRAND';
 
     public function __construct()
@@ -20,8 +20,10 @@ class SapBrand extends Command
     public function handle()
     {
         $this->brand = $this->argument('brand');
+        $this->domain = !empty($this->option('domain'))? $this->option('domain'):(strtolower($this->brand).'.test');
+        $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
-        $this->replaces['{%brand_string%}'] = $brand_string = strtolower($this->brand);
+        $this->replaces['{%brand_string%}'] = $brand_string = \Str::camel($this->brand);
         $this->replaces['{%custom_controller_namespace%}'] = str_replace('Admin', 'Brand', config('sap.custom_controller_namespace'));
         $this->brand_path = $brand_path = resource_path('views/brand/'.$brand_string);
         if (!$this->files->exists($brand_path)) {
@@ -45,7 +47,7 @@ class SapBrand extends Command
         $this->line('<info>If you are using valet...</info>');
         $this->line('<info>Run this...</info>');
         $this->line('<info>cd ./public</info>');
-        $this->line('<info>valet link '.$this->brand.'</info>');
+        $this->line('<info>valet link '.strtolower($this->domain).'</info>');
         $this->line('<info>valet secure</info>');
     }
 
@@ -78,6 +80,9 @@ class SapBrand extends Command
             return;
         }
         $controller_dir = str_replace('Admin', 'Brand', config('sap.custom_controller_dir'));
+        if (!$this->files->exists(app_path($controller_dir))) {
+            $this->files->makeDirectory(app_path($controller_dir), 0755, true);
+        }
         $controller_file = app_path($controller_dir.'/'.$this->brand.'Controller.php');
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));

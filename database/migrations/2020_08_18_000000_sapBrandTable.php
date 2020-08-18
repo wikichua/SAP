@@ -11,6 +11,7 @@ class SapBrandTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('id', true);
             $table->string('name')->nullable()->default('');
+            $table->string('domain')->nullable()->default('');
             $table->date('published_at')->nullable();
             $table->date('expired_at')->nullable();
             $table->string('status', 1)->nullable()->default('');
