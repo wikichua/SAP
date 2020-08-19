@@ -19,16 +19,6 @@ class User extends Authenticatable
     protected $appends = ['roles_string'];
     protected $fillable = [];
 
-    public function creator()
-    {
-        return $this->belongsTo('App\User', 'created_by', 'id');
-    }
-
-    public function modifier()
-    {
-        return $this->belongsTo('App\User', 'updated_by', 'id');
-    }
-
     public function getRolesStringAttribute()
     {
         return $this->roles->sortBy('name')->implode('name', ', ');

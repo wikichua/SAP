@@ -36,16 +36,6 @@ class Permission extends Model
         }
     }
 
-    public function creator()
-    {
-        return $this->belongsTo('App\User', 'created_by', 'id');
-    }
-
-    public function modifier()
-    {
-        return $this->belongsTo('App\User', 'updated_by', 'id');
-    }
-
     public function scopeFilterName($query, $search)
     {
         return $query->where('name', 'like', "%{$search}%");

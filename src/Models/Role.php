@@ -18,19 +18,9 @@ class Role extends Model
         return $this->belongsToMany(config('sap.models.permission'));
     }
 
-    public function creator()
-    {
-        return $this->belongsTo('App\User', 'created_by', 'id');
-    }
-
-    public function modifier()
-    {
-        return $this->belongsTo('App\User', 'updated_by', 'id');
-    }
-
     public function getIsAdminAttribute($value)
     {
-    	return $this->admin? 'Yes':'No';
+        return $this->admin? 'Yes':'No';
     }
 
     public function scopeFilterName($query, $search)

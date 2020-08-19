@@ -33,4 +33,14 @@ trait UserTimezone
             return $value;
         }
     }
+
+    public function creator()
+    {
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+    public function modifier()
+    {
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
 }

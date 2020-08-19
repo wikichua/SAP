@@ -13,16 +13,6 @@ class Setting extends Model
     protected $appends = ['isMultiple', 'rows','readUrl','esField'];
     // protected $EsFields = ['key'];
 
-    public function creator()
-    {
-        return $this->belongsTo('App\User', 'created_by', 'id');
-    }
-
-    public function modifier()
-    {
-        return $this->belongsTo('App\User', 'updated_by', 'id');
-    }
-
     public function scopeFilteKey($query, $search)
     {
         return $query->where('key', 'like', "%{$search}%");
