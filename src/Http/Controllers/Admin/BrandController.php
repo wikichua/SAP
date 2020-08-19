@@ -64,7 +64,6 @@ class BrandController extends Controller
     {
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
         $request->validate([
-            "name" => "required|min:4",
             "domain" => "required",
             "published_at" => "required",
             "expired_at" => "required",
@@ -78,6 +77,8 @@ class BrandController extends Controller
         $model->update($request->input());
 
         activity('Updated Brand: ' . $model->id, $request->input(), $model);
+
+        \cache::forget('brand-'.$model->name);
 
         return response()->json([
             'status' => 'success',

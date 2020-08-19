@@ -38,8 +38,9 @@ class ElasticSearchController extends Controller
                         'body' => [
                             'query' => [
                                 'multi_match' => [
-                                    'fields' => isset($model->EsFields) && is_array($model->EsFields)? $model->EsFields:['name'],
+                                    'fields' => isset($model->esField) && is_array($model->esField)? $model->esField:['name'],
                                     'query' => $query,
+                                    'fuzziness' => 'AUTO'
                                 ],
                             ],
                         ],

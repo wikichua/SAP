@@ -13,6 +13,7 @@ class SapES extends Command
     {
         parent::__construct();
         $this->elasticsearch = $elasticsearch;
+        \Cache::forget('esModelsList');
     }
     public function handle()
     {

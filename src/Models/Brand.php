@@ -36,8 +36,6 @@ class Brand extends Model
 
     ];
 
-
-
     public function getPublishedAtAttribute($value)
     {
         return $this->inUserTimezone($value);

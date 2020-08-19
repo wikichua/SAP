@@ -30,8 +30,6 @@ class SAPServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
-        $this->loadBrandsRoutes();
-        $this->loadRoutes();
         $this->loadComponents();
         $this->gatePermissions();
         $this->validatorExtensions();
@@ -40,9 +38,17 @@ class SAPServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/pub.php');
-        $this->loadRoutesFrom(__DIR__.'/web.php');
-        $this->loadRoutesFrom(__DIR__.'/api.php');
+
+        if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
+            $this->loadRoutes();
+            $this->loadRoutesFrom(__DIR__.'/pub.php');
+            $this->loadRoutesFrom(__DIR__.'/web.php');
+            $this->loadRoutesFrom(__DIR__.'/api.php');
+        } else {
+            if (Schema::hasTable('brands')) {
+                $this->loadBrandsRoutes();
+            }
+        }
 
         // Registering package commands.
         $this->commands([
@@ -178,10 +184,17 @@ class SAPServiceProvider extends ServiceProvider
     {
         if (File::exists(resource_path('views/brand'))) {
             foreach (File::directories(resource_path('views/brand')) as $dir) {
-                if (File::exists($dir.'/web.php')) {
-                    Route::middleware('web')->group($dir.'/web.php');
+                $brandName = basename($dir);
+                $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () {
+                    return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
+                });
+                if ($brand) {
+                    if (File::exists($dir.'/web.php')) {
+                        Route::middleware('web')->group($dir.'/web.php');
+                    }
                 }
             }
+            $brands = app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
         }
     }
 }

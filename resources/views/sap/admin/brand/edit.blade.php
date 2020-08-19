@@ -17,7 +17,7 @@
             <form novalidate data-ajax-form method="POST" action="{{ route('brand.update',[$model->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
-                <x-sap-input-field type="text" name="name" id="name" label="Brand Name" :class="['']" :attribute_tags="[]" :value="$model->name ?? ''"/>
+                <x-sap-input-field type="text" name="name" id="name" label="Brand Name" :class="['']" :attribute_tags="['disabled' => 'disabled']" :value="$model->name ?? ''"/>
                 <x-sap-input-field type="text" name="domain" id="domain" label="Domain" :class="['']" :attribute_tags="[]" :value="$model->domain ?? ''"/>
                 <x-sap-date-field name="published_at" id="published_at" label="Published Date" :class="['']" :attribute_tags="[]" :value="$model->published_at ?? ''"/>
                 <x-sap-date-field name="expired_at" id="expired_at" label="Expired Date" :class="['']" :attribute_tags="[]" :value="$model->expired_at ?? ''"/>

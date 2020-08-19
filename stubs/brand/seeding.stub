@@ -15,5 +15,6 @@ class Sap{%brand_name%}Seeding extends Migration
             'expired_at' => null,
             'status' => 'P',
         ]);
+        \cache::forget('brand-{%brand_name%}');
     }
 }
