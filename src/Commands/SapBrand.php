@@ -19,11 +19,11 @@ class SapBrand extends Command
 
     public function handle()
     {
-        $this->brand = $this->argument('brand');
+        $this->brand = \Str::studly($this->argument('brand'));
         $this->domain = !empty($this->option('domain'))? $this->option('domain'):(strtolower($this->brand).'.test');
         $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
-        $this->replaces['{%brand_string%}'] = $brand_string = \Str::camel($this->brand);
+        $this->replaces['{%brand_string%}'] = $brand_string = strtolower($this->brand);
         $this->replaces['{%custom_controller_namespace%}'] = str_replace('Admin', 'Brand', config('sap.custom_controller_namespace'));
         $this->brand_path = $brand_path = resource_path('views/brand/'.$brand_string);
         if (!$this->files->exists($brand_path)) {
@@ -127,12 +127,12 @@ class SapBrand extends Command
     protected function seed()
     {
         $msg = 'Migration file created';
-        $migration_stub = $this->stub_path.'/seeding.stub';
+        $migration_stub = $this->stub_path.'/brand_seed.stub';
         if (!$this->files->exists($migration_stub)) {
             $this->error('Migration stub file not found: <info>'.$migration_stub.'</info>');
             return;
         }
-        $filename = "sap{$this->brand}Seeding.php";
+        $filename = "sap{$this->brand}BrandSeed.php";
         $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
         foreach ($this->files->files(database_path('migrations/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {

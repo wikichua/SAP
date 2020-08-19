@@ -12,6 +12,7 @@
     'Read Activity Logs',
     'Read System Logs',
     'Read Brands',
+    'Read Components',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -36,6 +37,9 @@
             @endcan
             @can('Read Brands')
             <x-sap-menu-item :href="route('brand.list')" :active-pattern="'brand.*'">Brand</x-sap-menu-item>
+            @endcan
+            @can('Read Components')
+            <x-sap-menu-item :href="route('component.list')" :active-pattern="'component.*'">Component</x-sap-menu-item>
             @endcan
             @can('Read Activity Logs')
             <x-sap-menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>

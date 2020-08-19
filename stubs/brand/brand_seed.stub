@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Sap{%brand_name%}Seeding extends Migration
+class Sap{%brand_name%}BrandSeed extends Migration
 {
     public function up()
     {

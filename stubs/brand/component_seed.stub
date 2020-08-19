@@ -1,0 +1,16 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Sap{%comp_name%}ComponentSeed extends Migration
+{
+    public function up()
+    {
+        app(config('sap.models.component'))->query()->create([
+            'name' => '{%comp_name%}',
+            'status' => 'P',
+        ]);
+    }
+}

@@ -56,6 +56,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapMake::class,
             Commands\SapES::class,
             Commands\SapBrand::class,
+            Commands\SapComponent::class,
         ]);
     }
 
@@ -185,7 +186,7 @@ class SAPServiceProvider extends ServiceProvider
         if (File::exists(resource_path('views/brand'))) {
             foreach (File::directories(resource_path('views/brand')) as $dir) {
                 $brandName = basename($dir);
-                $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () {
+                $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
                     return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
                 });
                 if ($brand) {
