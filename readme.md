@@ -39,12 +39,10 @@
 1. Socialite (support github, linkedin, google, facebook, twitter)
 1. File Manager (https://github.com/UniSharp/laravel-filemanager)
 1. Generate Brand Site with Subdomain
+1. Component Management with try it online
 
 ### Todo List
-1. Brand Management
-1. Generate Brand while inserting into CRUD at Admin
-1. Component Management
-1. Generate Component while inserting into CRUD at Admin
+1.
 
 ## Installation
 
@@ -76,7 +74,6 @@ In your app/User.php
 class User extends \Wikichua\SAP\Models\User
 {
     use Notifiable;
-
     use \Wikichua\SAP\Http\Traits\AdminUser;
     use \Wikichua\SAP\Http\Traits\ModelScopes;
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
@@ -169,6 +166,21 @@ valet link sub.domain.com
 valet secure
 
 ```
+
+Oh ya... don't forget the migration
+
+##### Surely need component
+
+> php artisan sap:comp NewComponent
+
+And sure you will see this...
+
+```bash
+Component created successfully.
+Migration file created: /project/database/migrations/2020_08_19_000000_sapNewComponentComponentSeed.php
+```
+
+Oh ya... don't forget the migration
 
 ##### To exclude php debugbar render on ur API url
 
