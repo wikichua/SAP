@@ -126,3 +126,25 @@ function isMenuActive($patterns = [])
 {
     return preg_match('/'.(implode('|', $patterns)).'/', request()->route()->getName())? 'active':'';
 }
+
+function viewRenderer($__php, $__data = [])
+{
+    $__data['__env'] = app(\Illuminate\View\Factory::class);
+    $obLevel = ob_get_level();
+    ob_start();
+    extract($__data, EXTR_SKIP);
+    try {
+        eval('?' . '>' . $__php);
+    } catch (Exception $e) {
+        while (ob_get_level() > $obLevel) {
+            ob_end_clean();
+        }
+        throw $e;
+    } catch (Throwable $e) {
+        while (ob_get_level() > $obLevel) {
+            ob_end_clean();
+        }
+        throw new \Symfony\Component\Debug\Exception\FatalThrowableError($e);
+    }
+    return ob_get_clean();
+}

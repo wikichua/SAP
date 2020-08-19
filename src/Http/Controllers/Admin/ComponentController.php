@@ -23,6 +23,7 @@ class ComponentController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.component.actions', compact('model'))->render();
+                $model->usage = "&lt;x-".\Str::kebab($model->name).">&lt;/x-".\Str::kebab($model->name).">";
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -37,6 +38,7 @@ class ComponentController extends Controller
         $getUrl = route('component.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true, 'filterable' => true],
+            ['title' => 'Usage Example', 'data' => 'usage', 'sortable' => false, 'filterable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.component.index', compact('html', 'getUrl'));
@@ -46,5 +48,16 @@ class ComponentController extends Controller
     {
         $model = app(config('sap.models.component'))->query()->findOrFail($id);
         return view('sap::admin.component.show', compact('model'));
+    }
+
+    public function try(Request $request, $id)
+    {
+        $model = app(config('sap.models.component'))->query()->findOrFail($id);
+        $request->validate([
+            "code" => "required",
+        ]);
+        $code = $request->input('code');
+        $code = \Blade::compileString($code);
+        return viewRenderer($code);
     }
 }

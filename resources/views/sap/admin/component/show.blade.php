@@ -13,16 +13,36 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
-            @csrf
-            <x-sap-display-field type="text" name="name" id="name" label="Brand Name" :value="$model->name" type=""/>
+        <div class="table">
+            <div class="row">
+                <div class="col">
+                    <form novalidate method="POST" action="{{ route('component.try',[$model->id]) }}" id="component-try-form">
+                        @csrf
+                        <x-sap-textarea-field name="code" id="code" label="Try It" :class="['']" :attribute_tags="[]" value="<x-{{ \Str::kebab($model->name) }}></x-{{ \Str::kebab($model->name) }}>"/>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <h6>Preview</h6>
+                    <div id="preview-div"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 @push('scripts')
 <script>
-	$(document).ready(function() {
-	});
+   $(document).ready(function() {
+    $(document).on('submit', '#component-try-form', function(event) {
+        event.preventDefault();
+        let form = $(this);
+        let action = form.attr('action');
+        axios.post(action, new FormData(form[0])).then((response) => {
+            $('#preview-div').html(response.data);
+        });
+    });
+    $('#component-try-form').trigger('submit');
+});
 </script>
 @endpush

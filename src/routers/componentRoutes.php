@@ -7,5 +7,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], 'list', 'ComponentController@index')->name('component.list');
 
         Route::match(['get', 'head'], '{model}/read', 'ComponentController@show')->name('component.show');
+        Route::match(['post'], '{model}/try', 'ComponentController@try')->name('component.try');
     });
 });
