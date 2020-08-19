@@ -110,6 +110,9 @@ class SAPServiceProvider extends ServiceProvider
             // filemanager
             base_path('vendor/unisharp/laravel-filemanager/src/config/lfm.php') => config_path('lfm.php'),
             base_path('vendor/unisharp/laravel-filemanager/public') => public_path('vendor/laravel-filemanager'),
+            // elasticsearch
+            // base_path('vendor/cviebrock/laravel-elasticsearch/config/elasticsearch.php') => config_path('elasticsearch.php'),
+
         ], 'sap.install');
 
         // Publishing the translation files.

@@ -34,10 +34,13 @@ class SapES extends Command
     public function es($model)
     {
         foreach (app($model)->query()->cursor() as $data) {
-            if ($this->option('clean')) {
-                $this->elasticsearch->indices()->delete([
+            $param = [
                     'index' => app($model)->getSearchIndex(),
-                ]);
+                ];
+            if ($this->option('clean')) {
+                if ($this->elasticsearch->indices()->exists($param)) {
+                    $this->elasticsearch->indices()->delete($param);
+                }
             } else {
                 $this->elasticsearch->index([
                     'index' => $data->getSearchIndex(),
