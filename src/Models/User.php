@@ -18,6 +18,7 @@ class User extends Authenticatable
 
     protected $appends = ['roles_string'];
     protected $fillable = [];
+    public $searchableFields = ['name','email'];
 
     public function getRolesStringAttribute()
     {

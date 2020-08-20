@@ -77,7 +77,7 @@ class SapMake extends Command
     protected function reinstate()
     {
         $config_form = $this->config['form'];
-        $upload_strings = $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $relationships_query = [];
+        $upload_strings = $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $searchable_fields = $relationships_query = [];
 
         foreach ($config_form as $field => $options) {
             $this->replaces['{%field_variable%}'] = studly_case($field);
@@ -255,6 +255,7 @@ EOT;
                     case 'textarea':
                         $scopes[] = $this->indent().'return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
                         $searches[] = $this->indent().'<x-sap-search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
+                        $searchable_fields[] = "'".$field."'";
                         break;
                 }
 
@@ -274,12 +275,12 @@ EOT;
             $mutators[] = implode('', $mutator);
         }
         $appends[] = "'readUrl'";
-        $appends[] = "'esField'";
 
         $this->replaces['{%fillable_array%}'] = implode(",\n".$this->indent(2), $fillables);
         $this->replaces['{%mutators%}'] = implode(",\n".$this->indent(2), $mutators);
         $this->replaces['{%model_casts%}'] = "protected \$casts = [\n".$this->indent(2).implode(",\n".$this->indent(2), $casts)."\n".$this->indent(1).'];';
         $this->replaces['{%model_appends%}'] = "protected \$appends = [\n".$this->indent(2).implode(",\n".$this->indent(2), $appends)."\n".$this->indent(1).'];';
+        $this->replaces['{%searchable_fields%}'] = "protected \$searchableFields = [\n".$this->indent(2).implode(",\n".$this->indent(2), $searchable_fields)."\n".$this->indent(1).'];';
         $this->replaces['{%relationships%}'] = $relationships ? trim(implode(PHP_EOL, $relationships)) : '';
         $this->replaces['{%relationships_query%}'] = $relationships_query ? "->with('".implode("', '", $relationships_query)."')" : '';
         $this->replaces['{%user_timezones%}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';

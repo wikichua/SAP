@@ -34,7 +34,7 @@
 1. User Impersonate
 1. Log Viewer (I call it system loging)
 1. Chatify (Forked from https://github.com/munafio/chatify)
-1. Global Search using Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)
+1. Global Search using ~Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)~ Temporarily remove elasticsearch due to indexing issue. Looking into scout on elasticsearch driver..
 1. Advanced filter prebuild text, date range and select
 1. Socialite (support github, linkedin, google, facebook, twitter)
 1. File Manager (https://github.com/UniSharp/laravel-filemanager)
@@ -42,7 +42,7 @@
 1. Component Management with try it online
 
 ### Todo List
-1.
+1. Scout on elasticsearch driver
 
 ## Installation
 
@@ -196,24 +196,10 @@ At your debugbar.php
 ```
 
 ##### Elastic Search...
-
-Refering to sap.php in your config directory.
+Then in your all models
 ```php
-'elasticsearch_models' => [
-    'user' => '\App\User',
-    'permission' => '\Wikichua\SAP\Models\Permission',
-    ...
-],
+protected $searchableFields = []; // Add your field, preferably field that you indexed in your table schema (It's a like clause I think it will probably cancelling the index search...)
 ```
-Feel free to add in your desire searchable model in full namespace.
-
-Then in your model
-```php
-protected $EsFields = [];
-```
-Append in any of your wish to search fields (I somehow found it, date datatype can't search... hmmm...)
-Run this to reindexing your data into elasticsearch cache.
-> php artisan sap:es
 
 ##### Social Lite
 

@@ -59,13 +59,13 @@ function getModels($path, $namespace)
     return $out;
 }
 
-function esModelsList()
+function getModelsList()
 {
-    return \Cache::remember('esModelsList', (60*60*24), function () {
-        $sap_models = getModels(base_path('packages/wikichua/sap/src/Models'), config('sap.model_namespace'));
-        $app_models = getModels(app_path(), config('sap.custom_model_namespace'));
-        return array_merge($sap_models, $app_models);
-    });
+    // return \Cache::remember('getModelsList', (60*60*24), function () {
+    $sap_models = getModels(base_path('packages/wikichua/sap/src/Models'), config('sap.model_namespace'));
+    $app_models = getModels(app_path(), config('sap.custom_model_namespace'));
+    return array_merge($sap_models, $app_models);
+    // });
 }
 
 

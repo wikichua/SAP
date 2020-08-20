@@ -6,7 +6,6 @@ use Illuminate\Support\Carbon;
 
 trait ModelScopes
 {
-    use \Wikichua\SAP\Http\Traits\ElasticSearchable;
     public function scopeFilter($query, $filters)
     {
         parse_str($filters, $searches);

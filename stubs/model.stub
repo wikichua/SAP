@@ -22,7 +22,7 @@ class {%model_class%} extends Eloquent
 
     {%model_appends%}
 
-    protected $EsFields = [];
+    {%searchable_fields%}
 
     {%model_casts%}
 

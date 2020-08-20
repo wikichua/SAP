@@ -59,6 +59,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
             return response()->json(compact('url'));
         })->name('editor.upload_image');
 
-        Route::match(['get','post'], '/search', 'Admin\ElasticSearchController@index')->name('global.search');
+        Route::match(['get','post'], '/search', 'Admin\GlobalSearchController@index')->name('global.search');
     });
 });

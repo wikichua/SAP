@@ -10,8 +10,8 @@ class Permission extends Model
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
-    protected $appends = ['readUrl','esField'];
-    protected $EsFields = ['name','group'];
+    protected $appends = ['readUrl'];
+    public $searchableFields = ['name'];
 
     // roles relationship
     public function roles()
