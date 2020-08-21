@@ -60,20 +60,6 @@ class SAPServiceProvider extends ServiceProvider
         ]);
 
         $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
-
-        $env = base_path('.env');
-        if (env('SCOUT_DRIVER', '') == '' && File::exists($env) && File::isWritable($env)) {
-            $str[] = 'SCOUT_DRIVER=\Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
-            if (env('ELASTICSEARCH_HOST', '') == '') {
-                $str[] = 'ELASTICSEARCH_HOST=localhost:9200';
-            }
-            if (strpos(File::get($env), 'SCOUT_DRIVER')) {
-                $content = str_replace('SCOUT_DRIVER=', implode(PHP_EOL, $str), File::get($env));
-                File::replace($env, $content);
-            } else {
-                File::append($env, PHP_EOL.implode(PHP_EOL, $str));
-            }
-        }
     }
 
     public function register()
