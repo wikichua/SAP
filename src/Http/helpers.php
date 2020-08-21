@@ -62,7 +62,7 @@ function getModels($path, $namespace)
 function getModelsList()
 {
     // return \Cache::remember('getModelsList', (60*60*24), function () {
-    $sap_models = getModels(base_path('packages/wikichua/sap/src/Models'), config('sap.model_namespace'));
+    $sap_models = getModels(base_path('vendor/wikichua/sap/src/Models'), config('sap.model_namespace'));
     if (($key = array_search('\Wikichua\SAP\Models\User', $sap_models)) !== false) {
         unset($sap_models[$key]);
     }
