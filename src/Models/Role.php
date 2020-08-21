@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
-    protected $appends = ['isAdmin'];
+    protected $appends = ['isAdmin','readUrl'];
+    public $searchableFields = ['name'];
 
-    // permissions relationship
     public function permissions()
     {
         return $this->belongsToMany(config('sap.models.permission'));
@@ -31,5 +29,10 @@ class Role extends Model
     public function scopeFilterAdmin($query, $search)
     {
         return $query->where('admin', $search);
+    }
+
+    public function getReadUrlAttribute($value)
+    {
+        return $this->readUrl = route('role.show', $this->id);
     }
 }

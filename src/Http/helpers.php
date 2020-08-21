@@ -63,6 +63,9 @@ function getModelsList()
 {
     // return \Cache::remember('getModelsList', (60*60*24), function () {
     $sap_models = getModels(base_path('packages/wikichua/sap/src/Models'), config('sap.model_namespace'));
+    if (($key = array_search('\Wikichua\SAP\Models\User', $sap_models)) !== false) {
+        unset($sap_models[$key]);
+    }
     $app_models = getModels(app_path(), config('sap.custom_model_namespace'));
     return array_merge($sap_models, $app_models);
     // });

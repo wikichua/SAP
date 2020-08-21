@@ -40,9 +40,10 @@
 1. File Manager (https://github.com/UniSharp/laravel-filemanager)
 1. Generate Brand Site with Subdomain
 1. Component Management with try it online
+1. Scout on elasticsearch driver (https://github.com/matchish/laravel-scout-elasticsearch)
 
 ### Todo List
-1. Scout on elasticsearch driver
+1. Queue Manager (Laravel Horizon is cool, but...)
 
 ## Installation
 
@@ -75,9 +76,7 @@ class User extends \Wikichua\SAP\Models\User
 {
     use Notifiable;
     use \Wikichua\SAP\Http\Traits\AdminUser;
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
     use \Laravel\Sanctum\HasApiTokens;
     use \Lab404\Impersonate\Models\Impersonate;
 ```
@@ -198,7 +197,11 @@ At your debugbar.php
 ##### Elastic Search...
 Then in your all models
 ```php
-protected $searchableFields = []; // Add your field, preferably field that you indexed in your table schema (It's a like clause I think it will probably cancelling the index search...)
+protected $searchableFields = [];
+```
+Import your data into elastic search seemlessly
+```bash
+php artisan sap:import
 ```
 
 ##### Social Lite

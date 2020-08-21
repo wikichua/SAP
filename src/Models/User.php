@@ -7,16 +7,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
-class User extends Authenticatable
+abstract class User extends Authenticatable
 {
     use Notifiable;
-
     use \Wikichua\SAP\Http\Traits\AdminUser;
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    use \Laravel\Sanctum\HasApiTokens;
+    use \Lab404\Impersonate\Models\Impersonate;
 
-    protected $appends = ['roles_string'];
+    protected $appends = ['roles_string','readUrl'];
     protected $fillable = [];
     public $searchableFields = ['name','email'];
 
@@ -55,5 +54,10 @@ class User extends Authenticatable
             $this->inUserTimezone($start_at),
             $this->inUserTimezone($stop_at)
         ]);
+    }
+
+    public function getReadUrlAttribute($value)
+    {
+        return $this->readUrl = route('user.show', $this->id);
     }
 }

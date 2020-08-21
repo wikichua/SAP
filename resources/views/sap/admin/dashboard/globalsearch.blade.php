@@ -9,20 +9,18 @@
         </div>
     </div>
     <div class="card-columns">
-    @forelse ($items as $model => $item)
-        @foreach ($item as $itm)
+    @forelse ($items as $item)
         <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">{{ $model }}</h5>
-                <a href="{{ $itm->readUrl ?? '#' }}" class="btn btn-link stretched-link">
-                <p class="card-text">{{ $itm->{$itm->esField} ?? $itm->name ?? '' }}</p>
+                <h5 class="card-title">{{ basename(str_replace('\\', '/',get_class($item))) }}</h5>
+                <a href="{{ $item->readUrl ?? '#' }}" class="btn btn-link stretched-link">
+                <p class="card-text">{{ $item->{$item->searchableFields[0]} ?? $item->name ?? '' }}</p>
                 </a>
-                <p class="card-text"><small class="text-muted">{{ $itm->updated_at ?? $itm->created_at ?? '' }}</small></p>
+                <p class="card-text"><small class="text-muted">{{ $item->updated_at ?? $item->created_at ?? '' }}</small></p>
             </div>
         </div>
-        @endforeach
     @empty
-        {{-- empty expr --}}
+        <p>No search result</p>
     @endforelse
     </div>
 @endsection

@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $appends = ['readUrl'];
     public $searchableFields = ['name'];

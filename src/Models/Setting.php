@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
-    protected $appends = ['isMultiple', 'rows','readUrl','esField'];
-    // protected $EsFields = ['key'];
+    protected $appends = ['isMultiple', 'rows','readUrl'];
+    public $searchableFields = ['key'];
 
     public function scopeFilteKey($query, $search)
     {

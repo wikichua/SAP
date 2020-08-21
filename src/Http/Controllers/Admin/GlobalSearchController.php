@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Matchish\ScoutElasticSearch\Mixed;
 
 class GlobalSearchController extends Controller
 {
@@ -24,19 +25,19 @@ class GlobalSearchController extends Controller
     private function search(string $queryStr = '')
     {
         $models = getModelsList();
-        $models = ['\App\User','\Wikichua\SAP\Models\Permission',];
+        $items = [];
+        $searchable_models = [];
+        // $models = ['\App\User','\Wikichua\SAP\Models\Permission',];
         if (count($models)) {
             foreach ($models as $model) {
                 $name = basename(str_replace('\\', '/', $model));
                 $model = app($model);
                 if (isset($model->searchableFields) && count($model->searchableFields)) {
-                    $searchableFields = $model->searchableFields;
-                    $items[$name] = $model->where(function ($q) use ($queryStr, $searchableFields) {
-                        foreach ($searchableFields as $field) {
-                            $q->orWhere($field, 'like', "%{$queryStr}%");
-                        }
-                    })->take(10)->get();
+                    $searchable_models[] = $model->searchableAs();
                 }
+            }
+            if (count($searchable_models)) {
+                $items = Mixed::search($queryStr)->within(implode(',', $searchable_models))->get();
             }
         }
         return $items;

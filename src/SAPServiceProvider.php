@@ -56,7 +56,22 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapMake::class,
             Commands\SapBrand::class,
             Commands\SapComponent::class,
+            Commands\SapImport::class,
         ]);
+
+        $env = base_path('.env');
+        if (env('SCOUT_DRIVER', '') == '' && File::exists($env) && File::isWritable($env)) {
+            $str[] = 'SCOUT_DRIVER=\Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
+            if (env('ELASTICSEARCH_HOST', '') == '') {
+                $str[] = 'ELASTICSEARCH_HOST=localhost:9200';
+            }
+            if (strpos(File::get($env), 'SCOUT_DRIVER')) {
+                $content = str_replace('SCOUT_DRIVER=', implode(PHP_EOL, $str), File::get($env));
+                File::replace($env, $content);
+            } else {
+                File::append($env, PHP_EOL.implode(PHP_EOL, $str));
+            }
+        }
     }
 
     public function register()
@@ -68,6 +83,8 @@ class SAPServiceProvider extends ServiceProvider
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });
+
+        $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
     public function provides()
@@ -109,7 +126,10 @@ class SAPServiceProvider extends ServiceProvider
             // filemanager
             base_path('vendor/unisharp/laravel-filemanager/src/config/lfm.php') => config_path('lfm.php'),
             base_path('vendor/unisharp/laravel-filemanager/public') => public_path('vendor/laravel-filemanager'),
-
+            // scout
+            base_path('vendor/laravel/scout/config/scout.php') => config_path('scout.php'),
+            // Matchish\ScoutElasticSearch elasticsearch
+            base_path('vendor/matchish/laravel-scout-elasticsearch/config/elasticsearch.php') => config_path('elasticsearch.php'),
         ], 'sap.install');
 
         // Publishing the translation files.

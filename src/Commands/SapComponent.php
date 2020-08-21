@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 class SapComponent extends Command
 {
     protected $signature = 'sap:comp {name} {--inline} {--force}';
-    protected $description = 'Make Up The BRAND';
+    protected $description = 'Make Up The COMPONENT';
 
     public function __construct()
     {

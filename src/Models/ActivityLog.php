@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActivityLog extends Model
 {
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     const UPDATED_AT = null;
 
     protected $casts = [
         'data' => 'array',
     ];
+    public $searchableFields = [];
 
     // user relationship
     public function user()

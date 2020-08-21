@@ -8,9 +8,7 @@ use Illuminate\Support\Carbon;
 class Component extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    use \Wikichua\SAP\Http\Traits\ModelScopes;
-    use \Wikichua\SAP\Http\Traits\DynamicFillable;
-    use \Wikichua\SAP\Http\Traits\UserTimezone;
+    use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $dates = ['deleted_at'];
     protected $fillable = [
@@ -22,10 +20,9 @@ class Component extends Model
 
     protected $appends = [
         'readUrl',
-        'esField'
     ];
 
-    protected $EsFields = ['name'];
+    protected $searchableFields = ['name'];
 
     protected $casts = [
 
