@@ -59,6 +59,8 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapImport::class,
         ]);
 
+        $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
+
         $env = base_path('.env');
         if (env('SCOUT_DRIVER', '') == '' && File::exists($env) && File::isWritable($env)) {
             $str[] = 'SCOUT_DRIVER=\Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
@@ -83,8 +85,6 @@ class SAPServiceProvider extends ServiceProvider
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });
-
-        $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
     public function provides()

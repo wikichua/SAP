@@ -15,6 +15,6 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'expired_at' => null,
             'status' => 'P',
         ]);
-        \cache::forget('brand-{%brand_name%}');
+        \Cache::forget('brand-{%brand_name%}');
     }
 }
