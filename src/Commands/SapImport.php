@@ -13,7 +13,10 @@ class SapImport extends Command
     public function __construct()
     {
         parent::__construct();
+    }
 
+    public function handle()
+    {
         $env = base_path('.env');
         if (env('SCOUT_DRIVER', '') == '' && File::exists($env) && File::isWritable($env)) {
             $str[] = 'SCOUT_DRIVER=\Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
@@ -27,10 +30,7 @@ class SapImport extends Command
                 File::append($env, PHP_EOL.implode(PHP_EOL, $str));
             }
         }
-    }
 
-    public function handle()
-    {
         foreach (getModelsList() as $model) {
             \Artisan::call('scout:import', [
                 'searchable' => $model
