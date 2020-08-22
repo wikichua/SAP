@@ -58,8 +58,6 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapComponent::class,
             Commands\SapImport::class,
         ]);
-
-        $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
     public function register()
@@ -71,6 +69,7 @@ class SAPServiceProvider extends ServiceProvider
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });
+        $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
     public function provides()
