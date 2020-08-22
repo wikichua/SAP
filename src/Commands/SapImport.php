@@ -32,6 +32,7 @@ class SapImport extends Command
         }
 
         foreach (getModelsList() as $model) {
+            info($model);
             \Artisan::call('scout:import', [
                 'searchable' => $model
             ]);

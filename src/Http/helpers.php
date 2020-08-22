@@ -52,8 +52,8 @@ function getModels($path, $namespace)
     );
     foreach ($iterator as $item) {
         if ($item->isReadable() && $item->isFile() && mb_strtolower($item->getExtension()) === 'php') {
-            $out[] =  $namespace .
-                    str_replace("/", "\\", mb_substr($item->getRealPath(), mb_strlen($path), -4));
+            // $out[] =  $namespace . str_replace("/", "\\", mb_substr($item->getRealPath(), mb_strlen($path), -4));
+            $out[] =  $namespace .'\\'. basename(str_replace('.'.$item->getExtension(), '', $item->getRealPath()));
         }
     }
     return $out;
