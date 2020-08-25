@@ -44,7 +44,6 @@
 
 ### Todo List
 1. Queue Manager (Laravel Horizon is cool, but...)
-1. Backend office of the cube project
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix
 3. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.
 4. Easily integrated with internal microservice or external microservice by lumen or any framework.
