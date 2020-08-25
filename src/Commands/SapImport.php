@@ -19,7 +19,7 @@ class SapImport extends Command
     {
         $env = base_path('.env');
         if (env('SCOUT_DRIVER', '') == '' && File::exists($env) && File::isWritable($env)) {
-            $str[] = 'SCOUT_DRIVER=\Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
+            $str[] = 'SCOUT_DRIVER=Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine';
             if (env('ELASTICSEARCH_HOST', '') == '') {
                 $str[] = 'ELASTICSEARCH_HOST=localhost:9200';
             }
@@ -32,7 +32,6 @@ class SapImport extends Command
         }
 
         foreach (getModelsList() as $model) {
-            info($model);
             \Artisan::call('scout:import', [
                 'searchable' => $model
             ]);

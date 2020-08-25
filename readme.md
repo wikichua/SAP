@@ -49,7 +49,7 @@
 4. Easily integrated with internal microservice or external microservice by lumen or any framework.
 5. Developer can build microservice within Laravel unless the microservice have to host in other instance.
 6. Components that used globally in system or brand. Can refer back in BO to confirm the usage before develop.
-7. Helpers or functions created can be listed out via artisan (will develop this feature) but my suggestion is using oopt instead of functions following the psr4 which able to autoload and cache properly.
+7. ~Helpers or functions created can be listed out via artisan (will develop this feature) but my suggestion is using oopt instead of functions following the psr4 which able to autoload and cache properly.~
 8. Plug and play module (plan to make exporting module via artisan then import from BO) 1 issue is the versioning might have issue or more step to be done. Current thinking is, only product manager or team lead export the finalized new module and import via BO at client instance. In this case, this module if let say need to integrate with another package, we have to transform that package to microservices.
 
 ## Installation
