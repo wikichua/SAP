@@ -4,5 +4,8 @@ namespace Wikichua\SAP;
 
 class SAP
 {
-    // Build wonderful things
+    public function dump($value='hello world')
+    {
+        dd($value);
+    }
 }

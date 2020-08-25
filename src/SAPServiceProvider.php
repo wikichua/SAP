@@ -69,6 +69,7 @@ class SAPServiceProvider extends ServiceProvider
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });
+        $this->app->register(\Wikichua\SAP\HelpServiceProvider::class);
         $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
@@ -151,14 +152,14 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadComponents()
     {
-        // foreach (config('sap.components') as $slug => $class) {
-        //     Blade::component('sap-' . $slug, $class);
-        // }
+        // $array = [];
         foreach (File::files(__DIR__.'/View/Components/') as $file) {
             $basename = str_replace('.'.$file->getExtension(), '', $file->getBasename());
             $class = config('sap.component_namespace').'\\'.$basename;
             Blade::component('sap-'.\Str::snake($basename, '-'), get_class(new $class()));
+            // $array[\Str::snake($basename, '-')] = $class;
         }
+        // $this->loadViewComponentsAs('sap', $array); // not using this as in double looping the components
     }
 
     protected function gatePermissions()
