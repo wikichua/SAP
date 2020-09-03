@@ -5,9 +5,9 @@ namespace Wikichua\SAP\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-class SapImport extends Command
+class SapES extends Command
 {
-    protected $signature = 'sap:import';
+    protected $signature = 'sap:es';
     protected $description = 'Reimport Models to Elastic Search';
 
     public function __construct()

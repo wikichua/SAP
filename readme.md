@@ -80,12 +80,6 @@ In your app/User.php
 
 ```php
 class User extends \Wikichua\SAP\Models\User
-{
-    use Notifiable;
-    use \Wikichua\SAP\Http\Traits\AdminUser;
-    use \Wikichua\SAP\Http\Traits\AllModelTraits;
-    use \Laravel\Sanctum\HasApiTokens;
-    use \Lab404\Impersonate\Models\Impersonate;
 ```
 
 Then you continue in your terminal
@@ -208,7 +202,7 @@ protected $searchableFields = [];
 ```
 Import your data into elastic search seemlessly
 ```bash
-php artisan sap:import
+php artisan sap:es
 ```
 
 ##### Social Lite

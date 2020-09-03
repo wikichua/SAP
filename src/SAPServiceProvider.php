@@ -56,7 +56,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapMake::class,
             Commands\SapBrand::class,
             Commands\SapComponent::class,
-            Commands\SapImport::class,
+            Commands\SapES::class,
         ]);
     }
 

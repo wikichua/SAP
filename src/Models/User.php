@@ -9,7 +9,6 @@ use Illuminate\Support\Carbon;
 
 abstract class User extends Authenticatable
 {
-    use Notifiable;
     use \Wikichua\SAP\Http\Traits\AdminUser;
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
     use \Laravel\Sanctum\HasApiTokens;
