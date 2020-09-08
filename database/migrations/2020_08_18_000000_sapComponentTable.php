@@ -22,6 +22,6 @@ class SapComponentTable extends Migration
     public function down()
     {
         app(config('sap.models.permission'))->where('group', 'Components')->delete();
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('components');
     }
 }

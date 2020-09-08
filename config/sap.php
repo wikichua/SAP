@@ -34,6 +34,7 @@ return [
         'setting' => '\Wikichua\SAP\Models\Setting',
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
         'brand' => '\Wikichua\SAP\Models\Brand',
+        'page' => '\Wikichua\SAP\Models\Page',
         'component' => '\Wikichua\SAP\Models\Component',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',

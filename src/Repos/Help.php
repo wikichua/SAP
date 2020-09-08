@@ -132,6 +132,7 @@ class Help
 
     public function viewRenderer($__php, $__data = [])
     {
+        $__php = \Blade::compileString($__php);
         $__data['__env'] = app(\Illuminate\View\Factory::class);
         $obLevel = ob_get_level();
         ob_start();

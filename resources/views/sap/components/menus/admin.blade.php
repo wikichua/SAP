@@ -12,6 +12,7 @@
     'Read Activity Logs',
     'Read System Logs',
     'Read Brands',
+    'Read Pages',
     'Read Components',
 ])
 <li class="nav-item">
@@ -37,6 +38,9 @@
             @endcan
             @can('Read Brands')
             <x-sap-menu-item :href="route('brand.list')" :active-pattern="'brand.*'">Brand</x-sap-menu-item>
+            @endcan
+            @can('Read Pages')
+            <x-sap-menu-item :href="route('page.list')" :active-pattern="'page.*'">Page</x-sap-menu-item>
             @endcan
             @can('Read Components')
             <x-sap-menu-item :href="route('component.list')" :active-pattern="'component.*'">Component</x-sap-menu-item>

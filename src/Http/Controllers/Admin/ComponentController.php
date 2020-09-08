@@ -56,8 +56,6 @@ class ComponentController extends Controller
         $request->validate([
             "code" => "required",
         ]);
-        $code = $request->input('code');
-        $code = \Blade::compileString($code);
-        return viewRenderer($code);
+        return viewRenderer($request->input('code'));
     }
 }

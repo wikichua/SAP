@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 class SapBrand extends Command
 {
@@ -35,6 +36,7 @@ class SapBrand extends Command
             }
             $this->info('So you\'ve decided to overwrite it!');
         }
+        $this->env();
         $this->assets();
         $this->route();
         $this->controller();
@@ -49,6 +51,27 @@ class SapBrand extends Command
         $this->line('<info>cd ./public</info>');
         $this->line('<info>valet link '.strtolower($this->domain).'</info>');
         $this->line('<info>valet secure</info>');
+    }
+
+    protected function env()
+    {
+        $env = base_path('.env');
+        if (File::exists($env) == false || File::isWritable($env) == false) {
+            $this->error('.env undetected or is not writable');
+            return;
+        }
+        $str[] = $this->brand.'Url="'.$this->domain.'"';
+        if (env($this->brand.'Url', '') == '') {
+            if (strpos(File::get($env), $this->brand.'Url')) {
+                $content = str_replace($this->brand.'Url=', implode(PHP_EOL, $str), File::get($env));
+                File::replace($env, $content);
+            } else {
+                File::append($env, PHP_EOL.implode(PHP_EOL, $str));
+            }
+        } else {
+            $content = str_replace($this->brand.'Url="'.env($this->brand.'Url', '').'"', implode(PHP_EOL, $str), File::get($env));
+            File::replace($env, $content);
+        }
     }
 
     protected function assets()

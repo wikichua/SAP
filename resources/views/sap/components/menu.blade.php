@@ -7,6 +7,7 @@
         'activity_log.*',
         'system_log.*',
         'brand.*',
+        'page.*',
         'component.*',
     ]"/>
 @if (Route::has('chatify'))
