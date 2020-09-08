@@ -24,10 +24,10 @@ class {%brand_name%}Controller extends Controller
     public function page(Request $request, $slug)
     {
         $model = app(config('sap.models.page'))->query()
-            ->where('brand_id',$this->brand-id)
+            ->where('brand_id',$this->brand->id)
             ->where('slug',strtolower(trim($slug)))
             ->first();
-        return $this->getViewPage('index', compact('model'));
+        return $this->getViewPage('page', compact('model'));
     }
 
     public function getViewPage($file, array $compact = [])

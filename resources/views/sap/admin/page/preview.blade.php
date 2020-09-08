@@ -6,12 +6,13 @@
 
 @push('styles')
     @foreach ($model->styles as $style)
-    {!! $style !!}
+    {!! $style ?? ''!!}
     @endforeach
 @endpush
 
 @push('scripts')
     @foreach ($model->scripts as $script)
-    {!! $script !!}
+    {!! $script ?? '' !!}
     @endforeach
 @endpush
+

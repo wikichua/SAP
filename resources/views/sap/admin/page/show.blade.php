@@ -12,10 +12,8 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-
-        </div>
+    <div class="embed-responsive embed-responsive-16by9">
+            <iframe src="{{ route('page.preview',[$model->id]) }}"  class="embed-responsive-item"></iframe>
     </div>
 </div>
 @endsection
