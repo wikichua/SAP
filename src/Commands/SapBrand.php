@@ -25,8 +25,7 @@ class SapBrand extends Command
         $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
         $this->replaces['{%brand_string%}'] = $brand_string = strtolower($this->brand);
-        $this->replaces['{%custom_controller_namespace%}'] = str_replace('Admin', 'Brand', config('sap.custom_controller_namespace'));
-        $this->brand_path = $brand_path = resource_path('views/brand/'.$brand_string);
+        $this->brand_path = $brand_path = base_path('brand/'.$brand_string);
         if (!$this->files->exists($brand_path)) {
             $this->files->makeDirectory($brand_path, 0755, true);
         } else {
@@ -36,9 +35,11 @@ class SapBrand extends Command
             }
             $this->info('So you\'ve decided to overwrite it!');
         }
+        $this->autoload();
         $this->env();
         $this->assets();
         $this->route();
+        $this->model();
         $this->controller();
         $this->justCopy('layouts');
         $this->justCopy('pages');
@@ -51,6 +52,22 @@ class SapBrand extends Command
         $this->line('<info>cd ./public</info>');
         $this->line('<info>valet link '.strtolower($this->domain).'</info>');
         $this->line('<info>valet secure</info>');
+        shell_exec('composer dumpautoload');
+    }
+
+    protected function autoload()
+    {
+        $composerjson = base_path('composer.json');
+        if (File::exists($composerjson) == false || File::isWritable($composerjson) == false) {
+            $this->error('composer.json undetected or is not writable');
+            return;
+        }
+        $str[] = '"psr-4": {';
+        $str[] = "\t\t\t".'"Brand\\\":"brand/",';
+        if (strpos(File::get($composerjson), '"Brand\\\":"brand/",') == false) {
+            $content = \Str::replaceFirst($str[0], implode(PHP_EOL, $str), File::get($composerjson));
+            File::replace($composerjson, $content);
+        }
     }
 
     protected function env()
@@ -95,6 +112,14 @@ class SapBrand extends Command
         $this->line('Web file created: <info>'.$route_file.'</info>');
     }
 
+    protected function model()
+    {
+        $dir = 'brand/'.strtolower($this->brand).'/models';
+        if (!$this->files->exists(base_path($dir))) {
+            $this->files->makeDirectory(base_path($dir), 0755, true);
+        }
+    }
+
     protected function controller()
     {
         $controller_stub = $this->stub_path.'/controller.stub';
@@ -102,11 +127,11 @@ class SapBrand extends Command
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
             return;
         }
-        $controller_dir = str_replace('Admin', 'Brand', config('sap.custom_controller_dir'));
-        if (!$this->files->exists(app_path($controller_dir))) {
-            $this->files->makeDirectory(app_path($controller_dir), 0755, true);
+        $controller_dir = 'brand/'.strtolower($this->brand).'/controllers';
+        if (!$this->files->exists(base_path($controller_dir))) {
+            $this->files->makeDirectory(base_path($controller_dir), 0755, true);
         }
-        $controller_file = app_path($controller_dir.'/'.$this->brand.'Controller.php');
+        $controller_file = base_path($controller_dir.'/'.$this->brand.'Controller.php');
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
@@ -156,8 +181,11 @@ class SapBrand extends Command
             return;
         }
         $filename = "sap{$this->brand}BrandSeed.php";
-        $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
-        foreach ($this->files->files(database_path('migrations/')) as $file) {
+        if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/database'))) {
+            $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/database'), 0755, true);
+        }
+        $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
+        foreach ($this->files->files(base_path('brand/'.strtolower($this->brand).'/database/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();
                 $msg = 'Migration file overwritten';

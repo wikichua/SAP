@@ -1,13 +1,13 @@
 <?php
 
-namespace {%custom_controller_namespace%};
+namespace Brand\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class {%brand_name%}Controller extends Controller
 {
-    protected $page_path = 'brand.{%brand_string%}.pages.';
+    protected $page_path = '{%brand_string%}::pages.';
     protected $brand;
     public function __construct()
     {
@@ -27,6 +27,9 @@ class {%brand_name%}Controller extends Controller
             ->where('brand_id',$this->brand->id)
             ->where('slug',strtolower(trim($slug)))
             ->first();
+        if (!$model) {
+            abort(404);
+        }
         return $this->getViewPage('page', compact('model'));
     }
 

@@ -44,6 +44,11 @@ class SAPServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/pub.php');
             $this->loadRoutesFrom(__DIR__.'/web.php');
             $this->loadRoutesFrom(__DIR__.'/api.php');
+
+            foreach (File::directories(base_path('brand')) as $dir) {
+                $brandName = basename($dir);
+                $this->loadMigrationsFrom($dir.'/database');
+            }
         } else {
             if (Schema::hasTable('brands')) {
                 $this->loadBrandsRoutes();
@@ -189,16 +194,18 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadBrandsRoutes()
     {
-        if (File::exists(resource_path('views/brand'))) {
-            foreach (File::directories(resource_path('views/brand')) as $dir) {
-                $brandName = basename($dir);
-                $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
-                    return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
-                });
-                if ($brand) {
-                    if (File::exists($dir.'/web.php')) {
-                        Route::middleware('web')->group($dir.'/web.php');
-                    }
+        if (File::exists(base_path('brand'))) {
+            $brandDomain = request()->getHost();
+            $brand = \Cache::remember('brand-'.$brandDomain, (60*60*24), function () use ($brandDomain) {
+                return app(config('sap.models.brand'))->query()->whereStatus('A')->whereDomain($brandDomain)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
+            });
+            if ($brand) {
+                $brandName = strtolower($brand->name);
+                $dir = base_path('brand/'.$brandName);
+                if (File::exists($dir.'/web.php')) {
+                    Route::middleware('web')->group($dir.'/web.php');
+                    // $this->loadTranslationsFrom($dir.'/lang', $brandName);
+                    $this->loadViewsFrom($dir, $brandName);
                 }
             }
             $brands = app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
