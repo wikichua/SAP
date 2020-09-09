@@ -39,19 +39,27 @@ class SAPServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+        if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
+            foreach (File::directories(base_path('brand')) as $dir) {
+                $brandName = basename($dir);
+                $this->loadMigrationsFrom($dir.'/database');
+            }
+        }
+
         if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
             $this->loadRoutes();
             $this->loadRoutesFrom(__DIR__.'/pub.php');
             $this->loadRoutesFrom(__DIR__.'/web.php');
             $this->loadRoutesFrom(__DIR__.'/api.php');
-
-            foreach (File::directories(base_path('brand')) as $dir) {
-                $brandName = basename($dir);
-                $this->loadMigrationsFrom($dir.'/database');
-            }
         } else {
-            if (Schema::hasTable('brands')) {
-                $this->loadBrandsRoutes();
+            if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
+                foreach (File::directories(base_path('brand')) as $dir) {
+                    $brandName = basename($dir);
+                    $this->loadMigrationsFrom($dir.'/database');
+                }
+                $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
+                $dotenv->load();
+                $this->loadBrandsStuffs();
             }
         }
 
@@ -192,7 +200,7 @@ class SAPServiceProvider extends ServiceProvider
         }
     }
 
-    protected function loadBrandsRoutes()
+    protected function loadBrandsStuffs()
     {
         if (File::exists(base_path('brand'))) {
             $brandDomain = request()->getHost();
