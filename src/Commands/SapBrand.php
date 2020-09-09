@@ -43,6 +43,7 @@ class SapBrand extends Command
         $this->controller();
         $this->justCopy('layouts');
         $this->justCopy('pages');
+        $this->justCopy('config');
         $this->package();
         $this->webpack();
         $this->others();
@@ -207,7 +208,7 @@ class SapBrand extends Command
             $asset_stub = $this->stub_path.'/'.$file;
             $asset_dir = $this->brand_path.'/'.$file;
             $this->files->copy($asset_stub, $asset_dir);
-            $this->line('.gitattributes copied: <info>'.$asset_dir.'</info>');
+            $this->line($file.' copied: <info>'.$asset_dir.'</info>');
         }
     }
 

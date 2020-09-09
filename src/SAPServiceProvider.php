@@ -42,6 +42,11 @@ class SAPServiceProvider extends ServiceProvider
         if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
             foreach (File::directories(base_path('brand')) as $dir) {
                 $brandName = basename($dir);
+                if (File::isDirectory($dir.'/config')) {
+                    foreach (File::files($dir.'/config') as $confFile) {
+                        $this->mergeConfigFrom($confFile, $brandName);
+                    }
+                }
                 $this->loadMigrationsFrom($dir.'/database');
             }
         }
@@ -53,12 +58,8 @@ class SAPServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/api.php');
         } else {
             if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
-                foreach (File::directories(base_path('brand')) as $dir) {
-                    $brandName = basename($dir);
-                    $this->loadMigrationsFrom($dir.'/database');
-                }
-                $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
-                $dotenv->load();
+                // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
+                // $dotenv->load();
                 $this->loadBrandsStuffs();
             }
         }
