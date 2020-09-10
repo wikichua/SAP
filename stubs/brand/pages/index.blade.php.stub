@@ -1,4 +1,4 @@
-@extends('brand.{%brand_string%}.layouts.main')
+@extends('{%brand_string%}::layouts.main')
 
 @section('content')
     The content here and also component can be here too

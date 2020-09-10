@@ -7,34 +7,18 @@ use Illuminate\Http\Request;
 
 class {%brand_name%}Controller extends Controller
 {
+    use \Wikichua\SAP\Http\Traits\BrandControllerTrait;
+
     protected $page_path = '{%brand_string%}::pages.';
     protected $brand;
     public function __construct()
     {
-        $this->brand = app(config('sap.models.brand'))->query()
-            ->where('name','{%brand_name%}')->first();
+        $this->register('{%brand_name%}');
     }
 
     public function index(Request $request)
     {
         $greetings = 'Hello '.$this->brand->name;
         return $this->getViewPage('index', compact('greetings'));
-    }
-
-    public function page(Request $request, $slug)
-    {
-        $model = app(config('sap.models.page'))->query()
-            ->where('brand_id',$this->brand->id)
-            ->where('slug',strtolower(trim($slug)))
-            ->first();
-        if (!$model) {
-            abort(404);
-        }
-        return $this->getViewPage('page', compact('model'));
-    }
-
-    public function getViewPage($file, array $compact = [])
-    {
-        return view($this->page_path.$file, $compact);
     }
 }
