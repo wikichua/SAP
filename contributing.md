@@ -23,4 +23,20 @@ Add this in your composer.json under scripts section:
 ```
 Run composer update
 
+## Composer VSC style of import
+
+```bash
+composer config -g github-oauth.github.com 8d37e2ab2bbce7e977d9fa3a814efab21504243a
+```
+In your composer.json
+
+```json
+    "repositories": {
+        "wikichua/sap": {
+            "type": "vcs",
+            "url": "https://github.com/wikichua/sap.git"
+        }
+    }
+```
+
 **Happy coding**!
