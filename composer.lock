@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afdec437fb37858a1263e93b7246edb0",
+    "content-hash": "b10404e01da0615149475f2597d8af88",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1563,6 +1563,70 @@
                 "twitter"
             ],
             "time": "2020-09-04T11:07:03+00:00"
+        },
+        {
+            "name": "lionix/seo-manager",
+            "version": "v1.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lionix-team/seo-manager.git",
+                "reference": "e3f4bc9ba691ca01ab91b272929991a61e7e3170"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lionix-team/seo-manager/zipball/e3f4bc9ba691ca01ab91b272929991a61e7e3170",
+                "reference": "e3f4bc9ba691ca01ab91b272929991a61e7e3170",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.* || 7.*",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lionix\\SeoManager\\SeoManagerServiceProvider"
+                    ],
+                    "aliases": {
+                        "SeoManager": "Lionix\\SeoManager\\Facades\\SeoManager"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lionix\\SeoManager\\": "src"
+                },
+                "files": [
+                    "src/helpers/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lionix Team",
+                    "email": "packages@lionix-team.com"
+                },
+                {
+                    "name": "Sergey Karakhanyan",
+                    "email": "karakhanyansa@gmail.com"
+                }
+            ],
+            "description": "SEO Manager for Laravel Framework",
+            "keywords": [
+                "laravel",
+                "lionix",
+                "meta",
+                "meta-data",
+                "og-data",
+                "open-graph",
+                "seo",
+                "seo-manager"
+            ],
+            "time": "2020-07-28T02:32:56+00:00"
         },
         {
             "name": "matchish/laravel-scout-elasticsearch",

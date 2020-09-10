@@ -19,4 +19,8 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.lfm');
     }
+    public function seo(Request $request)
+    {
+        return view('sap::admin.dashboard.seo');
+    }
 }

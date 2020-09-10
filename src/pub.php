@@ -19,7 +19,6 @@ Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_nam
         Route::group(['middleware' => ['auth']], function () {
             Route::match(['get', 'head'], '/', 'PubController@home')->name('pub.home');
             Route::get('logout', 'LoginController@logout')->name('pub.logout');
-            Route::match(['get', 'head'], '/chatify', 'PubController@chatify')->name('pub.chatify');
         });
     });
 });

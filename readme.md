@@ -41,8 +41,10 @@
 1. Generate Brand Site with Subdomain
 1. Component Management with try it online
 1. Scout on elasticsearch driver (https://github.com/matchish/laravel-scout-elasticsearch)
+1. Create page as your blog page
 
 ### Todo List
+1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix
 3. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.

@@ -130,6 +130,9 @@ class SAPServiceProvider extends ServiceProvider
             base_path('vendor/laravel/scout/config/scout.php') => config_path('scout.php'),
             // Matchish\ScoutElasticSearch elasticsearch
             base_path('vendor/matchish/laravel-scout-elasticsearch/config/elasticsearch.php') => config_path('elasticsearch.php'),
+            // Lionix\SeoManager
+            __DIR__.'/../config/seo-manager.php' => config_path('seo-manager.php'),
+            base_path('vendor/lionix/seo-manager/src/assets') =>  public_path('vendor/lionix'),
         ], 'sap.install');
 
         // Publishing the translation files.
