@@ -33,7 +33,7 @@
 1. PHP Debug Bar
 1. User Impersonate
 1. Log Viewer (I call it system loging)
-1. Chatify (Forked from https://github.com/munafio/chatify)
+1. ~Chatify (Forked from https://github.com/munafio/chatify)~ Removed, looking into better alternative!
 1. Global Search using ~Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)~ Temporarily remove elasticsearch due to indexing issue. Looking into scout on elasticsearch driver..
 1. Advanced filter prebuild text, date range and select
 1. Socialite (support github, linkedin, google, facebook, twitter)
@@ -190,7 +190,7 @@ At your debugbar.php
     'except' => [
         'telescope*',
         'horizon*',
-        'chatify*',
+        ~'chatify*',~
         'api*',
     ],
 ```
@@ -232,7 +232,7 @@ TWITTER_CLIENT_SECRET=
 
 ```
 
-##### In case munafio/chatify yet supporting latest pusher version...
+<!-- ##### In case munafio/chatify yet supporting latest pusher version...
 
 ```json
 "repositories": {
@@ -251,7 +251,7 @@ TWITTER_CLIENT_SECRET=
 
 ```bash
 $ php artisan vendor:publish --tag=chatify-assets --force
-```
+``` -->
 
 ## Usage
 
