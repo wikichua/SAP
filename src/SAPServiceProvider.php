@@ -58,8 +58,6 @@ class SAPServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/api.php');
         } else {
             if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
-                // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
-                // $dotenv->load();
                 $this->loadBrandsStuffs();
             }
         }
@@ -215,6 +213,10 @@ class SAPServiceProvider extends ServiceProvider
                 $brandName = strtolower($brand->name);
                 $dir = base_path('brand/'.$brandName);
                 if (File::exists($dir.'/web.php')) {
+                    // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
+                    // $dotenv->load();
+                    // dd($dir.'/.env');
+                    // $this->app->loadEnvironmentFrom($dir.'/.env');
                     Route::middleware('web')->group($dir.'/web.php');
                     // $this->loadTranslationsFrom($dir.'/lang', $brandName);
                     $this->loadViewsFrom($dir, $brandName);
