@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34fd1bca57c70bd75d1f0c359a99070d",
+    "content-hash": "afdec437fb37858a1263e93b7246edb0",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -865,16 +865,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.39",
+            "version": "v6.18.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "36db948f3c34577525c4ca91ad70fdfe1b6b92e0"
+                "reference": "e42450df0896b7130ccdb5290a114424e18887c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/36db948f3c34577525c4ca91ad70fdfe1b6b92e0",
-                "reference": "36db948f3c34577525c4ca91ad70fdfe1b6b92e0",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e42450df0896b7130ccdb5290a114424e18887c9",
+                "reference": "e42450df0896b7130ccdb5290a114424e18887c9",
                 "shasum": ""
             },
             "require": {
@@ -1010,7 +1010,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-08T15:10:06+00:00"
+            "time": "2020-09-09T15:02:20+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1781,57 +1781,6 @@
                 }
             ],
             "time": "2020-07-23T08:41:23+00:00"
-        },
-        {
-            "name": "munafio/chatify",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wikichua/chatify.git",
-                "reference": "ee162576410a4142ebb32fa12a6ad3cf25c58646"
-            },
-            "require": {
-                "illuminate/support": "~5|~6|~7",
-                "laravel/helpers": "^1.2",
-                "pusher/pusher-php-server": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Chatify\\ChatifyServiceProvider"
-                    ],
-                    "aliases": {
-                        "Chatify": "Chatify\\Facades\\ChatifyMessenger"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Chatify\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Munaf A. Mahdi",
-                    "email": "munafaqeelmahdi@gmail.com"
-                }
-            ],
-            "description": "A package for Laravel PHP Framework to add a complete real-time chat system.",
-            "keywords": [
-                "chat",
-                "conversations",
-                "laravel",
-                "messenger",
-                "php",
-                "pusher",
-                "real-time",
-                "realtime"
-            ],
-            "time": "2020-08-14T05:54:23+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -7035,9 +6984,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "munafio/chatify": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

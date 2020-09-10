@@ -29,7 +29,6 @@
         "lab404/laravel-impersonate": "^1.7",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
         "pusher/pusher-php-server": "^4.1",
-        "munafio/chatify": "dev-master",
         "laravel/socialite": "^4.4",
         "unisharp/laravel-filemanager": "^2.1",
         "predis/predis": "^1.1",
@@ -54,12 +53,6 @@
     "autoload-dev": {
         "psr-4": {
             "Wikichua\\SAP\\Tests\\": "tests"
-        }
-    },
-    "repositories": {
-        "munafio/chatify": {
-            "type": "git",
-            "url": "https://github.com/wikichua/chatify.git"
         }
     },
     "extra": {

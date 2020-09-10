@@ -27,7 +27,6 @@
             </a>
             {{-- ur own menu here --}}
             <x-sap-menu menu="menu" label="Dashboard" :route="route('pub.home')" icon="fas fa-fw fa-tachometer-alt" :active-patterns="['pub.home.*']"/>
-            <x-sap-menu menu="menu" label="Chatify" :route="route('pub.chatify')" icon="fab fa-fw fa-rocketchat" :active-patterns="['pub.chatify.*']"/>
             {{-- ur own menu end --}}
 
             <hr class="sidebar-divider d-none d-md-block">
