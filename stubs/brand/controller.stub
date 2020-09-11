@@ -1,6 +1,6 @@
 <?php
 
-namespace Brand\{%brand_string%}\Controllers;
+namespace Brand\{%brand_name%}\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
