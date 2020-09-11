@@ -8,7 +8,7 @@
   <title>Brand New Template</title>
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('brand/{%brand_string%}/css/all.css') }}" rel="stylesheet">
+  <link href="{{ asset('{%brand_string%}/css/all.css') }}" rel="stylesheet">
   @stack('styles')
 </head>
 <body>
@@ -35,7 +35,7 @@
     </footer>
   </div>
   <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('brand/{%brand_string%}/js/all.js') }}"></script>
+  <script src="{{ asset('{%brand_string%}/js/all.js') }}"></script>
   @stack('scripts')
 </body>
 </html>
