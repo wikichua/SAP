@@ -58,7 +58,6 @@ class ReportController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'brand_id' => 'required',
             'name' => 'required',
             "status" => "required",
         ]);
@@ -101,7 +100,6 @@ class ReportController extends Controller
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
 
         $request->validate([
-            'brand_id' => 'required',
             'name' => 'required',
             "status" => "required",
         ]);

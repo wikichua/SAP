@@ -20,7 +20,7 @@
                 @include('sap::admin.report.queryInput')
                 <x-sap-select-field name="status" id="status" label="Status" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('report_status')" :selected="$model->status ?? []"/>
                 <button type="submit" class="btn btn-primary">
-                Save & Preview
+                Save & Show
                 </button>
             </form>
         </div>
