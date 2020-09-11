@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 
 class AuthController extends Controller
 {
@@ -26,11 +27,16 @@ class AuthController extends Controller
                 throw new \Exception('Error in Login');
             }
             $permissions = $user->roles->contains('admin', true)? ['*']:$user->flatPermissions()->toArray();
-            $user->tokens()->delete();
+            // $user->tokens()->delete();
             $tokenResult = $user->createToken('authToken', $permissions)->plainTextToken;
+            $tokenResult = explode('|', $tokenResult);
+            $personalAccessTokenModel = app(Sanctum::$personalAccessTokenModel)->query()
+                ->find($tokenResult[0]);
+            $personalAccessTokenModel->plain_text_token = $tokenResult[1];
+            $personalAccessTokenModel->save();
             return response()->json([
                 'status_code' => 200,
-                'access_token' => $tokenResult,
+                'access_token' => $tokenResult[1],
                 'permissions' => $permissions,
                 'token_type' => 'Bearer',
             ]);

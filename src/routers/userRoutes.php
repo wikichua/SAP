@@ -18,5 +18,13 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
 
         Route::match(['get', 'head'], '{user}/editPassword', 'UserController@editPassword')->name('user.editPassword');
         Route::match(['put', 'patch'], '{user}/updatePassword', 'UserController@updatePassword')->name('user.updatePassword');
+
+        // pat => personal access token
+        Route::group(['prefix' => '{user}/pat', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
+            Route::match(['get', 'head'], 'list', 'UserPersonalAccessTokenController@index')->name('pat.list');
+            Route::match(['get', 'head'], 'create', 'UserPersonalAccessTokenController@create')->name('pat.create');
+            Route::match(['post'], 'store', 'UserPersonalAccessTokenController@store')->name('pat.store');
+            Route::match(['delete'], '{pat}/delete', 'UserPersonalAccessTokenController@destroy')->name('pat.destroy');
+        });
     });
 });

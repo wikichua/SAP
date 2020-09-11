@@ -57,6 +57,13 @@ class CreateUsersColumns extends Migration
             $table->string('token')->index();
             $table->timestamp('created_at');
         });
+
+        if (Schema::hasTable('personal_access_tokens')) {
+            Schema::table('personal_access_tokens', function (Blueprint $table) {
+                $table->string('plain_text_token')->nullable()->index();
+            });
+            app(config('sap.models.permission'))->createGroup('Personal Access Token', ['Create Personal Access Token', 'Read Personal Access Token', 'Delete Personal Access Token']);
+        }
     }
 
     public function down()
