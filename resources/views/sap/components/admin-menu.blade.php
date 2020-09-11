@@ -4,6 +4,7 @@
         'permission.*',
         'role.*',
         'setting.*',
+        'report.*',
         'activity_log.*',
         'system_log.*',
         'brand.*',

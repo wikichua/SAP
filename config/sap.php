@@ -32,6 +32,7 @@ return [
         'role' => '\Wikichua\SAP\Models\Role',
         'permission' => '\Wikichua\SAP\Models\Permission',
         'setting' => '\Wikichua\SAP\Models\Setting',
+        'report' => '\Wikichua\SAP\Models\Report',
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
         'brand' => '\Wikichua\SAP\Models\Brand',
         'page' => '\Wikichua\SAP\Models\Page',

@@ -11,6 +11,7 @@
     'Read Settings',
     'Read Activity Logs',
     'Read System Logs',
+    'Read Reports',
     'Read Brands',
     'Read Pages',
     'Read Components',
@@ -35,6 +36,9 @@
             @endcan
             @can('Read Settings')
             <x-sap-menu-item :href="route('setting.list')" active-pattern="setting.*">Setting</x-sap-menu-item>
+            @endcan
+            @can('Read Reports')
+            <x-sap-menu-item :href="route('report.list')" active-pattern="report.*">Report</x-sap-menu-item>
             @endcan
             @can('Read Brands')
             <x-sap-menu-item :href="route('brand.list')" :active-pattern="'brand.*'">Brand</x-sap-menu-item>
