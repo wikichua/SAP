@@ -2,10 +2,11 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Notifications\Notifiable;
 
 abstract class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ abstract class User extends Authenticatable
     use \Lab404\Impersonate\Models\Impersonate;
 
     protected $appends = ['roles_string','readUrl'];
-    protected $fillable = [];
+    // protected $fillable = [];
     public $searchableFields = ['name','email'];
 
     public function getRolesStringAttribute()
