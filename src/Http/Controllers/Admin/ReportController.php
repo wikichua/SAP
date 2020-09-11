@@ -41,9 +41,6 @@ class ReportController extends Controller
         $getUrl = route('report.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
-            ['title' => 'Slug', 'data' => 'slug', 'sortable' => true],
-            ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
-            ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
