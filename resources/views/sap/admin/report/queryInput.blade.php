@@ -5,7 +5,7 @@
             @foreach ($model->queries as $index => $val)
             <div class="row mb-1">
                 <div class="col-11 d-flex justify-content-center">
-                    <textarea type="text" name="queries[]" class="form-control" placeholder="queries" rows="1">{{ $val }}</textarea>
+                    <textarea type="text" name="queries[]" class="form-control" placeholder="" rows="1">{{ $val }}</textarea>
                 </div>
                 <div class="col-1 d-flex justify-content-end">
                     <div class="btn-group" role="group">
@@ -18,7 +18,7 @@
         @else
         <div class="row mb-1">
             <div class="col-11 d-flex justify-content-center">
-                <textarea type="text" name="queries[]" class="form-control" placeholder="queries" rows="1"></textarea>
+                <textarea type="text" name="queries[]" class="form-control" placeholder="" rows="1"></textarea>
             </div>
             <div class="col-1 d-flex justify-content-end">
                 <div class="btn-group" role="group">
@@ -34,7 +34,7 @@
 <script id="template" type="text/x-lodash-template">
 <div class="row mb-1">
     <div class="col-11 d-flex justify-content-center">
-        <textarea type="text" name="queries[]" class="form-control" placeholder="queries" rows="1"></textarea>
+        <textarea type="text" name="queries[]" class="form-control" placeholder="" rows="1"></textarea>
     </div>
     <div class="col-1 d-flex justify-content-end">
         <div class="btn-group" role="group">
