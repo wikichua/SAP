@@ -8,6 +8,7 @@ class Sap{%model%}Table extends Migration
 {
     public function up()
     {
+        cache()->forget('fillable-{%table_name%}');
         Schema::create('{%table_name%}', function (Blueprint $table) {
             $table->increments('id', true);
             {%migration_codes%}

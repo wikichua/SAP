@@ -8,6 +8,7 @@ class CreateActivityLogsTable extends Migration
 {
     public function up()
     {
+        cache()->forget('fillable-activity_logs');
         // create table
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->increments('id');

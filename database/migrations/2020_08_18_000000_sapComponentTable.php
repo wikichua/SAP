@@ -8,6 +8,7 @@ class SapComponentTable extends Migration
 {
     public function up()
     {
+        cache()->forget('fillable-components');
         Schema::create('components', function (Blueprint $table) {
             $table->increments('id', true);
             $table->string('name')->nullable()->default('');

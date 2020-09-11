@@ -8,6 +8,7 @@ class CreatePermissionsTable extends Migration
 {
     public function up()
     {
+        cache()->forget('fillable-permissions');
         // create table
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');

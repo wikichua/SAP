@@ -8,6 +8,7 @@ class CreateRolesTable extends Migration
 {
     public function up()
     {
+        cache()->forget('fillable-roles');
         // create table
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
