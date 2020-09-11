@@ -82,8 +82,12 @@ class ReportController extends Controller
 
     public function show($id)
     {
+        $models = [];
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
-        return view('sap::admin.report.show', compact('model'));
+        foreach ($model->queries as $sql) {
+            $models[] = \DB::select($sql);
+        }
+        return view('sap::admin.report.show', compact('model', 'models'));
     }
 
     public function edit(Request $request, $id)

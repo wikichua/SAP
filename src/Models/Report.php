@@ -21,28 +21,17 @@ class Report extends Model
 
     protected $appends = [
         'status_name',
-        'readUrl',
     ];
 
-    protected $searchableFields = ['name'];
+    protected $searchableFields = [];
 
     protected $casts = [
         'queries' => 'array',
     ];
 
-    public function getPublishedAtAttribute($value)
-    {
-        return $this->inUserTimezone($value);
-    }
-
-    public function getExpiredAtAttribute($value)
-    {
-        return $this->inUserTimezone($value);
-    }
-
     public function getStatusNameAttribute($value)
     {
-        return settings('brand_status')[$this->attributes['status']];
+        return settings('report_status')[$this->attributes['status']];
     }
 
     public function scopeFilterName($query, $search)
@@ -50,41 +39,8 @@ class Report extends Model
         return $query->where('name', 'like', "%{$search}%");
     }
 
-    public function scopeFilterSlug($query, $search)
-    {
-        return $query->where('slug', 'like', "%{$search}%");
-    }
-
-    public function scopeFilterPublishedAt($query, $search)
-    {
-        $date = $this->getDateFilter($search);
-        return $query->whereBetween('published_at', [
-            $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
-        ]);
-    }
-
-    public function scopeFilterExpiredAt($query, $search)
-    {
-        $date = $this->getDateFilter($search);
-        return $query->whereBetween('expired_at', [
-            $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
-        ]);
-    }
-
     public function scopeFilterStatus($query, $search)
     {
         return $query->whereIn('status', $search);
-    }
-
-    public function getReadUrlAttribute($value)
-    {
-        return $this->readUrl = route('brand.show', $this->id);
-    }
-
-    public function brand()
-    {
-        return $this->belongsTo(config('sap.models.brand'), 'brand_id', 'id');
     }
 }

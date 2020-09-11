@@ -13,7 +13,6 @@ class AuthController extends Controller
             $request->validate([
                 'email' => 'email|required',
                 'password' => 'required',
-                'device_name' => 'required',
             ]);
             $credentials = $request->only(['email', 'password']);
             if (!\Auth::once($credentials)) {

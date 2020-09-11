@@ -87,7 +87,7 @@ class Page extends Model
 
     public function getReadUrlAttribute($value)
     {
-        return $this->readUrl = route('brand.show', $this->id);
+        return $this->readUrl = route('page.show', $this->id);
     }
 
     public function brand()

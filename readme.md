@@ -44,7 +44,8 @@
 1. Create page as your blog page
 
 ### Todo List
-1. BI
+1. Report (BI?)
+1. Personal Access Token
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Queue Manager (Laravel Horizon is cool, but...)
