@@ -35,7 +35,8 @@
         "laravel/scout": "^8.2",
         "matchish/laravel-scout-elasticsearch": "^4.0",
         "elasticsearch/elasticsearch": "^7.9",
-        "lionix/seo-manager": "^1.3"
+        "lionix/seo-manager": "^1.3",
+        "rap2hpoutre/fast-excel": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

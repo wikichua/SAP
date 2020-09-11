@@ -44,7 +44,9 @@
 1. Create page as your blog page
 
 ### Todo List
+1. BI
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
+1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Queue Manager (Laravel Horizon is cool, but...)
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix
 3. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.
@@ -73,7 +75,7 @@ DB_DATABASE=**project_table**
 Back to your terminal
 
 ```bash
-$ composer require wikichua/sap dev-master
+$ composer require wikichua/sap L8
 $ composer require laravel/ui
 $ php artisan vendor:publish --tag=sap.install --force
 ```
