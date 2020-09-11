@@ -8,7 +8,7 @@ Contributions are accepted via Pull Requests on [Github](https://github.com/wiki
 
 Need packager to ease your work
 
-> $ composer require jeroen-g/laravel-packager --dev
+> $ composer require jeroen-g/laravel-packager master-dev
 
 Import package from github
 
