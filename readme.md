@@ -46,9 +46,9 @@
 1. Report (BI?) - simple as fill the sql statements and save into table
 1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Prerun reporting and store in cache
+1. Prerun reporting "in queue" and store in cache
 
 ### Todo List
-1. Prerun reporting "in queue" and store in cache
 1. Tie user to brand?
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)

@@ -21,18 +21,25 @@ class SapReport extends Command
         $reports = app(config('sap.models.report'))->query()->where('status', 'A')->get();
         foreach ($reports as $report) {
             if (Cache::get('report-'.str_slug($report->name)) == null) {
-                cache()->remember('report-'.str_slug($report->name), $report->cache_ttl, function () use ($report) {
-                    $results = [];
-                    foreach ($report->queries as $sql) {
-                        $results[] = array_map(function ($value) {
-                            return (array)$value;
-                        }, \DB::select($sql));
-                    }
-                    return $results;
-                });
-                $report->generated_at = \Carbon\Carbon::now();
-                $report->next_generate_at = \Carbon\Carbon::now()->addSeconds($report->cache_ttl);
-                $report->save();
+                dispatch(function () use ($report) {
+                    cache()->remember(
+                        'report-'.str_slug($report->name),
+                        $report->cache_ttl,
+                        function () use ($report) {
+                            sleep(30);
+                            $results = [];
+                            foreach ($report->queries as $sql) {
+                                $results[] = array_map(function ($value) {
+                                    return (array)$value;
+                                }, \DB::select($sql));
+                            }
+                            return $results;
+                        }
+                    );
+                    $report->generated_at = \Carbon\Carbon::now();
+                    $report->next_generate_at = \Carbon\Carbon::now()->addSeconds($report->cache_ttl);
+                    $report->save();
+                })->onQueue('report_processing');
             }
         }
     }
