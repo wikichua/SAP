@@ -76,7 +76,7 @@ DB_DATABASE=**project_table**
 Back to your terminal
 
 ```bash
-$ composer require wikichua/sap L8
+$ composer require wikichua/sap dev-master
 $ composer require laravel/ui
 $ php artisan vendor:publish --tag=sap.install --force
 ```
@@ -91,8 +91,7 @@ Then you continue in your terminal
 
 ```bash
 $ php artisan migrate
-$ php artisan ziggy:generate resources/js/ziggy.js
-$ npm install --save && npm run dev
+$ npm run dev
 ```
 
 > php artisan vendor:publish --tag=sap.install --force
@@ -144,7 +143,7 @@ So if you wish to use your own route declarations, just turn all of those to **_
 This is how I normall do
 
 ```bash
-art vendor:publish --tag=sap.install --force && art ziggy:generate && npm run watch-poll
+art vendor:publish --tag=sap.install --force && npm run dev
 ```
 
 ##### Create a brand within your project?
@@ -265,14 +264,7 @@ $ php artisan vendor:publish --tag=chatify-assets --force
 ```bash
 $ php artisan sap:config <ModelName>
 $ php artisan sap:make <ModelName>
-$ php artisan ziggy:generate resources/js/ziggy.js
-$ npm install && npm run dev
-```
-
-This is how I normall do
-
-```bash
-art ziggy:generate && npm run watch-poll
+$ npm run dev
 ```
 
 #### Config
