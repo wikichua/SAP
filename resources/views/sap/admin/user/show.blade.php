@@ -18,6 +18,7 @@
             <x-sap-display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
             <x-sap-display-field type="text" name="name" id="name" label="Name" :value="$model->name"/>
             <x-sap-display-field type="text" name="email" id="email" label="Email" :value="$model->email"/>
+            <x-sap-display-field type="text" name="timezone" id="timezone" label="Timezone" :value="$model->timezone"/>
             <x-sap-display-field type="text" name="type" id="type" label="Type" :value="$model->type"/>
             <x-sap-display-field type="text" name="roles" id="roles" label="Roles" :value="$model->roles_string"/>
             <x-sap-display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>

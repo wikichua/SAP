@@ -18,6 +18,7 @@
                 @csrf
                 @method('PATCH')
                 <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name ?? ''"/>
+                <x-sap-input-field type="number" name="cache_ttl" id="cache_ttl" label="TTL (Seconds)" :class="[]" :value="$model->cache_ttl ?? '300'"/>
                 @include('sap::admin.report.queryInput')
                 <x-sap-select-field name="status" id="status" label="Status" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('report_status')" :selected="$model->status ?? []"/>
                 <button type="submit" class="btn btn-primary">

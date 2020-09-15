@@ -17,6 +17,7 @@
                 @method('PATCH')
                 <x-sap-input-field type="text" name="name" id="name" label="Full Name" :class="[]" :value="$model->name"/>
                 <x-sap-input-field type="email" name="email" id="email" label="Email" :class="[]" :value="$model->email"/>
+                <x-sap-select-field name="timezone" id="timezone" label="Timezone" :class="[]" :data="['style'=>'border bg-white','live-search'=>true]" :options="Help::timezones()" :selected="$model->timezone"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

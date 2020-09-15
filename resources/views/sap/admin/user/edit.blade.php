@@ -19,6 +19,7 @@
                 @method('PATCH')
                 <x-sap-input-field type="text" name="name" id="name" label="Full Name" :class="[]" :value="$model->name"/>
                 <x-sap-input-field type="email" name="email" id="email" label="Email" :class="[]" :value="$model->email"/>
+                <x-sap-select-field name="timezone" id="timezone" label="Timezone" :class="[]" :data="['style'=>'border bg-white','live-search'=>true]" :options="Help::timezones()" :selected="$model->timezone"/>
                 <x-sap-select-field name="type" id="type" label="Type" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('user_types')" :selected="$model->type"/>
                 <x-sap-checkboxes-field name="roles" id="roles" label="Roles" :class="[]" :options="$roles->toArray()" :checked="$model->roles()->pluck('role_id')->toArray()" :isGroup="false"/>
                 <button type="submit" class="btn btn-primary">

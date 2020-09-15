@@ -2,6 +2,7 @@
 	foreach ($attributes as $key => $val) {
 		$$key = $val;
 	}
+    $data = isset($data) && is_array($data)? $data:[];
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
@@ -11,7 +12,10 @@
 		@foreach (isset($attribute_tags)? $attribute_tags:[] as $attr_key => $attr_val)
 			{{ $attr_key }} = "{{ $attr_val }}"
 		@endforeach
-		{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}>{!! $value ?? '' !!}</textarea>
+		@foreach ($data as $data_key => $data_value)
+            {{ 'data-'.$data_key }}="{{ $data_value }}"
+        @endforeach
+        >{!! $value ?? '' !!}</textarea>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
 

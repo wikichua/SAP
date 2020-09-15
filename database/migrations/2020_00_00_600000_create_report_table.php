@@ -16,6 +16,9 @@ class CreateReportTable extends Migration
             $table->string('status', 1)->nullable()->default('');
             $table->integer('created_by')->nullable()->default(0);
             $table->integer('updated_by')->nullable()->default(0);
+            $table->integer('cache_ttl')->nullable()->default(300); // 5 mins
+            $table->datetime('generated_at')->nullable();
+            $table->datetime('next_generate_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

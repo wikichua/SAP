@@ -43,11 +43,13 @@
 1. Scout on elasticsearch driver (https://github.com/matchish/laravel-scout-elasticsearch)
 1. Create page as your blog page
 1. Personal Access Token
+1. Report (BI?) - simple as fill the sql statements and save into table
+1. Excel (https://github.com/rap2hpoutre/fast-excel)
+1. Prerun reporting and store in cache
 
 ### Todo List
-1. Report (BI?)
+1. Prerun reporting "in queue" and store in cache
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
-1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Queue Manager (Laravel Horizon is cool, but...)
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix
 3. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.
@@ -234,6 +236,12 @@ LINKEDIN_CLIENT_SECRET=
 TWITTER_CLIENT_ID=
 TWITTER_CLIENT_SECRET=
 
+```
+
+##### Prerun report from artisan
+
+```bash
+php artisan sap:report
 ```
 
 <!-- ##### In case munafio/chatify yet supporting latest pusher version...

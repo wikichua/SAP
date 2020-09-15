@@ -6,7 +6,7 @@
             <div class="btn-group" role="group">
                 <a href="{{ route('report.list') }}" class="btn btn-link">
                 <i class="fas fa-angle-double-left mr-2"></i></a>
-                <h3 class="m-0 font-weight-bold text-primary">{{ $model->name }} Report</h3>
+                <h3 class="m-0 font-weight-bold text-primary">{{ isset($model['name'])? $model['name']:(isset($model->name)? $model->name:'') }} Report</h3>
             </div>
             <div class="btn-group" role="group">
             </div>

@@ -45,6 +45,7 @@ class UserController extends Controller
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Email', 'data' => 'email', 'sortable' => true],
             ['title' => 'Type', 'data' => 'type', 'sortable' => true],
+            ['title' => 'Timezone', 'data' => 'timezone', 'sortable' => true],
             ['title' => 'Roles', 'data' => 'roles_string'],
             ['title' => '', 'data' => 'actionsView'],
         ];
@@ -63,6 +64,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'type' => 'required',
+            'timezone' => 'required',
             'roles' => 'required',
             'password_confirmation' => 'required',
             'password' => ['required','confirmed'],
@@ -109,6 +111,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'timezone' => 'required',
             'type' => 'required',
             'roles' => 'required',
         ]);

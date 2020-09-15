@@ -16,7 +16,7 @@
     @foreach ($data as $model)
     <tr>
       @foreach ($fields as $field)
-      <td>{{ $model->{$field} }}</td>
+      <td>{{ isset($model[$field])? $model[$field]:(isset($model->{$field})? $model->{$field}:'') }}</td>
       @endforeach
     </tr>
     @endforeach

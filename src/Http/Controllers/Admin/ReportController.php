@@ -5,6 +5,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Rap2hpoutre\FastExcel\SheetCollection;
 
 class ReportController extends Controller
 {
@@ -16,6 +17,7 @@ class ReportController extends Controller
         $this->middleware('can:Read Reports')->only(['index', 'read']);
         $this->middleware('can:Update Reports')->only(['edit', 'update']);
         $this->middleware('can:Delete Reports')->only('delete');
+        $this->middleware('can:Export Reports')->only('export');
     }
 
     public function index(Request $request)
@@ -27,6 +29,7 @@ class ReportController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.report.actions', compact('model'))->render();
+                $model->cache_status = Cache::get('report-'.str_slug($model->name)) == null? 'Processing':'Ready';
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -42,6 +45,9 @@ class ReportController extends Controller
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Report Status', 'data' => 'cache_status', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Last Run', 'data' => 'generated_at', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Next Run', 'data' => 'next_generate_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.report.index', compact('html', 'getUrl'));
@@ -84,10 +90,28 @@ class ReportController extends Controller
     {
         $models = [];
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
-        foreach ($model->queries as $sql) {
-            $models[] = \DB::select($sql);
-        }
+        $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
+            foreach ($model->queries as $sql) {
+                $models[] = array_map(function ($value) {
+                    return (array)$value;
+                }, \DB::select($sql));
+            }
+            return $models;
+        });
         return view('sap::admin.report.show', compact('model', 'models'));
+    }
+
+    public function export($id)
+    {
+        $models = [];
+        $model = app(config('sap.models.report'))->query()->findOrFail($id);
+        foreach ($model->queries as $sql) {
+            $models[] = array_map(function ($value) {
+                return (array)$value;
+            }, \DB::select($sql));
+        }
+        $sheets = new SheetCollection($models);
+        return fastexcel()->data($sheets)->download(\Str::studly($model->name).'.xlsx');
     }
 
     public function edit(Request $request, $id)

@@ -16,7 +16,10 @@ class Report extends Model
         'updated_by',
         'name',
         'queries',
-        'status'
+        'status',
+        'cache_ttl',
+        'generated_at',
+        'next_generate_at',
     ];
 
     protected $appends = [
@@ -42,5 +45,15 @@ class Report extends Model
     public function scopeFilterStatus($query, $search)
     {
         return $query->whereIn('status', $search);
+    }
+
+    public function getGeneratedAtAttribute($value)
+    {
+        return $this->inUserTimezone($value);
+    }
+
+    public function getNextGenerateAtAttribute($value)
+    {
+        return $this->inUserTimezone($value);
     }
 }

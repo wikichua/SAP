@@ -18,7 +18,7 @@
         @else
         <div class="row mb-1">
             <div class="col-11 d-flex justify-content-center">
-                <textarea type="text" name="queries[]" class="form-control" placeholder="" rows="1"></textarea>
+                <textarea type="text" name="queries[]" class="form-control" placeholder="select `name` from users;" rows="1"></textarea>
             </div>
             <div class="col-1 d-flex justify-content-end">
                 <div class="btn-group" role="group">
@@ -30,7 +30,7 @@
         @endif
     </div>
 </div>
-@push('queries')
+@push('scripts')
 <script id="template" type="text/x-lodash-template">
 <div class="row mb-1">
     <div class="col-11 d-flex justify-content-center">

@@ -6,6 +6,7 @@
 		$selected = [$selected];
 	}
     $options = is_array($options)? collect($options)->toArray():[$options => $options];
+    $data = isset($data) && is_array($data)? $data:[];
 @endphp
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
@@ -16,7 +17,9 @@
         @foreach (isset($attribute_tags)? $attribute_tags:[] as $attr_key => $attr_val)
             {{ $attr_key }} = "{{ $attr_val }}"
         @endforeach
-    	{{ isset($data) && is_array($data)? implode(' data-',$data):'' }}
+        @foreach ($data as $data_key => $data_value)
+            {{ 'data-'.$data_key }}="{{ $data_value }}"
+        @endforeach
     	>
         <option value=""></option>
         @foreach($options as $key => $val)

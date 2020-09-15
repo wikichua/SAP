@@ -7,7 +7,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], 'list', 'ReportController@index')->name('report.list');
 
         Route::match(['get', 'head'], '{report}/read', 'ReportController@show')->name('report.show');
-        Route::match(['get', 'head'], '{report}/preview', 'ReportController@preview')->name('report.preview');
+        Route::match(['post'], '{report}/export', 'ReportController@export')->name('report.export');
 
         Route::match(['get', 'head'], 'create', 'ReportController@create')->name('report.create');
         Route::match(['post'], 'store', 'ReportController@store')->name('report.store');

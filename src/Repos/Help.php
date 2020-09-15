@@ -152,4 +152,9 @@ class Help
         }
         return ob_get_clean();
     }
+
+    public function timezones()
+    {
+        return array_combine(timezone_identifiers_list(), timezone_identifiers_list());
+    }
 }
