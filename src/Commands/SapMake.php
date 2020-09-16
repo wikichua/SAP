@@ -43,7 +43,7 @@ class SapMake extends Command
         $this->line('<info>Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!</info>');
         $this->line('Config has changed: <info>'.$config_file.'</info>');
 
-        $this->alert("Now remember to run php artisan ziggy:generate resources/js/ziggy.js && npm run production\nafter you have done adjusting your crud component\nor business in your controler & model.");
+        $this->alert("Now remember npm run production\nafter you have done adjusting your crud component\nor business in your controler & model.");
     }
 
     protected function initReplacer()
@@ -366,10 +366,9 @@ EOT;
         $model_stub = $this->stub_path.'/model.stub';
         if (!$this->files->exists($model_stub)) {
             $this->error('Model stub file not found: <info>'.$model_stub.'</info>');
-
             return;
         }
-        $model_file = app_path($this->replaces['{%model%}'].'.php');
+        $model_file = app_path(config('sap.custom_model_dir').'/'.$this->replaces['{%model%}'].'.php');
         $model_stub = $this->files->get($model_stub);
         $this->files->put($model_file, $this->replaceholder($model_stub));
         $this->line('Model file created: <info>'.$model_file.'</info>');

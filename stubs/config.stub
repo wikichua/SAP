@@ -341,9 +341,9 @@ return [
                 'create' => 'required',
                 'update' => 'required',
             ],
-            // 'options' => "app('App\User')->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
+            // 'options' => "app(config('sap.models.user'))->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
             // if both options and model_options are set at same time, model_options will be priority and ignored options
-            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()",
+            'model_options' => "app(config('sap.models.user'))->query()->pluck('name','id')->toArray()",
             'casts' => '',
             'mutators' => [
                 'get' => '',
@@ -370,9 +370,9 @@ return [
                 'create' => 'required',
                 'update' => 'required',
             ],
-            // 'options' => "app('App\User')->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
+            // 'options' => "app(config('sap.models.user'))->query()->pluck('name','id')", // "app('App/User')->query()->pluck('name','id')"
             // if both options and model_options are set at same time, model_options will be priority and ignored options
-            'model_options' => "app('App\User')->query()->pluck('name','id')->toArray()",
+            'model_options' => "app(config('sap.models.user'))->query()->pluck('name','id')->toArray()",
             'casts' => '',
             'mutators' => [
                 'get' => '',

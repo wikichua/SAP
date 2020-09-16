@@ -2,7 +2,8 @@
 
 return [
     /* customization */
-    'custom_model_namespace' => 'App',
+    'custom_model_namespace' => 'App\Models',
+    'custom_model_dir' => 'Models',
     'custom_controller_namespace' => 'App\Http\Controllers\Admin',
     'custom_controller_dir' => 'Http/Controllers/Admin',
     'custom_api_controller_namespace' => 'App\Http\Controllers\Api',
@@ -28,7 +29,6 @@ return [
     'sub_route_dir' => 'routes/routers',
     'sub_api_route_dir' => 'routes/routers/api',
     'models' => [
-        // 'user' => '\App\User',
         'user' => config('auth.providers.users.model', '\App\User'),
         'role' => '\Wikichua\SAP\Models\Role',
         'permission' => '\Wikichua\SAP\Models\Permission',
