@@ -28,7 +28,8 @@ return [
     'sub_route_dir' => 'routes/routers',
     'sub_api_route_dir' => 'routes/routers/api',
     'models' => [
-        'user' => '\App\User',
+        // 'user' => '\App\User',
+        'user' => config('auth.providers.users.model', '\App\User'),
         'role' => '\Wikichua\SAP\Models\Role',
         'permission' => '\Wikichua\SAP\Models\Permission',
         'setting' => '\Wikichua\SAP\Models\Setting',
