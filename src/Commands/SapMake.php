@@ -1,5 +1,4 @@
 <?php
-
 namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
@@ -352,7 +351,7 @@ EOT;
             return;
         }
         $menu_stub = $this->files->get($menu_stub);
-        $toWriteInFile = resource_path('views/vendor/sap/components/menu.blade.php');
+        $toWriteInFile = resource_path('views/vendor/sap/components/admin-menu.blade.php');
         $toWriteInFileContent = $this->files->get($toWriteInFile);
         $replaceContent = $this->replaceholder($menu_stub);
         if (false === strpos($toWriteInFileContent, $replaceContent)) {
