@@ -65,7 +65,7 @@
 Setup new Laravel project in terminal
 
 ```bash
-$ laravel new **project**
+$ composer create-project --prefer-dist laravel/laravel:^7.0 **project**
 $ php artisan storage:link
 ```
 
@@ -80,7 +80,7 @@ Back to your terminal
 
 ```bash
 $ composer require wikichua/sap dev-master
-$ composer require laravel/ui
+$ composer require laravel/ui:^2.4
 $ php artisan vendor:publish --tag=sap.install --force
 ```
 
