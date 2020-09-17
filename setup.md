@@ -27,8 +27,8 @@ composer require laravel/ui:2.*
 
 ## Amend your composer.json
 This package is using which currently not updated to be able to support Laravel 8
-1. https://github.com/wikichua/laravel-filemanager.git
-1. https://github.com/wikichua/seo-manager.git
+1. https://github.com/UniSharp/laravel-filemanager -> https://github.com/wikichua/laravel-filemanager.git
+1. https://github.com/lionix-team/seo-manager -> https://github.com/wikichua/seo-manager.git
 
 So to fix this temporary:
 After created new project using composer create-project or laravel installer
