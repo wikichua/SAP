@@ -29,7 +29,6 @@ class SapMake extends Command
         if (!$this->config['ready']) {
             if (false == $this->option('force')) {
                 $this->error('Config file not ready: <info>'.$config_file.'</info>');
-
                 return;
             }
         }

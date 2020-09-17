@@ -70,6 +70,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapComponent::class,
             Commands\SapES::class,
             Commands\SapReport::class,
+            Commands\SapService::class,
         ]);
     }
 

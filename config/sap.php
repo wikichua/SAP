@@ -11,6 +11,10 @@ return [
     'custom_view_dir' => 'admin',
     'custom_admin_path' => 'admin',
     'custom_pub_path' => 'pub',
+    'custom_service_namespace' => 'App\Services',
+    'custom_service_dir' => 'Services',
+    'custom_facade_namespace' => 'App\Facades',
+    'custom_facade_dir' => 'Facades',
     /* end customization */
 
     'hidden_auth_route_names' => [
