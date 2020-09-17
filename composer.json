@@ -66,6 +66,10 @@
         }
     },
     "repositories": {
+        "codedredd/laravel-soap": {
+            "type": "git",
+            "url": "https://github.com/wikichua/laravel-soap.git"
+        },
         "unisharp/laravel-filemanager": {
             "type": "git",
             "url": "https://github.com/wikichua/laravel-filemanager.git"
