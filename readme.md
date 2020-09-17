@@ -47,6 +47,7 @@
 1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Prerun reporting and store in cache
 1. Prerun reporting "in queue" and store in cache
+1. Create Service Facade as supporting Library
 
 ### Todo List
 1. Tie user to brand?
@@ -243,6 +244,12 @@ TWITTER_CLIENT_SECRET=
 
 ```bash
 php artisan sap:report
+```
+
+##### Create Service Facade Lib from artisan
+
+```bash
+php artisan sap:service **ServiceName** --force
 ```
 
 <!-- ##### In case munafio/chatify yet supporting latest pusher version...
