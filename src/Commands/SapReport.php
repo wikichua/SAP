@@ -26,7 +26,6 @@ class SapReport extends Command
                         'report-'.str_slug($report->name),
                         $report->cache_ttl,
                         function () use ($report) {
-                            sleep(30);
                             $results = [];
                             foreach ($report->queries as $sql) {
                                 $results[] = array_map(function ($value) {
