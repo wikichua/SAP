@@ -50,6 +50,10 @@ class SapBrand extends Command
         $this->webpack();
         $this->others();
         $this->seed();
+        if (!$this->files->exists(public_path($this->replaces['{%brand_string%}']))) {
+            symlink($this->brand_path.'/public', public_path($this->replaces['{%brand_string%}']));
+            $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_string%}']).'</info>');
+        }
         $this->line('<info>If you are using valet...</info>');
         $this->line('<info>Run this...</info>');
         $this->line('<info>cd ./public</info>');
@@ -101,10 +105,6 @@ class SapBrand extends Command
         $this->files->copyDirectory($asset_stub, $asset_dir);
         if (!$this->files->exists($this->brand_path.'/public')) {
             $this->files->makeDirectory($this->brand_path.'/public');
-        }
-        if (!$this->files->exists(public_path($this->replaces['{%brand_string%}']))) {
-            symlink($this->brand_path.'/public', public_path($this->replaces['{%brand_string%}']));
-            $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_string%}']).'</info>');
         }
         $this->line('Assets copied: <info>'.$asset_dir.'</info>');
     }
