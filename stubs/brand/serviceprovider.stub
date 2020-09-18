@@ -1,0 +1,16 @@
+<?php
+
+namespace Brand\{%brand_name%}\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class {%brand_name%}ServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+    }
+    public function boot()
+    {
+        $this->app['router']->pushMiddlewareToGroup('web', \Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware::class);
+    }
+}

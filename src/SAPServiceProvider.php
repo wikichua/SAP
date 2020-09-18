@@ -39,27 +39,11 @@ class SAPServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
-            foreach (File::directories(base_path('brand')) as $dir) {
-                $brandName = basename($dir);
-                if (File::isDirectory($dir.'/config')) {
-                    foreach (File::files($dir.'/config') as $confFile) {
-                        $this->mergeConfigFrom($confFile, $brandName);
-                    }
-                }
-                $this->loadMigrationsFrom($dir.'/database');
-            }
-        }
-
         if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
             $this->loadRoutes();
             $this->loadRoutesFrom(__DIR__.'/pub.php');
             $this->loadRoutesFrom(__DIR__.'/web.php');
             $this->loadRoutesFrom(__DIR__.'/api.php');
-        } else {
-            if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
-                $this->loadBrandsStuffs();
-            }
         }
 
         // Registering package commands.
@@ -83,7 +67,8 @@ class SAPServiceProvider extends ServiceProvider
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });
-        $this->app->register(\Wikichua\SAP\HelpServiceProvider::class);
+        $this->app->register(\Wikichua\SAP\Providers\HelpServiceProvider::class);
+        $this->app->register(\Wikichua\SAP\Providers\BrandServiceProvider::class);
         $this->app->register(\Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
     }
 
@@ -201,30 +186,6 @@ class SAPServiceProvider extends ServiceProvider
             foreach (app(config('sap.models.setting'))->all() as $setting) {
                 Config::set('settings.'.$setting->key, $setting->value);
             }
-        }
-    }
-
-    protected function loadBrandsStuffs()
-    {
-        if (File::exists(base_path('brand'))) {
-            $brandDomain = request()->getHost();
-            $brand = \Cache::remember('brand-'.$brandDomain, (60*60*24), function () use ($brandDomain) {
-                return app(config('sap.models.brand'))->query()->whereStatus('A')->whereDomain($brandDomain)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
-            });
-            if ($brand) {
-                $brandName = strtolower($brand->name);
-                $dir = base_path('brand/'.$brandName);
-                if (File::exists($dir.'/web.php')) {
-                    // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
-                    // $dotenv->load();
-                    // dd($dir.'/.env');
-                    // $this->app->loadEnvironmentFrom($dir.'/.env');
-                    Route::middleware('web')->group($dir.'/web.php');
-                    // $this->loadTranslationsFrom($dir.'/lang', $brandName);
-                    $this->loadViewsFrom($dir, $brandName);
-                }
-            }
-            $brands = app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
         }
     }
 }

@@ -41,6 +41,8 @@ class SapBrand extends Command
         $this->route();
         $this->model();
         $this->controller();
+        $this->serviceprovider();
+        $this->middleware();
         $this->justCopy('layouts');
         $this->justCopy('pages');
         $this->justCopy('config');
@@ -143,6 +145,40 @@ class SapBrand extends Command
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
+    }
+
+    protected function serviceprovider()
+    {
+        $stub = $this->stub_path.'/serviceprovider.stub';
+        if (!$this->files->exists($stub)) {
+            $this->error('Service Provider stub file not found: <info>'.$stub.'</info>');
+            return;
+        }
+        $dir = 'brand/'.strtolower($this->brand).'/providers';
+        if (!$this->files->exists(base_path($dir))) {
+            $this->files->makeDirectory(base_path($dir), 0755, true);
+        }
+        $file = base_path($dir.'/'.$this->brand.'ServiceProvider.php');
+        $stub = $this->files->get($stub);
+        $this->files->put($file, $this->replaceholder($stub));
+        $this->line('Service Provider file created: <info>'.$file.'</info>');
+    }
+
+    protected function middleware()
+    {
+        $stub = $this->stub_path.'/middleware.stub';
+        if (!$this->files->exists($stub)) {
+            $this->error('Middleware stub file not found: <info>'.$stub.'</info>');
+            return;
+        }
+        $dir = 'brand/'.strtolower($this->brand).'/middlewares';
+        if (!$this->files->exists(base_path($dir))) {
+            $this->files->makeDirectory(base_path($dir), 0755, true);
+        }
+        $file = base_path($dir.'/'.$this->brand.'Middleware.php');
+        $stub = $this->files->get($stub);
+        $this->files->put($file, $this->replaceholder($stub));
+        $this->line('Middleware file created: <info>'.$file.'</info>');
     }
 
     protected function justCopy($path)

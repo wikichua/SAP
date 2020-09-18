@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\SAP;
+namespace Wikichua\SAP\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
