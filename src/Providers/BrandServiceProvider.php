@@ -10,9 +10,9 @@ class BrandServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
-            return;
-        }
+        // if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
+        //     return;
+        // }
         if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
             foreach (File::directories(base_path('brand')) as $dir) {
                 $brandName = basename($dir);
