@@ -48,6 +48,7 @@
 1. Prerun reporting and store in cache
 1. Prerun reporting "in queue" and store in cache
 1. Create Service Facade as supporting Library
+1. Stopping certain artisan cli perform on certain environments
 
 ### Todo List
 1. Tie user to brand?
@@ -150,129 +151,6 @@ This is how I normall do
 art vendor:publish --tag=sap.install --force && npm run dev
 ```
 
-##### Create a brand within your project?
-
-> php artisan sap:brand SubDomain --domain=sub.domain.com
-
-You should be seeing this...
-
-```bash
-Assets copied: /project/resources/views/brand/subDomain/assets
-Web file created: /project/resources/views/brand/subDomain/web.php
-Controller file created: /project/app/Http/Controllers/Brand/SubDomainController.php
-layouts file created: /project/resources/views/brand/subDomain/layouts/main.blade.php
-pages file created: /project/resources/views/brand/subDomain/pages/index.blade.php
-package.json file created: /project/resources/views/brand/subDomain/package.json
-webpack.mix.js file created: /project/resources/views/brand/subDomain/webpack.mix.js
-.gitattributes copied: /project/resources/views/brand/subDomain/.gitattributes
-.gitattributes copied: /project/resources/views/brand/subDomain/.gitignore
-Migration file created: /project/database/migrations/2020_08_18_000000_sapSubDomainSeeding.php
-If you are using valet...
-Run this...
-cd ./public
-valet link sub.domain.com
-valet secure
-
-```
-
-Oh ya... don't forget the migration
-
-##### Surely need component
-
-> php artisan sap:comp NewComponent
-
-And sure you will see this...
-
-```bash
-Component created successfully.
-Migration file created: /project/database/migrations/2020_08_19_000000_sapNewComponentComponentSeed.php
-```
-
-Oh ya... don't forget the migration
-
-##### To exclude php debugbar render on ur API url
-
-At your debugbar.php
-
-```php
-    'except' => [
-        'telescope*',
-        'horizon*',
-        ~'chatify*',~
-        'api*',
-    ],
-```
-
-##### Elastic Search...
-Then in your all models
-```php
-protected $searchableFields = [];
-```
-Import your data into elastic search seemlessly
-```bash
-php artisan sap:es
-```
-
-##### Social Lite
-
-In your User.php model
-```php
-protected $casts = [
-    'social' => 'array',
-];
-```
-Then
-```dotenv
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-
-FACEBOOK_CLIENT_ID=
-FACEBOOK_CLIENT_SECRET=
-
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-
-LINKEDIN_CLIENT_ID=
-LINKEDIN_CLIENT_SECRET=
-
-TWITTER_CLIENT_ID=
-TWITTER_CLIENT_SECRET=
-
-```
-
-##### Prerun report from artisan
-
-```bash
-php artisan sap:report
-```
-
-##### Create Service Facade Lib from artisan
-
-```bash
-php artisan sap:service **ServiceName** --force
-```
-
-<!-- ##### In case munafio/chatify yet supporting latest pusher version...
-
-```json
-"repositories": {
-        "munafio/chatify": {
-            "type": "git",
-            "url": "https://github.com/wikichua/chatify.git"
-        }
-    }
-```
-
-```json
-"require": {
-        "munafio/chatify": "dev-master",
-    }
-```
-
-```bash
-$ php artisan vendor:publish --tag=chatify-assets --force
-``` -->
-
 ## Usage
 
 ### Creating new module
@@ -348,6 +226,120 @@ $ art sap:make Test --force
         'link' => 'http://link.com',
         'timeout' => 5000,
     ]);
+```
+
+##### Create a brand within your project?
+
+> php artisan sap:brand SubDomain --domain=sub.domain.com
+
+You should be seeing this...
+
+```bash
+Assets copied: /project/resources/views/brand/subDomain/assets
+Web file created: /project/resources/views/brand/subDomain/web.php
+Controller file created: /project/app/Http/Controllers/Brand/SubDomainController.php
+layouts file created: /project/resources/views/brand/subDomain/layouts/main.blade.php
+pages file created: /project/resources/views/brand/subDomain/pages/index.blade.php
+package.json file created: /project/resources/views/brand/subDomain/package.json
+webpack.mix.js file created: /project/resources/views/brand/subDomain/webpack.mix.js
+.gitattributes copied: /project/resources/views/brand/subDomain/.gitattributes
+.gitattributes copied: /project/resources/views/brand/subDomain/.gitignore
+Migration file created: /project/database/migrations/2020_08_18_000000_sapSubDomainSeeding.php
+If you are using valet...
+Run this...
+cd ./public
+valet link sub.domain.com
+valet secure
+
+```
+
+Oh ya... don't forget the migration
+
+##### Surely need component
+
+> php artisan sap:comp NewComponent
+
+And sure you will see this...
+
+```bash
+Component created successfully.
+Migration file created: /project/database/migrations/2020_08_19_000000_sapNewComponentComponentSeed.php
+```
+
+Oh ya... don't forget the migration
+
+##### To exclude php debugbar render on ur API url
+
+At your debugbar.php
+
+```php
+    'except' => [
+        'telescope*',
+        'horizon*',
+        'api*',
+    ],
+```
+
+##### Elastic Search...
+Then in your all models
+```php
+protected $searchableFields = [];
+```
+Import your data into elastic search seemlessly
+```bash
+php artisan sap:es
+```
+
+##### Social Lite
+
+In your User.php model
+```php
+protected $casts = [
+    'social' => 'array',
+];
+```
+Then
+```dotenv
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+LINKEDIN_CLIENT_ID=
+LINKEDIN_CLIENT_SECRET=
+
+TWITTER_CLIENT_ID=
+TWITTER_CLIENT_SECRET=
+
+```
+
+##### Prerun report from artisan
+
+```bash
+php artisan sap:report
+```
+
+##### Create Service Facade Lib from artisan
+
+```bash
+php artisan sap:service **ServiceName** --force
+```
+
+##### Protect your artisan command when you are in production
+
+In app/Console/Kernel.php
+
+```php
+class Kernel extends ConsoleKernel
+{
+    use \Wikichua\SAP\Http\Traits\ArtisanTrait;
+    protected function commands()
+    {
+        $this->disable(['migrate:fresh','sap:config','sap:make'],['production']);
 ```
 
 ## Security
