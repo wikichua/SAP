@@ -13,6 +13,7 @@ class SapPageTable extends Migration
             $table->increments('id', true);
             $table->integer('brand_id')->nullable()->default(0);
             $table->string('name')->nullable()->default('')->unique();
+            $table->string('template')->nullable()->default('layouts.main')->unique();
             $table->text('slug')->nullable()->default('');
             $table->longText('blade')->nullable()->default('');
             $table->json('styles')->nullable()->default('');

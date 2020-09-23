@@ -16,5 +16,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['put', 'patch'], '{page}/update', 'PageController@update')->name('page.update');
 
         Route::match(['delete'], '{page}/delete', 'PageController@destroy')->name('page.destroy');
+
+        Route::match(['get', 'head'], '{brand_id}/templates', 'PageController@templates')->name('page.templates');
     });
 });

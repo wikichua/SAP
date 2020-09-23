@@ -5,13 +5,14 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
-        $this->middleware('intend_url')->only(['index', 'read' , 'preview']);
+        $this->middleware('intend_url')->only(['index', 'read', 'preview']);
         $this->middleware('can:Create Pages')->only(['create', 'store']);
         $this->middleware('can:Read Pages')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Pages')->only(['edit', 'update']);
@@ -34,14 +35,15 @@ class PageController extends Controller
             if ($request->get('sort', '') != '') {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
-            $links = $paginated->onEachSide(5)->links()->render();
+            $links      = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('page.list');
-        $html = [
+        $html   = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Slug', 'data' => 'slug', 'sortable' => true],
+            ['title' => 'Template', 'data' => 'template', 'sortable' => true],
             ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
@@ -58,12 +60,12 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'brand_id' => 'required',
-            'name' => 'required',
-            'slug' => 'required',
+            'brand_id'     => 'required',
+            'name'         => 'required',
+            'slug'         => 'required',
             "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
+            "expired_at"   => "required",
+            "status"       => "required",
         ]);
 
         $request->merge([
@@ -78,10 +80,10 @@ class PageController extends Controller
         Cache::flush();
 
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Page Created.',
-            'reload' => false,
-            'relist' => false,
+            'status'   => 'success',
+            'flash'    => 'Page Created.',
+            'reload'   => false,
+            'relist'   => false,
             // 'redirect' => route('page.list'),
             'redirect' => route('page.show', [$model->id]),
         ]);
@@ -96,6 +98,7 @@ class PageController extends Controller
     public function preview($id)
     {
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
+        \View::addNamespace(strtolower($model->brand->name), base_path('brand/'.strtolower($model->brand->name)));
         return view('sap::admin.page.preview', compact('model'));
     }
 
@@ -110,12 +113,12 @@ class PageController extends Controller
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
 
         $request->validate([
-            'brand_id' => 'required',
-            'name' => 'required',
-            'slug' => 'required',
+            'brand_id'     => 'required',
+            'name'         => 'required',
+            'slug'         => 'required',
             "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
+            "expired_at"   => "required",
+            "status"       => "required",
         ]);
 
         $request->merge([
@@ -129,10 +132,10 @@ class PageController extends Controller
         Cache::flush();
 
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Page Updated.',
-            'reload' => false,
-            'relist' => false,
+            'status'   => 'success',
+            'flash'    => 'Page Updated.',
+            'reload'   => false,
+            'relist'   => false,
             // 'redirect' => route('page.edit', [$model->id]),
             'redirect' => route('page.show', [$model->id]),
         ]);
@@ -148,11 +151,26 @@ class PageController extends Controller
         Cache::flush();
 
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Page Deleted.',
-            'reload' => false,
-            'relist' => true,
+            'status'   => 'success',
+            'flash'    => 'Page Deleted.',
+            'reload'   => false,
+            'relist'   => true,
             'redirect' => false,
         ]);
+    }
+
+    public function templates($brand_id)
+    {
+        $templates = [];
+        if ($brand_id != '') {
+            $model = app(config('sap.models.brand'))->query()->findOrFail($brand_id);
+            if ($model) {
+                foreach (File::files(base_path('brand/'.strtolower($model->name).'/layouts')) as $file) {
+                    $name = str_replace('.blade.php', '', $file->getBasename());
+                    $templates['layouts.'.$name] = $file->getBasename();
+                }
+            }
+        }
+        return response()->json($templates);
     }
 }

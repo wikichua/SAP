@@ -57,7 +57,7 @@ class BrandServiceProvider extends ServiceProvider
                     // $dotenv->load();
                     // dd($dir.'/.env');
                     // $this->app->loadEnvironmentFrom($dir.'/.env');
-                    Route::middleware('web')->group($dir.'/web.php');
+                    \Route::middleware('web')->group($dir.'/web.php');
                     // $this->loadTranslationsFrom($dir.'/lang', $brandName);
                     $this->loadViewsFrom($dir, $brandName);
                 }

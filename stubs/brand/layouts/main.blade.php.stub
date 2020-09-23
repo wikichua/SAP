@@ -34,6 +34,7 @@
       </p>
     </footer>
   </div>
+  @routes
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('{%brand_string%}/js/all.js') }}"></script>
   @stack('scripts')

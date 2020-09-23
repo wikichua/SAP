@@ -1,4 +1,4 @@
-@extends('brand.'.(strtolower($model->brand->name)).'.layouts.main')
+@extends(strtolower($model->brand->name).'::'.($model->template ?? 'layouts.main'))
 
 @section('content')
 {!! Help::viewRenderer($model->blade) !!}

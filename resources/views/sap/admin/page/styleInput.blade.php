@@ -31,7 +31,7 @@
     </div>
 </div>
 @push('scripts')
-<script id="template" type="text/x-lodash-template">
+<script id="style-template" type="text/x-lodash-template">
 <div class="row mb-1">
     <div class="col-11 d-flex justify-content-center">
         <textarea type="text" name="styles[]" class="form-control" placeholder="" rows="1"></textarea>
@@ -47,7 +47,7 @@
 <script>
 $(function () {
     $(document).on('click','.addRowStyle',function() {
-        var template = $('#template').html();
+        var template = $('#style-template').html();
         var templateFn = _.template(template);
         var templateHTML = templateFn();
         $(this).closest('.row').after(templateHTML);
