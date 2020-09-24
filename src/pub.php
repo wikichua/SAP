@@ -5,8 +5,10 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_namespace').'\Pub'], function () {
     Route::group(['middleware' => ['guest']], function () {
-        Route::redirect('/home', '/')->name('home');
-        Route::match(['get', 'head'], '', 'PubController@index')->name('pub.index');
+        if (config('sap.custom_pub_path') != '' && config('sap.custom_admin_path') != '') {
+            Route::redirect('/home', '/')->name('home');
+            Route::match(['get', 'head'], '', 'PubController@index')->name('pub.index');
+        }
     });
     Route::group(['prefix' => config('sap.custom_pub_path')], function () {
         Route::group(['middleware' => ['guest']], function () {
