@@ -16,7 +16,7 @@ $(function () {
             var templateHTML = templateFn(response);
             $('#template').html(templateHTML);
             $('#template').selectpicker('refresh');
-            @if ($model->template != '')
+            @if (isset($model->template) && $model->template != '')
             $('#template').selectpicker('val', '{{ $model->template }}');
             @endif
         }).catch((error) => {
