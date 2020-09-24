@@ -4,7 +4,7 @@
 
 ### Add SAP Access Token
 ```bash
-composer config github-oauth.github.com 00854db1536edc2b382d982cf7768536d64580a0
+composer config github-oauth.github.com 3674083c50f4b270117d84630274261a70126151
 ```
 ### Add Repositories in your composer.json
 ```json
