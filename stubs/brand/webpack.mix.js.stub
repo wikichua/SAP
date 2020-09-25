@@ -9,7 +9,8 @@ mix.webpackConfig({
     }
 });
 
-mix.scripts([
+mix.js("assets/js/app.js", "public/js")
+    .scripts([
         'assets/js/scripts.js',
     ], './public/js/all.js')
     .styles([
