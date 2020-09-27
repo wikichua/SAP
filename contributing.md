@@ -26,7 +26,7 @@ Run composer update
 ## Composer VSC style of import
 
 ```bash
-composer config -g github-oauth.github.com 3674083c50f4b270117d84630274261a70126151
+composer config -g github-oauth.github.com 86e253009610b1ce0718f68da57b2a454a8d78e3
 ```
 In your composer.json
 
