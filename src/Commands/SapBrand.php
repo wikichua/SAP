@@ -50,9 +50,7 @@ class SapBrand extends Command
         $this->webpack();
         $this->others();
         $this->seed();
-        shell_exec('composer dumpautoload');
-        shell_exec('cd '.$this->brand_path);
-        shell_exec('npm run dev');
+        shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
     }
 
     protected function autoload()
