@@ -49,10 +49,10 @@
 1. Excel (https://github.com/rap2hpoutre/fast-excel)
 1. Create Service Facade as supporting Library
 1. Stopping certain artisan cli perform on certain environments
+1. Page can choose different template (but template must be pre-coded)
 
 ### Todo List
 1. Tie user to brand?
-1. Page can choose different template (but template must be pre-coded)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix

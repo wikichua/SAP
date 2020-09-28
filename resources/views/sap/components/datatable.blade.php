@@ -30,7 +30,6 @@
   <% }); %>
 </script>
 <script>
-
   url = '{{ $attributes['url'] }}';
 </script>
 @endpush

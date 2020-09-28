@@ -2,6 +2,8 @@
 
 namespace Wikichua\SAP;
 
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -11,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Http\Kernel;
 
 class SAPServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,8 @@ class SAPServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__.'/pub.php');
             $this->loadRoutesFrom(__DIR__.'/web.php');
             $this->loadRoutesFrom(__DIR__.'/api.php');
+
+            Paginator::useBootstrap();
         }
 
         // Registering package commands.
