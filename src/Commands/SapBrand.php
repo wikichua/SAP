@@ -50,12 +50,9 @@ class SapBrand extends Command
         $this->webpack();
         $this->others();
         $this->seed();
-        $this->line('<info>If you are using valet...</info>');
-        $this->line('<info>Run this...</info>');
-        $this->line('<info>cd ./public</info>');
-        $this->line('<info>valet link '.strtolower($this->domain).'</info>');
-        $this->line('<info>valet secure</info>');
         shell_exec('composer dumpautoload');
+        shell_exec('cd '.$this->brand_path);
+        shell_exec('npm run dev');
     }
 
     protected function autoload()
