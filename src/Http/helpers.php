@@ -73,3 +73,9 @@ if (!function_exists('viewRenderer')) {
         return Help::viewRenderer($__php, $__data);
     }
 }
+if (!function_exists('slug_route')) {
+    function slug_route($name, array $parameters = [], $absolute = true)
+    {
+        return Help::slug_route($name, $parameters, $absolute);
+    }
+}

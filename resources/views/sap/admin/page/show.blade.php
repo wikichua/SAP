@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="embed-responsive embed-responsive-16by9">
-            <iframe src="{{ route('page.preview',[$model->id]) }}"  class="embed-responsive-item"></iframe>
+        <iframe src="{{ route('page.preview',[$model->id]) }}"  class="embed-responsive-item"></iframe>
     </div>
 </div>
 @endsection

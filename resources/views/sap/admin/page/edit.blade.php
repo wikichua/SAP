@@ -19,6 +19,7 @@
                 @method('PATCH')
                 <x-sap-select-field name="brand_id" id="brand_id" label="Brand" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>
                 @include('sap::admin.page.templateSelect')
+                <x-sap-select-field name="locale" id="locale" label="Locale" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('locales')" :selected="$model->locale ?? []"/>
                 <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name ?? ''"/>
                 <x-sap-input-field type="text" name="slug" id="slug" label="Slug" :class="[]" :value="$model->slug ?? ''"/>
                 @include('sap::admin.page.styleInput')

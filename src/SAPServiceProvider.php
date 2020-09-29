@@ -35,6 +35,7 @@ class SAPServiceProvider extends ServiceProvider
         $this->gatePermissions();
         $this->validatorExtensions();
         $this->configSettings();
+        $this->bladeDirectives();
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
@@ -187,8 +188,14 @@ class SAPServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('settings')) {
             foreach (app(config('sap.models.setting'))->all() as $setting) {
-                Config::set('settings.'.$setting->key, $setting->value);
+                cache()->rememberForever('setting-'.$setting->key, function () use ($setting) {
+                    return Config::set('settings.'.$setting->key, $setting->value);
+                });
             }
         }
+    }
+
+    protected function bladeDirectives()
+    {
     }
 }

@@ -39,7 +39,18 @@ class BrandServiceProvider extends ServiceProvider
     {
         // $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);
         if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
-            $this->loadBrandsStuffs();
+            if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
+                $brands = app(config('sap.models.brand'))->all();
+                foreach ($brands as $brand) {
+                    $brandName = strtolower($brand->name);
+                    $dir = base_path('brand/'.$brandName);
+                    if (File::exists($dir.'/web.php')) {
+                        \Route::middleware('web')->group($dir.'/web.php');
+                    }
+                }
+            } else {
+                $this->loadBrandsStuffs();
+            }
         }
     }
     protected function loadBrandsStuffs()

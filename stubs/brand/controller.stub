@@ -11,12 +11,15 @@ class {%brand_name%}Controller extends Controller
 
     protected $page_path = '{%brand_string%}::pages.';
     protected $brand;
+    protected $supportedLocales = [
+        'en',
+    ];
     public function __construct()
     {
-        $this->register('{%brand_name%}');
+        $this->register('{%brand_name%}')->setLocale();
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $locale)
     {
         $greetings = 'Hello '.$this->brand->name;
         return $this->getViewPage('index', compact('greetings'));

@@ -15,6 +15,7 @@ class Page extends Model
         'created_by',
         'updated_by',
         'brand_id',
+        'locale',
         'name',
         'slug',
         'blade',

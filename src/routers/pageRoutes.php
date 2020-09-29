@@ -18,5 +18,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['delete'], '{page}/delete', 'PageController@destroy')->name('page.destroy');
 
         Route::match(['get', 'head'], '{brand_id}/templates', 'PageController@templates')->name('page.templates');
+
+        Route::match(['post'], '{page}/replicate', 'PageController@replicate')->name('page.replicate');
     });
 });

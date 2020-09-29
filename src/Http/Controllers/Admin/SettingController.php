@@ -26,7 +26,7 @@ class SettingController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.setting.actions', compact('model'))->render();
-                $model->value = is_array($model->value)? implode('<br>', $model->value):$model->value;
+                $model->value       = is_array($model->value) ? implode('<br>', $model->value) : $model->value;
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -34,12 +34,12 @@ class SettingController extends Controller
             if ($request->get('sort', '') != '') {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
-            $links = $paginated->onEachSide(5)->links()->render();
+            $links      = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('setting.list');
-        $html = [
+        $html   = [
             ['title' => 'Key', 'data' => 'key', 'sortable' => true],
             ['title' => 'Value', 'data' => 'value', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
@@ -66,11 +66,13 @@ class SettingController extends Controller
 
         activity('Created Setting: ' . $model->id, $request->all(), $model);
 
+        cache()->forget('setting-' . $model->key);
+
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Setting Created.',
-            'reload' => false,
-            'relist' => false,
+            'status'   => 'success',
+            'flash'    => 'Setting Created.',
+            'reload'   => false,
+            'relist'   => false,
             'redirect' => route('setting.list'),
         ]);
     }
@@ -102,11 +104,13 @@ class SettingController extends Controller
 
         activity('Updated Setting: ' . $model->id, $request->all(), $model);
 
+        cache()->forget('setting-' . $model->key);
+
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Setting Updated.',
-            'reload' => false,
-            'relist' => false,
+            'status'   => 'success',
+            'flash'    => 'Setting Updated.',
+            'reload'   => false,
+            'relist'   => false,
             'redirect' => route('setting.edit', [$model->id]),
         ]);
     }
@@ -119,10 +123,10 @@ class SettingController extends Controller
         activity('Deleted Setting: ' . $model->id, [], $model);
 
         return response()->json([
-            'status' => 'success',
-            'flash' => 'Setting Deleted.',
-            'reload' => false,
-            'relist' => true,
+            'status'   => 'success',
+            'flash'    => 'Setting Deleted.',
+            'reload'   => false,
+            'relist'   => true,
             'redirect' => false,
         ]);
     }

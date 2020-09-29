@@ -42,11 +42,13 @@ class PageController extends Controller
         $getUrl = route('page.list');
         $html   = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
+            ['title' => 'Locale', 'data' => 'locale', 'sortable' => true],
             ['title' => 'Slug', 'data' => 'slug', 'sortable' => true],
             ['title' => 'Template', 'data' => 'template', 'sortable' => true],
             ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.page.index', compact('html', 'getUrl'));
@@ -61,6 +63,7 @@ class PageController extends Controller
     {
         $request->validate([
             'brand_id'     => 'required',
+            'locale'       => 'required',
             'name'         => 'required',
             'slug'         => 'required',
             "published_at" => "required",
@@ -84,8 +87,8 @@ class PageController extends Controller
             'flash'    => 'Page Created.',
             'reload'   => false,
             'relist'   => false,
-            // 'redirect' => route('page.list'),
-            'redirect' => route('page.show', [$model->id]),
+            'redirect' => route('page.list'),
+            // 'redirect' => route('page.show', [$model->id]),
         ]);
     }
 
@@ -95,11 +98,30 @@ class PageController extends Controller
         return view('sap::admin.page.show', compact('model'));
     }
 
+    public function replicate($id)
+    {
+        $model = app(config('sap.models.page'))->query()->findOrFail($id);
+        $newModel = $model->replicate();
+        $newModel->push();
+        $newModel->locale = null;
+        $newModel->save();
+        activity('Deleted Page: ' . $newModel->id, [], $newModel);
+        Cache::flush();
+        return response()->json([
+            'status'   => 'success',
+            'flash'    => 'Page Replicated.',
+            'reload'   => false,
+            'relist'   => false,
+            'redirect' => route('page.edit', [$newModel->id]),
+        ]);
+    }
+
     public function preview($id)
     {
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
-        \View::addNamespace(strtolower($model->brand->name), base_path('brand/'.strtolower($model->brand->name)));
-        return view('sap::admin.page.preview', compact('model'));
+        $brandName = strtolower($model->brand->name);
+        \View::addNamespace($brandName, base_path('brand/'.$brandName));
+        return view($brandName.'::pages.page', compact('model'));
     }
 
     public function edit(Request $request, $id)
@@ -114,6 +136,7 @@ class PageController extends Controller
 
         $request->validate([
             'brand_id'     => 'required',
+            'locale'       => 'required',
             'name'         => 'required',
             'slug'         => 'required',
             "published_at" => "required",
@@ -136,8 +159,8 @@ class PageController extends Controller
             'flash'    => 'Page Updated.',
             'reload'   => false,
             'relist'   => false,
-            // 'redirect' => route('page.edit', [$model->id]),
-            'redirect' => route('page.show', [$model->id]),
+            'redirect' => route('page.edit', [$model->id]),
+            // 'redirect' => route('page.show', [$model->id]),
         ]);
     }
 

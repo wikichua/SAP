@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{%brand_string%} Material Design Bootstrap</title>
+    <title>{%brand_name%} Material Design Bootstrap</title>
     <link href="{{ asset('{%brand_string%}/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('{%brand_string%}/css/all.css') }}" rel="stylesheet">
     <style type="text/css">
