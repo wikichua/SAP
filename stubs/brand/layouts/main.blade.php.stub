@@ -21,7 +21,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
       <div class="container">
         <!-- Brand -->
-        <a class="navbar-brand" href="{{ route('{%brand_string%}.home') }}" target="_blank">
+        <a class="navbar-brand" href="{{ slug_route('{%brand_string%}.home') }}">
           <strong>{%brand_name%}</strong>
         </a>
         <!-- Collapse -->
@@ -34,7 +34,7 @@
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link" href="{{ slug_route('{%brand_string%}.home') }}">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
