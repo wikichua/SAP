@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 
 class SapComponent extends Command
 {
-    protected $signature = 'sap:comp {name} {--inline} {--force}';
+    protected $signature = 'sap:comp {name} {--brand=} {--inline} {--force}';
     protected $description = 'Make Up The COMPONENT';
 
     public function __construct()
@@ -19,6 +19,7 @@ class SapComponent extends Command
 
     public function handle()
     {
+        $this->brand = !empty($this->option('brand'))? $this->option('brand'):null;
         $this->comp_name = \Str::studly($this->argument('name'));
         $this->replaces['{%comp_name%}'] = $comp_name = $this->comp_name;
         \Artisan::call('make:component', [

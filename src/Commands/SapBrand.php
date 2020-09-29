@@ -49,6 +49,7 @@ class SapBrand extends Command
         $this->package();
         $this->webpack();
         $this->others();
+        $this->component();
         $this->seed();
         shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
     }
@@ -99,12 +100,19 @@ class SapBrand extends Command
         }
         if (!$this->files->exists(public_path($this->replaces['{%brand_string%}']))) {
             if ($this->files->exists($this->brand_path.'/public')) {
-                // symlink($this->brand_path.'/public', public_path($this->replaces['{%brand_string%}']));
                 shell_exec('ln -s '.$this->brand_path.'/public' .' '.public_path($this->replaces['{%brand_string%}']));
                 $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_string%}']).'</info>');
             }
         }
         $this->line('Assets copied: <info>'.$asset_dir.'</info>');
+    }
+
+    protected function component()
+    {
+        if (!$this->files->exists($this->brand_path.'/components')) {
+            $this->files->makeDirectory($this->brand_path.'/components');
+            $this->line('Component created: <info>'.$this->brand_path.'/components'.'</info>');
+        }
     }
 
     protected function route()
