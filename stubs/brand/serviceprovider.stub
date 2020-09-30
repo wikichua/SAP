@@ -2,6 +2,7 @@
 
 namespace Brand\{%brand_name%}\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class {%brand_name%}ServiceProvider extends ServiceProvider
