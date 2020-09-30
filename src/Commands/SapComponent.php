@@ -20,7 +20,15 @@ class SapComponent extends Command
     public function handle()
     {
         $this->brand = !empty($this->option('brand'))? $this->option('brand'):null;
+        if ($this->brand) {
+            $brand = app(config('sap.models.brand'))->query()->where('name',strtolower($this->brand))->first();
+            if (!$brand) {
+                $this->error('Brand not found: <info>'.$this->brand.'</info>');
+                return '';
+            }
+        }
         $this->comp_name = \Str::studly($this->argument('name'));
+        $this->replaces['{%brand_id%}'] = $$brand->id;
         $this->replaces['{%comp_name%}'] = $comp_name = $this->comp_name;
         \Artisan::call('make:component', [
             'name' => $comp_name,

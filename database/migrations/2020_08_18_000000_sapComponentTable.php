@@ -12,6 +12,7 @@ class SapComponentTable extends Migration
         Schema::create('components', function (Blueprint $table) {
             $table->increments('id', true);
             $table->string('name')->nullable()->default('');
+            $table->integer('brand_id')->nullable()->default(0);
             $table->integer('created_by')->nullable()->default(0);
             $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
