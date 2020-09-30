@@ -11,6 +11,9 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
     }
     public function boot()
     {
+        Blade::componentNamespace('Brand\\{%brand_name%}\\Components\Component', '{%brand_string%}');
+        // <x-{%brand_string%}::component-name />
+
         $this->app['router']->pushMiddlewareToGroup('web', \Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware::class);
     }
 }
