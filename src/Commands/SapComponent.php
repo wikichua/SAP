@@ -28,7 +28,7 @@ class SapComponent extends Command
             }
         }
         $this->comp_name = \Str::studly($this->argument('name'));
-        $this->replaces['{%brand_id%}'] = $$brand->id;
+        $this->replaces['{%brand_id%}'] = $brand->id;
         $this->replaces['{%comp_name%}'] = $comp_name = $this->comp_name;
         \Artisan::call('make:component', [
             'name' => $comp_name,

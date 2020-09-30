@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 class ComponentController extends Controller
 {
@@ -23,7 +24,7 @@ class ComponentController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.component.actions', compact('model'))->render();
-                $model->usage = "&lt;x-".\Str::kebab($model->name).">&lt;/x-".\Str::kebab($model->name).">";
+                $model->usage = "&lt;x-$model->brand_name::".\Str::kebab($model->name).">&lt;/x-$model->brand_name::".\Str::kebab($model->name).">";
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -38,6 +39,7 @@ class ComponentController extends Controller
         $getUrl = route('component.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true, 'filterable' => true],
+            ['title' => 'Brand', 'data' => 'brand_name', 'sortable' => false, 'filterable' => false],
             ['title' => 'Usage Example', 'data' => 'usage', 'sortable' => false, 'filterable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];
@@ -56,6 +58,9 @@ class ComponentController extends Controller
         $request->validate([
             "code" => "required",
         ]);
+        if ($model->brand_id != 0) {
+            Blade::componentNamespace('\\Brand\\'.$model->brand_name.'\\Components\\Component', strtolower($model->brand_name));
+        }
         return viewRenderer($request->input('code'));
     }
 }

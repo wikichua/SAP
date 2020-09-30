@@ -18,7 +18,7 @@
                 <div class="col">
                     <form novalidate method="POST" action="{{ route('component.try',[$model->id]) }}" id="component-try-form">
                         @csrf
-                        <x-sap-textarea-field name="code" id="code" label="Try It" :class="['']" :attribute_tags="[]" value="<x-{{ \Str::kebab($model->name) }}></x-{{ \Str::kebab($model->name) }}>"/>
+                        <x-sap-textarea-field name="code" id="code" label="Try It" :class="['']" :attribute_tags="[]" value="<x-{{ strtolower($model->brand->name) }}::{{ \Str::kebab($model->name) }}></x-{{ strtolower($model->brand->name) }}::{{ \Str::kebab($model->name) }}>"/>
                         <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
                     </form>
                 </div>
