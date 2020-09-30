@@ -13,13 +13,13 @@
 @endphp
 <div class="form-group">
     <label for="{{ $id }}">{{ $label }}</label>
-    <div class="form-control h-auto {{ isset($data) && is_array($data)? implode(' data-',$data):'' }}" name="{{ $name }}">
+    <div class="form-control h-auto {{ implode(' ',$class) }}" {{ isset($data) && is_array($data)? implode(' data-',$data):'' }} name="{{ $name }}">
         @if ($isGroup)
             @foreach ($groupOptions as $group => $options)
             <b class="d-block{{ !$loop->first ? ' mt-3' : '' }}">{{ $group }}</b>
                 @foreach($options as $key => $val)
                 <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-checkbox">
-                    <input 
+                    <input
                         type="checkbox"
                         name="{{ $name }}[{{ $key }}]"
                         id="{{ $id }}-{{ $key }}"
@@ -34,7 +34,7 @@
         @else
             @foreach($options as $key => $val)
             <div class="custom-control custom-control-{{ isset($stacked) && $stacked? 'stacked':'inline' }} custom-checkbox">
-                <input 
+                <input
     	            type="checkbox"
     	            name="{{ $name }}[{{ $key }}]"
     	            id="{{ $id }}-{{ $key }}"
