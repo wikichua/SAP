@@ -27,6 +27,30 @@ class SapComponent extends Command
             '--inline' => $this->option('inline', false),
             '--force' => $this->option('force', false),
         ]);
+
+        if ($this->brand) {
+            $brand =  \Str::studly($this->brand);
+            $namespaceStr = "namespace Brand\\$brand\\Components\Component;";
+            $renderStr = "view('".strtolower($this->brand)."::components.".strtolower($comp_name)."')";
+
+            $component_class_path = app_path('View/Components');
+            $component_resource_path = resource_path('views/components');
+            $brand_component_class_path = base_path('brand/'.strtolower($this->brand).'/components');
+            if (!$this->files->exists($brand_component_class_path)) {
+                $this->files->makeDirectory($brand_component_class_path);
+                $this->files->makeDirectory($brand_component_class_path.'/component');
+            }
+            $componentClass = $brand_component_class_path."/component/{$comp_name}.php";
+            $componentView = $brand_component_class_path."/".(strtolower($comp_name)).".blade.php";
+            $this->files->move($component_class_path."/{$comp_name}.php",$componentClass);
+            $this->files->move($component_resource_path."/".(strtolower($comp_name)).".blade.php",$componentView);
+
+            $content = $this->files->get($componentClass);
+            $content = preg_replace('/^namespace\s.+;$/m', $namespaceStr, $content);
+            $content = str_replace('view(\'components.'.strtolower($comp_name).'\')', $renderStr, $content);
+            $this->files->put($componentClass,$content);
+        }
+
         $this->output->write(\Artisan::output());
         $this->seed();
     }
@@ -40,8 +64,15 @@ class SapComponent extends Command
             return;
         }
         $filename = "sap{$this->comp_name}ComponentSeed.php";
+
+        $database_dir = database_path('migrations');
         $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
-        foreach ($this->files->files(database_path('migrations/')) as $file) {
+
+        if ($this->brand) {
+            $database_dir = base_path('brand/'.strtolower($this->brand).'/database');
+            $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
+        }
+        foreach ($this->files->files($database_dir) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();
                 $msg = 'Migration file overwritten';

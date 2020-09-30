@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+Route::redirect('/','/en');
 Route::domain(env('{%brand_name%}Url'))
     ->prefix('{locale?}')
     ->name('{%brand_string%}.')
