@@ -65,9 +65,9 @@
 1. Stopping certain artisan cli perform on certain environments
 1. Page can choose different template (but template must be pre-coded)
 1. Locale for page module
+1. Locale for navigation menu
 
 ### Todo List
-1. Locale for navigation menu
 1. Tie user to brand?
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)

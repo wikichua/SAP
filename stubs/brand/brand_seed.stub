@@ -8,7 +8,7 @@ class Sap{%brand_name%}BrandSeed extends Migration
 {
     public function up()
     {
-        app(config('sap.models.brand'))->query()->create([
+        $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
             'domain' => env('{%brand_name%}Url'),
             'published_at' => null,
@@ -16,5 +16,10 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'status' => 'P',
         ]);
         \Cache::forget('brand-{%brand_name%}');
+        app(config('sap.models.component'))->query()->create([
+            'name' => 'Navbar Top',
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
     }
 }
