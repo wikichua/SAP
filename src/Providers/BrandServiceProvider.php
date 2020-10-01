@@ -16,11 +16,6 @@ class BrandServiceProvider extends ServiceProvider
         if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
             foreach (File::directories(base_path('brand')) as $dir) {
                 $brandName = basename($dir);
-                if (File::isDirectory($dir.'/config')) {
-                    foreach (File::files($dir.'/config') as $confFile) {
-                        $this->mergeConfigFrom($confFile, $brandName);
-                    }
-                }
                 if (File::isDirectory($dir.'/providers')) {
                     foreach (File::files($dir.'/providers') as $file) {
                         if (str_contains($file->getFilename(), 'ServiceProvider.php')) {

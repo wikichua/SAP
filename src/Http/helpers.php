@@ -74,8 +74,14 @@ if (!function_exists('viewRenderer')) {
     }
 }
 if (!function_exists('slug_route')) {
-    function slug_route($name, array $parameters = [], $absolute = true)
+    function slug_route($name, string $slug, array $parameters = [], $locale ='', $absolute = true)
     {
-        return Help::slug_route($name, $parameters, $absolute);
+        return Help::slug_route($name, $slug, $parameters, $locale, $absolute);
+    }
+}
+if (!function_exists('route_slug')) {
+    function route_slug($name, string $slug, array $parameters = [], $locale ='', $absolute = true)
+    {
+        return Help::slug_route($name, $slug, $parameters, $locale, $absolute);
     }
 }

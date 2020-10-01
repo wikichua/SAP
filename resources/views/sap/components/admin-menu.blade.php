@@ -9,6 +9,7 @@
         'system_log.*',
         'brand.*',
         'page.*',
+        'nav.*',
         'component.*',
     ]"/>
 @if (Route::has('lfm.home'))

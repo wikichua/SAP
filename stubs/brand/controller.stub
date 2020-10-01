@@ -19,8 +19,11 @@ class {%brand_name%}Controller extends Controller
         $this->register('{%brand_name%}')->setLocale();
     }
 
-    public function index(Request $request, $locale)
+    public function index(Request $request, $locale = '', $slug = '')
     {
+        if ($slug != '') {
+            $this->page($request, $locale, $slug);
+        }
         $greetings = 'Hello '.$this->brand->name;
         return $this->getViewPage('index', compact('greetings'));
     }

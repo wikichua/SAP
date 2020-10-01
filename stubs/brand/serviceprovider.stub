@@ -3,6 +3,7 @@
 namespace Brand\{%brand_name%}\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +14,16 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
     }
     public function boot()
     {
-        View::addNamespace('{%brand_string%}', base_path('brand/{%brand_string%}'))
+        $dir = base_path('brand/{%brand_string%}/config');
+        if (File::isDirectory($dir)) {
+            foreach (File::files($dir) as $confFile) {
+                $name = str_replace('.php', '', basename($confFile));
+                $this->mergeConfigFrom($confFile, '{%brand_string%}.'.$name);
+                $this->mergeConfigFrom($confFile, 'brand.'.$name);
+            }
+        }
+
+        View::addNamespace('{%brand_string%}', base_path('brand/{%brand_string%}'));
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components\Component', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />
 

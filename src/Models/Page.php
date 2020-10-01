@@ -50,7 +50,7 @@ class Page extends Model
 
     public function getStatusNameAttribute($value)
     {
-        return settings('brand_status')[$this->attributes['status']];
+        return settings('page_status')[$this->attributes['status']];
     }
 
     public function scopeFilterName($query, $search)

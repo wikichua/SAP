@@ -105,7 +105,7 @@ class PageController extends Controller
         $newModel->push();
         $newModel->locale = null;
         $newModel->save();
-        activity('Deleted Page: ' . $newModel->id, [], $newModel);
+        activity('Replicated Page: ' . $newModel->id, [], $newModel);
         Cache::flush();
         return response()->json([
             'status'   => 'success',
