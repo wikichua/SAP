@@ -21,8 +21,10 @@
 1. https://github.com/axios/axios
 1. https://github.com/tighten/ziggy
 1. https://gijgo.com/
+1. http://www.daterangepicker.com/
 1. https://summernote.org/
 1. https://codemirror.net/
+1. https://momentjs.com/
 
 ### Current Version
 
