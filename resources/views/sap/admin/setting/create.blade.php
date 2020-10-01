@@ -16,7 +16,7 @@
         <div class="table-responsive">
             <form novalidate data-ajax-form method="POST" action="{{ route('setting.store') }}" enctype="multipart/form-data">
                 @csrf
-                <x-sap-input-field type="text" name="key" id="key" label="Key" :class="[]" value=""/>
+                <x-sap::input-field type="text" name="key" id="key" label="Key" :class="[]" value=""/>
                 @include('sap::admin.setting.valueInput')
                 <button type="submit" class="btn btn-primary">
                 Submit

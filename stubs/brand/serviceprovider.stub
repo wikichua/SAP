@@ -13,7 +13,7 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
     }
     public function boot()
     {
-        View::addNamespace('coffee', base_path('brand/coffee'))
+        View::addNamespace('{%brand_string%}', base_path('brand/{%brand_string%}'))
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components\Component', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />
 

@@ -1,3 +1,3 @@
 @can('Read {%model_strings%}')
-<x-sap-menu menu="menu" label="{%menu_name%}" :route="route('{%model_variable%}.list')" icon="{%menu_icon%}" :active-patterns="['{%model_variable%}.*']"/>
+<x-sap::menu menu="menu" label="{%menu_name%}" :route="route('{%model_variable%}.list')" icon="{%menu_icon%}" :active-patterns="['{%model_variable%}.*']"/>
 @endcan

@@ -156,7 +156,7 @@ class SapMake extends Command
             }
             $replace_for_form['{%class_tag%}'] = "'".implode("',\n'", $options['class'])."'";
 
-            $read_stub = '<x-sap-display-field type="text" name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="{%type%}"/>';
+            $read_stub = '<x-sap::display-field type="text" name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="{%type%}"/>';
             $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
 
             $form_stub = '';
@@ -166,34 +166,34 @@ class SapMake extends Command
                 case 'password':
                 case 'text':
                 case 'url':
-                    $form_stub = '<x-sap-input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'time':
-                    $form_stub = '<x-sap-time-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::time-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'date':
-                    $form_stub = '<x-sap-date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'image':
-                    $form_stub = '<x-sap-image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'file':
-                    $form_stub = '<x-sap-file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'textarea':
-                    $form_stub = '<x-sap-textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 case 'select':
-                    $form_stub = '<x-sap-select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
+                    $form_stub = '<x-sap::select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
                     break;
                 case 'radio':
-                    $form_stub = '<x-sap-radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
+                    $form_stub = '<x-sap::radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
                     break;
                 case 'checkbox':
-                    $form_stub = '<x-sap-checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
+                    $form_stub = '<x-sap::checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
                     break;
                 case 'editor':
-                    $form_stub = '<x-sap-editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     break;
                 default:
                     $this->error('Input Type not supported: <info>'.$field.':'.$options['type'].'</info>');
@@ -241,18 +241,18 @@ EOT;
                     case 'date':
                         $scopes[] = $this->indent().'$date = $this->getDateFilter($search);';
                         $scopes[] = $this->indent().'return $query->whereBetween(\''.$field.'\', [ $this->inUserTimezone($date[\'start_at\']), $this->inUserTimezone($date[\'stop_at\'])]);';
-                        $searches[] = $this->indent().'<x-sap-search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
+                        $searches[] = $this->indent().'<x-sap::search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         break;
                     case 'select':
                     case 'radio':
                     case 'checkbox':
                         $scopes[] = $this->indent().'    return $query->whereIn(\''.$field.'\', $search);';
-                        $searches[] = $this->indent().'<x-sap-search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'"/>';
+                        $searches[] = $this->indent().'<x-sap::search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'"/>';
                         break;
                     case 'text':
                     case 'textarea':
                         $scopes[] = $this->indent().'return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
-                        $searches[] = $this->indent().'<x-sap-search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
+                        $searches[] = $this->indent().'<x-sap::search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         $searchable_fields[] = "'".$field."'";
                         break;
                 }

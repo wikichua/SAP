@@ -10,26 +10,26 @@ aria-hidden="true">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name">Brand Name</label>
-                    <x-sap-search-input-field type="text" name="name" id="name"/>
+                    <x-sap::search-input-field type="text" name="name" id="name"/>
                 </div>
                 <div class="form-group">
                     <label for="admin">Domain</label>
-                    <x-sap-search-input-field type="text" name="admin" id="admin"/>
+                    <x-sap::search-input-field type="text" name="admin" id="admin"/>
                 </div>
 
                 <div class="form-group">
                     <label for="published_at">Published Date</label>
-                    <x-sap-search-date-field type="text" name="published_at" id="published_at"/>
+                    <x-sap::search-date-field type="text" name="published_at" id="published_at"/>
                 </div>
 
                 <div class="form-group">
                     <label for="expired_at">Expired Date</label>
-                    <x-sap-search-date-field type="text" name="expired_at" id="expired_at"/>
+                    <x-sap::search-date-field type="text" name="expired_at" id="expired_at"/>
                 </div>
 
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <x-sap-search-select-field name="status" id="status" :options="settings('brand_status')"/>
+                    <x-sap::search-select-field name="status" id="status" :options="settings('brand_status')"/>
                 </div>
             </div>
             <div class="modal-footer">

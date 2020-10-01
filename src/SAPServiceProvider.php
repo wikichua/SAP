@@ -160,12 +160,12 @@ class SAPServiceProvider extends ServiceProvider
     {
         \Blade::componentNamespace('Wikichua\\SAP\\View\\Components', 'sap');
         // $array = [];
-        foreach (File::files(__DIR__.'/View/Components/') as $file) {
-            $basename = str_replace('.'.$file->getExtension(), '', $file->getBasename());
-            $class = config('sap.component_namespace').'\\'.$basename;
-            Blade::component('sap-'.\Str::snake($basename, '-'), get_class(new $class()));
-            // $array[\Str::snake($basename, '-')] = $class;
-        }
+        // foreach (File::files(__DIR__.'/View/Components/') as $file) {
+        //     $basename = str_replace('.'.$file->getExtension(), '', $file->getBasename());
+        //     $class = config('sap.component_namespace').'\\'.$basename;
+        //     Blade::component('sap-'.\Str::snake($basename, '-'), get_class(new $class()));
+        //     // $array[\Str::snake($basename, '-')] = $class;
+        // }
         // $this->loadViewComponentsAs('sap', $array); // not using this as in double looping the components
     }
 

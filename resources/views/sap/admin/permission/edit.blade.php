@@ -17,8 +17,8 @@
             <form novalidate data-ajax-form method="POST" action="{{ route('permission.update',[$model->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
-                <x-sap-input-field type="text" name="group" id="group" label="Group" :class="[]" :value="$model->group"/>
-                <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
+                <x-sap::input-field type="text" name="group" id="group" label="Group" :class="[]" :value="$model->group"/>
+                <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

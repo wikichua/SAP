@@ -24,7 +24,7 @@
             <div class="tab-content">
                 @foreach ($models as $model)
                 <div class="tab-pane fade {{ $loop->iteration == 1? 'show active':'' }}" id="nav-sql-{{ $loop->iteration }}" role="tabpanel" aria-labelledby="nav-sql-{{ $loop->iteration }}-tab">
-                    <x-sap-report-table :data="$model"/>
+                    <x-sap::report-table :data="$model"/>
                 </div>
                 @endforeach
             </div>

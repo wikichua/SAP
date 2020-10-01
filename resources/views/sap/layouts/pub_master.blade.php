@@ -25,7 +25,7 @@
                 <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
             </a>
             {{-- ur own menu here --}}
-            <x-sap-menu menu="menu" label="Dashboard" :route="route('pub.home')" icon="fas fa-fw fa-tachometer-alt" :active-patterns="['pub.home.*']"/>
+            <x-sap::menu menu="menu" label="Dashboard" :route="route('pub.home')" icon="fas fa-fw fa-tachometer-alt" :active-patterns="['pub.home.*']"/>
             {{-- ur own menu end --}}
 
             <hr class="sidebar-divider d-none d-md-block">
@@ -76,7 +76,7 @@
                             </div>
                         </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
-                        <x-sap-dropdown-menu/>
+                        <x-sap::dropdown-menu/>
                     </ul>
                 </nav>
                 <div class="container-fluid">

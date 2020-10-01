@@ -15,13 +15,13 @@
     <div class="card-body">
         <div class="table-responsive">
             @csrf
-            <x-sap-display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
-            <x-sap-display-field type="text" name="key" id="key" label="Key" :value="$model->key"/>
-            <x-sap-display-field type="text" name="value" id="value" label="Value" :value="$model->value" :type="is_array($model->value)? 'json':''"/>
-            <x-sap-display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
-            <x-sap-display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name"/>
-            <x-sap-display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
-            <x-sap-display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name"/>
+            <x-sap::display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
+            <x-sap::display-field type="text" name="key" id="key" label="Key" :value="$model->key"/>
+            <x-sap::display-field type="text" name="value" id="value" label="Value" :value="$model->value" :type="is_array($model->value)? 'json':''"/>
+            <x-sap::display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
+            <x-sap::display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name"/>
+            <x-sap::display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
+            <x-sap::display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name"/>
         </div>
     </div>
 </div>

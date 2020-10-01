@@ -10,7 +10,7 @@ aria-hidden="true">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name">Brand Name</label>
-                    <x-sap-search-input-field type="text" name="name" id="name"/>
+                    <x-sap::search-input-field type="text" name="name" id="name"/>
                 </div>
             </div>
             <div class="modal-footer">

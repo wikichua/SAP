@@ -14,13 +14,13 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <x-sap-display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
-            <x-sap-display-field type="text" name="user" id="user" label="User" :value="$model->user->name"/>
-            <x-sap-display-field type="text" name="model_id" id="model_id" label="Model ID" :value="$model->model_id"/>
-            <x-sap-display-field type="text" name="model_class" id="model_class" label="Model" :value="$model->model_class"/>
-            <x-sap-display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
-            <x-sap-display-field type="text" name="message" id="message" label="Message" :value="$model->message"/>
-            <x-sap-display-field type="text" name="data" id="data" label="Data" :value="$model->data" type="json"/>
+            <x-sap::display-field type="text" name="id" id="id" label="ID" :value="$model->id"/>
+            <x-sap::display-field type="text" name="user" id="user" label="User" :value="$model->user->name"/>
+            <x-sap::display-field type="text" name="model_id" id="model_id" label="Model ID" :value="$model->model_id"/>
+            <x-sap::display-field type="text" name="model_class" id="model_class" label="Model" :value="$model->model_class"/>
+            <x-sap::display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
+            <x-sap::display-field type="text" name="message" id="message" label="Message" :value="$model->message"/>
+            <x-sap::display-field type="text" name="data" id="data" label="Data" :value="$model->data" type="json"/>
         </div>
     </div>
 </div>

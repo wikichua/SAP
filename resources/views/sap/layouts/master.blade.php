@@ -25,7 +25,7 @@
                 <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
             </a>
 
-            <x-sap-admin-menu></x-sap-admin-menu>
+            <x-sap::admin-menu></x-sap-admin-menu>
 
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
@@ -73,7 +73,7 @@
                             </div>
                         </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
-                        <x-sap-dropdown-menu/>
+                        <x-sap::dropdown-menu/>
                     </ul>
                 </nav>
                 <div class="container-fluid">

@@ -17,9 +17,9 @@
             <form novalidate data-ajax-form method="POST" action="{{ route('role.update',[$model->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
-                <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
-                <x-sap-select-field name="admin" id="admin" label="Is Admin" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[false=>'No',true=>'Yes']" :selected="[$model->admin]"/>
-                <x-sap-checkboxes-field name="permissions" id="permissions" label="Permissions" :class="[]" :options="$group_permissions" :isGroup="true" :checked="$model->permissions->pluck('id')->toArray()"/>
+                <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
+                <x-sap::select-field name="admin" id="admin" label="Is Admin" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[false=>'No',true=>'Yes']" :selected="[$model->admin]"/>
+                <x-sap::checkboxes-field name="permissions" id="permissions" label="Permissions" :class="[]" :options="$group_permissions" :isGroup="true" :checked="$model->permissions->pluck('id')->toArray()"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

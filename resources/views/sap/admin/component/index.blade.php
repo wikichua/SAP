@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <x-sap-datatable :data="$html" :url="$getUrl"/>
+                <x-sap::datatable :data="$html" :url="$getUrl"/>
             </div>
         </div>
     </div>

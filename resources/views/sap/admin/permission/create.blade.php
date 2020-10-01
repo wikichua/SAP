@@ -16,8 +16,8 @@
         <div class="table-responsive">
             <form novalidate data-ajax-form method="POST" action="{{ route('permission.store') }}" enctype="multipart/form-data">
                 @csrf
-                <x-sap-input-field type="text" name="group" id="group" label="Group" :class="[]" value=""/>
-                <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" value=""/>
+                <x-sap::input-field type="text" name="group" id="group" label="Group" :class="[]" value=""/>
+                <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" value=""/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

@@ -5,7 +5,7 @@ namespace Wikichua\SAP\View\Components;
 use Illuminate\View\Component;
 
 class Datatable extends Component
-{    
+{
     public function __construct()
     {
     }

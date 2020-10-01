@@ -16,7 +16,7 @@
         <div class="table-responsive">
             <form novalidate data-ajax-form method="POST" action="{{ route('pat.store',[$user_id]) }}" enctype="multipart/form-data">
                 @csrf
-                <x-sap-input-field type="text" name="name" id="name" label="Name" :class="[]" value="authToken"/>
+                <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" value="authToken"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

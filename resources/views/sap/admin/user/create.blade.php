@@ -16,13 +16,13 @@
         <div class="table-responsive">
             <form novalidate data-ajax-form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                 @csrf
-                <x-sap-input-field type="text" name="name" id="name" label="Full Name" :class="[]" value=""/>
-                <x-sap-input-field type="email" name="email" id="email" label="Email" :class="[]" value=""/>
-                <x-sap-input-field type="password" name="password" id="password" label="Password" :class="[]"/>
-                <x-sap-input-field type="password" name="password_confirmation" id="password_confirmation" label="Confirm Password" :class="[]"/>
-                <x-sap-select-field name="timezone" id="timezone" label="Timezone" :class="[]" :data="['style'=>'border bg-white','live-search'=>true]" :options="Help::timezones()" :selected="[]"/>
-                <x-sap-select-field name="type" id="type" label="Type" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('user_types')" :selected="[]"/>
-                <x-sap-checkboxes-field name="roles" id="roles" label="Roles" :class="[]" :options="$roles->toArray()" :isGroup="false"/>
+                <x-sap::input-field type="text" name="name" id="name" label="Full Name" :class="[]" value=""/>
+                <x-sap::input-field type="email" name="email" id="email" label="Email" :class="[]" value=""/>
+                <x-sap::input-field type="password" name="password" id="password" label="Password" :class="[]"/>
+                <x-sap::input-field type="password" name="password_confirmation" id="password_confirmation" label="Confirm Password" :class="[]"/>
+                <x-sap::select-field name="timezone" id="timezone" label="Timezone" :class="[]" :data="['style'=>'border bg-white','live-search'=>true]" :options="Help::timezones()" :selected="[]"/>
+                <x-sap::select-field name="type" id="type" label="Type" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('user_types')" :selected="[]"/>
+                <x-sap::checkboxes-field name="roles" id="roles" label="Roles" :class="[]" :options="$roles->toArray()" :isGroup="false"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>

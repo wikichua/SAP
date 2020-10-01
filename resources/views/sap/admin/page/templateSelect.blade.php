@@ -1,4 +1,4 @@
-<x-sap-select-field name="template" id="template" label="Template" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[]" :selected="[]"/>
+<x-sap::select-field name="template" id="template" label="Template" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[]" :selected="[]"/>
 @push('scripts')
 <script id="page-template" type="text/x-lodash-template">
 <option value=""></option>

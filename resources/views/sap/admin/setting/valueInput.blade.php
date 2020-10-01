@@ -1,4 +1,4 @@
-<x-sap-checkbox-field name="multipleTypes" id="multipleTypes" label="Toggle to switch to multiple values" :class="[]" :value="true" subLabel="Multiple values"/>
+<x-sap::checkbox-field name="multipleTypes" id="multipleTypes" label="Toggle to switch to multiple values" :class="[]" :value="true" subLabel="Multiple values"/>
 <div class="form-group">
     <label for="name" class="col-md-2 col-form-label">Value</label>
     <div class="form-control h-auto">
