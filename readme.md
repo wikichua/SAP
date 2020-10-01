@@ -8,9 +8,21 @@
 ## Requirements
 
 1. A new Laravel related project (completedly new)
-2. Composer require laravel/ui (no need installing the auth scaffolding)
-3. A working NPM in your machine
-4. Knowledge in jQuery, Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
+1. Composer require laravel/ui (no need installing the auth scaffolding)
+1. A working NPM in your machine
+1. Knowledge in jQuery, Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
+
+## Refer
+
+1. https://developer.snapappointments.com/
+1. https://sweetalert2.github.io/
+1. https://unsplash.com/
+1. https://lodash.com/
+1. https://github.com/axios/axios
+1. https://github.com/tighten/ziggy
+1. https://gijgo.com/
+1. https://summernote.org/
+1. https://codemirror.net/
 
 ### Current Version
 
