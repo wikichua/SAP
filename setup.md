@@ -20,10 +20,6 @@ composer config github-oauth.github.com 86e253009610b1ce0718f68da57b2a454a8d78e3
 composer require wikichua/sap:dev-master
 composer require laravel/ui
 ```
-#### Laravel 7
-```bash
-composer require laravel/ui:2.*
-```
 
 ## Amend your composer.json
 This package is using which currently not updated to be able to support Laravel 8
@@ -35,7 +31,7 @@ After created new project using composer create-project or laravel installer
 ```json
     "repositories": {
         "wikichua/sap": {
-            "type": "git",
+            "type": "vcs",
             "url": "https://github.com/wikichua/sap.git"
         },
         "unisharp/laravel-filemanager": {
@@ -49,6 +45,8 @@ After created new project using composer create-project or laravel installer
     }
 ```
 ```bash
+composer require wikichua/sap:dev-master
+composer require laravel/ui
 composer require unisharp/laravel-filemanager:dev-master
 composer require lionix/seo-manager:dev-master
 ```

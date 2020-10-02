@@ -69,6 +69,7 @@
 
 ### Todo List
 1. Tie user to brand?
+1. Brand middleware and auth?
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 2. Host in 1 or multiple servers no issue as the brand can serve only that particular site with vhost fix
