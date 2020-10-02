@@ -37,15 +37,12 @@ class SapBrand extends Command
         }
         $this->autoload();
         $this->env();
-        $this->assets();
         $this->route();
         $this->model();
         $this->controller();
         $this->serviceprovider();
         $this->middleware();
-        $this->justCopy('layouts');
-        $this->justCopy('pages');
-        $this->justCopy('config');
+        $this->resources();
         $this->package();
         $this->webpack();
         $this->others();
@@ -90,10 +87,18 @@ class SapBrand extends Command
         }
     }
 
+    protected function resources()
+    {
+        $this->assets();
+        $this->justCopy('resources/views/layouts');
+        $this->justCopy('resources/views/pages');
+        $this->justCopy('config');
+    }
+
     protected function assets()
     {
-        $asset_stub = $this->stub_path.'/assets';
-        $asset_dir = $this->brand_path.'/assets';
+        $asset_stub = $this->stub_path.'/resources';
+        $asset_dir = $this->brand_path.'/resources';
         $this->files->copyDirectory($asset_stub, $asset_dir);
         if (!$this->files->exists($this->brand_path.'/public')) {
             $this->files->makeDirectory($this->brand_path.'/public');

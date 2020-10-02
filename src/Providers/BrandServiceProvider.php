@@ -65,7 +65,7 @@ class BrandServiceProvider extends ServiceProvider
                     // $this->app->loadEnvironmentFrom($dir.'/.env');
                     \Route::middleware('web')->group($dir.'/web.php');
                     // $this->loadTranslationsFrom($dir.'/lang', $brandName);
-                    $this->loadViewsFrom($dir, $brandName);
+                    // $this->loadViewsFrom($dir, $brandName);
                 }
             }
             app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);

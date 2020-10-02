@@ -8,15 +8,15 @@ mix.webpackConfig({
         }
     }
 });
-mix.js('assets/js/app.js', 'public/js')
-    .copy('assets/font', 'public/font')
-    .copy('assets/img', 'public/img')
+mix.js('resources/js/app.js', 'public/js')
+    .copy('resources/font', 'public/font')
+    .copy('resources/img', 'public/img')
     .scripts([
-        'assets/js/mdb.js',
-        'assets/js/scripts.js'
+        'resources/js/mdb.js',
+        'resources/js/scripts.js'
     ], './public/js/all.js')
     .styles([
-        'assets/css/mdb.css',
-        'assets/css/styles.css'
+        'resources/css/mdb.css',
+        'resources/css/styles.css'
     ], './public/css/all.css')
-    .sass('assets/css/app.scss', 'public/css');
+    .sass('resources/css/app.scss', 'public/css');
