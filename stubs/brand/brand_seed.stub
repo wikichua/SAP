@@ -11,14 +11,36 @@ class Sap{%brand_name%}BrandSeed extends Migration
         $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
             'domain' => env('{%brand_name%}Url'),
-            'published_at' => null,
-            'expired_at' => null,
-            'status' => 'P',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
+            'status' => 'A',
         ]);
         \Cache::forget('brand-{%brand_name%}');
         app(config('sap.models.component'))->query()->create([
             'name' => 'Navbar Top',
             'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
+        app(config('sap.models.nav'))->query()->create([
+            'name' => 'About Us',
+            'locale' => 'en',
+            'group_slug' => 'top-nav-bar',
+            'route_slug' => 'about-us',
+            'route_params' => [],
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
+        app(config('sap.models.page'))->query()->create([
+            'name' => 'About Us',
+            'slug' => 'about-us',
+            'locale' => 'en',
+            'styles' => [],
+            'scripts' => [],
+            'template' => 'layouts.main',
+            'brand_id' => $brand->id,
+            'blade' => '<p>This is all about us<br></p>',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
         ]);
     }
