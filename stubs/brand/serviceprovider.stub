@@ -14,6 +14,9 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
     }
     public function boot()
     {
+        $this->app['router']->aliasMiddleware('{%brand_string%}_guest', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
+        $this->app['router']->aliasMiddleware('{%brand_string%}_auth', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
+
         $dir = base_path('brand/{%brand_string%}/config');
         if (File::isDirectory($dir)) {
             foreach (File::files($dir) as $confFile) {

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/','/en');
 Route::domain(env('{%brand_name%}Url'))
     ->prefix('{locale?}')
+    ->middleware(['{%brand_string%}'])
     ->name('{%brand_string%}.')
     ->namespace('\Brand\{%brand_name%}\Controllers')
     ->group(function () {
