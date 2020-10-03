@@ -37,7 +37,7 @@ Run in your bash
 php artsan sap:config *ModuleName*
 ```
 
-[Config Sample](stubs/config.stub)
+[Config Sample](../stubs/config.stub)
 Add or remove any configuration that doesn't need and set *ready* to *true*
 
 ##### Make Module
