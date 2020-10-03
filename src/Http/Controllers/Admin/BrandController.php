@@ -12,8 +12,8 @@ class BrandController extends Controller
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Read {model_strings}')->only(['index', 'read']);
-        $this->middleware('can:Update {model_strings}')->only(['edit', 'update']);
+        $this->middleware('can:Read Brands')->only(['index', 'read']);
+        $this->middleware('can:Update Brands')->only(['edit', 'update']);
     }
 
     public function index(Request $request)

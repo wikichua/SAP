@@ -13,7 +13,7 @@ class ComponentController extends Controller
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Read {model_strings}')->only(['index', 'read']);
+        $this->middleware('can:Read Components')->only(['index', 'read']);
     }
 
     public function index(Request $request)

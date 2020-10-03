@@ -13,10 +13,10 @@ class {%model_class%}Controller extends Controller
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
-        $this->middleware('can:Create {model_strings}')->only(['create', 'store']);
-        $this->middleware('can:Read {model_strings}')->only(['index', 'read']);
-        $this->middleware('can:Update {model_strings}')->only(['edit', 'update']);
-        $this->middleware('can:Delete {model_strings}')->only('delete');
+        $this->middleware('can:Create {%model_strings%}')->only(['create', 'store']);
+        $this->middleware('can:Read {%model_strings%}')->only(['index', 'read']);
+        $this->middleware('can:Update {%model_strings%}')->only(['edit', 'update']);
+        $this->middleware('can:Delete {%model_strings%}')->only('delete');
     }
 
     public function index(Request $request)
