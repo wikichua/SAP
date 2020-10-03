@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
-            <x-sap::navbar-top groupSlug="top-nav-bar" />
+            <x-{%brand_string%}::navbar-top groupSlug="top-nav-bar" />
           </ul>
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">

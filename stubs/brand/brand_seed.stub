@@ -43,5 +43,11 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
         ]);
+
+        app(config('sap.models.component'))->query()->create([
+            'name' => 'LoginModal',
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
     }
 }

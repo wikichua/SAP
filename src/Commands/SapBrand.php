@@ -48,7 +48,9 @@ class SapBrand extends Command
         $this->others();
         $this->component();
         $this->seed();
-        shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
+        if ($this->confirm('Do you wish to run composer dumpautoload for '.$this->brand_path.'?', 'yes')) {
+            shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
+        }
     }
 
     protected function autoload()
@@ -92,6 +94,7 @@ class SapBrand extends Command
         $this->assets();
         $this->justCopy('resources/views/layouts');
         $this->justCopy('resources/views/pages');
+        $this->justCopy('resources/views/components');
         $this->justCopy('config');
     }
 
@@ -114,10 +117,11 @@ class SapBrand extends Command
 
     protected function component()
     {
-        if (!$this->files->exists($this->brand_path.'/components')) {
-            $this->files->makeDirectory($this->brand_path.'/components');
-            $this->line('Component created: <info>'.$this->brand_path.'/components'.'</info>');
-        }
+        // if (!$this->files->exists($this->brand_path.'/components')) {
+        //     $this->files->makeDirectory($this->brand_path.'/components');
+        //     $this->line('Component created: <info>'.$this->brand_path.'/components'.'</info>');
+        // }
+        $this->justCopy('components');
     }
 
     protected function route()

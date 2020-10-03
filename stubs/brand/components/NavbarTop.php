@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\SAP\View\Components;
+namespace Brand\{%brand_name%}\Components;
 
 use Illuminate\View\Component;
 
@@ -23,6 +23,6 @@ class NavbarTop extends Component
             ->where('group_slug', $this->group_slug)
             ->orderBy('seq')
             ->get();
-        return view('sap::components.navbar-top', compact('navs'));
+        return view('{%brand_string%}::components.navbar-top', compact('navs'));
     }
 }

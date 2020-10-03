@@ -4,6 +4,7 @@ namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class SapComponent extends Command
 {
@@ -21,13 +22,13 @@ class SapComponent extends Command
     {
         $this->brand = !empty($this->option('brand'))? $this->option('brand'):null;
         if ($this->brand) {
-            $brand = app(config('sap.models.brand'))->query()->where('name',strtolower($this->brand))->first();
+            $brand = app(config('sap.models.brand'))->query()->where('name', strtolower($this->brand))->first();
             if (!$brand) {
                 $this->error('Brand not found: <info>'.$this->brand.'</info>');
                 return '';
             }
         }
-        $this->comp_name = \Str::studly($this->argument('name'));
+        $this->comp_name = Str::studly($this->argument('name'));
         $this->replaces['{%brand_id%}'] = $brand->id;
         $this->replaces['{%comp_name%}'] = $comp_name = $this->comp_name;
         \Artisan::call('make:component', [
@@ -37,26 +38,26 @@ class SapComponent extends Command
         ]);
 
         if ($this->brand) {
-            $brand =  \Str::studly($this->brand);
-            $namespaceStr = "namespace Brand\\$brand\\Components\Component;";
+            $brand =  Str::studly($this->brand);
+            $namespaceStr = "namespace Brand\\$brand\\Components;";
             $renderStr = "view('".strtolower($this->brand)."::components.".strtolower($comp_name)."')";
 
             $component_class_path = app_path('View/Components');
             $component_resource_path = resource_path('views/components');
             $brand_component_class_path = base_path('brand/'.strtolower($this->brand).'/components');
+            $brand_component_view_path = base_path('brand/'.strtolower($this->brand).'/resources/views/components');
             if (!$this->files->exists($brand_component_class_path)) {
                 $this->files->makeDirectory($brand_component_class_path);
-                $this->files->makeDirectory($brand_component_class_path.'/component');
             }
-            $componentClass = $brand_component_class_path."/component/{$comp_name}.php";
-            $componentView = $brand_component_class_path."/".(strtolower($comp_name)).".blade.php";
-            $this->files->move($component_class_path."/{$comp_name}.php",$componentClass);
-            $this->files->move($component_resource_path."/".(strtolower($comp_name)).".blade.php",$componentView);
+            $componentClass = $brand_component_class_path."/{$comp_name}.php";
+            $componentView = $brand_component_view_path."/".(strtolower(Str::slug(Str::snake($comp_name)))).".blade.php";
+            $this->files->move($component_class_path."/{$comp_name}.php", $componentClass);
+            $this->files->move($component_resource_path."/".(strtolower(Str::slug(Str::snake($comp_name)))).".blade.php", $componentView);
 
             $content = $this->files->get($componentClass);
             $content = preg_replace('/^namespace\s.+;$/m', $namespaceStr, $content);
             $content = str_replace('view(\'components.'.strtolower($comp_name).'\')', $renderStr, $content);
-            $this->files->put($componentClass,$content);
+            $this->files->put($componentClass, $content);
         }
 
         $this->output->write(\Artisan::output());
