@@ -9,7 +9,7 @@
 - [Development](Development.md)
 - [Refer](#Refer)
 
-###Introduction
+### Introduction
 
 Laravel oriented package. This package is mainly for
 
@@ -20,7 +20,7 @@ Laravel oriented package. This package is mainly for
 1. Console to import database searchable tables into elasticsearch
 1. Create SQL for reporting + console to run SQL within the queue
 
-###Requirements
+### Requirements
 
 1. A new Laravel related project (completedly new)
 1. Composer require laravel/ui (no need installing the auth scaffolding)
@@ -30,7 +30,7 @@ Laravel oriented package. This package is mainly for
 1. A working NPM in your machine
 1. Knowledge in jQuery, Bootstrap, Material Design Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
 
-###Features
+### Features
 
 1. Theme using https://startbootstrap.com/themes/sb-admin-2/
 1. Activity Logging
@@ -71,7 +71,7 @@ Laravel oriented package. This package is mainly for
 1. Locale for navigation menu
 1. Navigation Management
 
-###Todo List
+### Todo List
 
 1. Tie user to brand
 1. Brand middleware and auth
@@ -81,7 +81,7 @@ Laravel oriented package. This package is mainly for
 1. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
 
-###Refer
+### Refer
 
 1. https://developer.snapappointments.com/
 1. https://sweetalert2.github.io/
