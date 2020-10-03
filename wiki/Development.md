@@ -1,4 +1,4 @@
-### Development
+## Development
 
 - [Create New Service](#Create-New-Service)
 - [Create New Module with SAP](#Create-New-Module-with-SAP)
@@ -13,7 +13,7 @@
 - [Disable Artisan Command](#Disable-Artisan-Command)
 - [Social Lite](#Social-Lite)
 
-#### Create New Service
+### Create New Service
 
 **ServiceName** - MUST be Plural + Studly Case
 
@@ -25,11 +25,11 @@ php artisan sap:service *ServiceName* --force
 
 You may like to add your business model as a service.
 
-#### Create New Module with SAP
+### Create New Module with SAP
 
 **ModuleName** - MUST be Plural + Studly Case
 
-##### Create Config
+#### Create Config
 
 Run in your bash
 
@@ -40,7 +40,7 @@ php artsan sap:config *ModuleName*
 [Config Sample](../stubs/config.stub)
 Add or remove any configuration that doesn't need and set *ready* to *true*
 
-##### Make Module
+#### Make Module
 
 Run in your bash
 
@@ -71,7 +71,7 @@ Config has changed: /var/www/l8/config/sap/LinuxOsConfig.php
 
 Coming soon
 
-##### Using Pusher in your application
+#### Using Pusher in your application
 
 With Helper should be much more easy.
 
@@ -91,12 +91,12 @@ Run in your bash
     ]);
 ```
 
-###### TODO
+##### TODO
 
 1. php artisan sap:export **ModuleName**
 1. php artisan sap:import **ModuleName**
 
-#### Create New Brand with SAP
+### Create New Brand with SAP
 
 **BrandName** - MUST be Plural + Studly Case
 
@@ -114,7 +114,7 @@ This brand will be accompanied with the register of
 1. Carousel Component
 1. Sample Page
 
-#### Create New Component with SAP
+### Create New Component with SAP
 
 Run in your bash
 
@@ -122,7 +122,7 @@ Run in your bash
 php artisan sap:comp *ComponentName*
 ```
 
-##### Create component which belongs to Brand Only
+#### Create component which belongs to Brand Only
 
 Run in your bash
 
@@ -130,7 +130,7 @@ Run in your bash
 php artisan sap:comp *ComponentName* --brand=*BrandName*
 ```
 
-#### Run Import data to Elastic Search
+### Run Import data to Elastic Search
 
 In your scout.php
 
@@ -144,13 +144,13 @@ Run in your bash
 php artisan sap:es
 ```
 
-#### Run report with Artisan + Task Scheduler
+### Run report with Artisan + Task Scheduler
 
 ```bash
 php artisan sap:report
 ```
 
-#### Queue and Cache Closure
+### Queue and Cache Closure
 
 Coming Soon
 
@@ -169,7 +169,7 @@ At your debugbar.php
     ],
 ```
 
-#### Disable Artisan Command
+### Disable Artisan Command
 
 In your app/Console/Kernel.php
 
@@ -189,7 +189,7 @@ protected function commands()
 
 Notes: 1st argument takes array for the command to be disabled while the 2nd argument is an array for environment that you want it to be run on.
 
-#### Social Lite
+### Social Lite
 
 In your User.php model
 
