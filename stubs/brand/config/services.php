@@ -1,6 +1,5 @@
 <?php
-$custom_pub_path = config('sap.custom_pub_path')!=''? '/'.config('sap.custom_pub_path').'/':'';
-$redirectUrl = secure_url(env('APP_URL').$custom_pub_path.'login/{%provider%}/callback');
+$redirectUrl = secure_url('/auth/login/{%provider%}/callback');
 return [
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),

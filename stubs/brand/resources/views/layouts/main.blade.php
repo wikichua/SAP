@@ -39,14 +39,9 @@
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
-              <a href="https://www.facebook.com/mdbootstrap" class="nav-link" target="_blank">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="https://twitter.com/MDBootstrap" class="nav-link" target="_blank">
-                <i class="fab fa-twitter"></i>
-              </a>
+              <button type="button" class="btn btn-link nav-link"  data-toggle="modal" data-target="#elegantModalForm">
+                <i class="fas fa-sign-in-alt"></i>
+              </button>
             </li>
           </ul>
         </div>
@@ -209,6 +204,9 @@
       </div>
       <!--/.Copyright-->
     </footer>
+
+    <x-{%brand_string%}::login-modal />
+
     <script src="{{ asset('{%brand_string%}/js/app.js') }}"></script>
     <script src="{{ asset('{%brand_string%}/js/all.js') }}"></script>
     <script type="text/javascript">

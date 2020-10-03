@@ -42,6 +42,7 @@ class SAPServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
+            $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
             $this->loadRoutes();
             $this->loadRoutesFrom(__DIR__.'/pub.php');
             $this->loadRoutesFrom(__DIR__.'/web.php');
@@ -65,9 +66,7 @@ class SAPServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/sap.php', 'sap');
-        $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
 
-        // Register the service the package provides.
         $this->app->singleton('sap', function ($app) {
             return new SAP();
         });

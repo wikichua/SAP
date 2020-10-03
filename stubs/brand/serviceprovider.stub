@@ -11,20 +11,19 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $dir = base_path('brand/{%brand_string%}/config');
+        if (File::isDirectory($dir)) {
+            foreach (File::files($dir) as $confFile) {
+                $name = str_replace('.php', '', basename($confFile));
+                $this->mergeConfigFrom($confFile, $name);
+            }
+        }
     }
     public function boot()
     {
         $this->app['router']->aliasMiddleware('{%brand_string%}_guest', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
         $this->app['router']->aliasMiddleware('{%brand_string%}_auth', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
 
-        $dir = base_path('brand/{%brand_string%}/config');
-        if (File::isDirectory($dir)) {
-            foreach (File::files($dir) as $confFile) {
-                $name = str_replace('.php', '', basename($confFile));
-                $this->mergeConfigFrom($confFile, '{%brand_string%}.'.$name);
-                $this->mergeConfigFrom($confFile, 'brand.'.$name);
-            }
-        }
         View::addNamespace('{%brand_string%}', base_path('brand/{%brand_string%}/resources/views'));
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />

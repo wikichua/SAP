@@ -18,6 +18,9 @@ abstract class User extends Authenticatable
     protected $appends = ['roles_string','readUrl'];
     // protected $fillable = [];
     public $searchableFields = ['name','email'];
+    protected $casts = [
+        'social' => 'array',
+    ];
 
     public function getRolesStringAttribute()
     {

@@ -22,7 +22,7 @@ class BrandServiceProvider extends ServiceProvider
                     if (File::exists($dir.'/web.php')) {
                         \Route::middleware('web')->group($dir.'/web.php');
                     }
-                    $this->registerBrandServiceProviders($dir);
+                    // $this->registerBrandServiceProviders($dir);
                 }
                 app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
             } else {

@@ -5,6 +5,7 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\View;
 
 class ComponentController extends Controller
 {
@@ -59,7 +60,8 @@ class ComponentController extends Controller
             "code" => "required",
         ]);
         if ($model->brand_id != 0) {
-            Blade::componentNamespace('\\Brand\\'.$model->brand_name.'\\Components\\Component', strtolower($model->brand_name));
+            View::addNamespace(strtolower($model->brand_name), base_path('brand/'.strtolower($model->brand_name).'/resources/views'));
+            Blade::componentNamespace('\\Brand\\'.$model->brand_name.'\\Components', strtolower($model->brand_name));
         }
         return viewRenderer($request->input('code'));
     }

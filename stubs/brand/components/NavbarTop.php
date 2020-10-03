@@ -10,7 +10,7 @@ class NavbarTop extends Component
     public $brand;
     public function __construct($groupSlug)
     {
-        $this->brand = config('brand.config.brand');
+        $this->brand = '{%brand_string%}';
         $this->group_slug = $groupSlug;
     }
     public function render()

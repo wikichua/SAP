@@ -48,7 +48,7 @@ class SapBrand extends Command
         $this->others();
         $this->component();
         $this->seed();
-        if ($this->confirm('Do you wish to run composer dumpautoload for '.$this->brand_path.'?', 'yes')) {
+        if ($this->confirm('Do you wish to run composer dumpautoload for '.$this->brand_path.'?')) {
             shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
         }
     }
@@ -160,6 +160,8 @@ class SapBrand extends Command
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
+
+        $this->justCopy('controllers');
     }
 
     protected function serviceprovider()
