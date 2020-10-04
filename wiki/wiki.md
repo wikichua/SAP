@@ -74,6 +74,7 @@ Laravel oriented package. This package is mainly for
 ## Todo List
 
 1. Tie user to brand
+1. Carousel component for brand
 1. Brand middleware and auth
 1. Alias Domain for Brand
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
