@@ -26,6 +26,7 @@ class CarouselController extends Controller
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.carousel.actions', compact('model'))->render();
+                $model->image = '<img src="'.asset($model->image_url).'" style="max-height:50px;" />';
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -40,7 +41,7 @@ class CarouselController extends Controller
         $getUrl = route('carousel.list');
         $html = [
             ['title' => 'Slug', 'data' => 'slug', 'sortable' => true, 'filterable' => true],
-              ['title' => 'Image', 'data' => 'image_url', 'sortable' => false, 'filterable' => false],
+              ['title' => 'Image', 'data' => 'image', 'sortable' => false, 'filterable' => false],
               ['title' => 'Tags', 'data' => 'tags', 'sortable' => false, 'filterable' => true],
               ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
               ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
@@ -94,13 +95,13 @@ class CarouselController extends Controller
 
     public function show($id)
     {
-        $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
         return view('sap::admin.carousel.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
-        $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
         return view('sap::admin.carousel.edit', compact('model'));
     }
 
@@ -128,7 +129,7 @@ class CarouselController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
 
         $model->update($request->input());
 
@@ -145,7 +146,7 @@ class CarouselController extends Controller
 
     public function destroy($id)
     {
-        $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
 
         $model->delete();
 

@@ -11,8 +11,8 @@
 <div class="form-group">
 	<label for="{{ $id }}">{{ $label }}</label>
     <select
-    	name="{{ $name }}"
     	id="{{ $id }}"
+    	name="{{ $name }}{{ isset($attribute_tags) && in_array('multiple',$attribute_tags)? '[]':'' }}"
     	class="selectpicker form-control {{ implode(' ',$class) }}"
         @foreach (isset($attribute_tags)? $attribute_tags:[] as $attr_key => $attr_val)
             {{ $attr_key }} = "{{ $attr_val }}"

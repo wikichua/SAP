@@ -140,9 +140,7 @@ class SapBrand extends Command
     protected function model()
     {
         $dir = 'brand/'.strtolower($this->brand).'/models';
-        if (!$this->files->exists(base_path($dir))) {
-            $this->files->makeDirectory(base_path($dir), 0755, true);
-        }
+        $this->files->ensureDirectoryExists(base_path($dir), 0755, true);
     }
 
     protected function controller()
@@ -153,9 +151,9 @@ class SapBrand extends Command
             return;
         }
         $controller_dir = 'brand/'.strtolower($this->brand).'/controllers';
-        if (!$this->files->exists(base_path($controller_dir))) {
-            $this->files->makeDirectory(base_path($controller_dir), 0755, true);
-        }
+
+        $this->files->ensureDirectoryExists(base_path($controller_dir), 0755, true);
+
         $controller_file = base_path($controller_dir.'/'.$this->brand.'Controller.php');
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
@@ -202,9 +200,7 @@ class SapBrand extends Command
     {
         $stub_path = $this->stub_path.'/'.$path;
         $brand_path = $this->brand_path.'/'.$path;
-        if (!$this->files->exists($brand_path)) {
-            $this->files->makeDirectory($brand_path, 0755, true);
-        }
+        $this->files->ensureDirectoryExists($brand_path, 0755, true);
         foreach ($this->files->files($stub_path) as $file) {
             $file = $file->getBasename();
             $stub = $stub_path.'/'.$file;
@@ -242,9 +238,7 @@ class SapBrand extends Command
             return;
         }
         $filename = "sap{$this->brand}BrandSeed.php";
-        if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/database'))) {
-            $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/database'), 0755, true);
-        }
+        $this->files->ensureDirectoryExists(base_path('brand/'.strtolower($this->brand).'/database'), 0755, true);
         $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
         foreach ($this->files->files(base_path('brand/'.strtolower($this->brand).'/database/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {

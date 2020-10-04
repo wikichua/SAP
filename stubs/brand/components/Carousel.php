@@ -4,12 +4,12 @@ namespace Brand\{%brand_name%}\Components;
 
 use Illuminate\View\Component;
 
-class NavbarTop extends Component
+class Carousel extends Component
 {
     public $slug;
     public $tags;
     public $brand;
-    public function __construct($slug, array $tags = [])
+    public function __construct($slug = '', array $tags = [])
     {
         $this->brand = '{%brand_string%}';
         $this->slug = $slug;
@@ -17,6 +17,7 @@ class NavbarTop extends Component
     }
     public function render()
     {
+        $uniqueId = \Str::uuid();
         $brand_id = app(config('sap.models.brand'))->where('name', $this->brand)->first()->id;
         $carousels = app(config('sap.models.carousel'))->query()
             ->where('status', 'A')
@@ -25,6 +26,6 @@ class NavbarTop extends Component
             ->whereJsonContains('tags', $this->tags)
             ->orderBy('seq')
             ->get();
-        return view('{%brand_string%}::components.carousel', compact('carousels'));
+        return view('{%brand_string%}::components.carousel', compact('carousels','uniqueId'));
     }
 }

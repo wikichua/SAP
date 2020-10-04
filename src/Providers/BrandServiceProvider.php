@@ -13,14 +13,28 @@ class BrandServiceProvider extends ServiceProvider
     }
     public function boot()
     {
-        if (Schema::hasTable('brands') && File::isDirectory(base_path('brand'))) {
+        $brand_path = base_path('brand');
+        if (Schema::hasTable('brands') && File::isDirectory($brand_path)) {
             if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
                 $brands = app(config('sap.models.brand'))->all();
+                $fromModal = true;
+                if (count($brands) < 1) {
+                    $brands = File::directories($brand_path);
+                    $fromModal = false;
+                }
                 foreach ($brands as $brand) {
-                    $brandName = strtolower($brand->name);
-                    $dir = base_path('brand/'.$brandName);
+                    if ($fromModal) {
+                        $brandName = strtolower($brand->name);
+                        $dir = base_path('brand/'.$brandName);
+                    } else {
+                        $dir = $brand;
+                    }
+
                     if (File::exists($dir.'/web.php')) {
                         \Route::middleware('web')->group($dir.'/web.php');
+                    }
+                    if (File::isDirectory($dir.'/database')) {
+                        $this->loadMigrationsFrom($dir.'/database');
                     }
                     // $this->registerBrandServiceProviders($dir);
                 }

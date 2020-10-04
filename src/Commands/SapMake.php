@@ -22,7 +22,6 @@ class SapMake extends Command
         $config_file = config_path('sap/'.$this->model.'Config.php');
         if (!$this->files->exists($config_file)) {
             $this->error('Config file not found: <info>'.$config_file.'</info>');
-
             return;
         }
         $this->config = include $config_file;

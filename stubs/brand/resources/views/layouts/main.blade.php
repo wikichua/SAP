@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
-            <x-{%brand_string%}::navbar-top groupSlug="top-nav-bar" />
+            <x-{%brand_string%}::navbar-top groupSlug="sample-navbar" />
           </ul>
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">
@@ -49,7 +49,7 @@
     </nav>
     <!-- Navbar -->
     <!--Carousel Wrapper-->
-    <x-{%brand_string%}::carousel slug="" :tags="[]">
+    <x-{%brand_string%}::carousel slug="sample-carousel" :tags="['new','hot']" />
     <!--/.Carousel Wrapper-->
     <!--Main layout-->
     <main>

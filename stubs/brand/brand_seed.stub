@@ -15,32 +15,12 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
         ]);
+
         \Cache::forget('brand-{%brand_name%}');
+
         app(config('sap.models.component'))->query()->create([
-            'name' => 'Navbar Top',
+            'name' => 'NavbarTop',
             'brand_id' => $brand->id,
-            'status' => 'A',
-        ]);
-        app(config('sap.models.nav'))->query()->create([
-            'name' => 'About Us',
-            'locale' => 'en',
-            'group_slug' => 'top-nav-bar',
-            'route_slug' => 'about-us',
-            'route_params' => [],
-            'brand_id' => $brand->id,
-            'status' => 'A',
-        ]);
-        app(config('sap.models.page'))->query()->create([
-            'name' => 'About Us',
-            'slug' => 'about-us',
-            'locale' => 'en',
-            'styles' => [],
-            'scripts' => [],
-            'template' => 'layouts.main',
-            'brand_id' => $brand->id,
-            'blade' => '<p>This is all about us<br></p>',
-            'published_at' => \Carbon\Carbon::now(),
-            'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
         ]);
 
@@ -49,5 +29,78 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'brand_id' => $brand->id,
             'status' => 'A',
         ]);
+
+        app(config('sap.models.component'))->query()->create([
+            'name' => 'Carousel',
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
+
+        app(config('sap.models.nav'))->query()->create([
+            'name' => 'Sample Page Nav',
+            'locale' => 'en',
+            'group_slug' => 'sample-navbar',
+            'route_slug' => 'sample-page',
+            'route_params' => [],
+            'brand_id' => $brand->id,
+            'status' => 'A',
+            'seq' => 1,
+        ]);
+        app(config('sap.models.page'))->query()->create([
+            'name' => 'Sample Page',
+            'slug' => 'sample-page',
+            'locale' => 'en',
+            'styles' => [],
+            'scripts' => [],
+            'template' => 'layouts.main',
+            'brand_id' => $brand->id,
+            'blade' => '<p>This is a sample page.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
+            'status' => 'A',
+        ]);
+
+        app(config('sap.models.carousel'))->query()->create([
+            'slug' => 'sample-carousel',
+            'brand_id' => $brand->id,
+            'image_url' => '//source.unsplash.com/random/800x600/?nature',
+            'caption' => 'Sample Carousel 1',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
+            'status' => 'A',
+            'seq' => 1,
+            'tags' => ['new','hot'],
+        ]);
+
+        app(config('sap.models.carousel'))->query()->create([
+            'slug' => 'sample-carousel',
+            'brand_id' => $brand->id,
+            'image_url' => '//source.unsplash.com/random/800x600/?water',
+            'caption' => 'Sample Carousel 2',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
+            'status' => 'A',
+            'seq' => 1,
+            'tags' => ['new','hot'],
+        ]);
+
+        app(config('sap.models.carousel'))->query()->create([
+            'slug' => 'sample-carousel',
+            'brand_id' => $brand->id,
+            'image_url' => '//source.unsplash.com/random/800x600/?sky',
+            'caption' => 'Sample Carousel 3',
+            'published_at' => \Carbon\Carbon::now(),
+            'expired_at' => \Carbon\Carbon::now()->addYear(),
+            'status' => 'A',
+            'seq' => 1,
+            'tags' => ['new','hot'],
+        ]);
+
+
     }
 }

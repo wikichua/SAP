@@ -46,9 +46,7 @@ class SapComponent extends Command
             $component_resource_path = resource_path('views/components');
             $brand_component_class_path = base_path('brand/'.strtolower($this->brand).'/components');
             $brand_component_view_path = base_path('brand/'.strtolower($this->brand).'/resources/views/components');
-            if (!$this->files->exists($brand_component_class_path)) {
-                $this->files->makeDirectory($brand_component_class_path);
-            }
+            $this->files->ensureDirectoryExists($brand_component_class_path, 0755, true);
             $componentClass = $brand_component_class_path."/{$comp_name}.php";
             $componentView = $brand_component_view_path."/".(strtolower(Str::slug(Str::snake($comp_name)))).".blade.php";
             $this->files->move($component_class_path."/{$comp_name}.php", $componentClass);
