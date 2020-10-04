@@ -49,7 +49,7 @@
     </nav>
     <!-- Navbar -->
     <!--Carousel Wrapper-->
-    <x-coffee::carousel slug="" :tags="[]">
+    <x-{%brand_string%}::carousel slug="" :tags="[]">
     <!--/.Carousel Wrapper-->
     <!--Main layout-->
     <main>
