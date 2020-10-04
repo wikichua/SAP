@@ -75,12 +75,9 @@ Coming soon
 
 With Helper should be much more easy.
 
-Run in your bash
-
 ```php
     pushered('hello string');
     pushered(['hello array','hello array again']);
-    pushered(['message' => 'hello message']);
     pushered(['message' => 'hello message']);
     pushered([
         'title' => 'hello title',
@@ -106,12 +103,12 @@ Run in your bash
 php artisan sap:brand *BrandName* --domain=*sub.domain.test*
 ```
 
-This brand will be accompanied with the register of
+This brand will be scaffolded with the set of
 
 1. Template using MDB (https://mdbootstrap.com)
 1. Login Component (include social lite for register)
 1. Top Navbar Component
-1. Carousel Component
+1. Carousel Component (on the way)
 1. Sample Page
 
 ### Create New Component with SAP

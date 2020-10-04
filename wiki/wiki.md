@@ -51,7 +51,6 @@ Laravel oriented package. This package is mainly for
 1. PHP Debug Bar
 1. User Impersonate
 1. Log Viewer (I call it system loging)
-1. Global Search using ~Elastic Search (https://packagist.org/packages/elasticsearch/elasticsearch)~ Temporarily remove elasticsearch due to indexing issue. Looking into scout on elasticsearch driver..
 1. Advanced filter prebuild text, date range and select
 1. Socialite (support github, linkedin, google, facebook, twitter)
 1. File Manager (https://github.com/UniSharp/laravel-filemanager)
@@ -73,17 +72,18 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
-1. Tie user to brand
 1. Carousel component for brand
-1. Brand middleware and auth
+1. Tie user to brand
+1. Brand middleware and auth (social lite login + register)
 1. Alias Domain for Brand
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
-1. Db connection for specific brand can be segregated by different connections. So we don't have to duplicate directory for each host.
+1. Db connection for specific brand can be segregated by different connections.
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
 
 ## Refer
 
+1. https://startbootstrap.com/themes/sb-admin-2/
 1. https://developer.snapappointments.com/
 1. https://sweetalert2.github.io/
 1. https://unsplash.com/
