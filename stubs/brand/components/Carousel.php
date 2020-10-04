@@ -6,23 +6,25 @@ use Illuminate\View\Component;
 
 class NavbarTop extends Component
 {
-    public $group_slug;
+    public $slug;
+    public $tags;
     public $brand;
-    public function __construct($groupSlug)
+    public function __construct($slug, array $tags = [])
     {
         $this->brand = '{%brand_string%}';
-        $this->group_slug = $groupSlug;
+        $this->slug = $slug;
+        $this->tags = $tags;
     }
     public function render()
     {
         $brand_id = app(config('sap.models.brand'))->where('name', $this->brand)->first()->id;
-        $navs = app(config('sap.models.nav'))->query()
+        $carousels = app(config('sap.models.carousel'))->query()
             ->where('status', 'A')
-            ->where('locale', app()->getLocale())
             ->where('brand_id', $brand_id)
-            ->where('group_slug', $this->group_slug)
+            ->where('slug', $this->slug)
+            ->whereJsonContains('tags', $this->tags)
             ->orderBy('seq')
             ->get();
-        return view('{%brand_string%}::components.carousel', compact('navs'));
+        return view('{%brand_string%}::components.carousel', compact('carousels'));
     }
 }
