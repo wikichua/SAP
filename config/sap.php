@@ -43,6 +43,7 @@ return [
         'page' => '\Wikichua\SAP\Models\Page',
         'nav' => '\Wikichua\SAP\Models\Nav',
         'component' => '\Wikichua\SAP\Models\Component',
+        'carousel' => '\Wikichua\SAP\Models\Carousel',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'elasticsearch' => [
