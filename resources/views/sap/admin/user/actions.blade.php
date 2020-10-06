@@ -18,11 +18,13 @@
         @endcan
 
         @can('Impersonate Users')
+            @if ($model->hasPermission('Access Admin Panel',$model->id))
         <a href="{{ route('impersonate', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-people-arrows"></i></a>
+            @endif
         @endcan
     @endif
 
     @can('Read Personal Access Token')
-        <a href="{{ route('pat.list', $model->id) }}" class="btn btn-link text-secondary p-1" title="Change Password"><i class="fas fa-lg fa-fingerprint"></i></a>
+        <a href="{{ route('pat.list', $model->id) }}" class="btn btn-link text-secondary p-1" title="Personal Access Token"><i class="fas fa-lg fa-fingerprint"></i></a>
     @endcan
 </div>

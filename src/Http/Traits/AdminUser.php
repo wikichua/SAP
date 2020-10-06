@@ -27,9 +27,12 @@ trait AdminUser
     }
 
     // combined user + role permissions
-    public function flatPermissions()
+    public function flatPermissions($user_id = '')
     {
-        return Cache::remember('permissions.'.auth()->id(), (60*60*24), function () {
+        if ($user_id == '' || $user_id == null) {
+            $user_id = auth()->id();
+        }
+        return Cache::remember('permissions.'.$user_id, (60*60*24), function () {
             return $this->permissions->merge($this->roles->flatMap(function ($role) {
                 return $role->permissions;
             }));
@@ -37,9 +40,9 @@ trait AdminUser
     }
 
     // check if user has permission
-    public function hasPermission($name)
+    public function hasPermission($name, $user_id = '')
     {
-        return $this->flatPermissions()->contains('name', $name) || $this->roles->contains('admin', true);
+        return $this->flatPermissions($user_id)->contains('name', $name) || $this->roles->contains('admin', true);
     }
 
     // use admin url in password reset email link
