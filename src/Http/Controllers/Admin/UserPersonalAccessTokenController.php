@@ -21,6 +21,7 @@ class UserPersonalAccessTokenController extends Controller
     {
         if ($request->ajax()) {
             $models = app(Sanctum::$personalAccessTokenModel)->query()
+                ->checkBrand()
                 ->where('tokenable_id', $user_id);
             $paginated = $models->paginate(25);
             $links = $paginated->onEachSide(5)->links()->render();

@@ -22,6 +22,11 @@ abstract class User extends Authenticatable
         'social' => 'array',
     ];
 
+    public function brand()
+    {
+        return $this->belongsTo(app(config('sap.models.brand')), 'brand_id', 'id');
+    }
+
     public function getRolesStringAttribute()
     {
         return $this->roles->sortBy('name')->implode('name', ', ');

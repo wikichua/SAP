@@ -70,12 +70,12 @@ Laravel oriented package. This package is mainly for
 1. Locale for navigation menu
 1. Navigation Management
 1. Carousel component for brand
+1. Tie user to brand
 
 ## Todo List
 
-1. Tie user to brand
-1. Brand middleware and auth (social lite login + register)
 1. Alias Domain for Brand
+1. Brand middleware and auth (social lite login + register)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 1. Db connection for specific brand can be segregated by different connections.

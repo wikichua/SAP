@@ -6,6 +6,17 @@ use Illuminate\Support\Carbon;
 
 trait ModelScopes
 {
+    public function scopeCheckBrand($query)
+    {
+        if (array_search('brand_id', $this->getFillable())) {
+            $brand_id = auth()->user()->brand_id;
+            if ($brand_id) {
+                return $query->where('brand_id',$brand_id);
+            }
+        }
+        return $query;
+    }
+
     public function scopeFilter($query, $filters)
     {
         parse_str($filters, $searches);

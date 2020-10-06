@@ -17,6 +17,7 @@
             <form novalidate data-ajax-form method="POST" action="{{ route('user.update',[$model->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+                <x-sap::select-field name="brand_id" id="brand_id" label="Brand" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>
                 <x-sap::input-field type="text" name="name" id="name" label="Full Name" :class="[]" :value="$model->name"/>
                 <x-sap::input-field type="email" name="email" id="email" label="Email" :class="[]" :value="$model->email"/>
                 <x-sap::select-field name="timezone" id="timezone" label="Timezone" :class="[]" :data="['style'=>'border bg-white','live-search'=>true]" :options="Help::timezones()" :selected="$model->timezone"/>

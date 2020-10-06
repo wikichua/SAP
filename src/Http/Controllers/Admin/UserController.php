@@ -23,12 +23,14 @@ class UserController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.user'))->query()
                 ->where('id', '!=', 1)
+                ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''))
                 ->with('roles');
             $paginated = $models->paginate(25);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.user.actions', compact('model'))->render();
+                $model->brand_name = $model->brand->name ?? '';
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -45,6 +47,7 @@ class UserController extends Controller
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Email', 'data' => 'email', 'sortable' => true],
             ['title' => 'Type', 'data' => 'type', 'sortable' => true],
+            ['title' => 'Brand', 'data' => 'brand_name', 'sortable' => false],
             ['title' => 'Timezone', 'data' => 'timezone', 'sortable' => true],
             ['title' => 'Roles', 'data' => 'roles_string'],
             ['title' => '', 'data' => 'actionsView'],

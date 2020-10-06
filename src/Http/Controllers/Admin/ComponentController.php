@@ -20,6 +20,7 @@ class ComponentController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.component'))->query()
+                ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate(25);

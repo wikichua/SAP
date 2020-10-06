@@ -20,6 +20,7 @@ class BrandController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.brand'))->query()
+                ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate(25);
