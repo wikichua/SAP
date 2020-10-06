@@ -98,3 +98,4 @@ Laravel oriented package. This package is mainly for
 1. https://codemirror.net/
 1. https://momentjs.com/
 1. https://mdbootstrap.com
+1. https://bootstrap-table.com
