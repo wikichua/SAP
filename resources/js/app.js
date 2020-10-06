@@ -22,4 +22,5 @@ const Toast = window.Toast = Swal.mixin({
 });
 
 require('summernote/dist/summernote-bs4');
+require('bootstrap-table/src/bootstrap-table');
 require('gijgo/js/gijgo');

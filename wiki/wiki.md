@@ -74,12 +74,14 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
+1. Let listing table resizeable, sortable columns, sortable rows and update to seq field in table.
 1. Alias Domain for Brand
 1. Brand middleware and auth (social lite login + register)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 1. Db connection for specific brand can be segregated by different connections.
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
+1. Web Terminal seem cool and fun (https://github.com/recca0120/laravel-terminal)
 
 ## Refer
 

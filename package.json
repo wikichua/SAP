@@ -26,6 +26,7 @@
         "@fortawesome/fontawesome-free": "^5.14.0",
         "bootstrap-daterangepicker": "^3.1.0",
         "bootstrap-select": "^1.13.18",
+        "bootstrap-table": "^1.18.0",
         "codemirror": "^5.56.0",
         "daterangepicker": "^3.1.0",
         "gijgo": "^1.9.13",
