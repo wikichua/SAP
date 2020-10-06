@@ -66,6 +66,7 @@ class SAPServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/sap.php', 'sap');
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-impersonate.php', 'impersonate');
 
         $this->app->singleton('sap', function ($app) {
             return new SAP();
