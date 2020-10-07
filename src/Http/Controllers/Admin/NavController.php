@@ -25,7 +25,7 @@ class NavController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.nav.actions', compact('model'))->render();
                 $model->link = '<a href="'.route_slug(strtolower($model->brand->name).'.page', $model->route_slug, $model->route_params, $model->locale).'" target="_blank">'.$model->name.'</a>';

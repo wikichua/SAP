@@ -25,7 +25,7 @@ class RoleController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.role.actions', compact('model'))->render();
                 $permissions = $model->permissions()->pluck('name')->toArray();

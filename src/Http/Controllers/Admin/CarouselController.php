@@ -24,7 +24,7 @@ class CarouselController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.carousel.actions', compact('model'))->render();
                 $model->image = '<img src="'.asset($model->image_url).'" style="max-height:50px;" />';

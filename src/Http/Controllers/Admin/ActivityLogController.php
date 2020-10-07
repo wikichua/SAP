@@ -21,7 +21,7 @@ class ActivityLogController extends Controller
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''),$request->get('direction', ''))
                 ->with(['user']);
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.activity_log.actions',compact('model'))->render();
             }

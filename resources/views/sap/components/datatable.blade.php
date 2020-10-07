@@ -1,17 +1,27 @@
 @php
   $data = $attributes->get('data',[]);
 @endphp
+<div id="toolbar">
+  <div class="form-inline" role="form">
+    <x-sap::select-field name="take" id="pageTake" label="Page Limit" :class="['pageTake', 'ml-1']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[10 => 10,25 => 25,50 => 50,100 => 100,200 => 200]" :selected="old('take',25)"/>
+  </div>
+</div>
 <table id="bootstrap-table" class="bootstrap-table table table-hover table-striped table-bordered"
+  data-toolbar="#toolbar"
   data-show-columns="true"
   data-use-row-attr-func="true"
   data-reorderable-rows="true"
-  data-pagination="true"
+  data-show-toggle="true"
   >
   <thead class="thead-dark">
     <tr>
       @foreach ($data as $el)
       <th data-field="{{ $el['data'] }}" data-sortable="{{ isset($el['sortable']) && $el['sortable']? 'true':'false' }}">
+        @if ($loop->last)
+        Action
+        @else
         {{ $el['title'] }}
+        @endif
       </th>
       @endforeach
     </tr>

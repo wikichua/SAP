@@ -24,7 +24,7 @@ class SettingController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.setting.actions', compact('model'))->render();
                 $model->value       = is_array($model->value) ? implode('<br>', $model->value) : $model->value;

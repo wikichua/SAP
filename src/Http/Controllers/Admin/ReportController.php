@@ -27,7 +27,7 @@ class ReportController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.report.actions', compact('model'))->render();
                 $model->cache_status = Cache::get('report-'.str_slug($model->name)) == null? 'Processing':'Ready';

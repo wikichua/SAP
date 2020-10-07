@@ -23,7 +23,7 @@ class ComponentController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.component.actions', compact('model'))->render();
                 $model->usage = "&lt;x-$model->brand_name::".\Str::kebab($model->name).">&lt;/x-$model->brand_name::".\Str::kebab($model->name).">";

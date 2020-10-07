@@ -27,7 +27,7 @@ class UserController extends Controller
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', '')) // be treated as default sorting rules
                 ->with('roles');
-            $paginated = $models->paginate(1);
+            $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.user.actions', compact('model'))->render();
                 $model->brand_name = $model->brand->name ?? '';

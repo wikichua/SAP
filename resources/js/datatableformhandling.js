@@ -1,17 +1,16 @@
 let url = '';
 let currentUrl = '';
-const loadDatatable = function(url, sort, direction, filters) {
-    let params = {};
-    if (_.isUndefined(sort) === false) {
-        params['sort'] = sort;
-        params['direction'] = direction;
-    }
+
+const loadDatatable = function(url, filters, take) {
+    let parameters = {};
     if (_.isUndefined(filters) === false) {
-        params['filters'] = filters;
+        parameters['filters'] = filters;
     }
-    let rowTemplate = _.template($('#row-template').html());
+    if (_.isUndefined(take) === false) {
+        parameters['take'] = take;
+    }
     axios.get(url, {
-        params: params,
+        params: parameters,
         onUploadProgress: function(progressEvent) {
             $('#overlayLoader').show();
         },
@@ -19,8 +18,7 @@ const loadDatatable = function(url, sort, direction, filters) {
         let resp = response.data;
         let data = resp.paginated.data;
         let links = resp.links;
-        let rowHtml = rowTemplate({ data: data });
-        $('#datatable-row').html(rowHtml);
+        $('.bootstrap-table').bootstrapTable('load',data);
         let paginationTemplate = _.template(links);
         let paginationHtml = paginationTemplate();
         $('#datatable-pagination').html(paginationHtml);
@@ -128,12 +126,13 @@ const previewImage = function ($this) {
     }
 }
 $(document).ready(function() {
-    $('.bootstrap-table').bootstrapTable();
     // display flash-message
     _.attempt(flashMessage);
     $('#overlayLoader').hide();
     // datatable
-    if (typeof url !== undefined) {
+
+    if (_.isUndefined(url) === false) {
+        $('.bootstrap-table').bootstrapTable();
         _.attempt(loadDatatable, url);
     }
     $(document).on('click', '.page-link', function(event) {
@@ -141,22 +140,11 @@ $(document).ready(function() {
         let link = $(this).attr('href');
         loadDatatable(link);
     });
-    $(document).on('click', '.server-sortable', function(event) {
+    $(document).on('change', '#pageTake', function(event) {
         event.preventDefault();
-        let key = $(this).data('key');
-        let direction = $(this).data('direction');
-        if (_.isUndefined(key) === false) {
-            loadDatatable(url, key, direction);
-            let icon = $(this).find('.icon');
-            $('.icon').removeClass('fa-sort-down').removeClass('fa-sort-up');
-            if (direction == 'asc') {
-                icon.addClass('fa-sort-down');
-                $(this).data('direction', 'desc');
-            } else {
-                icon.addClass('fa-sort-up');
-                $(this).data('direction', 'asc');
-            }
-        }
+        let params = {};
+        params['filter'] = $('.filterInput').serialize();
+        loadDatatable(currentUrl, params, $(this).val());
     });
     // form handler
     $(document).on('submit', 'form[data-ajax-form]', function(event) {
@@ -184,7 +172,9 @@ $(document).ready(function() {
     // search btn trigger
     $(document).on('click', '#filterBtn', function(event) {
         event.preventDefault();
-        loadDatatable(url, null, null, $('.filterInput').serialize());
+        let params = {};
+        params['filter'] = $('.filterInput').serialize();
+        loadDatatable(url, params);
         $('#filterModalCenter').modal('hide');
     });
     // init selectpicker
