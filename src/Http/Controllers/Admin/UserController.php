@@ -25,9 +25,9 @@ class UserController extends Controller
                 ->where('id', '!=', 1)
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+                ->sorting($request->get('sort', ''), $request->get('direction', '')) // be treated as default sorting rules
                 ->with('roles');
-            $paginated = $models->paginate(25);
+            $paginated = $models->paginate(1);
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.user.actions', compact('model'))->render();
                 $model->brand_name = $model->brand->name ?? '';

@@ -128,6 +128,7 @@ const previewImage = function ($this) {
     }
 }
 $(document).ready(function() {
+    $('.bootstrap-table').bootstrapTable();
     // display flash-message
     _.attempt(flashMessage);
     $('#overlayLoader').hide();
@@ -140,7 +141,7 @@ $(document).ready(function() {
         let link = $(this).attr('href');
         loadDatatable(link);
     });
-    $(document).on('click', '.sortable', function(event) {
+    $(document).on('click', '.server-sortable', function(event) {
         event.preventDefault();
         let key = $(this).data('key');
         let direction = $(this).data('direction');

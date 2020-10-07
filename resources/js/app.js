@@ -2,6 +2,7 @@ require("./bootstrap");
 import route from "ziggy";
 import { Ziggy } from './ziggy';
 require('bootstrap-select');
+require('bootstrap-table');
 
 window.moment = require('moment');
 window.daterangepicker = require('bootstrap-daterangepicker');
@@ -22,5 +23,4 @@ const Toast = window.Toast = Swal.mixin({
 });
 
 require('summernote/dist/summernote-bs4');
-require('bootstrap-table/src/bootstrap-table');
 require('gijgo/js/gijgo');

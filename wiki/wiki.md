@@ -90,6 +90,7 @@ Laravel oriented package. This package is mainly for
 1. https://sweetalert2.github.io/
 1. https://unsplash.com/
 1. https://lodash.com/
+1. https://learn.co/lessons/javascript-lodash-templates
 1. https://github.com/axios/axios
 1. https://github.com/tighten/ziggy
 1. https://gijgo.com/
