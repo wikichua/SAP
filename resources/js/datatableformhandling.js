@@ -1,5 +1,6 @@
 let url = '';
 let currentUrl = '';
+let listTable;
 
 const loadDatatable = function(url, filters, take) {
     let parameters = {};
@@ -18,10 +19,10 @@ const loadDatatable = function(url, filters, take) {
         let resp = response.data;
         let data = resp.paginated.data;
         let links = resp.links;
-        $('.bootstrap-table').bootstrapTable('load',data);
         let paginationTemplate = _.template(links);
         let paginationHtml = paginationTemplate();
         $('#datatable-pagination').html(paginationHtml);
+        listTable.bootstrapTable('load', data);
         currentUrl = resp.currentUrl;
     }).catch((error) => {
         // console.error(error);
@@ -102,16 +103,14 @@ const onImageUpload = async function(file, editor) {
         url: route('editor.upload_image'),
         method: "POST",
         data: formData
-    })
-    .then(result => {
+    }).then(result => {
         let url = result.data.url; // Get url from response
         editor.summernote('insertImage', url);
-    })
-    .catch(err => {
+    }).catch(err => {
         console.error(err);
     });
 };
-const previewImage = function ($this) {
+const previewImage = function($this) {
     let dom = $this.get(0);
     let previewDiv = $this.closest('.form-group').find('.row').find('.img-preview').find('.row').empty();
     if (dom.files) {
@@ -119,7 +118,7 @@ const previewImage = function ($this) {
         for (i = 0; i < filesAmount; i++) {
             var reader = new FileReader();
             reader.onload = function(event) {
-                $($.parseHTML('<div class="col-2"><img src="'+event.target.result+'" class="img-thumbnail"></div>')).appendTo(previewDiv);
+                $($.parseHTML('<div class="col-2"><img src="' + event.target.result + '" class="img-thumbnail"></div>')).appendTo(previewDiv);
             }
             reader.readAsDataURL(dom.files[i]);
         }
@@ -130,9 +129,8 @@ $(document).ready(function() {
     _.attempt(flashMessage);
     $('#overlayLoader').hide();
     // datatable
-
     if (_.isUndefined(url) === false) {
-        $('.bootstrap-table').bootstrapTable();
+        listTable = $('.bootstrap-table').bootstrapTable();
         _.attempt(loadDatatable, url);
     }
     $(document).on('click', '.page-link', function(event) {

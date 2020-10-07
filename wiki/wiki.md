@@ -75,8 +75,8 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
-1. Sortable rows and update to seq field in table.
 1. Alias Domain for Brand
+1. Sortable rows and update to seq field in table.
 1. Brand middleware and auth (social lite login + register)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
