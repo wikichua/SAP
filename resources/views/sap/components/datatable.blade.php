@@ -12,6 +12,12 @@
   data-use-row-attr-func="true"
   data-reorderable-rows="true"
   data-show-toggle="true"
+  data-resizable="true"
+  data-use-row-attr-func="true"
+  data-reorderable-rows="true"
+  data-sticky-header="true"
+  data-sticky-header-offset-left="16.8em"
+  data-sticky-header-offset-right="2.8em"
   >
   <thead class="thead-dark">
     <tr>
@@ -34,11 +40,11 @@
 
 @once
   @push('styles')
-  <link href="https://unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.css" rel="stylesheet">
-  <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.css" rel="stylesheet">
+  <link href="//unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.css" rel="stylesheet">
+  <link href="//unpkg.com/bootstrap-table@1.18.0/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.css" rel="stylesheet">
   @endpush
   @push('scripts')
-  <script src="https://unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.min.js"></script>
+  <script src="//unpkg.com/jquery-resizable-columns@0.2.3/dist/jquery.resizableColumns.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/1.0.3/jquery.tablednd.min.js"></script>
   @endpush
 @endonce
