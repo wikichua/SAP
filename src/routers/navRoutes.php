@@ -19,5 +19,8 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], '{brand_id}/pages', 'NavController@pages')->name('nav.pages');
 
         Route::match(['post'], '{nav}/replicate', 'NavController@replicate')->name('nav.replicate');
+
+        Route::match(['get', 'head'], 'orderable/{groupValue?}', 'NavController@orderable')->name('carousel.orderable');
+        Route::match(['post'], 'orderable/update/{groupValue?}', 'NavController@orderableUpdate')->name('carousel.orderableUpdate');
     });
 });
