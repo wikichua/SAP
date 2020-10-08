@@ -8,13 +8,13 @@
                         <i class="fas fa-angle-double-left mr-2"></i></a>
                     <h3 class="m-0 font-weight-bold text-primary">Carousel Listing</h3>
                 </div>
-                <div class="btn-group" role="group">
+                <div class="btn-group float-right" role="group" id="toolbar-primary">
                     @can('Create Carousels')
                     <a class="btn btn-outline-secondary" href="{{ route('carousel.create') }}">
                         <i class="fas fa-folder-plus mr-2"></i>New
                     </a>
                     @endcan
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#filterModalCenter">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
                 </div>

@@ -72,11 +72,11 @@ Laravel oriented package. This package is mainly for
 1. Carousel component for brand
 1. Tie user to brand
 1. Let listing table resizeable, sticky table head
+1. Sortable rows and update to seq field in table.
 
 ## Todo List
 
 1. Alias Domain for Brand
-1. Sortable rows and update to seq field in table.
 1. Brand middleware and auth (social lite login + register)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)

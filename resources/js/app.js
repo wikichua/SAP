@@ -26,3 +26,4 @@ require('gijgo/js/gijgo');
 require('bootstrap-table');
 require('bootstrap-table/dist/extensions/resizable/bootstrap-table-resizable');
 require('bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header');
+require('bootstrap-table/dist/extensions/reorder-rows/bootstrap-table-reorder-rows');

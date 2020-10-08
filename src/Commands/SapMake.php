@@ -73,6 +73,8 @@ class SapMake extends Command
 
     protected function reinstate()
     {
+        $this->orderable();
+
         $config_form = $this->config['form'];
         $upload_strings = $model_keys = $setting_keys = $table_fields = $search_scopes = $search_fields = $settings_options_up = $settings_options_down = $read_fields = $form_fields = $validations = $user_timezones = $fillables = $casts = $appends = $mutators = $relationships = $searchable_fields = $relationships_query = [];
 
@@ -407,6 +409,10 @@ EOT;
     protected function views()
     {
         $view_files = ['search', 'index', 'edit', 'create', 'show', 'actions'];
+        if($this->config['orderable'] !== false)
+        {
+            $view_files[] = 'orderable';
+        }
         foreach ($view_files as $mode) {
             $view_stub = $this->stub_path.'/views/'.$mode.'.stub';
             if (!$this->files->exists($view_stub)) {
@@ -448,6 +454,25 @@ EOT;
         $migrations_stub = $this->files->get($migration_stub);
         $this->files->put($migration_file, $this->replaceholder($migrations_stub));
         $this->line($msg.': <info>'.$migration_file.'</info>');
+    }
+
+    protected function orderable()
+    {
+        $orderable = $this->config['orderable'];
+        if ($orderable === false) {
+            $this->replaces['{%orderable_link%}'] = $this->replaces['{%orderable_field%}'] = $this->replaces['{%orderable_label%}'] = $this->replaces['{%orderable_routes%}'] = $this->replaces['{%orderable_controller%}'] = '';
+            return ;
+        }
+        $this->replaces['{%orderable_field%}'] = $orderable;
+        $this->replaces['{%orderable_label%}'] = $this->config['form'][$orderable]['label'];
+        $orderable_routes = [];
+        $orderable_routes[] = "Route::match(['get', 'head'], 'orderable/{orderable?}', '{$this->replaces['{%model_class%}']}Controller@orderable')->name('{$this->replaces['{%model_variable%}']}.orderable');";
+        $orderable_routes[] = "Route::match(['post'], 'orderable/update/{orderable?}', '{$this->replaces['{%model_class%}']}Controller@orderableUpdate')->name('{$this->replaces['{%model_variable%}']}.orderableUpdate');";
+        $this->replaces['{%orderable_routes%}'] = isset($orderable_routes) ? trim(implode(PHP_EOL.$this->indent(2), $orderable_routes)) : '';
+
+        $this->replaces['{%orderable_controller%}'] = $this->replaceholder($this->files->get($this->stub_path.'/orderable_controller.stub'));
+
+        $this->replaces['{%orderable_link%}'] = "<a class=\"btn btn-outline-secondary\" href=\"{{ route('{$this->replaces['{%model_variable%}']}.orderable',['{$orderable}']) }}\"><i class=\"fas fa-folder-plus mr-2\"></i>Reorder List</a>";
     }
 
     protected function replaceholder($content)

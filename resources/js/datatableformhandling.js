@@ -18,12 +18,17 @@ const loadDatatable = function(url, filters, take) {
     }).then((response) => {
         let resp = response.data;
         let data = resp.paginated.data;
-        let links = resp.links;
-        let paginationTemplate = _.template(links);
-        let paginationHtml = paginationTemplate();
-        $('#datatable-pagination').html(paginationHtml);
+        theCurrentRow = data;
         listTable.bootstrapTable('load', data);
-        currentUrl = resp.currentUrl;
+        if (_.isUndefined(resp.links) === false) {
+            let links = resp.links;
+            let paginationTemplate = _.template(links);
+            let paginationHtml = paginationTemplate();
+            $('#datatable-pagination').html(paginationHtml);
+        }
+        if (_.isUndefined(resp.currentUrl) === false) {
+            currentUrl = resp.currentUrl;
+        }
     }).catch((error) => {
         // console.error(error);
     }).finally(() => {
@@ -47,53 +52,7 @@ const commitPost = function(form) {
     if (_.isUndefined(action) === false) {
         form.find('.form-control,.form-control-plaintext').removeClass('is-invalid').addClass('is-valid');
         $('.invalid-feedback').hide();
-        axios.request({
-            method: 'POST',
-            url: action,
-            data: new FormData(form[0]),
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            onUploadProgress: function(progressEvent) {
-                $('#overlayLoader').show();
-            },
-        }).then((response) => {
-            let resp = response.data;
-            // flash message
-            if (resp.hasOwnProperty('flash') && _.isString(resp.flash)) {
-                cookies.set('flash-status', resp.status);
-                cookies.set('flash-message', resp.flash);
-            }
-            // redirect to page
-            if (resp.hasOwnProperty('redirect') && resp.redirect) {
-                $(location).attr('href', resp.redirect);
-            }
-            // reload current page
-            if (resp.hasOwnProperty('reload') && resp.reload) {
-                location.reload();
-            }
-            // reload datatable
-            if (resp.hasOwnProperty('relist') && resp.relist) {
-                flashMessage();
-                loadDatatable(currentUrl);
-            }
-        }).catch((error) => {
-            let resp = error.response.data;
-            let errors = resp.errors;
-            let message = resp.message;
-            _.forEach(errors, function(array, fieldname) {
-                $('[name=' + fieldname + ']').addClass('is-invalid');
-                $('#' + fieldname + '-alert').html(_.join(array, "<br>")).show();
-            });
-            Toast.fire({
-                icon: 'error',
-                title: 'Opps! Something went wrong!'
-            });
-        }).finally(() => {
-            // TODO
-            $('#overlayLoader').hide();
-        });
+        fireRequest(form, action);
     }
 };
 const onImageUpload = async function(file, editor) {
@@ -124,13 +83,71 @@ const previewImage = function($this) {
         }
     }
 }
+const fireRequest = function(form, action) {
+    axios.request({
+        method: 'POST',
+        url: action,
+        data: new FormData(form[0]),
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        onUploadProgress: function(progressEvent) {
+            $('#overlayLoader').show();
+        },
+    }).then((response) => {
+        let resp = response.data;
+        // flash message
+        if (resp.hasOwnProperty('flash') && _.isString(resp.flash)) {
+            cookies.set('flash-status', resp.status);
+            cookies.set('flash-message', resp.flash);
+        }
+        // redirect to page
+        if (resp.hasOwnProperty('redirect') && resp.redirect) {
+            $(location).attr('href', resp.redirect);
+        }
+        // reload current page
+        if (resp.hasOwnProperty('reload') && resp.reload) {
+            location.reload();
+        }
+        // reload datatable
+        if (resp.hasOwnProperty('relist') && resp.relist) {
+            flashMessage();
+            loadDatatable(currentUrl);
+        }
+    }).catch((error) => {
+        let resp = error.response.data;
+        let errors = resp.errors;
+        let message = resp.message;
+        _.forEach(errors, function(array, fieldname) {
+            $('[name=' + fieldname + ']').addClass('is-invalid');
+            $('#' + fieldname + '-alert').html(_.join(array, "<br>")).show();
+        });
+        Toast.fire({
+            icon: 'error',
+            title: 'Opps! Something went wrong!'
+        });
+    }).finally(() => {
+        // TODO
+        $('#overlayLoader').hide();
+    });
+}
 $(document).ready(function() {
     // display flash-message
     _.attempt(flashMessage);
     $('#overlayLoader').hide();
     // datatable
     if (_.isUndefined(url) === false) {
-        listTable = $('.bootstrap-table').bootstrapTable();
+        listTable = $('.bootstrap-table').bootstrapTable({
+            onReorderRow: (newRow) => {
+                let seq = [];
+                _.forEach(newRow, function(value, key) {
+                    seq.push(value.id);
+                });
+                $('#newRow').val(seq.join(','));
+                $('form[data-ajax-form]').trigger('submit');
+            }
+        });
         _.attempt(loadDatatable, url);
     }
     $(document).on('click', '.page-link', function(event) {

@@ -6,18 +6,13 @@
                 <div class="btn-group" role="group">
                     <a href="javascript:void();" class="btn btn-link">
                         <i class="fas fa-angle-double-left mr-2"></i></a>
-                    <h3 class="m-0 font-weight-bold text-primary">{{ $user->name }} Personal Access Token Listing</h3>
-                </div>
-                <div class="btn-group float-right" role="group" id="toolbar-primary">
-                    <a class="btn btn-outline-secondary" href="{{ route('pat.create',[$user_id]) }}">
-                        <i class="fas fa-folder-plus mr-2"></i>New
-                    </a>
+                    <h3 class="m-0 font-weight-bold text-primary">Carousel Sortable</h3>
                 </div>
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <x-sap::datatable :data="$html" :url="$getUrl"/>
+                <x-sap::orderable-datatable :data="$html" :url="$getUrl" :actUrl="$actUrl" />
             </div>
         </div>
     </div>

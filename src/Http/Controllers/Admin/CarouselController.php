@@ -161,4 +161,49 @@ class CarouselController extends Controller
             'redirect' => false,
         ]);
     }
+
+    public function orderable(Request $request,$orderable = '')
+    {
+        if ($request->ajax()) {
+            $models = app(config('sap.models.carousel'))->query()
+                ->checkBrand()->orderBy('seq');
+            if ($orderable != '') {
+                $models->where('slug',$orderable);
+            }
+            $paginated['data'] = $models->take(100)->get();
+            return compact('paginated');
+        }
+        $getUrl = route('carousel.orderable',$orderable);
+        $actUrl = route('carousel.orderableUpdate',$orderable);
+        $html = [
+            ['title' => 'ID', 'data' => 'id'],
+            ['title' => 'Slug', 'data' => 'slug'],
+            ['title' => 'Image Url', 'data' => 'image_url'],
+        ];
+        return view('sap::admin.carousel.orderable', compact('html', 'getUrl', 'actUrl'));
+    }
+
+    public function orderableUpdate(Request $request,$orderable = '')
+    {
+        $newRow = $request->get('newRow');
+        $models = app(config('sap.models.carousel'))->query()->select('id')
+            ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
+        if ($orderable != '') {
+            $models->where('slug',$orderable);
+        }
+        $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
+        foreach ($models as $seq => $model) {
+            $model->seq = $seq+1;
+            $model->save();
+        }
+        // activity('Updated Carousel: ' . $model->id, $request->input(), $model);
+
+        return response()->json([
+            'status' => 'success',
+            'flash' => 'Carousel Reordered.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
+        ]);
+    }
 }

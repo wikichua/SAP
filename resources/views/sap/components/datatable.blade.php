@@ -1,16 +1,14 @@
 @php
   $data = $attributes->get('data',[]);
 @endphp
-<div id="toolbar">
+<div id="toolbar-secondary" class="float-right mr-1">
   <div class="form-inline" role="form">
     <x-sap::select-field name="take" id="pageTake" label="Page Limit" :class="['pageTake', 'ml-1']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[10 => 10,25 => 25,50 => 50,100 => 100,200 => 200]" :selected="old('take',25)"/>
   </div>
 </div>
 <table id="bootstrap-table" class="bootstrap-table table table-hover table-striped table-bordered"
-  data-toolbar="#toolbar"
+  data-toolbar="#toolbar-primary, #toolbar-secondary"
   data-show-columns="true"
-  data-use-row-attr-func="true"
-  data-reorderable-rows="true"
   data-show-toggle="true"
   data-resizable="true"
   data-sticky-header="true"

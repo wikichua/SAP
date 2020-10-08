@@ -15,5 +15,8 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['put', 'patch'], '{model}/update', '{%model_class%}Controller@update')->name('{%model_variable%}.update');
 
         Route::match(['delete'], '{model}/delete', '{%model_class%}Controller@destroy')->name('{%model_variable%}.destroy');
+
+        {%orderable_routes%}
+
     });
 });

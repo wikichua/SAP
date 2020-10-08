@@ -56,7 +56,7 @@ class Carousel extends Eloquent
 
     public function getStatusNameAttribute($value)
     {
-        return settings('carousel_status')[$this->attributes['status']];
+        return isset($this->attributes['status'])? settings('carousel_status')[$this->attributes['status']]:'';
     }
 
     public function scopeFilterSlug($query, $search)

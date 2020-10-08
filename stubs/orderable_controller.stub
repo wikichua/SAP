@@ -1,0 +1,45 @@
+    public function orderable(Request $request,$orderable = '')
+    {
+        if ($request->ajax()) {
+            $models = {%model_class%}::query()
+                ->checkBrand()->orderBy('seq');
+            if ($orderable != '') {
+                $models->where('{%orderable_field%}',$orderable);
+            }
+            $paginated['data'] = $models->take(100)->get();
+            return compact('paginated');
+        }
+        $getUrl = route('{%model_variable%}.orderable',$orderable);
+        $actUrl = route('{%model_variable%}.orderableUpdate',$orderable);
+        $html = [
+            ['title' => 'ID', 'data' => 'id'],
+            ['title' => '{%orderable_label%}', 'data' => '{%orderable_field%}'],
+            ['title' => 'Name', 'data' => 'name'],
+        ];
+        return view('admin.{%model_variable%}.orderable', compact('html', 'getUrl', 'actUrl'));
+    }
+
+    public function orderableUpdate(Request $request,$orderable = '')
+    {
+        $newRow = $request->get('newRow');
+        $models = {%model_class%}::query()->select('id')
+            ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
+        if ($orderable != '') {
+            $models->where('{%orderable_field%}',$orderable);
+        }
+        $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
+        foreach ($models as $seq => $model) {
+            $model->seq = $seq+1;
+            $model->save();
+        }
+
+        activity('Reordered {%model_class%}: ' . $newRow, $models->pluck('seq','id'));
+
+        return response()->json([
+            'status' => 'success',
+            'flash' => '{%model_class%} Reordered.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
+        ]);
+    }
