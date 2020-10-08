@@ -189,7 +189,10 @@ class PageController extends Controller
         if ($brand_id != '') {
             $model = app(config('sap.models.brand'))->query()->findOrFail($brand_id);
             if ($model) {
-                foreach (File::files(base_path('brand/'.strtolower($model->name).'/layouts')) as $file) {
+                \Config::set('brand', array_merge(
+                    require base_path('brand/'.strtolower($model->name).'/config/main.php')
+                ));
+                foreach (File::files(config('brand.template_path',base_path('brand/'.strtolower($model->name).'/resources/views/layouts'))) as $file) {
                     $name = str_replace('.blade.php', '', $file->getBasename());
                     $templates['layouts.'.$name] = $file->getBasename();
                 }

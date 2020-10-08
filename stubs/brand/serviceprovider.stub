@@ -24,7 +24,7 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('{%brand_string%}_guest', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
         $this->app['router']->aliasMiddleware('{%brand_string%}_auth', 'Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware');
 
-        View::addNamespace('{%brand_string%}', base_path('brand/{%brand_string%}/resources/views'));
+        View::addNamespace('{%brand_string%}', config('main.template_path',base_path('brand/{%brand_string%}/resources/views')));
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />
 
