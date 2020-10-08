@@ -15,6 +15,7 @@
                     <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
+                    <a class="btn btn-outline-secondary" href="{{ route('nav.orderable',['group_slug']) }}"><i class="fas fa-sort-numeric-up mr-2"></i>Reorder List</a>
                 </div>
             </div>
         </div>

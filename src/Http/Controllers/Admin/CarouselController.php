@@ -196,7 +196,8 @@ class CarouselController extends Controller
             $model->seq = $seq+1;
             $model->save();
         }
-        // activity('Updated Carousel: ' . $model->id, $request->input(), $model);
+
+        activity('Reordered Carousel: ' . $newRow, $models->pluck('seq','id'), $model);
 
         return response()->json([
             'status' => 'success',

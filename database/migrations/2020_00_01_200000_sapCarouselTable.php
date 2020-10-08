@@ -15,7 +15,7 @@ class SapCarouselTable extends Migration
             $table->string('brand_id', 1)->nullable()->default('');
             $table->text('image_url')->nullable();
             $table->text('caption')->nullable();
-            $table->integer('seq')->nullable()->default(0);
+            $table->integer('seq')->nullable()->default(1);
             $table->json('tags')->nullable();
             $table->date('published_at')->nullable();
             $table->date('expired_at')->nullable();

@@ -33,7 +33,7 @@
             $model->save();
         }
 
-        activity('Reordered {%model_class%}: ' . $newRow, $models->pluck('seq','id'));
+        activity('Reordered {%model_class%}: ' . $newRow, $models->pluck('seq','id'), $model);
 
         return response()->json([
             'status' => 'success',

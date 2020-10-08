@@ -187,4 +187,49 @@ class NavController extends Controller
         }
         return response()->json($pages);
     }
+
+    public function orderable(Request $request,$orderable = '')
+    {
+        if ($request->ajax()) {
+            $models = app(config('sap.models.nav'))->query()
+                ->checkBrand()->orderBy('seq');
+            if ($orderable != '') {
+                $models->where('group_slug',$orderable);
+            }
+            $paginated['data'] = $models->take(100)->get();
+            return compact('paginated');
+        }
+        $getUrl = route('nav.orderable',$orderable);
+        $actUrl = route('nav.orderableUpdate',$orderable);
+        $html = [
+            ['title' => 'ID', 'data' => 'id'],
+            ['title' => 'Group Slug', 'data' => 'group_slug'],
+            ['title' => 'Name', 'data' => 'name'],
+        ];
+        return view('sap::admin.nav.orderable', compact('html', 'getUrl', 'actUrl'));
+    }
+
+    public function orderableUpdate(Request $request,$orderable = '')
+    {
+        $newRow = $request->get('newRow');
+        $models = app(config('sap.models.nav'))->query()->select('id')
+            ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
+        if ($orderable != '') {
+            $models->where('group_slug',$orderable);
+        }
+        $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
+        foreach ($models as $seq => $model) {
+            $model->seq = $seq+1;
+            $model->save();
+        }
+        activity('Updated Nav: ' . $model->id, $request->input(), $model, $model);
+
+        return response()->json([
+            'status' => 'success',
+            'flash' => 'Nav Reordered.',
+            'reload' => false,
+            'relist' => true,
+            'redirect' => false,
+        ]);
+    }
 }
