@@ -6,7 +6,7 @@ return [
     'table_name' => '', // leave empty to use model's naming convention
     'menu_icon' => 'fas fa-link',
     'menu_name' => '', // leave empty to use model name
-    'orderable' => 'name', // in case your module need to reorder the display seq. set false to disabled, set order category fieldname to enabled field name must declared in the form section
+    'orderable' => false, // in case your module need to reorder the display seq. set false to disabled, set order category fieldname to enabled field name must declared in the form section
     'form' => [
         'name' => [
             'label' => 'Full Name',
