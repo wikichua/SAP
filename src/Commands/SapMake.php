@@ -460,7 +460,7 @@ EOT;
     {
         $orderable = $this->config['orderable'];
         if ($orderable === false) {
-            $this->replaces['{%orderable_link%}'] = $this->replaces['{%orderable_field%}'] = $this->replaces['{%orderable_label%}'] = $this->replaces['{%orderable_routes%}'] = $this->replaces['{%orderable_controller%}'] = '';
+            $this->replaces['{%orderable_migration%}'] = $this->replaces['{%orderable_link%}'] = $this->replaces['{%orderable_field%}'] = $this->replaces['{%orderable_label%}'] = $this->replaces['{%orderable_routes%}'] = $this->replaces['{%orderable_controller%}'] = '';
             return ;
         }
         $this->replaces['{%orderable_field%}'] = $orderable;
@@ -473,6 +473,7 @@ EOT;
         $this->replaces['{%orderable_controller%}'] = $this->replaceholder($this->files->get($this->stub_path.'/orderable_controller.stub'));
 
         $this->replaces['{%orderable_link%}'] = "<a class=\"btn btn-outline-secondary\" href=\"{{ route('{$this->replaces['{%model_variable%}']}.orderable',['{$orderable}']) }}\"><i class=\"fas fa-folder-plus mr-2\"></i>Reorder List</a>";
+        $this->replaces['{%orderable_migration%}'] = "$table->integer('seq')->nullable()->default(1);";
     }
 
     protected function replaceholder($content)

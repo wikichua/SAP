@@ -16,6 +16,7 @@ class Sap{%model%}Table extends Migration
             $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
+            {%orderable_migration%}
         });
 
         {%settings_options_up%}
