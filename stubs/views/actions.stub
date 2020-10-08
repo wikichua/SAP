@@ -1,5 +1,6 @@
 <div class="text-right text-nowrap">
     <a href="{{ route('{%model_variable%}.show', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-eye"></i></a>
+    {%orderable_link%}
     @can('Update {%model_strings%}')
         <a href="{{ route('{%model_variable%}.edit', $model->id) }}" class="btn btn-link text-secondary p-1" title="Update"><i class="fas fa-lg fa-edit"></i></a>
     @endcan

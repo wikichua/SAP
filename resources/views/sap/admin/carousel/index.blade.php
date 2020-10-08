@@ -17,7 +17,6 @@
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
-                    <a class="btn btn-outline-secondary" href="{{ route('carousel.orderable',['slug']) }}"><i class="fas fa-sort-numeric-up mr-2"></i>Reorder List</a>
                 </div>
             </div>
         </div>

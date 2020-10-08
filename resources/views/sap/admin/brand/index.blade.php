@@ -9,7 +9,7 @@
                     <h3 class="m-0 font-weight-bold text-primary">Brand Listing</h3>
                 </div>
                 <div class="btn-group float-right" role="group" id="toolbar-primary">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#filterModalCenter">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
                 </div>

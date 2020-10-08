@@ -472,7 +472,7 @@ EOT;
 
         $this->replaces['{%orderable_controller%}'] = $this->replaceholder($this->files->get($this->stub_path.'/orderable_controller.stub'));
 
-        $this->replaces['{%orderable_link%}'] = "<a class=\"btn btn-outline-secondary\" href=\"{{ route('{$this->replaces['{%model_variable%}']}.orderable',['{$orderable}']) }}\"><i class=\"fas fa-sort-numeric-up mr-2\"></i>Reorder List</a>";
+        $this->replaces['{%orderable_link%}'] = "<a href=\"{{ route('{$this->replaces['{%model_variable%}']}.orderable',\$model->{$orderable}) }}\" class=\"btn btn-link text-secondary p-1\" title=\"Reorder List\"><i class=\"fas fa-sort-numeric-up\"></i></a>";
         $this->replaces['{%orderable_migration%}'] = '$table->integer(\'seq\')->nullable()->default(1);';
     }
 

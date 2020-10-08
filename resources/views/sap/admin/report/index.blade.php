@@ -12,7 +12,7 @@
                     <a class="btn btn-outline-secondary" href="{{ route('report.create') }}">
                         <i class="fas fa-folder-plus mr-2"></i>New
                     </a>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#filterModalCenter">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
                 </div>
