@@ -20,7 +20,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
 
         Route::match(['post'], '{nav}/replicate', 'NavController@replicate')->name('nav.replicate');
 
-        Route::match(['get', 'head'], 'orderable/{groupValue?}', 'NavController@orderable')->name('carousel.orderable');
-        Route::match(['post'], 'orderable/update/{groupValue?}', 'NavController@orderableUpdate')->name('carousel.orderableUpdate');
+        Route::match(['get', 'head'], 'orderable/{groupValue?}', 'NavController@orderable')->name('nav.orderable');
+        Route::match(['post'], 'orderable/update/{groupValue?}', 'NavController@orderableUpdate')->name('nav.orderableUpdate');
     });
 });
