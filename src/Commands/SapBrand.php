@@ -36,7 +36,7 @@ class SapBrand extends Command
             $this->info('So you\'ve decided to overwrite it!');
         }
         $this->autoload();
-        $this->env();
+        // $this->env();
         $this->route();
         $this->model();
         $this->controller();
@@ -70,7 +70,7 @@ class SapBrand extends Command
         }
     }
 
-    protected function env()
+    /*protected function env()
     {
         $env = base_path('.env');
         if (File::exists($env) == false || File::isWritable($env) == false) {
@@ -89,7 +89,7 @@ class SapBrand extends Command
             $content = str_replace($this->brand.'Url="'.env($this->brand.'Url', '').'"', implode(PHP_EOL, $str), File::get($env));
             File::replace($env, $content);
         }
-    }
+    }*/
 
     protected function resources()
     {

@@ -10,7 +10,7 @@ class Sap{%brand_name%}BrandSeed extends Migration
     {
         $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
-            'domain' => env('{%brand_name%}Url'),
+            'domain' => '{%domain%}',
             'published_at' => \Carbon\Carbon::now(),
             'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',

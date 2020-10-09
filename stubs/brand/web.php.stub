@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/en');
-Route::domain(env('CoffeeUrl'))
-    ->name('{%brand_string%}.')
+Route::name('{%brand_string%}.')
     ->namespace('\Brand\{%brand_name%}\Controllers')
     ->group(function () {
         Route::group(['prefix'=>'{locale?}','middlewares' => ['{%brand_string%}_guest']], function () {
