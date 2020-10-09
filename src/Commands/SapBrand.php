@@ -48,6 +48,8 @@ class SapBrand extends Command
         $this->others();
         $this->component();
         $this->seed();
+        \Cache::forget('brand-configs');
+        \Cache::forget('brand-'.$brand_name);
         if ($this->confirm('Do you wish to run composer dumpautoload for '.$this->brand_path.'?')) {
             shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
         }

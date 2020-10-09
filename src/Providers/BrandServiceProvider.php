@@ -16,20 +16,8 @@ class BrandServiceProvider extends ServiceProvider
         $brand_path = base_path('brand');
         if (Schema::hasTable('brands') && File::isDirectory($brand_path)) {
             if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
-                $brands = app(config('sap.models.brand'))->all();
-                $fromModal = true;
-                if (count($brands) < 1) {
-                    $brands = File::directories($brand_path);
-                    $fromModal = false;
-                }
-                foreach ($brands as $brand) {
-                    if ($fromModal) {
-                        $brandName = strtolower($brand->name);
-                        $dir = base_path('brand/'.$brandName);
-                    } else {
-                        $dir = $brand;
-                    }
-
+                $brands = File::directories($brand_path);
+                foreach ($brands as $dir) {
                     if (File::exists($dir.'/web.php')) {
                         \Route::middleware('web')->group($dir.'/web.php');
                     }
@@ -59,12 +47,28 @@ class BrandServiceProvider extends ServiceProvider
         }
         $this->loadMigrationsFrom($dir.'/database');
     }
+    protected function findBrandDomains($domain)
+    {
+        $configs =  \Cache::remember('brand-configs', (60*60*24), function () {
+            $configs = [];
+            foreach (File::directories(base_path('brand')) as $dir) {
+                $brand = basename($dir);
+                $config = require($dir.'/config/domains.php');
+                $configs[$config['main']] = $brand;
+                foreach ($config['aliases'] as $alias) {
+                    $configs[$alias] = $brand;
+                }
+            }
+            return $configs;
+        });
+        return $configs[$domain];
+    }
     protected function loadBrandStuffs()
     {
         if (File::exists(base_path('brand'))) {
-            $brandDomain = request()->getHost();
-            $brand = \Cache::remember('brand-'.$brandDomain, (60*60*24), function () use ($brandDomain) {
-                return app(config('sap.models.brand'))->query()->whereStatus('A')->whereDomain($brandDomain)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
+            $brandName = $this->findBrandDomains(request()->getHost());
+            $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
+                return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
             });
             if ($brand) {
                 $brandName = strtolower($brand->name);
