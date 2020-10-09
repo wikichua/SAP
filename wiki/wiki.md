@@ -77,6 +77,7 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
+1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. Brand middleware and auth (social lite login + register)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
