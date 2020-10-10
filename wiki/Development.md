@@ -100,23 +100,28 @@ With Helper should be much more easy.
 Run in your bash
 
 ```bash
-php artisan sap:brand *BrandName* --domain=*sub.domain.test*
+php artisan sap:brand *BrandName* --domain=*domain.test*
 ```
 
 This brand will be scaffolded with the set of
 
-1. Seeder for sample page, sample navigation, sample carousel and login modal
-1. Template using MDB (https://mdbootstrap.com)
-1. Sample Page
-1. Login Modal Component (include social lite for register)
+1. Seeder for sample page, sample navigation, sample carousel and login modal (social lite)
+2. Domain aliases (file domains.php) - *Need to clear cache for this*
+3. Template using MDB (https://mdbootstrap.com)
+4. Sample Page
+5. Login Modal Component (include social lite for register)
 ```html
 <x-{%brand_string%}::login-modal />
 ```
-1. Top Navbar Component
+6. Top Navbar Login Component
+```html
+<x-{%brand_string%}::navbar-top-login />
+```
+7. Top Navbar Component
 ```html
 <x-{%brand_string%}::navbar-top groupSlug="sample-navbar" />
 ```
-1. Carousel Component
+8. Carousel Component
 ```html
 <x-{%brand_string%}::carousel slug="sample-carousel" :tags="['new','hot']" />
 ```
