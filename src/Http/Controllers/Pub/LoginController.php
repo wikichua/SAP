@@ -98,7 +98,7 @@ class LoginController extends Controller
     {
         try {
             $params = [
-                    'name' => $data->getName(),
+                    'name' => $data->getName()? $data->getName():$data->getEmail(),
                     'email' => $data->getEmail(),
                     'avatar' => $data->getAvatar(),
                     'password' => bcrypt($data->getEmail()),
@@ -112,6 +112,7 @@ class LoginController extends Controller
                 ];
             $user = app(config('sap.models.user'))->query()->create($params);
             // Check support verify or not
+
             if ($user instanceof MustVerifyEmail) {
                 $user->markEmailAsVerified();
             }

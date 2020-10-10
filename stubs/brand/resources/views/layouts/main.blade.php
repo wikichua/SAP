@@ -38,11 +38,7 @@
           </ul>
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-              <button type="button" class="btn btn-link nav-link"  data-toggle="modal" data-target="#elegantModalForm">
-                <i class="fas fa-sign-in-alt"></i>
-              </button>
-            </li>
+            <x-{%brand_string%}::navbar-top-login />
           </ul>
         </div>
       </div>

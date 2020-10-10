@@ -64,6 +64,12 @@ In your app/User.php
 class User extends \Wikichua\SAP\Models\User
 ```
 
+```php
+    protected $casts = [
+        'social' => 'array',
+    ];
+```
+
 Run in your bash
 
 ```bash

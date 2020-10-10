@@ -21,5 +21,6 @@ class User extends \Wikichua\SAP\Models\User
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'social' => 'array',
     ];
 }

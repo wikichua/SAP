@@ -36,7 +36,7 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         // user model need to tie to brand_id
-        return $request->only($this->username(), 'password') + ['type' => 'User'];
+        return $request->only($this->username(), 'password');
     }
 
     public function logout(Request $request)
@@ -99,11 +99,10 @@ class LoginController extends Controller
     {
         try {
             $params = [
-                    'name' => $data->getName(),
+                    'name' => $data->getName()? $data->getName():$data->getEmail(),
                     'email' => $data->getEmail(),
                     'avatar' => $data->getAvatar(),
                     'password' => bcrypt($data->getEmail()),
-                    'type' => 'User',
                     'social' => [
                         $provider => [
                             'id' => $data->id,

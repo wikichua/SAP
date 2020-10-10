@@ -73,10 +73,11 @@ Laravel oriented package. This package is mainly for
 1. Tie user to brand
 1. Let listing table resizeable, sticky table head
 1. Sortable rows and update to seq field in table.
-1. Alias Domain for Brand
+1. Alias Domain for Brand ~BUG : domains aliases issue~
 
 ## Todo List
 
+1. BUG : social login not working
 1. BUG : cant load from route for multiple brands in brandserviceprovider
 1. Brand User Model
 1. Brand middleware and auth (social lite login + register)

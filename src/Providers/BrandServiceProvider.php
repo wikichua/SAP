@@ -46,26 +46,11 @@ class BrandServiceProvider extends ServiceProvider
         }
         $this->loadMigrationsFrom($dir.'/database');
     }
-    protected function findBrandDomains($domain)
-    {
-        $configs =  \Cache::remember('brand-configs', (60*60*24), function () {
-            $configs = [];
-            foreach (File::directories(base_path('brand')) as $dir) {
-                $brand = basename($dir);
-                $config = require($dir.'/config/domains.php');
-                $configs[$config['main']] = $brand;
-                foreach ($config['aliases'] as $alias) {
-                    $configs[$alias] = $brand;
-                }
-            }
-            return $configs;
-        });
-        return $configs[$domain];
-    }
+
     protected function loadBrandStuffs()
     {
         if (File::exists(base_path('brand'))) {
-            $brandName = $this->findBrandDomains(request()->getHost());
+            $brandName = \Help::findBrandDomains(request()->getHost());
             $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
                 return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
             });

@@ -1,6 +1,9 @@
 <?php
 namespace Wikichua\SAP\Repos;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+
 class Help
 {
     public function dump($value='Hello Help')
@@ -164,5 +167,32 @@ class Help
             $locale = app()->getLocale() != ''? app()->getLocale():config('app.locale');
         }
         return route($name, array_merge([$locale,$slug], $parameters), $absolute);
+    }
+
+    public function findBrandDomains($domain = '')
+    {
+        $configs =  Cache::remember('brand-configs', (60*60*24), function () {
+            $configs = [];
+            foreach (File::directories(base_path('brand')) as $dir) {
+                $brand = basename($dir);
+                $config = require($dir.'/config/domains.php');
+                $configs[$config['main']] = $brand;
+                foreach ($config['aliases'] as $alias) {
+                    $configs[$alias] = $brand;
+                }
+            }
+            return $configs;
+        });
+        return $domain == ''? $configs:$configs[$domain];
+    }
+
+    public function getDomain($name = '')
+    {
+        $domains = $this->findBrandDomains();
+        if ($name != '') {
+            $domains = array_flip($domains);
+            return isset($domains[$name])? $domains[$name]:'null';
+        }
+        return isset($domains[request()->getHost()])? request()->getHost():'null';
     }
 }

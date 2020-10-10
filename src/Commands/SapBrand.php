@@ -24,6 +24,7 @@ class SapBrand extends Command
         $this->domain = !empty($this->option('domain'))? $this->option('domain'):(strtolower($this->brand).'.test');
         $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
+        $this->replaces['{%brand_capital%}'] = $brand_capital = strtoupper($this->brand);
         $this->replaces['{%brand_string%}'] = $brand_string = strtolower($this->brand);
         $this->brand_path = $brand_path = base_path('brand/'.$brand_string);
         if (!$this->files->exists($brand_path)) {

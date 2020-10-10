@@ -23,6 +23,6 @@ class LoginModal extends Component
      */
     public function render()
     {
-        return view('{%brand_string%}::components.login-modal');
+        return auth('brand_web')->check()? '':view('{%brand_string%}::components.login-modal');
     }
 }

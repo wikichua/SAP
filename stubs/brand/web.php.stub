@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/en');
 Route::name('{%brand_string%}.')
+    ->domain(getDomain('{%brand_string%}'))
     ->namespace('\Brand\{%brand_name%}\Controllers')
     ->group(function () {
         Route::group(['prefix'=>'{locale?}','middlewares' => ['{%brand_string%}_guest']], function () {
@@ -14,6 +15,7 @@ Route::name('{%brand_string%}.')
             Route::post('/login', 'LoginController@login')->name('login');
             Route::match(['get','post'], 'login/{provider}', 'LoginController@redirectToProvider')->name('social.login');
             Route::match(['get','post'], 'login/{provider}/callback', 'LoginController@handleProviderCallback')->name('social.callback');
+            Route::get('logout', 'LoginController@logout')->name('logout');
         });
         Route::group(['prefix'=>'auth','middlewares' => ['{%brand_string%}_auth']], function () {
             // Route::get('/', 'ProfileController@index')->name('profile');

@@ -8,6 +8,21 @@ class Sap{%brand_name%}BrandSeed extends Migration
 {
     public function up()
     {
+        Schema::create('{%brand_string%}_users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+            $table->json('social')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('timezone')->default(config('app.timezone'))->index();
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
+        });
+
         $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
             'domain' => '{%domain%}',
@@ -20,6 +35,12 @@ class Sap{%brand_name%}BrandSeed extends Migration
 
         app(config('sap.models.component'))->query()->create([
             'name' => 'NavbarTop',
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
+
+        app(config('sap.models.component'))->query()->create([
+            'name' => 'NavbarTopLogin',
             'brand_id' => $brand->id,
             'status' => 'A',
         ]);
@@ -100,5 +121,16 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'seq' => 1,
             'tags' => ['new','hot'],
         ]);
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('{%brand_string%}_users');
+        $brand = app(config('sap.models.brand'))->query()->where('name','{%brand_name%}')->first();
+        app(config('sap.models.component'))->query()->where('brand_id',$brand->id)->forceDelete();
+        app(config('sap.models.nav'))->query()->where('brand_id',$brand->id)->forceDelete();
+        app(config('sap.models.page'))->query()->where('brand_id',$brand->id)->forceDelete();
+        app(config('sap.models.carousel'))->query()->where('brand_id',$brand->id)->forceDelete();
+        $brand->forceDelete();
     }
 }
