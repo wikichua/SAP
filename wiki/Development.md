@@ -126,6 +126,8 @@ This brand will be scaffolded with the set of
 <x-{%brand_string%}::carousel slug="sample-carousel" :tags="['new','hot']" />
 ```
 
+More about [Brand Development](Brand-Development.md)
+
 ### Create New Component with SAP
 
 Run in your bash
