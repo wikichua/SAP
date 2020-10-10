@@ -6,7 +6,8 @@
 - [Todo List](#Todo-List)
 - [Package Development](Package-Development.md)
 - [Installation](Installation.md)
-- [Development](Development.md)
+- [Module Development](Module-Development.md)
+- [Brand Development](Brand-Development.md)
 - [Refer](#Refer)
 
 ## Introduction
