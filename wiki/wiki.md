@@ -2,7 +2,7 @@
 
 - [Introduction](#Introduction)
 - [Requirements](#Requirements)
-- [Features](#Features)
+- [Features or Done](#Features-or-Done)
 - [Todo List](#Todo-List)
 - [Package Development](Package-Development.md)
 - [Installation](Installation.md)
@@ -31,7 +31,7 @@ Laravel oriented package. This package is mainly for
 1. A working NPM in your machine
 1. Knowledge in jQuery, Bootstrap, Material Design Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
 
-## Features
+## Features or Done
 
 1. Theme using https://startbootstrap.com/themes/sb-admin-2/
 1. Activity Logging
