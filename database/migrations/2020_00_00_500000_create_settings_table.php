@@ -45,6 +45,8 @@ class CreateSettingsTable extends Migration
             'value' => ["A" => "Active", "I" => "Inactive"],
         ]);
 
+        app(config('sap.models.setting'))->create(['key' => 'locales','value' => ['en' => 'EN']]);
+
         // add permissions
         app(config('sap.models.permission'))->createGroup('Settings', ['Create Settings', 'Read Settings', 'Update Settings', 'Delete Settings']);
     }

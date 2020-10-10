@@ -28,7 +28,6 @@ class SapPageTable extends Migration
             $table->softDeletes();
         });
         app(config('sap.models.setting'))->create(['key' => 'page_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
-        app(config('sap.models.setting'))->create(['key' => 'locales','value' => ['en' => 'EN']]);
         app(config('sap.models.permission'))->createGroup('Pages', ['Create Pages', 'Read Pages', 'Update Pages', 'Delete Pages']);
     }
     public function down()

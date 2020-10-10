@@ -23,6 +23,7 @@ class PageController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.page'))->query()
+                ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
@@ -42,6 +43,7 @@ class PageController extends Controller
         }
         $getUrl = route('page.list');
         $html   = [
+            ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => true],
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Locale', 'data' => 'locale', 'sortable' => true],
             ['title' => 'Slug', 'data' => 'slug', 'sortable' => true],

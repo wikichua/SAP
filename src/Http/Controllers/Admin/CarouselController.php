@@ -21,6 +21,7 @@ class CarouselController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.carousel'))->query()
+                ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
@@ -41,11 +42,12 @@ class CarouselController extends Controller
         }
         $getUrl = route('carousel.list');
         $html = [
+            ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => false],
             ['title' => 'Slug', 'data' => 'slug', 'sortable' => true, 'filterable' => true],
-              ['title' => 'Image', 'data' => 'image', 'sortable' => false, 'filterable' => false],
-              ['title' => 'Tags', 'data' => 'tags', 'sortable' => false, 'filterable' => true],
-              ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
-              ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Image', 'data' => 'image', 'sortable' => false, 'filterable' => false],
+            ['title' => 'Tags', 'data' => 'tags', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Published Date', 'data' => 'published_at', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.carousel.index', compact('html', 'getUrl'));

@@ -20,6 +20,7 @@ class ComponentController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.component'))->query()
+                ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
@@ -41,7 +42,7 @@ class ComponentController extends Controller
         $getUrl = route('component.list');
         $html = [
             ['title' => 'Name', 'data' => 'name', 'sortable' => true, 'filterable' => true],
-            ['title' => 'Brand', 'data' => 'brand_name', 'sortable' => false, 'filterable' => false],
+            ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => false, 'filterable' => false],
             ['title' => 'Usage Example', 'data' => 'usage', 'sortable' => false, 'filterable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];

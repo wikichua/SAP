@@ -22,6 +22,7 @@ class NavController extends Controller
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.nav'))->query()
+                ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
@@ -42,6 +43,7 @@ class NavController extends Controller
         }
         $getUrl = route('nav.list');
         $html   = [
+            ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => false],
             ['title' => 'Link', 'data' => 'link', 'sortable' => false],
             ['title' => 'Group Slug', 'data' => 'group_slug', 'sortable' => true],
             ['title' => 'Locale', 'data' => 'locale', 'sortable' => true],

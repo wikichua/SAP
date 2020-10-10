@@ -25,7 +25,6 @@ class SapNavTable extends Migration
             $table->softDeletes();
         });
         app(config('sap.models.setting'))->create(['key' => 'nav_status','value' => ['A' => 'Active','I' => 'Inactive']]);
-        app(config('sap.models.setting'))->create(['key' => 'locales','value' => ['en' => 'EN']]);
         app(config('sap.models.permission'))->createGroup('Navs', ['Create Navs', 'Read Navs', 'Update Navs', 'Delete Navs']);
     }
     public function down()
