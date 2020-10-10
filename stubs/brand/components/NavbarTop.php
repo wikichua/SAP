@@ -15,7 +15,8 @@ class NavbarTop extends Component
     }
     public function render()
     {
-        $brand_id = app(config('sap.models.brand'))->where('name', $this->brand)->first()->id;
+        $brand_id = brand($this->brand)->id;
+        $brand_name = strtolower(brand($this->brand)->name);
         $navs = app(config('sap.models.nav'))->query()
             ->where('status', 'A')
             ->where('locale', app()->getLocale())
@@ -23,6 +24,6 @@ class NavbarTop extends Component
             ->where('group_slug', $this->group_slug)
             ->orderBy('seq')
             ->get();
-        return view('{%brand_string%}::components.navbar-top', compact('navs'));
+        return view('{%brand_string%}::components.navbar-top', compact('navs','brand_name'));
     }
 }

@@ -51,9 +51,7 @@ class BrandServiceProvider extends ServiceProvider
     {
         if (File::exists(base_path('brand'))) {
             $brandName = \Help::findBrandDomains(request()->getHost());
-            $brand = \Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
-                return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
-            });
+            $brand = \Help::brand($brandName);
             if ($brand) {
                 $brandName = strtolower($brand->name);
                 $dir = base_path('brand/'.$brandName);

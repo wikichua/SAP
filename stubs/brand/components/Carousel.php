@@ -18,7 +18,7 @@ class Carousel extends Component
     public function render()
     {
         $uniqueId = \Str::uuid();
-        $brand_id = app(config('sap.models.brand'))->where('name', $this->brand)->first()->id;
+        $brand_id = brand($this->brand)->id;
         $carousels = app(config('sap.models.carousel'))->query()
             ->where('status', 'A')
             ->where('brand_id', $brand_id)

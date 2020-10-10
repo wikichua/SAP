@@ -97,3 +97,9 @@ if (!function_exists('getDomain')) {
         return Help::getDomain($name);
     }
 }
+if (!function_exists('brand')) {
+    function brand($brandName)
+    {
+        return Help::brand($brandName);
+    }
+}

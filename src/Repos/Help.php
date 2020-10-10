@@ -195,4 +195,12 @@ class Help
         }
         return isset($domains[request()->getHost()])? request()->getHost():'null';
     }
+
+    public function brand($brandName = '')
+    {
+        $brandName = $brandName == '' ?? $this->findBrandDomains(request()->getHost());
+        return Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
+            return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
+        });
+    }
 }
