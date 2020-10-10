@@ -194,7 +194,7 @@ class Kernel extends ConsoleKernel
 Then at the commands()
 
 ```php
-protected function commands()
+    protected function commands()
     {
         $this->disable(['migrate:fresh', 'sap:config', 'sap:make'], ['production']);
 ```
