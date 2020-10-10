@@ -143,6 +143,7 @@ class SapBrand extends Command
     {
         $dir = 'brand/'.strtolower($this->brand).'/models';
         $this->files->ensureDirectoryExists(base_path($dir), 0755, true);
+        $this->justCopy('models');
     }
 
     protected function controller()

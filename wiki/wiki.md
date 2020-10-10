@@ -77,8 +77,10 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
-1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
+1. BUG : cant load from route for multiple brands in brandserviceprovider
+1. Brand User Model
 1. Brand middleware and auth (social lite login + register)
+1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. Queue Manager (Laravel Horizon is cool, but...)
 1. Db connection for specific brand can be segregated by different connections.

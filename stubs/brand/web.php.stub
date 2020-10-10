@@ -16,6 +16,6 @@ Route::name('{%brand_string%}.')
             Route::match(['get','post'], 'login/{provider}/callback', 'LoginController@handleProviderCallback')->name('social.callback');
         });
         Route::group(['prefix'=>'auth','middlewares' => ['{%brand_string%}_auth']], function () {
-            Route::get('/', 'ProfileController@index')->name('profile');
+            // Route::get('/', 'ProfileController@index')->name('profile');
         });
     });

@@ -75,11 +75,11 @@ class LoginController extends Controller
     }
     public function handleSocialUser(string $provider, object $data)
     {
-        $user = app(config('sap.models.user'))->query()->where([
+        $user = app(config('main.models.user'))->query()->where([
             "social->{$provider}->id" => $data->id,
         ])->first();
         if (!$user) {
-            $user = app(config('sap.models.user'))->query()->where([
+            $user = app(config('main.models.user'))->query()->where([
                 'email' => $data->email,
             ])->first();
         }
@@ -111,7 +111,7 @@ class LoginController extends Controller
                         ],
                     ],
                 ];
-            $user = app(config('sap.models.user'))->query()->create($params);
+            $user = app(config('main.models.user'))->query()->create($params);
             // Check support verify or not
             if ($user instanceof MustVerifyEmail) {
                 $user->markEmailAsVerified();

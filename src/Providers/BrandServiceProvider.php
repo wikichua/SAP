@@ -18,7 +18,8 @@ class BrandServiceProvider extends ServiceProvider
             if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
                 foreach (File::directories($brand_path) as $dir) {
                     if (File::exists($dir.'/web.php')) {
-                        \Route::middleware('web')->group($dir.'/web.php');
+                        // \Route::middleware('web')->group($dir.'/web.php');
+                        $this->loadRoutesFrom($dir.'/web.php');
                     }
                     if (File::isDirectory($dir.'/database')) {
                         $this->loadMigrationsFrom($dir.'/database');

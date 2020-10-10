@@ -3,27 +3,21 @@
 return [
 
     'defaults' => [
-        'guard' => 'brand',
+        'guard' => 'brand_web',
         'passwords' => 'users',
     ],
 
     'guards' => [
-        'web' => [
+        'brand_web' => [
             'driver' => 'session',
-            'provider' => 'users',
-        ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'provider' => 'brand_users',
         ],
     ],
 
     'providers' => [
-        'users' => [
+        'brand_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => \Brand\{%brand_name%}\Models\User::class,
         ],
 
         // 'users' => [
@@ -34,7 +28,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'brand_users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
