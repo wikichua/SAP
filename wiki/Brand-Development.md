@@ -153,7 +153,7 @@ app(config('main.models.*sample*'))->query()->all();
 
 ### View
 
-May refer to (laravel blade section)[https://laravel.com/docs/8.x/views]
+May refer to [Laravel Blade Document](https://laravel.com/docs/8.x/views)
 
 ##### Directory Structure:
 
