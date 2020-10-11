@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class SapES extends Command
 {
-    protected $signature = 'sap:es';
+    protected $signature = 'sap:es {--info}';
     protected $description = 'Reimport Models to Elastic Search';
 
     public function __construct()
@@ -31,11 +31,29 @@ class SapES extends Command
             }
         }
 
-        foreach (getModelsList() as $model) {
+        if (true == $this->option('info')) {
+            $result = shell_exec("curl localhost:9200/_cat/indices?v");
+            $this->line($result);
+        } else {
+            $this->import();
+        }
+    }
+    protected function import()
+    {
+        $this->info('Clean up indexes data stored in Elastic Search');
+        shell_exec("curl -XDELETE 'localhost:9200/*_index_*'");
+
+        $this->info('Importing to Elastic Search');
+        $models = getModelsList();
+        $bar = $this->output->createProgressBar(count($models));
+        $bar->start();
+        foreach ($models as $model) {
             \Artisan::call('scout:import', [
                 'searchable' => $model
             ]);
-            $this->output->write(\Artisan::output());
+            $bar->advance();
         }
+        $bar->finish();
+        $this->info("\nImporting Completed");
     }
 }

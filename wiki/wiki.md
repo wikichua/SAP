@@ -85,6 +85,8 @@ Laravel oriented package. This package is mainly for
 
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
+1. php artisan sap:export **ModuleName**
+1. php artisan sap:import **ModuleName**
 1. Queue Manager (Laravel Horizon is cool, but...)
 1. Db connection for specific brand can be segregated by different connections.
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
@@ -109,4 +111,5 @@ Laravel oriented package. This package is mainly for
 1. https://bootstrap-table.com
 1. https://github.com/UniSharp/laravel-filemanager
 1. https://github.com/matchish/laravel-scout-elasticsearch
+1. https://chartio.com/resources/tutorials/how-to-delete-data-from-elasticsearch/
 1. https://github.com/rap2hpoutre/fast-excel

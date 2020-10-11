@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class SapService extends Command
 {
-    protected $signature = 'sap:service {name} {--force}';
+    protected $signature = 'sap:service {name} {--brand=} {--force}';
     protected $description = 'Create Service Facade Class';
     protected $name;
 
@@ -18,26 +18,73 @@ class SapService extends Command
 
     public function handle()
     {
+        $this->brand = $this->option('brand')? $this->option('brand'):null;
+
         $this->name = \Str::studly($this->argument('name'));
+
+        if ($this->brand) {
+            $this->brandName = \Str::studly($this->option('brand'));
+            $this->brand(strtolower($this->brand));
+        } else {
+            $this->app();
+        }
+    }
+    protected function app()
+    {
         if (File::exists(app_path(config('sap.custom_service_dir'))) != true) {
             File::makeDirectory(app_path(config('sap.custom_service_dir')));
         }
         if (File::exists(app_path(config('sap.custom_facade_dir'))) != true) {
             File::makeDirectory(app_path(config('sap.custom_facade_dir')));
         }
+        $service_file = app_path(config('sap.custom_service_dir').'/'.$this->name.'.php');
+        $facade_file = app_path(config('sap.custom_facade_dir').'/'.$this->name.'.php');
         if ($this->option('force') == false) {
-            if (File::exists(app_path(config('sap.custom_service_dir').'/'.$this->name.'.php')) || File::exists(app_path(config('sap.custom_facade_dir').'/'.$this->name.'.php'))) {
+            if (File::exists($service_file)
+                || File::exists($facade_file)) {
                 $this->info('Service has already exists');
                 return ;
             }
         }
-        File::put(app_path(config('sap.custom_facade_dir').'/'.$this->name.'.php'), $this->facadeString());
-        File::put(app_path(config('sap.custom_service_dir').'/'.$this->name.'.php'), $this->serviceString());
+        File::put($facade_file, $this->facadeString());
+        $this->info('Facade File added to '.$facade_file);
+        File::put($service_file, $this->serviceString());
+        $this->info('Service File added to '.$service_file);
     }
-    protected function facadeString()
+    protected function brand($brand_string)
     {
-        $namespace = config('sap.custom_facade_namespace');
+        $brand_service_path = base_path('brand/'.$brand_string.'/services');
+        if (File::exists($brand_service_path) != true) {
+            File::makeDirectory($brand_service_path);
+        }
+        $brand_facade_path = base_path('brand/'.$brand_string.'/facades');
+        if (File::exists($brand_facade_path) != true) {
+            File::makeDirectory($brand_facade_path);
+        }
+        $service_file = $brand_service_path.'/'.$this->name.'.php';
+        $facade_file = $brand_facade_path.'/'.$this->name.'.php';
+        if ($this->option('force') == false) {
+            if (File::exists($service_file)
+                || File::exists($facade_file)) {
+                $this->info('Service has already exists');
+                return ;
+            }
+        }
+        File::put($facade_file, $this->facadeString(1));
+        $this->info('Facade File added to '.$facade_file);
+        File::put($service_file, $this->serviceString(1));
+        $this->info('Service File added to '.$service_file);
+    }
+    protected function facadeString($isBrand = 0)
+    {
         $name = $this->name;
+        $namespace = config('sap.custom_facade_namespace');
+        $return = "\App\Services\\$name::class";
+        if ($isBrand) {
+            $namespace = "Brand\\$this->brandName\Facades\\$name";
+            $return = "\Brand\\$this->brandName\Services\\$name::class";
+        }
+
         return <<<EOT
 <?php
 
@@ -49,15 +96,19 @@ class {$name} extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \App\Services\\{$name}::class;
+        return {$return};
     }
 }
 EOT;
     }
-    protected function serviceString()
+    protected function serviceString($isBrand = 0)
     {
-        $namespace = config('sap.custom_service_namespace');
         $name = $this->name;
+        $namespace = config('sap.custom_service_namespace');
+        if ($isBrand) {
+            $namespace = "Brand\\$this->brandName\Services\\$name";
+        }
+
         return <<<EOT
 <?php
 

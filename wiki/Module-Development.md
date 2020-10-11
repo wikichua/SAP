@@ -1,29 +1,20 @@
 ## Module Development
 
-- [Create New Service](#Create-New-Service)
 - [Create New Module with SAP](#Create-New-Module-with-SAP)
+- [Create New Service](#Create-New-Service)
+- [Create Service which belongs to Brand Only](#Create-Service-which-belongs-to-Brand-Only)
 - [Create Export and Import Module with SAP](#Create-Export-and-Import-Module-with-SAP)
 - [Create New Brand with SAP](#Create-New-Brand-with-SAP)
 - [Create New Component with SAP](#Create-New-Component-with-SAP)
+- [Create Component which belongs to Brand Only](#Create-Component-which-belongs-to-Brand-Only)
 - [Using Pusher in your application](#Using-Pusher-in-your-application)
 - [Run Import data to Elastic Search](#Run-Import-data-to-Elastic-Search)
+- [Cleanup and Info Elastic Search Index](#Cleanup-and-Info-Elastic-Search-Index)
 - [Run report with Artisan and Task Scheduler](#Run-report-with-Artisan-and-Task-Scheduler)
 - [Queue and Cache Closure](#Queue-and-Cache-Closure)
 - [PHP Debug Bar](#PHP-Debug-Bar)
 - [Disable Artisan Command](#Disable-Artisan-Command)
 - [Social Lite](#Social-Lite)
-
-### Create New Service
-
-**ServiceName** - MUST be Plural + Studly Case
-
-Run in your bash
-
-```bash
-php artisan sap:service *ServiceName* --force
-```
-
-You may like to add your business model as a service.
 
 ### Create New Module with SAP
 
@@ -67,6 +58,27 @@ Migration file created: /var/www/l8/database/migrations/2020_09_17_000000_sapLin
 Since you had done make the CRUD, we will help you set ready to false to prevent accidentally make after you have done all your changes in your flow!
 Config has changed: /var/www/l8/config/sap/LinuxOsConfig.php
 ```
+
+### Create New Service
+
+**ServiceName** - MUST be Plural + Studly Case
+
+Run in your bash
+
+```bash
+php artisan sap:service *ServiceName*
+```
+
+### Create Service which belongs to Brand Only
+
+Run in your bash
+
+```bash
+php artisan sap:service *ServiceName* --brand=*BrandName*
+```
+
+You may like to add your business model as a service.
+
 #### Create Export and Import Module with SAP
 
 Coming soon
@@ -87,11 +99,6 @@ With Helper should be much more easy.
         'timeout' => 5000,
     ]);
 ```
-
-##### TODO
-
-1. php artisan sap:export **ModuleName**
-1. php artisan sap:import **ModuleName**
 
 ### Create New Brand with SAP
 
@@ -136,7 +143,7 @@ Run in your bash
 php artisan sap:comp *ComponentName*
 ```
 
-#### Create component which belongs to Brand Only
+### Create Component which belongs to Brand Only
 
 Run in your bash
 
@@ -158,6 +165,23 @@ Run in your bash
 php artisan sap:es
 ```
 
+### Cleanup and Info Elastic Search Index
+
+Run in your bash
+
+Clean Up
+
+```bash
+curl -XDELETE 'localhost:9200/*_index_*'
+```
+
+Current Info
+
+```bash
+curl 'localhost:9200/_cat/indices?v'
+
+```
+
 ### Run report with Artisan and Task Scheduler
 
 ```bash
@@ -168,7 +192,7 @@ php artisan sap:report
 
 Coming Soon
 
-####PHP Debug Bar
+### PHP Debug Bar
 
 This feature is automatic enable in non production environment
 However, you will need to exclude it in api related routes
