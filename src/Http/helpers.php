@@ -85,10 +85,10 @@ if (!function_exists('route_slug')) {
         return Help::slug_route($name, $slug, $parameters, $locale, $absolute);
     }
 }
-if (!function_exists('findBrandDomains')) {
-    function findBrandDomains($domain = '')
+if (!function_exists('getBrandName')) {
+    function getBrandName($domain = '')
     {
-        return Help::findBrandDomains($domain);
+        return Help::getBrandName($domain);
     }
 }
 if (!function_exists('getDomain')) {

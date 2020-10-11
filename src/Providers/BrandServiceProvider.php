@@ -50,7 +50,7 @@ class BrandServiceProvider extends ServiceProvider
     protected function loadBrandStuffs()
     {
         if (File::exists(base_path('brand'))) {
-            $brandName = \Help::findBrandDomains(request()->getHost());
+            $brandName = \Help::getBrandName(request()->getHost());
             $brand = \Help::brand($brandName);
             if ($brand) {
                 $brandName = strtolower($brand->name);

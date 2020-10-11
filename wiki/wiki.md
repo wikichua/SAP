@@ -8,6 +8,7 @@
 - [Installation](Installation.md)
 - [Module Development](Module-Development.md)
 - [Brand Development](Brand-Development.md)
+- [Available Helper](Available-Helper.md)
 - [Refer](#Refer)
 
 ## Introduction
