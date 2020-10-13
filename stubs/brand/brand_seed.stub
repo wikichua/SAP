@@ -57,6 +57,12 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'status' => 'A',
         ]);
 
+        app(config('sap.models.component'))->query()->create([
+            'name' => 'Alert',
+            'brand_id' => $brand->id,
+            'status' => 'A',
+        ]);
+
         app(config('sap.models.nav'))->query()->create([
             'name' => 'Sample Page Nav',
             'locale' => 'en',

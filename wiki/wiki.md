@@ -81,10 +81,11 @@ Laravel oriented package. This package is mainly for
 1. ~BUG : domains aliases issue~
 1. ~BUG : social login not working~
 1. ~BUG : cant load from route for multiple brands in brandserviceprovider~
+1. Notification swal2 for brand (https://realrashid.github.io/sweet-alert/install)
+    1. Convert alert.blade.php to brand component
 
 ## Todo List
 
-1. Notification swal2 for brand (https://realrashid.github.io/sweet-alert/install)
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. php artisan sap:export **ModuleName**

@@ -40,7 +40,8 @@
         "pusher/pusher-php-server": "^4.1",
         "unisharp/laravel-filemanager": "dev-master",
         "lionix/seo-manager": "dev-master",
-        "intervention/imagecache": "^2.5"
+        "intervention/imagecache": "^2.5",
+        "realrashid/sweet-alert": "^3.1"
     },
     "autoload": {
         "psr-4": {

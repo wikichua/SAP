@@ -93,6 +93,7 @@
     </footer>
 
     <x-{%brand_string%}::login-modal />
+    <x-{%brand_string%}::alert />
 
     <script src="{{ asset('{%brand_string%}/js/app.js') }}"></script>
     <script src="{{ asset('{%brand_string%}/js/all.js') }}"></script>
