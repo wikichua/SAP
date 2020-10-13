@@ -122,6 +122,7 @@ class SAPServiceProvider extends ServiceProvider
             // Lionix\SeoManager
             __DIR__.'/../config/seo-manager.php' => config_path('seo-manager.php'),
             base_path('vendor/lionix/seo-manager/src/assets') =>  public_path('vendor/lionix'),
+            //
         ], 'sap.install');
 
         // Publishing the translation files.
