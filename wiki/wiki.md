@@ -86,6 +86,7 @@ Laravel oriented package. This package is mainly for
 
 ## Todo List
 
+1. MongoDB package - activity logs should be in mongodb
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. php artisan sap:export **ModuleName**
@@ -116,4 +117,4 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/matchish/laravel-scout-elasticsearch
 1. https://chartio.com/resources/tutorials/how-to-delete-data-from-elasticsearch/
 1. https://github.com/rap2hpoutre/fast-excel
-1. https://realrashid.github.io/sweet-alert/install
+1. https://realrashid.github.io/sweet-alert
