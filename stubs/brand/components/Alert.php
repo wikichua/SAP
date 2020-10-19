@@ -24,6 +24,6 @@ class Alert extends Component
      */
     public function render()
     {
-        return Session::has('alert.config')? '':view('{%brand_string%}::components.alert');
+        return Session::has('alert.config')? view('{%brand_string%}::components.alert'):'';
     }
 }
