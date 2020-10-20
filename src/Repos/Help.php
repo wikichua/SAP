@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 
 class Help
 {
-    public function dump($value='Hello Help')
+    public function dump($value = 'Hello Help')
     {
         dd($value);
     }
@@ -186,13 +186,9 @@ class Help
         return $domain == ''? $configs:$configs[$domain];
     }
 
-    public function getDomain($name = '')
+    public function getDomain()
     {
         $domains = $this->getBrandName();
-        if ($name != '') {
-            $domains = array_flip($domains);
-            return isset($domains[$name])? $domains[$name]:'null';
-        }
         return isset($domains[request()->getHost()])? request()->getHost():'null';
     }
 
