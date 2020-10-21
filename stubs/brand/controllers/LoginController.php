@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->redirectTo = route('{%brand_string%}.home');
-        $this->middleware('{%brand_string%}_guest')->except('logout');
+        $this->middleware('{%brand_string%}:guest')->except('logout');
     }
 
     /*public function showLoginForm()

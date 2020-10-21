@@ -87,7 +87,7 @@ The main CMS post view is depend on group of routes in
 ```php
     Route::group([
             'prefix'=>'{locale?}',
-            'middlewares' => ['*brand_name*_guest'],
+            'middlewares' => ['*brand_name*:guest'],
             'where' => ['locale' => '[a-z]{2}']
         ],
         function () {
@@ -99,7 +99,7 @@ The main CMS post view is depend on group of routes in
 NOTE: In order to ensure your new route added works, please use prefix name at minimum 3 chars. Example
 
 ```php
-    Route::group(['prefix'=>'auth','middlewares' => ['*brand_name*_guest']], function () {
+    Route::group(['prefix'=>'auth','middlewares' => ['*brand_name*:guest']], function () {
             Route::post('/login', 'LoginController@login')->name('login');
             Route::match(['get','post'], 'login/{provider}', 'LoginController@redirectToProvider')->name('social.login');
             Route::match(['get','post'], 'login/{provider}/callback', 'LoginController@handleProviderCallback')->name('social.callback');
