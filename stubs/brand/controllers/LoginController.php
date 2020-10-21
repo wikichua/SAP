@@ -27,7 +27,7 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        return $this->guard('brand')->attempt(
+        return $this->guard('brand_web')->attempt(
             $this->credentials($request),
             $request->filled('remember')
         );
@@ -41,7 +41,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $this->guard('brand')->logout();
+        $this->guard('brand_web')->logout();
 
         $request->session()->invalidate();
 
@@ -123,7 +123,7 @@ class LoginController extends Controller
     }
     public function socialLogin($user)
     {
-        $this->guard('brand')->loginUsingId($user->id);
+        $this->guard('brand_web')->loginUsingId($user->id);
         return redirect($this->redirectTo);
     }
 }
