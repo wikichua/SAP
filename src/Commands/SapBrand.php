@@ -198,6 +198,8 @@ class SapBrand extends Command
         $stub = $this->files->get($stub);
         $this->files->put($file, $this->replaceholder($stub));
         $this->line('Middleware file created: <info>'.$file.'</info>');
+
+        $this->justCopy('middlewares');
     }
 
     protected function justCopy($path)

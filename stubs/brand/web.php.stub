@@ -9,20 +9,20 @@ Route::name('{%brand_string%}.')
     ->group(function () {
         Route::group([
             'prefix'=>'{locale?}',
-            'middleware' => ['{%brand_string%}_guest'],
+            'middleware' => ['{%brand_string%}:guest'],
             'where' => ['locale' => '[a-z]{2}']
         ],
         function () {
             Route::get('/', '{%brand_name%}Controller@index')->name('home');
             Route::get('/{slug}', '{%brand_name%}Controller@page')->name('page');
         });
-        Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}_guest']], function () {
+        Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}:guest']], function () {
             Route::post('/login', 'LoginController@login')->name('login');
             Route::match(['get','post'], 'login/{provider}', 'LoginController@redirectToProvider')->name('social.login');
             Route::match(['get','post'], 'login/{provider}/callback', 'LoginController@handleProviderCallback')->name('social.callback');
             Route::get('logout', 'LoginController@logout')->name('logout');
         });
-        Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}_auth']], function () {
+        Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}:auth']], function () {
             // Route::get('/', 'ProfileController@index')->name('profile');
         });
     });
