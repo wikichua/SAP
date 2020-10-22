@@ -10,6 +10,7 @@
 - [View](#View)
 - [NPM](#NPM)
 - [Component](#Component)
+- [Module](#Module)
 
 ### Init
 
@@ -189,4 +190,26 @@ Using this artisan command will include the "component seed" for the admin panel
 
 ```html
 <x-*BrandName*::*component-name* />
+```
+### Module
+
+Make the module via artisan using
+
+#### Create Config
+
+Run in your bash
+
+```bash
+php artsan sap:config *ModuleName* --brand=*BrandName*
+```
+
+[Config Sample](../stubs/config.stub)
+Add or remove any configuration that doesn't need and set *ready* to *true*
+
+#### Make Module
+
+Run in your bash
+
+```bash
+php artsan sap:make *ModuleName* --brand=*BrandName*
 ```

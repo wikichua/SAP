@@ -84,6 +84,7 @@ Laravel oriented package. This package is mainly for
 1. Notification swal2 for brand (https://realrashid.github.io/sweet-alert/install)
     1. Convert alert.blade.php to brand component
 1. ~MongoDB package - activity logs should be in mongodb (https://github.com/jenssegers/laravel-mongodb)~ Maybe NO
+1. Brand Specific Module (in case of the module on specific for the brand)
 
 ## Todo List
 

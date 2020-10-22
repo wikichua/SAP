@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api'], function () {
-    Route::group(['prefix' => '{%model_variable%}', 'middleware' => ['auth:sanctum'], 'namespace' => config('sap.custom_api_controller_namespace')], function () {
+    Route::group(['prefix' => '{%model_variable%}', 'middleware' => ['auth:sanctum'], 'namespace' => config('sap.custom_api_controller_namespace'), 'as' => '{%route_as%}'], function () {
         Route::match(['get', 'head'], 'list', '{%model_class%}Controller@index')->name('api.{%model_variable%}.list');
         Route::match(['get', 'head'], '{model}/read', '{%model_class%}Controller@show')->name('api.{%model_variable%}.show');
         Route::match(['post'], 'store', '{%model_class%}Controller@store')->name('api.{%model_variable%}.store');

@@ -20,12 +20,12 @@ class Sap{%model%}Table extends Migration
         });
 
         {%settings_options_up%}
-        app(config('sap.models.permission'))->createGroup('{%model_strings%}', ['Create {%model_strings%}', 'Read {%model_strings%}', 'Update {%model_strings%}', 'Delete {%model_strings%}']);
+        app(config('sap.models.permission'))->createGroup('{%permission_string%}', ['Create {%permission_string%}', 'Read {%permission_string%}', 'Update {%permission_string%}', 'Delete {%permission_string%}']);
     }
     public function down()
     {
         {%settings_options_down%}
-        app(config('sap.models.permission'))->where('group', '{%model_strings%}')->delete();
+        app(config('sap.models.permission'))->where('group', '{%permission_string%}')->delete();
         Schema::dropIfExists('{%table_name%}');
     }
 }

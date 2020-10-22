@@ -20,3 +20,6 @@
 <x-sap::menu menu="menu" label="SEO Manager" :route="route('seo.home')" icon="fas fa-fw fa-folder" :active-patterns="['seo.*']"/>
 @endif
 <!--DoNotRemoveMe-->
+@foreach ($brandMenus as $brandMenu)
+@include($brandMenu)
+@endforeach

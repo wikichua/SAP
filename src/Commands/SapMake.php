@@ -6,7 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 
 class SapMake extends Command
 {
-    protected $signature = 'sap:make {model} {--force}';
+    protected $signature = 'sap:make {model} {--brand=} {--force}';
     protected $description = 'Make Up The CRUD From Config';
 
     public function __construct(Filesystem $files)
@@ -18,8 +18,21 @@ class SapMake extends Command
 
     public function handle()
     {
-        $this->model = $this->argument('model');
-        $config_file = config_path('sap/'.$this->model.'Config.php');
+        $this->brand = $this->option('brand')? \Str::studly($this->option('brand')):null;
+
+        if ($this->brand) {
+            $brand = app(config('sap.models.brand'))->query()->where('name', strtolower($this->brand))->first();
+            if (!$brand) {
+                $this->error('Brand not found: <info>'.$this->brand.'</info>');
+                return '';
+            }
+            $this->model = $this->brand.$this->argument('model');
+            $config_file = base_path('brand/'.strtolower($this->brand).'/config/sap/'.$this->model.'Config.php');
+        } else {
+            $this->model = $this->argument('model');
+            $config_file = config_path('sap/'.$this->model.'Config.php');
+        }
+
         if (!$this->files->exists($config_file)) {
             $this->error('Config file not found: <info>'.$config_file.'</info>');
             return;
@@ -46,11 +59,16 @@ class SapMake extends Command
 
     protected function initReplacer()
     {
-        $this->replaces['{%custom_controller_namespace%}'] = config('sap.custom_controller_namespace');
-        $this->replaces['{%custom_api_controller_namespace%}'] = config('sap.custom_api_controller_namespace');
+        // $this->replaces['{%route_as%}'] = $this->brand? strtolower($this->brand).'.':'';
+        $this->replaces['{%route_as%}'] = '';
+        $this->replaces['{%custom_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Admin':config('sap.custom_controller_namespace');
+        $this->replaces['{%custom_api_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Api':config('sap.custom_api_controller_namespace');
+        $this->replaces['{%custom_model_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Models':ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
+        $this->replaces['{%page_path%}'] = $this->brand? strtolower($this->brand).'::admin':'admin';
+        $this->replaces['{%brand_view_namespace%}'] = $this->brand? '$config = require(base_path(\'brand/'.strtolower($this->brand).'/config/main.php\'));
+        \View::addNamespace(\''.strtolower($this->brand).'\', $config[\'resources_path\']);':'';
 
         $this->replaces['{%model%}'] = $this->model;
-        $this->replaces['{%custom_model_namespace%}'] = ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
         $this->replaces['{%model_class%}'] = $this->replaces['{%model%}'];
         $this->replaces['{%model_string%}'] = trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $this->replaces['{%model%}']));
         $this->replaces['{%model_strings%}'] = str_plural($this->replaces['{%model_string%}']);
@@ -62,10 +80,17 @@ class SapMake extends Command
         $this->replaces['{%menu_name%}'] = $this->replaces['{%model_strings%}'];
         $this->replaces['{%menu_icon%}'] = $this->config['menu_icon'];
 
-        if (isset($this->config['table_name']) && '' != $this->config['table_name']) {
+        $this->replaces['{%permission_string%}'] = $this->replaces['{%model_string%}'];
+
+        if ($this->brand) {
+            $this->replaces['{%table_declared%}'] = "protected \$table = '{$this->replaces['{%table_name%}']}';";
+        }
+
+        if ((isset($this->config['table_name']) && '' != $this->config['table_name'])) {
             $this->replaces['{%table_name%}'] = $this->config['table_name'];
             $this->replaces['{%table_declared%}'] = "protected \$table = '{$this->config['table_name']}';";
         }
+
         if (isset($this->config['menu_name']) && '' != $this->config['menu_name']) {
             $this->replaces['{%menu_name%}'] = $this->config['menu_name'];
         }
@@ -312,32 +337,52 @@ EOT;
 
     protected function route()
     {
-        if (!$this->files->exists(app_path('../'.config('sap.sub_route_dir')))) {
-            $this->files->makeDirectory(app_path('../'.config('sap.sub_route_dir')), 0755, true);
+        if ($this->brand) {
+            if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/routers'))) {
+                $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/routers'), 0755, true);
+            }
+            $route_file = base_path('brand/'.strtolower($this->brand).'/routers/'.$this->replaces['{%model_variable%}'].'Routes.php');
+        } else {
+            if (!$this->files->exists(app_path('../'.config('sap.sub_route_dir')))) {
+                $this->files->makeDirectory(app_path('../'.config('sap.sub_route_dir')), 0755, true);
+            }
+            $route_file = config('sap.sub_route_dir').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         }
-        $route_file = config('sap.sub_route_dir').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         $route_stub = $this->stub_path.'/route.stub';
         if (!$this->files->exists($route_stub)) {
             $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
             return;
         }
         $route_stub = $this->files->get($route_stub);
+        if ($this->brand) {
+            $route_stub = str_replace("config('sap.custom_controller_namespace')", "'\\Brand\\".$this->brand."\\Controllers\\Admin'", $route_stub);
+        }
         $this->files->put($route_file, $this->replaceholder($route_stub));
         $this->line('Route file created: <info>'.$route_file.'</info>');
     }
 
     protected function api_route()
     {
-        if (!$this->files->exists(app_path('../'.config('sap.sub_api_route_dir')))) {
-            $this->files->makeDirectory(app_path('../'.config('sap.sub_api_route_dir')), 0755, true);
+        if ($this->brand) {
+            if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/routers/api'))) {
+                $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/routers/api'), 0755, true);
+            }
+            $route_file = base_path('brand/'.strtolower($this->brand).'/routers/api/'.$this->replaces['{%model_variable%}'].'Routes.php');
+        } else {
+            if (!$this->files->exists(app_path('../'.config('sap.sub_api_route_dir')))) {
+                $this->files->makeDirectory(app_path('../'.config('sap.sub_api_route_dir')), 0755, true);
+            }
+            $route_file = config('sap.sub_api_route_dir').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         }
-        $route_file = config('sap.sub_api_route_dir').'/'.$this->replaces['{%model_variable%}'].'Routes.php';
         $route_stub = $this->stub_path.'/api_route.stub';
         if (!$this->files->exists($route_stub)) {
             $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
             return;
         }
         $route_stub = $this->files->get($route_stub);
+        if ($this->brand) {
+            $route_stub = str_replace("config('sap.custom_api_controller_namespace')", "'\\Brand\\".$this->brand."\\Controllers\\Api'", $route_stub);
+        }
         $this->files->put($route_file, $this->replaceholder($route_stub));
         $this->line('API Route file created: <info>'.$route_file.'</info>');
     }
@@ -347,11 +392,15 @@ EOT;
         $menu_stub = $this->stub_path.'/menu.stub';
         if (!$this->files->exists($menu_stub)) {
             $this->error('Menu stub file not found: <info>'.$menu_stub.'</info>');
-
             return;
         }
         $menu_stub = $this->files->get($menu_stub);
-        $toWriteInFile = resource_path('views/vendor/sap/components/admin-menu.blade.php');
+        if ($this->brand) {
+            $toWriteInFile = base_path('brand/'.strtolower($this->brand).'/resources/views/layouts/menu.blade.php');
+        } else {
+            $toWriteInFile = resource_path('views/vendor/sap/components/admin-menu.blade.php');
+        }
+
         $toWriteInFileContent = $this->files->get($toWriteInFile);
         $replaceContent = $this->replaceholder($menu_stub);
         if (false === strpos($toWriteInFileContent, $replaceContent)) {
@@ -368,7 +417,12 @@ EOT;
             $this->error('Model stub file not found: <info>'.$model_stub.'</info>');
             return;
         }
-        $model_file = app_path(config('sap.custom_model_dir').'/'.$this->replaces['{%model%}'].'.php');
+        if ($this->brand) {
+            $model_file = base_path('brand/'.strtolower($this->brand).'/models/'.$this->replaces['{%model%}'].'.php');
+        } else {
+            $model_file = app_path(config('sap.custom_model_dir').'/'.$this->replaces['{%model%}'].'.php');
+        }
+
         $model_stub = $this->files->get($model_stub);
         $this->files->put($model_file, $this->replaceholder($model_stub));
         $this->line('Model file created: <info>'.$model_file.'</info>');
@@ -376,15 +430,26 @@ EOT;
 
     protected function controller()
     {
-        if (!$this->files->exists(app_path(config('sap.custom_controller_dir')))) {
-            $this->files->makeDirectory(app_path(config('sap.custom_controller_dir')), 0755, true);
+        if ($this->brand) {
+            if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/controllers/Admin'))) {
+                $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/controllers/Admin'), 0755, true);
+            }
+        } else {
+            if (!$this->files->exists(app_path(config('sap.custom_controller_dir')))) {
+                $this->files->makeDirectory(app_path(config('sap.custom_controller_dir')), 0755, true);
+            }
         }
         $controller_stub = $this->stub_path.'/controller.stub';
         if (!$this->files->exists($controller_stub)) {
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
             return;
         }
-        $controller_file = app_path(config('sap.custom_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
+        if ($this->brand) {
+            $controller_file = base_path('brand/'.strtolower($this->brand).'/controllers/Admin/'.$this->replaces['{%model%}'].'Controller.php');
+        } else {
+            $controller_file = app_path(config('sap.custom_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
+        }
+
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
@@ -392,15 +457,25 @@ EOT;
 
     protected function api_controller()
     {
-        if (!$this->files->exists(app_path(config('sap.custom_api_controller_dir')))) {
-            $this->files->makeDirectory(app_path(config('sap.custom_api_controller_dir')), 0755, true);
+        if ($this->brand) {
+            if (!$this->files->exists(base_path('brand/'.strtolower($this->brand).'/controllers/Api'))) {
+                $this->files->makeDirectory(base_path('brand/'.strtolower($this->brand).'/controllers/Api'), 0755, true);
+            }
+        } else {
+            if (!$this->files->exists(app_path(config('sap.custom_api_controller_dir')))) {
+                $this->files->makeDirectory(app_path(config('sap.custom_api_controller_dir')), 0755, true);
+            }
         }
         $controller_stub = $this->stub_path.'/api_controller.stub';
         if (!$this->files->exists($controller_stub)) {
             $this->error('Api Controller stub file not found: <info>'.$controller_stub.'</info>');
             return;
         }
-        $controller_file = app_path(config('sap.custom_api_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
+        if ($this->brand) {
+            $controller_file = base_path('brand/'.strtolower($this->brand).'/controllers/Api/'.$this->replaces['{%model%}'].'Controller.php');
+        } else {
+            $controller_file = app_path(config('sap.custom_api_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
+        }
         $controller_stub = $this->files->get($controller_stub);
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Api Controller file created: <info>'.$controller_file.'</info>');
@@ -409,24 +484,28 @@ EOT;
     protected function views()
     {
         $view_files = ['search', 'index', 'edit', 'create', 'show', 'actions'];
-        if($this->config['orderable'] !== false)
-        {
+        if ($this->config['orderable'] !== false) {
             $view_files[] = 'orderable';
         }
+
+        if ($this->brand) {
+            $view_path = base_path('brand/'.strtolower($this->brand).'/resources/views/admin/'.$this->replaces['{%model_variable%}']);
+        } else {
+            $view_path = resource_path('views/'.config('sap.custom_view_dir').'/'.$this->replaces['{%model_variable%}']);
+        }
+
+        if (!$this->files->exists($view_path)) {
+            $this->files->makeDirectory($view_path, 0755, true);
+        }
+
         foreach ($view_files as $mode) {
             $view_stub = $this->stub_path.'/views/'.$mode.'.stub';
             if (!$this->files->exists($view_stub)) {
                 $this->error('View stub file not found: <info>'.$view_stub.'</info>');
-
                 return;
             }
-            $view_path = resource_path('views/'.config('sap.custom_view_dir').'/'.$this->replaces['{%model_variable%}']);
 
-            if (!$this->files->exists($view_path)) {
-                $this->files->makeDirectory($view_path, 0755, true);
-            }
-
-            $view_file = resource_path('views/'.config('sap.custom_view_dir').'/'.$this->replaces['{%model_variable%}'].'/'.$mode.'.blade.php');
+            $view_file = $view_path.'/'.$mode.'.blade.php';
             $view_stub = $this->files->get($view_stub);
 
             $this->files->put($view_file, $this->replaceholder($view_stub));
@@ -443,7 +522,12 @@ EOT;
             return;
         }
         $filename = "sap{$this->model}Table.php";
-        $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
+        if ($this->brand) {
+            $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
+        } else {
+            $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
+        }
+
         foreach ($this->files->files(database_path('migrations/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();

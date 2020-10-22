@@ -26,5 +26,5 @@
             </div>
         </div>
     </div>
-    @include('admin.{%model_variable%}.search')
+    @include('{%page_path%}.{%model_variable%}.search')
 @endsection

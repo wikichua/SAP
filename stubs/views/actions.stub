@@ -1,10 +1,10 @@
 <div class="text-right text-nowrap">
     <a href="{{ route('{%model_variable%}.show', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-eye"></i></a>
     {%orderable_link%}
-    @can('Update {%model_strings%}')
+    @can('Update {%permission_string%}')
         <a href="{{ route('{%model_variable%}.edit', $model->id) }}" class="btn btn-link text-secondary p-1" title="Update"><i class="fas fa-lg fa-edit"></i></a>
     @endcan
-    @can('Delete {%model_strings%}')
+    @can('Delete {%permission_string%}')
     <form method="POST" action="{{ route('{%model_variable%}.destroy', $model->id) }}" class="d-inline-block" novalidate data-ajax-form data-confirm="You won't be able to revert this!">
         @csrf
         @method('DELETE')

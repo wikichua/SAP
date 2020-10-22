@@ -28,6 +28,12 @@ Run in your bash
 php artsan sap:config *ModuleName*
 ```
 
+Or for Brand
+
+```bash
+php artsan sap:config *ModuleName* --Brand=*BrandName*
+```
+
 [Config Sample](../stubs/config.stub)
 Add or remove any configuration that doesn't need and set *ready* to *true*
 
@@ -37,6 +43,12 @@ Run in your bash
 
 ```bash
 php artsan sap:make *ModuleName*
+```
+
+Or for Brand
+
+```bash
+php artsan sap:make *ModuleName* --Brand=*BrandName*
 ```
 
 Sample of result:

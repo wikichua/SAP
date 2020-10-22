@@ -16,13 +16,26 @@ class BrandServiceProvider extends ServiceProvider
         $brand_path = base_path('brand');
         if (Schema::hasTable('brands') && File::isDirectory($brand_path)) {
             if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
-                foreach (File::directories($brand_path) as $dir) {
+                $dirs = File::directories($brand_path);
+                foreach ($dirs as $dir) {
                     if (File::exists($dir.'/web.php')) {
-                        // \Route::middleware('web')->group($dir.'/web.php');
                         $this->loadRoutesFrom($dir.'/web.php');
                     }
                     if (File::isDirectory($dir.'/database')) {
                         $this->loadMigrationsFrom($dir.'/database');
+                    }
+                    // load admin routes in brand
+                    if (File::exists($dir.'/routers')) {
+                        $files = File::files($dir.'/routers/');
+                        foreach ($files as $file) {
+                            $this->loadRoutesFrom($file);
+                        }
+                        if (File::exists($dir.'/routers/api')) {
+                            $files = File::files($dir.'/routers/api/');
+                            foreach ($files as $file) {
+                                $this->loadRoutesFrom($file);
+                            }
+                        }
                     }
                 }
                 app(config('sap.models.brand'))->query()->whereStatus('A')->where('expired_at', '<', date('Y-m-d 23:59:59'))->update(['status' => 'E']);
