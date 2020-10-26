@@ -173,7 +173,8 @@ class Help
     {
         $configs =  Cache::remember('brand-configs', (60*60*24), function () {
             $configs = [];
-            foreach (File::directories(base_path('brand')) as $dir) {
+            $dirs = File::directories(base_path('brand'));
+            foreach ($dirs as $dir) {
                 $brand = basename($dir);
                 $config = require($dir.'/config/domains.php');
                 $configs[$config['main']] = $brand;

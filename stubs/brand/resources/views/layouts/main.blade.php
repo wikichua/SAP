@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{%brand_name%} Material Design Bootstrap</title>
-    <link href="{{ asset('{%brand_string%}/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('{%brand_string%}/css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset('{%brand_name%}/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('{%brand_name%}/css/all.css') }}" rel="stylesheet">
     <style type="text/css">
     @media (min-width: 800px) and (max-width: 850px) {
       .navbar:not(.top-nav-collapse) {
@@ -95,8 +95,8 @@
     <x-{%brand_string%}::login-modal />
     <x-{%brand_string%}::alert />
 
-    <script src="{{ asset('{%brand_string%}/js/app.js') }}"></script>
-    <script src="{{ asset('{%brand_string%}/js/all.js') }}"></script>
+    <script src="{{ asset('{%brand_name%}/js/app.js') }}"></script>
+    <script src="{{ asset('{%brand_name%}/js/all.js') }}"></script>
     <script type="text/javascript">
     new WOW().init();
     </script>

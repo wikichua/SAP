@@ -47,8 +47,9 @@ class BrandServiceProvider extends ServiceProvider
     protected function registerBrandServiceProviders($dir)
     {
         $brandName = basename($dir);
-        if (File::isDirectory($dir.'/providers')) {
-            foreach (File::files($dir.'/providers') as $file) {
+        if (File::isDirectory($dir.'/Providers')) {
+            $files = File::files($dir.'/Providers');
+            foreach ($files as $file) {
                 if (str_contains($file->getFilename(), 'ServiceProvider.php')) {
                     list($namespace, $class) = array_values(preg_grep('/class|namespace/', explode(PHP_EOL, File::get($file->getPathname()))));
                     $class = explode(' ', $class)[1];
@@ -66,8 +67,7 @@ class BrandServiceProvider extends ServiceProvider
             $brandName = \Help::getBrandName(request()->getHost());
             $brand = \Help::brand($brandName);
             if ($brand) {
-                $brandName = strtolower($brand->name);
-                $dir = base_path('brand/'.$brandName);
+                $dir = base_path('brand/'.$brand->name);
                 if (File::exists($dir.'/web.php')) {
                     $this->registerBrandServiceProviders($dir);
                     // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');

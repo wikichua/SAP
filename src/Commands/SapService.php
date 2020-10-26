@@ -24,7 +24,7 @@ class SapService extends Command
 
         if ($this->brand) {
             $this->brandName = \Str::studly($this->option('brand'));
-            $this->brand(strtolower($this->brand));
+            $this->brand($this->brandName);
         } else {
             $this->app();
         }

@@ -62,8 +62,8 @@ class ComponentController extends Controller
             "code" => "required",
         ]);
         if ($model->brand_id != 0) {
-            View::addNamespace(strtolower($model->brand_name), base_path('brand/'.strtolower($model->brand_name).'/resources/views'));
-            Blade::componentNamespace('\\Brand\\'.$model->brand_name.'\\Components', strtolower($model->brand_name));
+            View::addNamespace(strtolower($model->brand_name), base_path('brand/'.$model->brand->name.'/resources/views'));
+            Blade::componentNamespace('\\Brand\\'.$model->brand->name.'\\Components', strtolower($model->brand_name));
         }
         return viewRenderer($request->input('code'));
     }

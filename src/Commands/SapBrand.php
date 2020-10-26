@@ -25,8 +25,8 @@ class SapBrand extends Command
         $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
         $this->replaces['{%brand_capital%}'] = $brand_capital = strtoupper($this->brand);
-        $this->replaces['{%brand_string%}'] = $brand_string = strtolower($this->brand);
-        $this->brand_path = $brand_path = base_path('brand/'.$brand_string);
+        $this->replaces['{%brand_string%}'] = strtolower($this->brand);
+        $this->brand_path = $brand_path = base_path('brand/'.$this->brand);
         if (!$this->files->exists($brand_path)) {
             $this->files->makeDirectory($brand_path, 0755, true);
         } else {
@@ -64,8 +64,8 @@ class SapBrand extends Command
             return;
         }
         $str[] = '"psr-4": {';
-        $str[] = "\t\t\t".'"Brand\\\":"brand/",';
-        if (strpos(File::get($composerjson), '"Brand\\\":"brand/",') == false) {
+        $str[] = "\t\t\t".'"Brand\\\": "brand/",';
+        if (strpos(File::get($composerjson), '"Brand\\\": "brand/",') == false) {
             $content = \Str::replaceFirst($str[0], implode(PHP_EOL, $str), File::get($composerjson));
             File::replace($composerjson, $content);
         }
@@ -124,7 +124,7 @@ class SapBrand extends Command
         //     $this->files->makeDirectory($this->brand_path.'/components');
         //     $this->line('Component created: <info>'.$this->brand_path.'/components'.'</info>');
         // }
-        $this->justCopy('components');
+        $this->justCopy('Components');
     }
 
     protected function route()
@@ -142,9 +142,9 @@ class SapBrand extends Command
 
     protected function model()
     {
-        $dir = 'brand/'.strtolower($this->brand).'/models';
+        $dir = 'brand/'.$this->brand.'/Models';
         $this->files->ensureDirectoryExists(base_path($dir), 0755, true);
-        $this->justCopy('models');
+        $this->justCopy('Models');
     }
 
     protected function controller()
@@ -154,7 +154,7 @@ class SapBrand extends Command
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
             return;
         }
-        $controller_dir = 'brand/'.strtolower($this->brand).'/controllers';
+        $controller_dir = 'brand/'.$this->brand.'/Controllers';
 
         $this->files->ensureDirectoryExists(base_path($controller_dir), 0755, true);
 
@@ -163,7 +163,7 @@ class SapBrand extends Command
         $this->files->put($controller_file, $this->replaceholder($controller_stub));
         $this->line('Controller file created: <info>'.$controller_file.'</info>');
 
-        $this->justCopy('controllers');
+        $this->justCopy('Controllers');
     }
 
     protected function serviceprovider()
@@ -173,7 +173,7 @@ class SapBrand extends Command
             $this->error('Service Provider stub file not found: <info>'.$stub.'</info>');
             return;
         }
-        $dir = 'brand/'.strtolower($this->brand).'/providers';
+        $dir = 'brand/'.$this->brand.'/Providers';
         if (!$this->files->exists(base_path($dir))) {
             $this->files->makeDirectory(base_path($dir), 0755, true);
         }
@@ -190,7 +190,7 @@ class SapBrand extends Command
             $this->error('Middleware stub file not found: <info>'.$stub.'</info>');
             return;
         }
-        $dir = 'brand/'.strtolower($this->brand).'/middlewares';
+        $dir = 'brand/'.$this->brand.'/Middlewares';
         if (!$this->files->exists(base_path($dir))) {
             $this->files->makeDirectory(base_path($dir), 0755, true);
         }
@@ -199,7 +199,7 @@ class SapBrand extends Command
         $this->files->put($file, $this->replaceholder($stub));
         $this->line('Middleware file created: <info>'.$file.'</info>');
 
-        $this->justCopy('middlewares');
+        $this->justCopy('Middlewares');
     }
 
     protected function justCopy($path)
@@ -244,9 +244,9 @@ class SapBrand extends Command
             return;
         }
         $filename = "sap{$this->brand}BrandSeed.php";
-        $this->files->ensureDirectoryExists(base_path('brand/'.strtolower($this->brand).'/database'), 0755, true);
-        $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
-        foreach ($this->files->files(base_path('brand/'.strtolower($this->brand).'/database/')) as $file) {
+        $this->files->ensureDirectoryExists(base_path('brand/'.$this->brand.'/database'), 0755, true);
+        $migration_file = base_path('brand/'.$this->brand.'/database/'.date('Y_m_d_000000_').$filename);
+        foreach ($this->files->files(base_path('brand/'.$this->brand.'/database/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();
                 $msg = 'Migration file overwritten';

@@ -45,8 +45,8 @@ class SapComponent extends Command
 
             $component_class_path = app_path('View/Components');
             $component_resource_path = resource_path('views/components');
-            $brand_component_class_path = base_path('brand/'.strtolower($this->brand).'/components');
-            $brand_component_view_path = base_path('brand/'.strtolower($this->brand).'/resources/views/components');
+            $brand_component_class_path = base_path('brand/'.$this->brand.'/Components');
+            $brand_component_view_path = base_path('brand/'.$this->brand.'/resources/views/components');
             $this->files->ensureDirectoryExists($brand_component_class_path, 0755, true);
             $componentClass = $brand_component_class_path."/{$comp_name}.php";
             $componentView = $brand_component_view_path."/".(strtolower(Str::slug(Str::snake($comp_name)))).".blade.php";
@@ -77,8 +77,8 @@ class SapComponent extends Command
         $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
 
         if ($this->brand) {
-            $database_dir = base_path('brand/'.strtolower($this->brand).'/database');
-            $migration_file = base_path('brand/'.strtolower($this->brand).'/database/'.date('Y_m_d_000000_').$filename);
+            $database_dir = base_path('brand/'.$this->brand.'/database');
+            $migration_file = base_path('brand/'.$this->brand.'/database/'.date('Y_m_d_000000_').$filename);
         }
         foreach ($this->files->files($database_dir) as $file) {
             if (str_contains($file->getPathname(), $filename)) {

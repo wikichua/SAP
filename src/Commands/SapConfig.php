@@ -23,7 +23,7 @@ class SapConfig extends Command
                 $this->error('Brand not found: <info>'.$this->brand.'</info>');
                 return '';
             }
-            $config_path = base_path('brand/'.strtolower($this->brand).'/config/sap');
+            $config_path = base_path('brand/'.$this->brand.'/config/sap');
             $model = $this->brand.$this->argument('model');
         } else {
             $config_path = 'config/sap';
