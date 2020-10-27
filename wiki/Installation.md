@@ -23,10 +23,6 @@ Add this into your composer.json
         "unisharp/laravel-filemanager": {
             "type": "git",
             "url": "https://github.com/wikichua/laravel-filemanager.git"
-        },
-        "lionix/seo-manager": {
-            "type": "git",
-            "url": "https://github.com/wikichua/seo-manager.git"
         }
     }
 ```
@@ -53,7 +49,6 @@ Run in your bash
 ```bash
 composer require wikichua/sap:dev-master
 composer require unisharp/laravel-filemanager:dev-master
-composer require lionix/seo-manager:dev-master
 php artisan storage:link
 php artisan vendor:publish --tag=sap.install --force
 ```

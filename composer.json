@@ -70,10 +70,6 @@
         "unisharp/laravel-filemanager": {
             "type": "git",
             "url": "https://github.com/wikichua/laravel-filemanager.git"
-        },
-        "lionix/seo-manager": {
-            "type": "git",
-            "url": "https://github.com/wikichua/seo-manager.git"
         }
     }
 }

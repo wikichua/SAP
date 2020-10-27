@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9dbb8b46a63f0f54326da3250f3ab9e",
+    "content-hash": "1053fe5e303b46eb71958a0eb8c54810",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1842,12 +1842,18 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/wikichua/seo-manager.git",
-                "reference": "7c2e7673ec72e7ea9a637bc9de78d4b982e3d447"
+                "url": "https://github.com/lionix-team/seo-manager.git",
+                "reference": "d5b973f5fa71670b67aa2a337b2feff96aa86674"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lionix-team/seo-manager/zipball/d5b973f5fa71670b67aa2a337b2feff96aa86674",
+                "reference": "d5b973f5fa71670b67aa2a337b2feff96aa86674",
+                "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5|~6|~7|~8",
-                "php": "^7.3"
+                "illuminate/support": "5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.* || 7.* || 8.*",
+                "php": "^7.0"
             },
             "type": "library",
             "extra": {
@@ -1868,6 +1874,7 @@
                     "src/helpers/helpers.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1892,7 +1899,7 @@
                 "seo",
                 "seo-manager"
             ],
-            "time": "2020-09-16T09:06:17+00:00"
+            "time": "2020-10-22T05:30:00+00:00"
         },
         {
             "name": "matchish/laravel-scout-elasticsearch",
