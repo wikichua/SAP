@@ -11,7 +11,7 @@ trait ModelScopes
         if (array_search('brand_id', $this->getFillable())) {
             $brand_id = auth()->user()->brand_id;
             if ($brand_id) {
-                return $query->where('brand_id',$brand_id);
+                return $query->where('brand_id', $brand_id);
             }
         }
         return $query;
@@ -19,6 +19,9 @@ trait ModelScopes
 
     public function scopeFilter($query, $filters)
     {
+        if (json_decode($filters)) {
+            $filters = json_decode($filters, 1)['filter'];
+        }
         parse_str($filters, $searches);
         if (count($searches)) {
             foreach ($searches as $field => $search) {
