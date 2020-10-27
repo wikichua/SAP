@@ -109,10 +109,10 @@ class SapBrand extends Command
         if (!$this->files->exists($this->brand_path.'/public')) {
             $this->files->makeDirectory($this->brand_path.'/public');
         }
-        if (!$this->files->exists(public_path($this->replaces['{%brand_string%}']))) {
+        if (!$this->files->exists(public_path($this->replaces['{%brand_name%}']))) {
             if ($this->files->exists($this->brand_path.'/public')) {
-                shell_exec('ln -s '.$this->brand_path.'/public' .' '.public_path($this->replaces['{%brand_string%}']));
-                $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_string%}']).'</info>');
+                shell_exec('ln -s '.$this->brand_path.'/public' .' '.public_path($this->replaces['{%brand_name%}']));
+                $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_name%}']).'</info>');
             }
         }
         $this->line('Assets copied: <info>'.$asset_dir.'</info>');
