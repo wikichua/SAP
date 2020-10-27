@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1053fe5e303b46eb71958a0eb8c54810",
+    "content-hash": "6354bd13d24ea41fd41e232513a2324d",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -3339,16 +3339,16 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v3.1.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "94415e288bf38e482cc645030800c0a8591c9624"
+                "reference": "244f349ae468e527a00c1e8b333e0ed75d070b93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/94415e288bf38e482cc645030800c0a8591c9624",
-                "reference": "94415e288bf38e482cc645030800c0a8591c9624",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/244f349ae468e527a00c1e8b333e0ed75d070b93",
+                "reference": "244f349ae468e527a00c1e8b333e0ed75d070b93",
                 "shasum": ""
             },
             "require": {
@@ -3419,7 +3419,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-09T15:24:03+00:00"
+            "time": "2020-09-16T15:05:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5901,18 +5901,24 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/wikichua/laravel-filemanager.git",
-                "reference": "8645ce2cc0e37282c7429e211fad3b9076155715"
+                "url": "https://github.com/UniSharp/laravel-filemanager.git",
+                "reference": "582b6ee5db851a1ddeff8085dcb56e17218dbf10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/582b6ee5db851a1ddeff8085dcb56e17218dbf10",
+                "reference": "582b6ee5db851a1ddeff8085dcb56e17218dbf10",
+                "shasum": ""
             },
             "require": {
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
-                "illuminate/config": "~5|~6|~7|~8",
-                "illuminate/container": "~5|~6|~7|~8",
-                "illuminate/filesystem": "~5|~6|~7|~8",
-                "illuminate/http": "~5|~6|~7|~8",
-                "illuminate/support": "~5|~6|~7|~8",
-                "intervention/image": "^2.5",
+                "illuminate/config": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/container": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/filesystem": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/http": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "intervention/image": "2.*",
                 "php": ">=7.2.0"
             },
             "require-dev": {
@@ -5938,11 +5944,7 @@
                     "UniSharp\\LaravelFilemanager\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5958,7 +5960,7 @@
             ],
             "description": "A file upload/editor intended for use with Laravel 5 to 6 and CKEditor / TinyMCE",
             "keywords": [
-                "ckeditor",
+                "CKEditor",
                 "file",
                 "filemanager",
                 "image",
@@ -5967,7 +5969,7 @@
                 "tinymce",
                 "upload"
             ],
-            "time": "2020-09-16T09:51:25+00:00"
+            "time": "2020-09-13T14:59:41+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -6121,7 +6123,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "unisharp/laravel-filemanager": 20,
-        "lionix/seo-manager": 20
+        "lionix/seo-manager": 20,
+        "realrashid/sweet-alert": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

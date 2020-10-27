@@ -18,9 +18,7 @@
     ],
     "suggest": {
         "laravel/ui": "^2.4|^3.0",
-        "laravel/horizon": "Yes! We do need this package :-)",
-        "unisharp/laravel-filemanager": "https://github.com/wikichua/laravel-filemanager.git",
-        "lionix/seo-manager": "https://github.com/wikichua/seo-manager.git"
+        "laravel/horizon": "Yes! We do need this package :-)"
     },
     "require": {
         "laravel/helpers": "^1.3",
@@ -41,7 +39,7 @@
         "unisharp/laravel-filemanager": "dev-master",
         "lionix/seo-manager": "dev-master",
         "intervention/imagecache": "^2.5",
-        "realrashid/sweet-alert": "^3.1"
+        "realrashid/sweet-alert": "dev-master"
     },
     "autoload": {
         "psr-4": {
