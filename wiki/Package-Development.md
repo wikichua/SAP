@@ -23,6 +23,5 @@ Run in your bash
 
 ```bash
 composer require wikichua/sap:dev-master
-composer require unisharp/laravel-filemanager:dev-master
 php artisan storage:link
 ```

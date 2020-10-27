@@ -65,11 +65,5 @@
                 "SAP": "Wikichua\\SAP\\Facades\\SAP"
             }
         }
-    },
-    "repositories": {
-        "unisharp/laravel-filemanager": {
-            "type": "git",
-            "url": "https://github.com/wikichua/laravel-filemanager.git"
-        }
     }
 }
