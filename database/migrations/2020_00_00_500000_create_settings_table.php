@@ -13,7 +13,7 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key')->index();
-            $table->text('value')->nullable();
+            $table->longText('value')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable()->default(1);
             $table->integer('updated_by')->nullable()->default(1);
