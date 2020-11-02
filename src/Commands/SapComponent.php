@@ -41,7 +41,7 @@ class SapComponent extends Command
         if ($this->brand) {
             $brand =  Str::studly($this->brand);
             $namespaceStr = "namespace Brand\\$brand\\Components;";
-            $renderStr = "view('".strtolower($this->brand)."::components.".strtolower($comp_name)."')";
+            $renderStr = "return view('".strtolower($this->brand)."::components.";
 
             $component_class_path = app_path('View/Components');
             $component_resource_path = resource_path('views/components');
@@ -55,7 +55,7 @@ class SapComponent extends Command
 
             $content = $this->files->get($componentClass);
             $content = preg_replace('/^namespace\s.+;$/m', $namespaceStr, $content);
-            $content = str_replace('view(\'components.'.strtolower($comp_name).'\')', $renderStr, $content);
+            $content = str_replace("return view('components.", $renderStr, $content);
             $this->files->put($componentClass, $content);
         }
 

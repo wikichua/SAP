@@ -161,7 +161,7 @@ class Help
         return array_combine(timezone_identifiers_list(), timezone_identifiers_list());
     }
 
-    public function slug_route($name, string $slug, array $parameters = [], $locale = '', $absolute = true)
+    public function slug_route($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
     {
         if ($locale == '') {
             $locale = app()->getLocale() != ''? app()->getLocale():config('app.locale');
