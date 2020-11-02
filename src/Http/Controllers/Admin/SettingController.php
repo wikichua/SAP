@@ -27,7 +27,7 @@ class SettingController extends Controller
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.setting.actions', compact('model'))->render();
-                $model->value       = is_array($model->value) ? implode('<br>', $model->value) : $model->value;
+                $model->valueString = is_array($model->value) ? implode('<br>', $model->value) : $model->value;
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -42,7 +42,7 @@ class SettingController extends Controller
         $getUrl = route('setting.list');
         $html   = [
             ['title' => 'Key', 'data' => 'key', 'sortable' => true],
-            ['title' => 'Value', 'data' => 'value', 'sortable' => true],
+            ['title' => 'Value', 'data' => 'valueString', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.setting.index', compact('html', 'getUrl'));
@@ -61,6 +61,10 @@ class SettingController extends Controller
 
         if ($request->get('multipleTypes', false) == true) {
             $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
+        }
+
+        if ($request->has('protected') == false) {
+            $request->merge(['protected' => 0]);
         }
 
         $model = app(config('sap.models.setting'))->create($request->all());
@@ -92,13 +96,18 @@ class SettingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
         $request->validate([
             'key' => 'required',
         ]);
 
+        $model = app(config('sap.models.setting'))->query()->findOrFail($id);
+
         if ($request->get('multipleTypes', false) == true) {
             $request->merge(['value' => array_combine($request->get('indexes', []), $request->get('values', []))]);
+        }
+
+        if ($request->has('protected') == false) {
+            $request->merge(['protected' => 0]);
         }
 
         $model->update($request->all());

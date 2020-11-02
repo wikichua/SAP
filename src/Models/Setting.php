@@ -10,14 +10,23 @@ class Setting extends Model
 
     protected $appends = ['isMultiple', 'rows','readUrl'];
     public $searchableFields = ['key'];
+    protected $fillable = [
+        'key',
+        'value',
+        'protected',
+        'created_by',
+        'updated_by',
+    ];
 
     public function scopeFilteKey($query, $search)
     {
         return $query->where('key', 'like', "%{$search}%");
     }
-
     public function getValueAttribute($value)
     {
+        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+            $value = decrypt(trim($value));
+        }
         if (json_decode($value)) {
             return json_decode($value, 1);
         }
@@ -30,23 +39,34 @@ class Setting extends Model
         } else {
             $this->attributes['value'] = $value;
         }
+        if (request()->has('protected') && request()->get('protected') == 1) {
+            $this->attributes['value'] = encrypt($this->attributes['value']);
+        }
     }
     public function getIsMultipleAttribute()
     {
-        if (json_decode($this->attributes['value'])) {
+        $value = $this->attributes['value'];
+        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+            $value = decrypt($value);
+        }
+        if (json_decode($value)) {
             return true;
         }
         return false;
     }
     public function getRowsAttribute()
     {
-        if (json_decode($this->attributes['value'])) {
-            $array = json_decode($this->attributes['value'], true);
+        $value = $this->attributes['value'];
+        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+            $value = decrypt($value);
+        }
+        if (json_decode($value)) {
+            $array = json_decode($value, true);
             $rows = [];
-            foreach ($array as $key => $value) {
+            foreach ($array as $key => $val) {
                 $rows[] = [
                     'index' => $key,
-                    'value' => $value,
+                    'value' => $val,
                 ];
             }
             return $rows;
@@ -55,22 +75,24 @@ class Setting extends Model
             'index' => null,
             'value' => null,
         ];
-        ;
     }
     public function getAllSettings()
     {
         $sets = [];
-        $settings = app(config('sap.models.setting'))->query()->pluck('value', 'key');
-        foreach ($settings as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $k => $v) {
-                    $sets[$key][] = [
+        $settings = app(config('sap.models.setting'))->all();
+        foreach ($settings as $setting) {
+            if ($setting->protected == 1) {
+                $setting->value = decrypt($setting->value);
+            }
+            if (is_array($setting->value)) {
+                foreach ($setting->value as $k => $v) {
+                    $sets[$setting->key][] = [
                         'value' => $k,
                         'text' => $v,
                     ];
                 }
             } else {
-                $sets[$key] = $value;
+                $sets[$setting->key] = $setting->value;
             }
         }
         return $sets;

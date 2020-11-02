@@ -15,7 +15,7 @@
                 value="{{ $value }}"
                 {{ isset($checked) && ($value == $checked)? 'checked':'' }}
             >
-            <label for="{{ $id }}" class="custom-control-label">{{ $subLabel }}</label>
+            <label for="{{ $id }}" class="custom-control-label">{{ $subLabel ?? '' }}</label>
         </div>
     </div>
     <div>

@@ -28,8 +28,8 @@ class AdminMenu extends Component
             $config = [];
             if (File::exists($dir.'/config/main.php')) {
                 $config = require($dir.'/config/main.php');
-                if (File::exists($config['template_path'].'/menu.blade.php')) {
-                    View::addNamespace(basename($dir), $config['template_path']);
+                if (File::exists($config['admin_path'].'/menu.blade.php')) {
+                    View::addNamespace(basename($dir), $config['admin_path']);
                     $this->brandMenus[] = basename($dir).'::menu';
                 }
             }
