@@ -14,6 +14,14 @@
 - [radio](#radio)
 - [datalist](#datalist)
 
+### Brand Components
+
+- [alert](#alert)
+- [carousel](#carousel)
+- [login modal](#login-modal)
+- [navbar top](#navbar-top)
+- [navbar top login](#navbar-top-login)
+
 #### Input Text
 
 ```php
@@ -143,4 +151,34 @@
 
 ```php
 <x-sap::datalist-field name="datalist" id="datalist" label="Datalist" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.user'))->query()->pluck('name','id')->toArray()" :selected="$model->datalist ?? []"/>
+```
+
+#### alert
+
+```php
+<x-*brandname*::alert />
+```
+
+#### carousel
+
+```php
+<x-*brandname*::carousel slug="sample-carousel" :tags="['new','hot']" />
+```
+
+#### login modal
+
+```php
+<x-*brandname*::login-modal />
+```
+
+#### navbar top
+
+```php
+<x-*brandname*::navbar-top groupSlug="sample-navbar" />
+```
+
+#### navbar top login
+
+```php
+<x-*brandname*::navbar-top-login />
 ```
