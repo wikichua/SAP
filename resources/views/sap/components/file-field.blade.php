@@ -10,7 +10,7 @@
         $values = [];
 @endphp
 <div class="form-group">
-    <label for="{{ $id }}">{{ $label }}</label>
+    <label for="{{ $id }}">{!! $label !!}</label>
         <div class="input-group mb-1">
         <div class="custom-file">
             <input type="file"

@@ -5,7 +5,7 @@
 	$data = isset($data) && is_array($data)? $data:[];
 @endphp
 <div class="form-group">
-	<label for="{{ $id }}">{{ $label }}</label>
+	<label for="{{ $id }}">{!! $label !!}</label>
 	<textarea class="form-control {{ implode(' ',$class) }}"
 		id="{{ $id }}"
 		name="{{ $name }}"

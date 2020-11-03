@@ -6,7 +6,7 @@ return [
     'table_name' => '', // leave empty to use model's naming convention
     'menu_icon' => 'fas fa-link',
     'menu_name' => '', // leave empty to use model name
-    'orderable' => false, // in case your module need to reorder the display seq. set false to disabled, set order category fieldname to enabled field name must declared in the form section
+    'orderable' => false, // in case your module need to reorder the display seq. set false to disabled, set "order group" fieldname to enabled. Field name must declared in the form section
     'form' => [
         'name' => [
             'label' => 'Full Name',
@@ -329,7 +329,6 @@ return [
             'user_timezone' => false,
         ],
 
-        // important notes. grabbing from model is still not available. added TODO list
         'author_id' => [
             'label' => 'Author',
             'type' => 'select', // empty to exclude form
@@ -356,10 +355,9 @@ return [
             'user_timezone' => false,
         ],
 
-        // important notes. grabbing from model is still not available. added TODO list
         'another_user_id' => [
             'label' => 'Another Users',
-            'type' => 'select',
+            'type' => 'datalist',
             'class' => [],
             'attributes' => [
                 'multiple' => 'multiple',

@@ -8,6 +8,7 @@
 - [Installation](Installation.md)
 - [Module Development](Module-Development.md)
 - [Brand Development](Brand-Development.md)
+- [Available Components](Available-Components.md)
 - [Available Helper](Available-Helper.md)
 - [Refer](#Refer)
 
@@ -45,7 +46,7 @@ Laravel oriented package. This package is mainly for
     - Datatable listing (using common table component in bootstrap)
         - Able to delete row record (Authorization Gate included)
     - Create and Edit form
-        - Text, File, Textarea, Date or Time Picker, Select, Checkbox, Radio, Editor and etc...
+        - Text, File, Textarea, Date or Time Picker, Select, Checkbox, Radio, Editor, Datalist and etc...
 1. Swal and Toast integrated
 1. Select, Radio or Checkbox options will be added to settings table during migration
 1. Select, Radio or Checkbox model options will be generated codes in controller and both create and edit component.

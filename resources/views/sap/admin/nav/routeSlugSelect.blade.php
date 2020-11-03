@@ -1,7 +1,6 @@
-<x-sap::select-field name="route_slug" id="route_slug" label="Route Slug" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[]" :selected="[]"/>
+<x-sap::datalist-field name="route_slug" id="route_slug" label="Route Slug / Name (<small class='text-danger'>For external link. Please fill up the full URL.</small>)" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[]" :selected="[]"/>
 @push('scripts')
 <script id="route_slug-template" type="text/x-lodash-template">
-<option value=""></option>
 <% _.forEach(data, function(value, key) { %>
 <option value="<%- key %>"><%- value %></option>
 <% }); %>
@@ -14,10 +13,10 @@ $(function () {
             var template = $('#route_slug-template').html();
             var templateFn = _.template(template);
             var templateHTML = templateFn(response);
-            $('#route_slug').html(templateHTML);
-            $('#route_slug').selectpicker('refresh');
+            $('#route_slug-datalist').html(templateHTML);
+            // $('#route_slug').selectpicker('refresh');
             @if (isset($model->route_slug) && $model->route_slug != '')
-            $('#route_slug').selectpicker('val', '{{ $model->route_slug }}');
+            // $('#route_slug').selectpicker('val', '{{ $model->route_slug }}');
             @endif
         }).catch((error) => {
           console.error(error);

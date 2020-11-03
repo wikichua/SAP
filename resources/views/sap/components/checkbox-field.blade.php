@@ -4,7 +4,7 @@
 	}
 @endphp
 <div class="form-group">
-    <label id="{{ $id }}-label">{{ $label }}</label>
+    <label id="{{ $id }}-label">{!! $label !!}</label>
     <div class="form-control h-auto {{ implode(' ',$class) }}" {{ isset($data) && is_array($data)? implode(' data-',$data):'' }} name="{{ $name }}">
         <div class="custom-control custom-checkbox">
             <input

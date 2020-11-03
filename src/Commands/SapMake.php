@@ -212,6 +212,9 @@ class SapMake extends Command
                 case 'select':
                     $form_stub = '<x-sap::select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
                     break;
+                case 'datalist':
+                    $form_stub = '<x-sap::datalist-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
+                    break;
                 case 'radio':
                     $form_stub = '<x-sap::radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
                     break;
@@ -270,6 +273,7 @@ EOT;
                         $searches[] = $this->indent().'<x-sap::search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         break;
                     case 'select':
+                    case 'datalist':
                     case 'radio':
                     case 'checkbox':
                         $scopes[] = $this->indent().'    return $query->whereIn(\''.$field.'\', $search);';

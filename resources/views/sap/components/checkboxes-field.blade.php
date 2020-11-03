@@ -12,7 +12,7 @@
     }
 @endphp
 <div class="form-group">
-    <label for="{{ $id }}">{{ $label }}</label>
+    <label for="{{ $id }}">{!! $label !!}</label>
     <div class="form-control h-auto {{ implode(' ',$class) }}" {{ isset($data) && is_array($data)? implode(' data-',$data):'' }} name="{{ $name }}">
         @if ($isGroup)
             @foreach ($groupOptions as $group => $options)
