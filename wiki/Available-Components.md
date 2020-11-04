@@ -22,7 +22,7 @@
 - [navbar top](#navbar-top)
 - [navbar top login](#navbar-top-login)
 
-#### Input Text
+#### Config
 
 ```php
 'name' => [
