@@ -8,8 +8,28 @@ return [
     'menu_name' => '', // leave empty to use model name
     'orderable' => false, // in case your module need to reorder the display seq. set false to disabled, set "order group" fieldname to enabled. Field name must declared in the form section
     'form' => [
-        'name' => [
-            'label' => 'Full Name',
+
+        'markdown' => [
+            'label' => 'Markdown',
+            'type' => 'markdown',
+            'class' => [],
+            'attributes' => [],
+            'list' => false,
+            'search' => false,
+            'migration' => 'longText:{%field%}|nullable',
+            'validation' => [
+                'create' => 'required|min:4',
+                'update' => 'required|min:4',
+            ],
+            'options' => [],
+            'casts' => '',
+            'mutators' => [],
+            'relationship' => '',
+            'user_timezone' => false,
+        ],
+
+        'text' => [
+            'label' => 'Text',
             'type' => 'text',
             'class' => [],
             'attributes' => [],
@@ -186,9 +206,9 @@ return [
             'user_timezone' => false,
         ],
 
-        'cover_letter' => [
-            'label' => 'Cover Letter',
-            'type' => 'editor', // https://www.vue2editor.com/
+        'editor' => [
+            'label' => 'Editor',
+            'type' => 'editor',
             'class' => [],
             'attributes' => [],
             'list' => false,
@@ -205,8 +225,8 @@ return [
             'user_timezone' => false,
         ],
 
-        'summary' => [
-            'label' => 'Summary',
+        'textarea' => [
+            'label' => 'Textarea',
             'type' => 'textarea',
             'class' => [],
             'attributes' => [],
@@ -224,8 +244,8 @@ return [
             'user_timezone' => false,
         ],
 
-        'gender' => [
-            'label' => 'Gender',
+        'select' => [
+            'label' => 'Select',
             'type' => 'select',
             'class' => [],
             'attributes' => [],
@@ -237,8 +257,8 @@ return [
                 'update' => 'required',
             ],
             'options' => [ // will be added in settings model
-                'male' => 'Male',
-                'female' => 'Female',
+                'option_1' => 'Option 1',
+                'option_2' => 'Option 2',
             ],
             'casts' => '',
             'mutators' => [
@@ -385,6 +405,6 @@ return [
     ],
 
     'appends' => [
-        'status_name' => 'return settings(\'{%model_variable%}_status\')[$this->attributes[\'status\']];',
+        'status_name' => 'return settings(\'{%model_variable%}_status\')[$this->attributes[\'status\']] ?? $this->attributes[\'status\'];',
     ],
 ];

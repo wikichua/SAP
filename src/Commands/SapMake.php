@@ -167,23 +167,20 @@ class SapMake extends Command
 
             $replace_for_form['{%label%}'] = $options['label'];
             $replace_for_form['{%field%}'] = $field;
-            $replace_for_form['{%type%}'] = '';
-            // if ('json' == $options['type']) {
-            //     $replace_for_form['{%type%}'] = $type;
-            // }
             $replace_for_form['{%model_variable%}'] = $model_variable = $this->replaces['{%model_variable%}'];
             $replace_for_form['{%attributes_tag%}'] = '';
+            $isMultiple = false;
             if (count($options['attributes'])) {
                 $temp_attrs = [];
                 foreach ($options['attributes'] as $attr_key => $attr_val) {
                     $temp_attrs[] = "'{$attr_key}'=>'{$attr_val}'";
+                    if ($attr_key == 'multiple') {
+                        $isMultiple = true;
+                    }
                 }
                 $replace_for_form['{%attributes_tag%}'] = implode(', ', $temp_attrs);
             }
             $replace_for_form['{%class_tag%}'] = "'".implode("',\n'", $options['class'])."'";
-
-            $read_stub = '<x-sap::display-field type="text" name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="{%type%}"/>';
-            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
 
             $form_stub = '';
             switch ($options['type']) {
@@ -193,42 +190,60 @@ class SapMake extends Command
                 case 'text':
                 case 'url':
                     $form_stub = '<x-sap::input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
                     break;
                 case 'time':
                     $form_stub = '<x-sap::time-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
                     break;
                 case 'date':
                     $form_stub = '<x-sap::date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="date"/>';
                     break;
                 case 'image':
                     $form_stub = '<x-sap::image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="image"/>';
                     break;
                 case 'file':
                     $form_stub = '<x-sap::file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="file"/>';
                     break;
                 case 'textarea':
                     $form_stub = '<x-sap::textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
                     break;
                 case 'select':
                     $form_stub = '<x-sap::select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
+                    $type = $isMultiple? 'list':'text';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="'.$type.'"/>';
                     break;
                 case 'datalist':
                     $form_stub = '<x-sap::datalist-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
                     break;
                 case 'radio':
                     $form_stub = '<x-sap::radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
                     break;
                 case 'checkbox':
-                    $form_stub = '<x-sap::checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
+                    $form_stub = '<x-sap::checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :class="[{%class_tag%}]" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
+                    $type = $isMultiple? 'list':'text';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="'.$type.'"/>';
                     break;
                 case 'editor':
                     $form_stub = '<x-sap::editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="editor"/>';
+                    break;
+                case 'markdown':
+                    $form_stub = '<x-sap::markdown-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="markdown"/>';
                     break;
                 default:
                     $this->error('Input Type not supported: <info>'.$field.':'.$options['type'].'</info>');
                     break;
             }
             $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
+            $read_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $read_stub);
 
             if (in_array($options['type'], ['file', 'image'])) {
                 if (isset($options['attributes']['multiple']) && 'multiple' == $options['attributes']['multiple']) {

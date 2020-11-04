@@ -87,6 +87,8 @@ Laravel oriented package. This package is mainly for
 1. ~MongoDB package - activity logs should be in mongodb (https://github.com/jenssegers/laravel-mongodb)~ Maybe NO
 1. Brand Specific Module (in case of the module on specific for the brand)
 1. Setting Module, some of the data need to be encrypted to prevent direct read from database table
+1. Markdown editor (https://simplemde.com/)
+1. Markdown parser (https://github.com/ARCANEDEV/LaravelMarkdown)
 
 ## Todo List
 
@@ -122,3 +124,5 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/rap2hpoutre/fast-excel
 1. https://realrashid.github.io/sweet-alert
 1. https://github.com/jenssegers/laravel-mongodb
+1. https://github.com/sparksuite/simplemde-markdown-editor
+1. https://github.com/ARCANEDEV/LaravelMarkdown

@@ -8,11 +8,13 @@
 - [time](#time)
 - [number](#number)
 - [editor](#editor)
+- [markdown](#markdown)
 - [textarea](#textarea)
 - [select](#select)
 - [checkbox](#checkbox)
 - [radio](#radio)
 - [datalist](#datalist)
+- [display](#display)
 
 ### Brand Components
 
@@ -54,7 +56,7 @@
 
 1. *name*. (field name) is an index of the field name which will be saved as table field name
 1. *label*. used in label tag
-1. *type*. text, file, image, date, time, number, editor, textarea, select, checkbox, radio, datalist
+1. *type*. text, file, image, date, time, number, editor, markdown, textarea, select, checkbox, radio, datalist
 1. *class*. class for DOM attribute. There are already prefilled class which are important
 1. *attributes*. others attributes for the DOM excluded class. Set multiple if needed, & files, images, select, checkbox will automatically takes as array
 1. *list*. to display the field in index or listing page
@@ -115,6 +117,12 @@
 <x-sap::editor-field name="editor" id="editor" label="Editor" :class="['']" :attribute_tags="[]" :value="$model->editor ?? ''"/>
 ```
 
+#### markdown
+
+```php
+<x-sap::markdown-field name="markdown" id="markdown" label="Markdown" :class="['']" :attribute_tags="[]" :value="$model->markdown ?? ''"/>
+```
+
 #### textarea
 
 ```php
@@ -151,6 +159,19 @@
 
 ```php
 <x-sap::datalist-field name="datalist" id="datalist" label="Datalist" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.user'))->query()->pluck('name','id')->toArray()" :selected="$model->datalist ?? []"/>
+```
+
+#### display
+
+```php
+<x-sap::display-field name="markdown" id="markdown" label="Markdown" value="{!! $model->markdown !!}" type="markdown"/>
+<x-sap::display-field name="text" id="text" label="Text" :value="$model->text" type="text"/>
+<x-sap::display-field name="file" id="file" label="File" :value="$model->file" type="file"/>
+<x-sap::display-field name="image" id="image" label="Image" :value="$model->image" type="image"/>
+<x-sap::display-field name="date" id="date" label="Date" :value="$model->date" type="date"/>
+<x-sap::display-field name="editor" id="editor" label="Editor" value="{!! $model->editor !!}" type="editor"/>
+<x-sap::display-field name="list" id="list" label="List" :value="$model->list" type="list"/>
+<x-sap::display-field name="json" id="json" label="JSON" :value="$model->json" type="json"/>
 ```
 
 #### alert
