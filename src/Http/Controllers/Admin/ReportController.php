@@ -29,8 +29,8 @@ class ReportController extends Controller
                 ->sorting($request->get('sort', ''), $request->get('direction', ''));
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
-                $model->actionsView = view('sap::admin.report.actions', compact('model'))->render();
                 $model->cache_status = Cache::get('report-'.str_slug($model->name)) == null? 'Processing':'Ready';
+                $model->actionsView = view('sap::admin.report.actions', compact('model'))->render();
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -106,11 +106,14 @@ class ReportController extends Controller
     {
         $models = [];
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
-        foreach ($model->queries as $sql) {
-            $models[] = array_map(function ($value) {
-                return (array)$value;
-            }, \DB::select($sql));
-        }
+        $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
+            foreach ($model->queries as $sql) {
+                $models[] = array_map(function ($value) {
+                    return (array)$value;
+                }, \DB::select($sql));
+            }
+            return $models;
+        });
         $sheets = new SheetCollection($models);
         return fastexcel()->data($sheets)->download(\Str::studly($model->name).'.xlsx');
     }
