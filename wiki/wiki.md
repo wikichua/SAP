@@ -64,7 +64,7 @@ Laravel oriented package. This package is mainly for
 1. Personal Access Token
 1. Report (BI?) - simple as fill the sql statements and save into table
 1. Prerun reporting and store in cache
-1. Prerun reporting "in queue" and store in cache
+1. Prerun reporting "queue" or "sync" and store in cache
 1. Fast Excel
 1. Create Service Facade as supporting Library
 1. Stopping certain artisan cli perform on certain environments

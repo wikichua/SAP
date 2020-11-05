@@ -200,6 +200,37 @@ curl 'localhost:9200/_cat/indices?v'
 php artisan sap:report
 ```
 
+Specific report only
+
+```bash
+php artisan sap:report *name*
+```
+
+Work / Run with queue / sync
+
+```bash
+php artisan sap:report --method=queue
+php artisan sap:report --method=sync
+```
+
+Please read about [Laravel Task Scheduling](https://laravel.com/docs/8.x/scheduling#starting-the-scheduler)
+
+```php
+// app/Console/Kernel.php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('sap:report',[
+        '--method' => 'queue'
+    ])->withoutOverlapping()->runInBackground()->hourly();
+}
+```
+
+Please read about [Laravel Supervisor Configuration](https://laravel.com/docs/8.x/queues#supervisor-configuration)
+
+```bash
+php artisan queue:work --queue=report_processing
+```
+
 ### Queue and Cache Closure
 
 Coming Soon

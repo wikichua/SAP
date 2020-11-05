@@ -40,7 +40,8 @@
         "lionix/seo-manager": "dev-master",
         "intervention/imagecache": "^2.5",
         "realrashid/sweet-alert": "dev-master",
-        "arcanedev/laravel-markdown": "dev-master"
+        "arcanedev/laravel-markdown": "dev-master",
+        "spatie/async": "dev-master"
     },
     "autoload": {
         "psr-4": {

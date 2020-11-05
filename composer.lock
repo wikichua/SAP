@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "323ca9bab7ec9d4b2a3b4a879590d55f",
+    "content-hash": "1764e4ee0dcac512aaed6f4fd45d7e65",
     "packages": [
         {
             "name": "arcanedev/laravel-markdown",
@@ -3549,6 +3549,63 @@
             "time": "2020-09-16T15:05:05+00:00"
         },
         {
+            "name": "spatie/async",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/async.git",
+                "reference": "de00127d72b9d8394dd6fde05435c17d5980c617"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/async/zipball/de00127d72b9d8394dd6fde05435c17d5980c617",
+                "reference": "de00127d72b9d8394dd6fde05435c17d5980c617",
+                "shasum": ""
+            },
+            "require": {
+                "opis/closure": "^3.4.2",
+                "php": "^7.1",
+                "symfony/process": "^3.3 || ^4.0 || ^5.0"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^7.5 || ^8.0 || ^9.0",
+                "symfony/stopwatch": "^4.0 || ^5.0"
+            },
+            "suggest": {
+                "ext-pcntl": "Required to use async processes",
+                "ext-posix": "Required to use async processes"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Async\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Asynchronous and parallel PHP with the PCNTL extension",
+            "homepage": "https://github.com/spatie/async",
+            "keywords": [
+                "async",
+                "spatie"
+            ],
+            "time": "2020-10-12T09:05:23+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.3",
             "source": {
@@ -6187,7 +6244,8 @@
         "unisharp/laravel-filemanager": 20,
         "lionix/seo-manager": 20,
         "realrashid/sweet-alert": 20,
-        "arcanedev/laravel-markdown": 20
+        "arcanedev/laravel-markdown": 20,
+        "spatie/async": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
