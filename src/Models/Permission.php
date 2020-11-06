@@ -9,7 +9,7 @@ class Permission extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $appends = ['readUrl'];
-    public $searchableFields = ['name'];
+    public $searchableFields = ['name','group'];
 
     // roles relationship
     public function roles()

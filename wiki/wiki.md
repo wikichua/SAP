@@ -16,11 +16,10 @@
 
 Laravel oriented package. This package is mainly for
 
-1. CRUD generator for module
+1. CRUD generator module for main app or for brand
 1. Create + manage multiple domain brand homepage + register to database for managing
 1. Create component for main app or for brand + register to database for managing
 1. Manage pages and navigations for brand
-1. Console to import database searchable tables into elasticsearch
 1. Create SQL for reporting + console to run SQL within the queue
 
 ## Requirements
@@ -59,7 +58,6 @@ Laravel oriented package. This package is mainly for
 1. File Manager
 1. Generate Brand Site with Subdomain
 1. Component Management with try it online
-1. Scout on elasticsearch driver
 1. Create page as your blog page
 1. Personal Access Token
 1. Report (BI?) - simple as fill the sql statements and save into table
@@ -89,6 +87,8 @@ Laravel oriented package. This package is mainly for
 1. Setting Module, some of the data need to be encrypted to prevent direct read from database table
 1. Markdown editor (https://simplemde.com/)
 1. Markdown parser (https://github.com/ARCANEDEV/LaravelMarkdown)
+1. Global Searchable refined (remove elasticsearch dependency)
+1. Observer for models to handle searchable data
 
 ## Todo List
 
@@ -119,8 +119,6 @@ Laravel oriented package. This package is mainly for
 1. https://mdbootstrap.com
 1. https://bootstrap-table.com
 1. https://github.com/UniSharp/laravel-filemanager
-1. https://github.com/matchish/laravel-scout-elasticsearch
-1. https://chartio.com/resources/tutorials/how-to-delete-data-from-elasticsearch/
 1. https://github.com/rap2hpoutre/fast-excel
 1. https://realrashid.github.io/sweet-alert
 1. https://github.com/jenssegers/laravel-mongodb

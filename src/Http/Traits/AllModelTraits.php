@@ -4,25 +4,27 @@ namespace Wikichua\SAP\Http\Traits;
 
 trait AllModelTraits
 {
-    use \Laravel\Scout\Searchable;
     use \Wikichua\SAP\Http\Traits\ModelScopes;
+    use \Wikichua\SAP\Http\Traits\Searchable;
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
-    public function searchableAs()
+    protected static function booted()
     {
-        return $this->getTable().'_index';
-    }
-    public function toSearchableArray()
-    {
-        $array = [];
-        if (isset($this->searchableFields)) {
-            foreach ($this->searchableFields as $field) {
-                $array[$field] = $this->{$field};
+        static::created(function ($model) {
+            if (!str_contains(get_class($model), 'Searchable')) {
+                $model->createSearchable();
             }
-        } else {
-            $array = $this->toArray();
-        }
-        return $array;
+        });
+        static::updated(function ($model) {
+            if (!str_contains(get_class($model), 'Searchable')) {
+                $model->updateSearchable();
+            }
+        });
+        static::deleted(function ($model) {
+            if (!str_contains(get_class($model), 'Searchable')) {
+                $model->deleteSearchable();
+            }
+        });
     }
 }

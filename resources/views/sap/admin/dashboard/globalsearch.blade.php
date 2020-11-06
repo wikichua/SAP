@@ -12,9 +12,9 @@
     @forelse ($items as $item)
         <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">{{ basename(str_replace('\\', '/',get_class($item))) }}</h5>
-                <a href="{{ $item->readUrl ?? '#' }}" class="btn btn-link stretched-link">
-                <p class="card-text">{{ $item->{$item->searchableFields[0]} ?? $item->name ?? '' }}</p>
+                <h5 class="card-title">{{ basename(str_replace('\\', '/',$item->model)) }}</h5>
+                <a href="{{ app($item->model)->find($item->model_id)->readUrl ?? '#' }}" class="btn btn-link stretched-link text-decoration-none">
+                <p class="card-text">{!! implode('<br />', $item->tags) !!}</p>
                 </a>
                 <p class="card-text"><small class="text-muted">{{ $item->updated_at ?? $item->created_at ?? '' }}</small></p>
             </div>
@@ -23,6 +23,7 @@
         <p>No search result</p>
     @endforelse
     </div>
+    {{ $items->links() }}
 @endsection
 
 @push('scripts')

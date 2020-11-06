@@ -72,14 +72,26 @@ class Help
 
     public function getModelsList()
     {
-        // return \Cache::remember('getModelsList', (60*60*24), function () {
-        $sap_models = getModels(base_path('vendor/wikichua/sap/src/Models'), config('sap.model_namespace'));
+        $sap_models = $this->getModels(base_path('vendor/wikichua/sap/src/Models'), config('sap.model_namespace'));
         if (($key = array_search('\Wikichua\SAP\Models\User', $sap_models)) !== false) {
             unset($sap_models[$key]);
         }
-        $app_models = getModels(app_path(), config('sap.custom_model_namespace'));
-        return array_merge($sap_models, $app_models);
-        // });
+        $app_models = $this->getModels(app_path(), config('sap.custom_model_namespace')) + $this->getModels(app_path('Models'), config('sap.custom_model_namespace'));
+
+        return array_merge($sap_models, $app_models, $this->getBrandsModelsList());
+    }
+
+    public function getBrandsModelsList()
+    {
+        $models = [];
+        $dirs = File::directories(base_path('brand'));
+        foreach ($dirs as $dir) {
+            if (File::isDirectory($dir.'/Models')) {
+                $namespace = str_replace(['brand','/'], ['Brand','\\'], (str_replace(base_path(), '', $dir.'/Models')));
+                $models += $this->getModels($dir.'/Models', $namespace);
+            }
+        }
+        return $models;
     }
 
 

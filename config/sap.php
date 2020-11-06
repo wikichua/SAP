@@ -33,6 +33,7 @@ return [
     'sub_route_dir' => 'routes/routers',
     'sub_api_route_dir' => 'routes/routers/api',
     'models' => [
+        'searchable' => '\Wikichua\SAP\Models\Searchable',
         'user' => config('auth.providers.users.model', '\App\User'),
         'role' => '\Wikichua\SAP\Models\Role',
         'permission' => '\Wikichua\SAP\Models\Permission',

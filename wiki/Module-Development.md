@@ -8,8 +8,7 @@
 - [Create New Component with SAP](#Create-New-Component-with-SAP)
 - [Create Component which belongs to Brand Only](#Create-Component-which-belongs-to-Brand-Only)
 - [Using Pusher in your application](#Using-Pusher-in-your-application)
-- [Run Import data to Elastic Search](#Run-Import-data-to-Elastic-Search)
-- [Cleanup and Info Elastic Search Index](#Cleanup-and-Info-Elastic-Search-Index)
+- [Run Indexing Data Into Global Searchable](#Run-Indexing-Data-Into-Global-Searchable)
 - [Run report with Artisan and Task Scheduler](#Run-report-with-Artisan-and-Task-Scheduler)
 - [Queue and Cache Closure](#Queue-and-Cache-Closure)
 - [PHP Debug Bar](#PHP-Debug-Bar)
@@ -163,35 +162,12 @@ Run in your bash
 php artisan sap:comp *ComponentName* --brand=*BrandName*
 ```
 
-### Run Import data to Elastic Search
-
-In your scout.php
-
-```php
-    'driver' => env('SCOUT_DRIVER', null),
-```
+### Run Indexing Data Into Global Searchable
 
 Run in your bash
 
 ```bash
-php artisan sap:es
-```
-
-### Cleanup and Info Elastic Search Index
-
-Run in your bash
-
-Clean Up
-
-```bash
-curl -XDELETE 'localhost:9200/*_index_*'
-```
-
-Current Info
-
-```bash
-curl 'localhost:9200/_cat/indices?v'
-
+php artisan sap:index
 ```
 
 ### Run report with Artisan and Task Scheduler
