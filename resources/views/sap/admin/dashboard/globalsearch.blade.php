@@ -13,8 +13,14 @@
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">{{ basename(str_replace('\\', '/',$item->model)) }}</h5>
-                <a href="{{ app($item->model)->find($item->model_id)->readUrl ?? '#' }}" class="btn btn-link stretched-link text-decoration-none">
-                <p class="card-text">{!! implode('<br />', $item->tags) !!}</p>
+                <a href="{{ app($item->model)->find($item->model_id)->readUrl ?? '#' }}" class="btn btn-link stretched-link text-decoration-none text-left">
+                <p class="card-text">
+                    <ul class="list-unstyled">
+                        @foreach ($item->tags as $key => $val)
+                        <li>{{ ucwords($key) }} : {{ $val }}</li>
+                        @endforeach
+                    </ul>
+                </p>
                 </a>
                 <p class="card-text"><small class="text-muted">{{ $item->updated_at ?? $item->created_at ?? '' }}</small></p>
             </div>
@@ -23,7 +29,7 @@
         <p>No search result</p>
     @endforelse
     </div>
-    {{ $items->links() }}
+    <div class="align-content-center">{{ $items->links() }}</div>
 @endsection
 
 @push('scripts')

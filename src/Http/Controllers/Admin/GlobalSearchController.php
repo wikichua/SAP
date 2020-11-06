@@ -24,6 +24,6 @@ class GlobalSearchController extends Controller
     private function search(string $queryStr = '')
     {
         $searchable = app(config('sap.models.searchable'))->query();
-        return $searchable->filterTags($queryStr)->paginate(25);
+        return $searchable->filterTags($queryStr)->paginate(2);
     }
 }
