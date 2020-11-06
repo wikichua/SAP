@@ -151,9 +151,11 @@ $(document).ready(function() {
         _.attempt(loadDatatable, url);
     }
     $(document).on('click', '.page-link', function(event) {
-        event.preventDefault();
-        let link = $(this).attr('href');
-        loadDatatable(link);
+        if ($(this).closest('div').attr('id') == 'datatable-pagination') {
+            event.preventDefault();
+            let link = $(this).attr('href');
+            loadDatatable(link);
+        }
     });
     $(document).on('change', '#pageTake', function(event) {
         event.preventDefault();

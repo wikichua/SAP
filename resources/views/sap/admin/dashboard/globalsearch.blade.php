@@ -29,7 +29,7 @@
         <p>No search result</p>
     @endforelse
     </div>
-    <div class="align-content-center">{{ $items->links() }}</div>
+    <div class="d-flex justify-content-center m-5">{{ $items->withQueryString()->links() }}</div>
 @endsection
 
 @push('scripts')
