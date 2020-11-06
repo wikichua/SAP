@@ -21,6 +21,13 @@ class Searchable extends Model
     ];
     public function scopeFilterTags($query, $search)
     {
-        return $query->whereRaw('`tags` RLIKE "\\:\.'.$search.'\."');
+        $searches = [
+            $search,
+            strtolower($search),
+            strtoupper($search),
+            ucfirst($search),
+            ucwords($search),
+        ];
+        return $query->whereRaw('`tags` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
 }
