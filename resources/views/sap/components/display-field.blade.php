@@ -43,12 +43,15 @@
 				        {!! implode('<br>', $value) !!}
 				        @break
 				    @case('json') {{-- special for key-paired --}}
-				        @forelse ($value as $k => $v)
+                        @forelse ($value as $k => $v)
 				        	<li class="list-unstyled">{!! $k !!} : {!! $v !!}</li>
 				        @empty
 				        	Null
 				        @endforelse
 				        @break
+                    @case('code')
+                        <pre class="text-muted">@json($value, JSON_PRETTY_PRINT)</pre>
+                        @break
 				    @default
 				        {{ trim($value) }}
 				@endswitch

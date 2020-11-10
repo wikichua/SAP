@@ -16,7 +16,9 @@ class CreateActivityLogsTable extends Migration
             $table->integer('model_id')->nullable()->index();
             $table->string('model_class')->nullable();
             $table->string('message')->index();
-            $table->text('data')->nullable();
+            $table->json('data')->nullable();
+            $table->json('agents')->nullable();
+            $table->integer('brand_id')->nullable()->index();
             $table->timestamp('created_at')->index();
         });
 

@@ -12,6 +12,7 @@ class ActivityLog extends Model
 
     protected $casts = [
         'data' => 'array',
+        'agents' => 'array',
     ];
     public $searchableFields = [];
 

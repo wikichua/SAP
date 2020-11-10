@@ -47,6 +47,18 @@ if (!function_exists('activity')) {
         return Help::activity($message, $data, $model);
     }
 }
+if (!function_exists('agent')) {
+    function agent()
+    {
+        return Help::agent();
+    }
+}
+if (!function_exists('agents')) {
+    function agents($key = '')
+    {
+        return Help::agents($key);
+    }
+}
 
 if (!function_exists('scan_langs_dir')) {
     function scan_langs_dir()

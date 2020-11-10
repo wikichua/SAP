@@ -20,7 +20,6 @@ const Toast = window.Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
-
 const SimpleMDE = window.SimpleMDE = require('simplemde/dist/simplemde.min');
 require('summernote/dist/summernote-bs4');
 require('gijgo/js/gijgo');

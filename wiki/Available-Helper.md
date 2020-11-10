@@ -7,6 +7,7 @@
 - [getBrandName](#getBrandName)
 - [getDomain](#getDomain)
 - [brand](#brand)
+- [agent and agents](#agent-and-agents)
 
 #### settings
 
@@ -79,3 +80,19 @@ auth()
 ```
 
 This **brand** helper is getting the brand model and cached to reduce multiple calls to the database.
+
+#### agent and agents
+
+Return instance from [jenssegers/agent](https://github.com/jenssegers/agent)
+
+```php
+agent()
+```
+
+```php
+agents($key)
+```
+
+key = null to return all
+available keys:
+headers, ips, opendns, languages, device, platform, platform_version, browser, browser_version, isDesktop, isPhone, isRobot

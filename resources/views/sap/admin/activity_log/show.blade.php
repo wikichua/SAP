@@ -20,7 +20,8 @@
             <x-sap::display-field type="text" name="model_class" id="model_class" label="Model" :value="$model->model_class"/>
             <x-sap::display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at"/>
             <x-sap::display-field type="text" name="message" id="message" label="Message" :value="$model->message"/>
-            <x-sap::display-field type="text" name="data" id="data" label="Data" :value="$model->data" type="json"/>
+            <x-sap::display-field type="code" name="data" id="data" label="Data" :value="$model->data"/>
+            <x-sap::display-field type="code" name="agents" id="agents" label="Agents" :value="$model->agents"/>
         </div>
     </div>
 </div>

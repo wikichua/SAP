@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\File;
 
 class Help
 {
-    public function dump($value = 'Hello Help')
-    {
-        dd($value);
-    }
-
     public function qs_url($path = null, $qs = array(), $secure = null)
     {
         $url = app('url')->to($path, $secure);
@@ -94,6 +89,33 @@ class Help
         return $models;
     }
 
+    public function agent()
+    {
+        return (new \Jenssegers\Agent\Agent);
+    }
+
+    public function agents($key = '')
+    {
+        $agent = agent();
+        $data = [
+            'headers' => request()->headers->all(),
+            'ips' => request()->ips(),
+            'opendns' => trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com")),
+            'languages' => $agent->languages(),
+            'device' => $agent->device(),
+            'platform' => $agent->platform(),
+            'platform_version' => $agent->version($agent->platform()),
+            'browser' => $agent->browser(),
+            'browser_version' => $agent->version($agent->browser()),
+            'isDesktop' => $agent->isDesktop(),
+            'isPhone' => $agent->isPhone(),
+            'isRobot' => $agent->isRobot(),
+        ];
+        if ($key != '' && isset($data[$key])) {
+            return $data[$key];
+        }
+        return $data;
+    }
 
     public function activity($message, $data = [], $model = null)
     {
@@ -104,13 +126,14 @@ class Help
             }
         }
 
-        // create model
         app(config('sap.models.activity_log'))->create([
             'user_id' => auth()->check() ? auth()->user()->id : null,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,
             'message' => $message,
             'data' => $data ? $data : null,
+            'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
+            'agents' => agents(),
         ]);
     }
 
