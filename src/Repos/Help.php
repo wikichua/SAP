@@ -89,6 +89,20 @@ class Help
         return $models;
     }
 
+    public function opendns()
+    {
+        return trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+    }
+
+    public function iplocation($ip = '')
+    {
+        $fields = [
+            'status','message','continent','continentCode','country','countryCode','region','regionName','city','district','zip','lat','lon','timezone','offset','currency','isp','org','as','asname','reverse','mobile','proxy','hosting','query'
+        ];
+        $result = json_decode(\Http::get('//ip-api.com/json/'.$ip, ['fields' => implode(',', $fields)]), 1);
+        return $result;
+    }
+
     public function agent()
     {
         return (new \Jenssegers\Agent\Agent);
@@ -96,11 +110,12 @@ class Help
 
     public function agents($key = '')
     {
-        $agent = agent();
+        $agent = $this->agent();
         $data = [
             'headers' => request()->headers->all(),
             'ips' => request()->ips(),
-            'opendns' => trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com")),
+            'opendns' => $this->opendns(),
+            'iplocation' => $this->iplocation(),
             'languages' => $agent->languages(),
             'device' => $agent->device(),
             'platform' => $agent->platform(),
@@ -133,7 +148,7 @@ class Help
             'message' => $message,
             'data' => $data ? $data : null,
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
-            'agents' => agents(),
+            'agents' => $this->agents(),
         ]);
     }
 

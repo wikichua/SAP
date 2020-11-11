@@ -7,6 +7,8 @@
 - [getBrandName](#getBrandName)
 - [getDomain](#getDomain)
 - [brand](#brand)
+- [opendns](#opendns)
+- [iplocation](#iplocation)
 - [agent and agents](#agent-and-agents)
 
 #### settings
@@ -95,4 +97,20 @@ agents($key)
 
 key = null to return all
 available keys:
-headers, ips, opendns, languages, device, platform, platform_version, browser, browser_version, isDesktop, isPhone, isRobot
+headers, ips, opendns, iplocation, languages, device, platform, platform_version, browser, browser_version, isDesktop, isPhone, isRobot
+
+#### opendns
+
+Return open IP
+
+```php
+opendns()
+```
+
+#### iplocation
+
+Return open IP Location
+
+```php
+iplocation($ip = '')
+```

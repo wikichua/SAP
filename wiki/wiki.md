@@ -26,7 +26,6 @@ Laravel oriented package. This package is mainly for
 
 1. A new Laravel related project (completedly new)
 1. Composer require laravel/ui (no need installing the auth scaffolding)
-1. Elastic Search
 1. Redis or Memcached
 1. Supervisord
 1. A working NPM in your machine
@@ -35,7 +34,7 @@ Laravel oriented package. This package is mainly for
 ## Features or Done
 
 1. Theme using https://startbootstrap.com/themes/sb-admin-2/
-1. Activity Logging
+1. Activity Logging (Censored sensitive data) + More data captured
 1. Preset Authentication (exactly from Laravel scaffolding)
 1. Permission & Role (Authorization)
 1. Settings configuration
@@ -60,7 +59,7 @@ Laravel oriented package. This package is mainly for
 1. Component Management with try it online
 1. Create page as your blog page
 1. Personal Access Token
-1. Report (BI?) - simple as fill the sql statements and save into table
+1. Report (NOT BI) - simple as fill the sql statements and save into table
 1. Prerun reporting and store in cache
 1. Prerun reporting "queue" or "sync" and store in cache
 1. Fast Excel
@@ -89,6 +88,8 @@ Laravel oriented package. This package is mainly for
 1. Markdown parser (https://github.com/ARCANEDEV/LaravelMarkdown)
 1. Global Searchable refined (remove elasticsearch dependency)
 1. Observer for models to handle searchable data
+1. Brand's Model specific, Brand DB Connection specific.
+1. IP Location
 
 ## Todo List
 
@@ -97,7 +98,6 @@ Laravel oriented package. This package is mainly for
 1. php artisan sap:export **ModuleName**
 1. php artisan sap:import **ModuleName**
 1. Queue Manager (Laravel Horizon is cool, but...)
-1. Db connection for specific brand can be segregated by different connections.
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
 1. Web Terminal seem cool and fun (https://github.com/recca0120/laravel-terminal)
 

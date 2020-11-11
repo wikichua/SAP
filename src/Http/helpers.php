@@ -59,6 +59,18 @@ if (!function_exists('agents')) {
         return Help::agents($key);
     }
 }
+if (!function_exists('opendns')) {
+    function opendns()
+    {
+        return Help::opendns();
+    }
+}
+if (!function_exists('iplocation')) {
+    function iplocation($ip = '')
+    {
+        return Help::iplocation($ip);
+    }
+}
 
 if (!function_exists('scan_langs_dir')) {
     function scan_langs_dir()
