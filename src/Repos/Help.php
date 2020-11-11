@@ -151,7 +151,7 @@ class Help
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
             'opendns' => $this->opendns(),
             'agents' => $this->agents(),
-            'iplocation' => $this->iplocation() ?? [],
+            'iplocation' => $this->iplocation(),
         ]);
     }
 
