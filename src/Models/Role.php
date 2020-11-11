@@ -11,6 +11,8 @@ class Role extends Model
     protected $appends = ['isAdmin','readUrl'];
     public $searchableFields = ['name'];
 
+    protected $activity_logged = true;
+
     public function permissions()
     {
         return $this->belongsToMany(config('sap.models.permission'));

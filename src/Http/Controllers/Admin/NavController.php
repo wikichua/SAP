@@ -79,8 +79,6 @@ class NavController extends Controller
 
         $model = app(config('sap.models.nav'))->create($request->all());
 
-        activity('Created Nav: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -106,8 +104,6 @@ class NavController extends Controller
         $newModel->push();
         $newModel->locale = null;
         $newModel->save();
-        activity('Replicated Nav: ' . $newModel->id, [], $newModel);
-        Cache::flush();
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Nav Replicated.',
@@ -143,8 +139,6 @@ class NavController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated Nav: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -161,8 +155,6 @@ class NavController extends Controller
     {
         $model = app(config('sap.models.nav'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted Nav: ' . $model->id, [], $model);
 
         Cache::flush();
 
@@ -190,19 +182,19 @@ class NavController extends Controller
         return response()->json($pages);
     }
 
-    public function orderable(Request $request,$orderable = '')
+    public function orderable(Request $request, $orderable = '')
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.nav'))->query()
                 ->checkBrand()->orderBy('seq');
             if ($orderable != '') {
-                $models->where('group_slug',$orderable);
+                $models->where('group_slug', $orderable);
             }
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
-        $getUrl = route('nav.orderable',$orderable);
-        $actUrl = route('nav.orderableUpdate',$orderable);
+        $getUrl = route('nav.orderable', $orderable);
+        $actUrl = route('nav.orderableUpdate', $orderable);
         $html = [
             ['title' => 'ID', 'data' => 'id'],
             ['title' => 'Group Slug', 'data' => 'group_slug'],
@@ -211,18 +203,18 @@ class NavController extends Controller
         return view('sap::admin.nav.orderable', compact('html', 'getUrl', 'actUrl'));
     }
 
-    public function orderableUpdate(Request $request,$orderable = '')
+    public function orderableUpdate(Request $request, $orderable = '')
     {
         $newRow = $request->get('newRow');
         $models = app(config('sap.models.nav'))->query()->select('id')
             ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
         if ($orderable != '') {
-            $models->where('group_slug',$orderable);
+            $models->where('group_slug', $orderable);
         }
-        $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
+        $models = $models->whereIn('id', explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {
             $model->seq = $seq+1;
-            $model->save();
+            $model->saveQuietly();
         }
         activity('Updated Nav: ' . $model->id, $request->input(), $model, $model);
 

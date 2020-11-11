@@ -10,6 +10,9 @@ class {%model_class%} extends Eloquent
     use \Illuminate\Database\Eloquent\SoftDeletes;
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
+    protected $activity_logged = true;
+    protected $activity_name = '{%model_class%}';
+
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'created_by',

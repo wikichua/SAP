@@ -30,7 +30,7 @@
         $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {
             $model->seq = $seq+1;
-            $model->save();
+            $model->saveQuietly();
         }
 
         activity('Reordered {%model_class%}: ' . $newRow, $models->pluck('seq','id'), $model);

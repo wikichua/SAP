@@ -12,19 +12,27 @@ trait AllModelTraits
     protected static function booted()
     {
         static::created(function ($model) {
-            if (!str_contains(get_class($model), 'Searchable')) {
-                $model->createSearchable();
-            }
+            $model->createSearchable();
+            $model->logActivity('Created');
         });
         static::updated(function ($model) {
-            if (!str_contains(get_class($model), 'Searchable')) {
-                $model->updateSearchable();
-            }
+            $model->updateSearchable();
+            $model->logActivity('Updated');
         });
         static::deleted(function ($model) {
-            if (!str_contains(get_class($model), 'Searchable')) {
-                $model->deleteSearchable();
-            }
+            $model->deleteSearchable();
+            $model->logActivity('Deleted');
         });
+    }
+
+    protected function logActivity($mode = 'Created')
+    {
+        if (!\Str::contains(get_class($this), ['Searchable','ActivityLog']) && isset($this->activity_logged) && $this->activity_logged) {
+            $name = basename(str_replace('\\', '/', get_class($this)));
+            if (isset($this->activity_name)) {
+                $name = $this->activity_name;
+            }
+            activity($mode .' '. $name . ': ' . $this->id, $this->attributes, $this);
+        }
     }
 }

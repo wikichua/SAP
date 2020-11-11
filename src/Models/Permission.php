@@ -8,6 +8,8 @@ class Permission extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
+    protected $activity_logged = true;
+
     protected $appends = ['readUrl'];
     public $searchableFields = ['name','group'];
 

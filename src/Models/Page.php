@@ -10,6 +10,8 @@ class Page extends Model
     use \Illuminate\Database\Eloquent\SoftDeletes;
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
+    protected $activity_logged = true;
+
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'created_by',

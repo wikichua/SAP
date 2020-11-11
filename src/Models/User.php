@@ -15,6 +15,8 @@ abstract class User extends Authenticatable
     use \Laravel\Sanctum\HasApiTokens;
     use \Lab404\Impersonate\Models\Impersonate;
 
+    protected $activity_logged = true;
+
     protected $appends = ['roles_string','readUrl'];
     // protected $fillable = [];
     public $searchableFields = ['name','email'];

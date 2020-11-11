@@ -40,8 +40,6 @@ class ProfileController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated User: ' . $model->id, $request->all(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Profile Updated.',
@@ -72,8 +70,6 @@ class ProfileController extends Controller
         ]);
 
         $model->update($request->all());
-
-        activity('Update Profile Password: ' . $model->id, $request->all(), $model);
 
         return response()->json([
             'status' => 'success',

@@ -83,8 +83,6 @@ class UserController extends Controller
         $model = app(config('sap.models.user'))->create($request->input());
         $model->roles()->sync($request->get('roles'));
 
-        activity('Created User: ' . $model->id, $request->input(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'User Created.',
@@ -133,8 +131,6 @@ class UserController extends Controller
         $model->update($request->input());
         $model->roles()->sync($request->get('roles'));
 
-        activity('Updated User: ' . $model->id, $request->input(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'User Updated.',
@@ -164,8 +160,6 @@ class UserController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated User Password: ' . $model->id, $request->all(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'User Password Updated.',
@@ -179,8 +173,6 @@ class UserController extends Controller
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted User: ' . $model->id, [], $model);
 
         return response()->json([
             'status' => 'success',

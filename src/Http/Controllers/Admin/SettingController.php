@@ -69,8 +69,6 @@ class SettingController extends Controller
 
         $model = app(config('sap.models.setting'))->create($request->all());
 
-        activity('Created Setting: ' . $model->id, $request->all(), $model);
-
         cache()->forget('setting-' . $model->key);
 
         return response()->json([
@@ -112,8 +110,6 @@ class SettingController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated Setting: ' . $model->id, $request->all(), $model);
-
         cache()->forget('setting-' . $model->key);
 
         return response()->json([
@@ -129,8 +125,6 @@ class SettingController extends Controller
     {
         $model = app(config('sap.models.setting'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted Setting: ' . $model->id, [], $model);
 
         return response()->json([
             'status'   => 'success',

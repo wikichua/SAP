@@ -73,8 +73,6 @@ class ReportController extends Controller
 
         $model = app(config('sap.models.report'))->create($request->all());
 
-        activity('Created Report: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -139,8 +137,6 @@ class ReportController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated Report: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -157,8 +153,6 @@ class ReportController extends Controller
     {
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted Report: ' . $model->id, [], $model);
 
         Cache::flush();
 

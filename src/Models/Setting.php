@@ -8,6 +8,8 @@ class Setting extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
+    protected $activity_logged = true;
+
     protected $appends = ['isMultiple', 'rows','readUrl'];
     public $searchableFields = ['key'];
     protected $fillable = [

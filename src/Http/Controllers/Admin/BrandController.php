@@ -77,8 +77,6 @@ class BrandController extends Controller
 
         $model->update($request->input());
 
-        activity('Updated Brand: ' . $model->id, $request->input(), $model);
-
         \Cache::forget('brand-'.$model->name);
 
         return response()->json([

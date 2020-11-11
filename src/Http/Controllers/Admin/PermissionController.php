@@ -67,8 +67,6 @@ class PermissionController extends Controller
 
         $model = app(config('sap.models.permission'))->create($request->all());
 
-        activity('Created Permission: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -107,8 +105,6 @@ class PermissionController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated Permission: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -124,8 +120,6 @@ class PermissionController extends Controller
     {
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted Permission: ' . $model->id, [], $model);
 
         Cache::flush();
 

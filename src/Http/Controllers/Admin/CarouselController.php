@@ -85,8 +85,6 @@ class CarouselController extends Controller
 
         $model = app(config('sap.models.carousel'))->query()->create($request->input());
 
-        activity('Created Carousel: ' . $model->id, $request->input(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Created.',
@@ -136,8 +134,6 @@ class CarouselController extends Controller
 
         $model->update($request->input());
 
-        activity('Updated Carousel: ' . $model->id, $request->input(), $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Updated.',
@@ -153,8 +149,6 @@ class CarouselController extends Controller
 
         $model->delete();
 
-        activity('Deleted Carousel: ' . $model->id, [], $model);
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Deleted.',
@@ -164,19 +158,19 @@ class CarouselController extends Controller
         ]);
     }
 
-    public function orderable(Request $request,$orderable = '')
+    public function orderable(Request $request, $orderable = '')
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.carousel'))->query()
                 ->checkBrand()->orderBy('seq');
             if ($orderable != '') {
-                $models->where('slug',$orderable);
+                $models->where('slug', $orderable);
             }
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
-        $getUrl = route('carousel.orderable',$orderable);
-        $actUrl = route('carousel.orderableUpdate',$orderable);
+        $getUrl = route('carousel.orderable', $orderable);
+        $actUrl = route('carousel.orderableUpdate', $orderable);
         $html = [
             ['title' => 'ID', 'data' => 'id'],
             ['title' => 'Slug', 'data' => 'slug'],
@@ -185,21 +179,21 @@ class CarouselController extends Controller
         return view('sap::admin.carousel.orderable', compact('html', 'getUrl', 'actUrl'));
     }
 
-    public function orderableUpdate(Request $request,$orderable = '')
+    public function orderableUpdate(Request $request, $orderable = '')
     {
         $newRow = $request->get('newRow');
         $models = app(config('sap.models.carousel'))->query()->select('id')
             ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
         if ($orderable != '') {
-            $models->where('slug',$orderable);
+            $models->where('slug', $orderable);
         }
-        $models = $models->whereIn('id',explode(',', $newRow))->take(100)->get();
+        $models = $models->whereIn('id', explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {
             $model->seq = $seq+1;
-            $model->save();
+            $model->saveQuietly();
         }
 
-        activity('Reordered Carousel: ' . $newRow, $models->pluck('seq','id'), $model);
+        activity('Reordered Carousel: ' . $newRow, $models->pluck('seq', 'id'), $model);
 
         return response()->json([
             'status' => 'success',

@@ -80,8 +80,6 @@ class RoleController extends Controller
         $model = app(config('sap.models.role'))->create($request->all());
         $model->permissions()->sync($request->get('permissions'));
 
-        activity('Created Role: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -129,8 +127,6 @@ class RoleController extends Controller
         $model->update($request->all());
         $model->permissions()->sync($request->get('permissions'));
 
-        activity('Updated Role: ' . $model->id, $request->all(), $model);
-
         Cache::flush();
 
         return response()->json([
@@ -146,8 +142,6 @@ class RoleController extends Controller
     {
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
         $model->delete();
-
-        activity('Deleted Role: ' . $model->id, [], $model);
 
         Cache::flush();
 
