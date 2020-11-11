@@ -42,9 +42,9 @@ if (!function_exists('getModelsList')) {
     }
 }
 if (!function_exists('activity')) {
-    function activity($message, $data = [], $model = null)
+    function activity($message, $data = [], $model = null, $ip = '')
     {
-        return Help::activity($message, $data, $model);
+        return Help::activity($message, $data, $model, $ip);
     }
 }
 if (!function_exists('agent')) {

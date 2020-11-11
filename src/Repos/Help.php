@@ -134,13 +134,16 @@ class Help
         return $data;
     }
 
-    public function activity($message, $data = [], $model = null)
+    public function activity($message, $data = [], $model = null, $ip = '')
     {
         // unset hidden form fields
         foreach (['_token', '_method', '_submit'] as $unset_key) {
             if (isset($data[$unset_key])) {
                 unset($data[$unset_key]);
             }
+        }
+        if ($ip == '') {
+            $ip = $this->opendns();
         }
 
         app(config('sap.models.activity_log'))->create([
@@ -150,9 +153,9 @@ class Help
             'message' => $message,
             'data' => $data ? $data : null,
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
-            'opendns' => $this->opendns(),
+            'opendns' => $ip,
             'agents' => $this->agents(),
-            'iplocation' => $this->iplocation(),
+            'iplocation' => $this->iplocation($ip),
         ]);
     }
 

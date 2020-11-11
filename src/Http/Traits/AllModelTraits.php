@@ -9,8 +9,11 @@ trait AllModelTraits
     use \Wikichua\SAP\Http\Traits\DynamicFillable;
     use \Wikichua\SAP\Http\Traits\UserTimezone;
 
+    protected static $opendns;
+
     protected static function booted()
     {
+        static::$opendns = opendns();
         static::created(function ($model) {
             $model->createSearchable();
             $model->logActivity('Created');
@@ -32,7 +35,7 @@ trait AllModelTraits
             if (isset($this->activity_name)) {
                 $name = $this->activity_name;
             }
-            activity($mode .' '. $name . ': ' . $this->id, $this->attributes, $this);
+            activity($mode .' '. $name . ': ' . $this->id, $this->attributes, $this, static::$opendns);
         }
     }
 }
