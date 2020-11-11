@@ -16,11 +16,15 @@
 
 Laravel oriented package. This package is mainly for
 
-1. CRUD generator module for main app or for brand
-1. Create + manage multiple domain brand homepage + register to database for managing
-1. Create component for main app or for brand + register to database for managing
-1. Manage pages and navigations for brand
-1. Create SQL for reporting + console to run SQL within the queue
+1. Multisites - Create + manage multiple domain brand homepage + register to database for managing
+1. Module - CRUD generator module for main app or for brand + API resources
+1. Component - Create + manage component for main app or for brand + register to database for managing
+1. CMS - Create + manage pages and navigations for brand
+1. Reporting - Create + manage SQLs for reporting + console to run SQL within the queue
+1. Settings - Create + manage settings value(s) within the table (cached if enabled) + encryption for sensitive value
+1. Global Search - Indexing for Search (Not elasticsearch, algolia and etc) - in case need, use laravel scout
+1. ACL - Manage users, assign roles & permission, impersonating, check last activity details
+1. Activity Logs - Helper to create logs in database
 
 ## Requirements
 
@@ -44,7 +48,7 @@ Laravel oriented package. This package is mainly for
     - Datatable listing (using common table component in bootstrap)
         - Able to delete row record (Authorization Gate included)
     - Create and Edit form
-        - Text, File, Textarea, Date or Time Picker, Select, Checkbox, Radio, Editor, Datalist and etc...
+        - Text, File, Textarea, Date or Time Picker, Select, Checkbox, Radio, Editor, Datalist, Markdown and etc...
 1. Swal and Toast integrated
 1. Select, Radio or Checkbox options will be added to settings table during migration
 1. Select, Radio or Checkbox model options will be generated codes in controller and both create and edit component.
@@ -90,6 +94,7 @@ Laravel oriented package. This package is mainly for
 1. Observer for models to handle searchable data
 1. Brand's Model specific, Brand DB Connection specific.
 1. IP Location
+1. Last Activity show by user and profile
 
 ## Todo List
 

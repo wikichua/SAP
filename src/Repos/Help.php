@@ -112,10 +112,6 @@ class Help
     {
         $agent = $this->agent();
         $data = [
-            'headers' => request()->headers->all(),
-            'ips' => request()->ips(),
-            'opendns' => $this->opendns(),
-            'iplocation' => $this->iplocation(),
             'languages' => $agent->languages(),
             'device' => $agent->device(),
             'platform' => $agent->platform(),
@@ -125,6 +121,8 @@ class Help
             'isDesktop' => $agent->isDesktop(),
             'isPhone' => $agent->isPhone(),
             'isRobot' => $agent->isRobot(),
+            'headers' => request()->headers->all(),
+            'ips' => request()->ips(),
         ];
         if ($key != '' && isset($data[$key])) {
             return $data[$key];
@@ -148,7 +146,9 @@ class Help
             'message' => $message,
             'data' => $data ? $data : null,
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
+            'opendns' => $this->opendns(),
             'agents' => $this->agents(),
+            'iplocation' => $this->iplocation(),
         ]);
     }
 

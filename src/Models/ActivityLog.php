@@ -9,10 +9,24 @@ class ActivityLog extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     const UPDATED_AT = null;
+    protected $fillable = [
+        'id',
+        'user_id',
+        'model_id',
+        'model_class',
+        'message',
+        'data',
+        'agents',
+        'opendns',
+        'iplocation',
+        'brand_id',
+        'created_at',
+    ];
 
     protected $casts = [
         'data' => 'array',
         'agents' => 'array',
+        'iplocation' => 'array',
     ];
     public $searchableFields = [];
 
@@ -26,6 +40,11 @@ class ActivityLog extends Model
     public function user()
     {
         return $this->belongsTo(config('sap.models.user'))->withDefault(['name' => null]);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(config('sap.models.brand'))->withDefault(['name' => null]);
     }
 
     // dynamic model

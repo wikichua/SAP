@@ -68,4 +68,9 @@ abstract class User extends Authenticatable
     {
         return $this->readUrl = route('user.show', $this->id);
     }
+
+    public function activitylogs()
+    {
+        return $this->hasMany(config('sap.models.activity_log'), 'user_id', 'id')->orderBy('created_at', 'desc');
+    }
 }

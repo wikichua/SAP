@@ -18,6 +18,8 @@ class CreateActivityLogsTable extends Migration
             $table->string('message')->index();
             $table->json('data')->nullable();
             $table->json('agents')->nullable();
+            $table->string('opendns')->nullable();
+            $table->json('iplocation')->nullable();
             $table->integer('brand_id')->nullable()->index();
             $table->timestamp('created_at')->index();
         });

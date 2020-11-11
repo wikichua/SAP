@@ -97,6 +97,12 @@ class UserController extends Controller
     public function show($id)
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
+        $last_activity = $model->activitylogs()->first();
+        $model->last_activity = [
+            'datetime' => $last_activity->created_at,
+            'message' => $last_activity->message,
+            'iplocation' => $last_activity->iplocation,
+        ];
         return view('sap::admin.user.show', compact('model'));
     }
 

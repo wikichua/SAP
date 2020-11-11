@@ -44,7 +44,7 @@
 				        @break
 				    @case('json') {{-- special for key-paired --}}
                         @forelse ($value as $k => $v)
-				        	<li class="list-unstyled">{!! $k !!} : {!! $v !!}</li>
+				        	<li class="list-unstyled">{!! $k !!} : {!! is_array($v)? '<pre class="text-muted">'.(json_encode($v,JSON_PRETTY_PRINT)).'</pre>':$v !!}</li>
 				        @empty
 				        	Null
 				        @endforelse

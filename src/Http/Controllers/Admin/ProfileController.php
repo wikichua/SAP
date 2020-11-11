@@ -10,7 +10,13 @@ class ProfileController extends Controller
     public function show(Request $request)
     {
         $model = auth()->user();
-        return view('sap::admin.profile.show',compact('model'));
+        $last_activity = $model->activitylogs()->first();
+        $model->last_activity = [
+            'datetime' => $last_activity->created_at,
+            'message' => $last_activity->message,
+            'iplocation' => $last_activity->iplocation,
+        ];
+        return view('sap::admin.profile.show', compact('model'));
     }
 
     public function edit(Request $request)
@@ -41,14 +47,14 @@ class ProfileController extends Controller
             'flash' => 'Profile Updated.',
             'reload' => false,
             'relist' => false,
-            'redirect' => route('profile.edit',[$model->id]),
+            'redirect' => route('profile.edit', [$model->id]),
         ]);
     }
 
     public function editPassword(Request $request)
     {
         $model = auth()->user();
-        return view('sap::admin.profile.editPassword',compact('model'));
+        return view('sap::admin.profile.editPassword', compact('model'));
     }
 
     public function updatePassword(Request $request)
