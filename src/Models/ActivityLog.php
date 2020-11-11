@@ -16,6 +16,12 @@ class ActivityLog extends Model
     ];
     public $searchableFields = [];
 
+    protected $masks = [
+        'password',
+        'password_confirmation',
+        'token'
+    ];
+
     // user relationship
     public function user()
     {
@@ -26,5 +32,17 @@ class ActivityLog extends Model
     public function model()
     {
         return $this->model_class ? app($this->model_class)->find($this->model_id) : null;
+    }
+
+    public function getDataAttribute($data)
+    {
+        $data = json_decode($data, 1);
+        $masks = config('sap.activity_log.masks', $this->masks);
+        foreach ($masks as $key) {
+            if (isset($data[$key])) {
+                $data[$key] = '***censored***';
+            }
+        }
+        return $data;
     }
 }

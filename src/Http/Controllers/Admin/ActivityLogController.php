@@ -19,21 +19,21 @@ class ActivityLogController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.activity_log'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''),$request->get('direction', ''))
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
                 ->with(['user']);
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
-                $model->actionsView = view('sap::admin.activity_log.actions',compact('model'))->render();
+                $model->actionsView = view('sap::admin.activity_log.actions', compact('model'))->render();
             }
-            if ($request->get('filters','') != '') {
-                $paginated->appends(['filters' => $request->get('filters','')]);
+            if ($request->get('filters', '') != '') {
+                $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort','') != '') {
-                $paginated->appends(['sort' => $request->get('sort',''), 'direction' => $request->get('direction','asc')]);
+            if ($request->get('sort', '') != '') {
+                $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
-            return compact('paginated','links','currentUrl');
+            return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('activity_log.list');
         $html = [
@@ -44,7 +44,7 @@ class ActivityLogController extends Controller
             ['title' => 'Message', 'data' => 'message'],
             ['title' => '', 'data' => 'actionsView'],
         ];
-        return view('sap::admin.activity_log.index', compact('html','getUrl'));
+        return view('sap::admin.activity_log.index', compact('html', 'getUrl'));
     }
 
     public function show($id)

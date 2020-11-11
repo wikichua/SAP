@@ -47,8 +47,11 @@ return [
         'carousel' => '\Wikichua\SAP\Models\Carousel',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
-    'elasticsearch' => [
-        'enabled' => env('ELASTICSEARCH_ENABLED', false),
-        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', "localhost:9200")),
+    'activity_log' => [
+        'masks' => [ // maskign the key in data field within the activity log model
+            'password',
+            'password_confirmation',
+            'token',
+        ],
     ],
 ];
