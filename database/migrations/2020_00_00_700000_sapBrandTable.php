@@ -21,14 +21,9 @@ class SapBrandTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        app(config('sap.models.setting'))->create(['key' => 'brand_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
-        app(config('sap.models.permission'))->createGroup('Brands', ['Read Brands', 'Update Brands']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key', 'brand_status')->forceDelete();
-        app(config('sap.models.permission'))->where('group', 'Brands')->delete();
         Schema::dropIfExists('brands');
     }
 }

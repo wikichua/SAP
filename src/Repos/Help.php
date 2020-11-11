@@ -99,6 +99,9 @@ class Help
         $fields = [
             'status','message','continent','continentCode','country','countryCode','region','regionName','city','district','zip','lat','lon','timezone','offset','currency','isp','org','as','asname','reverse','mobile','proxy','hosting','query'
         ];
+        if ($ip == '') {
+            $ip = $this->opendns();
+        }
         $result = json_decode(\Http::get('//ip-api.com/json/'.$ip, ['fields' => implode(',', $fields)]), 1);
         return $result;
     }
@@ -140,7 +143,7 @@ class Help
         }
 
         app(config('sap.models.activity_log'))->create([
-            'user_id' => auth()->check() ? auth()->user()->id : null,
+            'user_id' => auth()->check() ? auth()->user()->id : 1,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,
             'message' => $message,
@@ -148,7 +151,7 @@ class Help
             'brand_id' => auth()->check() ? auth()->user()->brand_id : null,
             'opendns' => $this->opendns(),
             'agents' => $this->agents(),
-            'iplocation' => $this->iplocation(),
+            'iplocation' => $this->iplocation() ?? [],
         ]);
     }
 

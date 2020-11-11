@@ -32,10 +32,6 @@ class CreatePermissionsTable extends Migration
             $table->integer('permission_id')->index();
             $table->integer('user_id')->index();
         });
-
-        // create permissions
-        app(config('sap.models.permission'))->createGroup('Admin Panel', ['Access Admin Panel']);
-        app(config('sap.models.permission'))->createGroup('Permissions', ['Create Permissions', 'Read Permissions', 'Update Permissions', 'Delete Permissions']);
     }
 
     public function down()

@@ -22,13 +22,9 @@ class CreateReportTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        app(config('sap.models.setting'))->create(['key' => 'report_status','value' => ['A' => 'Active','I' => 'Inactive']]);
-        app(config('sap.models.permission'))->createGroup('Reports', ['Create Reports', 'Read Reports', 'Update Reports', 'Delete Reports']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key', 'report_status')->forceDelete();
-        app(config('sap.models.permission'))->where('group', 'Reports')->delete();
         Schema::dropIfExists('reports');
     }
 }

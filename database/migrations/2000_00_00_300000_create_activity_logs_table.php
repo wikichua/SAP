@@ -23,17 +23,11 @@ class CreateActivityLogsTable extends Migration
             $table->integer('brand_id')->nullable()->index();
             $table->timestamp('created_at')->index();
         });
-
-        // add permissions
-        app(config('sap.models.permission'))->createGroup('Activity Logs', ['Read Activity Logs']);
     }
 
     public function down()
     {
         // drop table
         Schema::dropIfExists('activity_logs');
-
-        // delete permissions
-        app(config('sap.models.permission'))->where('group', 'Activity Logs')->delete();
     }
 }

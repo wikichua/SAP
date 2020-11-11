@@ -31,9 +31,6 @@ class CreateRolesTable extends Migration
             'name' => 'Admin',
             'admin' => true,
         ]);
-
-        // create permissions
-        app(config('sap.models.permission'))->createGroup('Roles', ['Create Roles', 'Read Roles', 'Update Roles', 'Delete Roles']);
     }
 
     public function down()
@@ -41,8 +38,5 @@ class CreateRolesTable extends Migration
         // drop tables
         Schema::dropIfExists('roles');
         Schema::dropIfExists('role_user');
-
-        // delete permissions
-        app(config('sap.models.permission'))->where('group', 'Roles')->delete();
     }
 }

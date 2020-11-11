@@ -25,16 +25,9 @@ class SapCarouselTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        app(config('sap.models.setting'))->create(['key' => 'carousel_tags','value' => ['new' => 'New','hot' => 'Hot','recommended' => 'Recommended']]);
-        app(config('sap.models.setting'))->create(['key' => 'carousel_status','value' => ['A' => 'Active','I' => 'Inactive']]);
-        app(config('sap.models.permission'))->createGroup('Carousels', ['Create Carousels', 'Read Carousels', 'Update Carousels', 'Delete Carousels']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key','carousel_tags')->forceDelete();
-        app(config('sap.models.setting'))->where('key','carousel_status')->forceDelete();
-        app(config('sap.models.permission'))->where('group', 'Carousels')->delete();
         Schema::dropIfExists('carousels');
     }
 }

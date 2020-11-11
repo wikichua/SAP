@@ -10,9 +10,9 @@ class SapPageTable extends Migration
     {
         cache()->forget('fillable-pages');
         Schema::create('pages', function (Blueprint $table) {
-        $table->increments('id', true);
+            $table->increments('id', true);
             $table->integer('brand_id')->nullable()->default(0);
-            $table->string('locale',2)->nullable()->default('en');
+            $table->string('locale', 2)->nullable()->default('en');
             $table->string('name')->nullable()->default('');
             $table->string('template')->nullable()->default('layouts.main');
             $table->text('slug')->nullable()->default('');
@@ -27,13 +27,9 @@ class SapPageTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        app(config('sap.models.setting'))->create(['key' => 'page_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
-        app(config('sap.models.permission'))->createGroup('Pages', ['Create Pages', 'Read Pages', 'Update Pages', 'Delete Pages']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key', 'page_status')->forceDelete();
-        app(config('sap.models.permission'))->where('group', 'Pages')->delete();
         Schema::dropIfExists('pages');
     }
 }

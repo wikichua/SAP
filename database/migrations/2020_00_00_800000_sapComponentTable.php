@@ -18,12 +18,9 @@ class SapComponentTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        app(config('sap.models.permission'))->createGroup('Components', ['Read Components']);
     }
     public function down()
     {
-        app(config('sap.models.permission'))->where('group', 'Components')->delete();
         Schema::dropIfExists('components');
     }
 }

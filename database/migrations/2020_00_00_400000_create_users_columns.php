@@ -49,8 +49,6 @@ class CreateUsersColumns extends Migration
             'password' => Hash::make('admin123'),
             'type' => 'Admin',
         ]);
-        // create permissions
-        app(config('sap.models.permission'))->createGroup('Users', ['Create Users', 'Read Users', 'Update Users', 'Delete Users', 'Update Users Password']);
 
         Schema::dropIfExists('password_resets');
         Schema::create('password_resets', function (Blueprint $table) {
@@ -63,7 +61,6 @@ class CreateUsersColumns extends Migration
             Schema::table('personal_access_tokens', function (Blueprint $table) {
                 $table->string('plain_text_token')->nullable()->index();
             });
-            app(config('sap.models.permission'))->createGroup('Personal Access Token', ['Create Personal Access Token', 'Read Personal Access Token', 'Delete Personal Access Token']);
         }
     }
 
@@ -77,9 +74,6 @@ class CreateUsersColumns extends Migration
             $table->dropColumn('created_by');
             $table->dropColumn('updated_by');
         });
-
-        // delete permissions
-        app(config('sap.models.permission'))->where('group', 'Users')->delete();
 
         Schema::drop('password_resets');
     }

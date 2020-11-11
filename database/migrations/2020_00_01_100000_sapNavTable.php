@@ -24,13 +24,9 @@ class SapNavTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        app(config('sap.models.setting'))->create(['key' => 'nav_status','value' => ['A' => 'Active','I' => 'Inactive']]);
-        app(config('sap.models.permission'))->createGroup('Navs', ['Create Navs', 'Read Navs', 'Update Navs', 'Delete Navs']);
     }
     public function down()
     {
-        app(config('sap.models.setting'))->where('key', 'nav_status')->forceDelete();
-        app(config('sap.models.permission'))->where('group', 'Navs')->delete();
         Schema::dropIfExists('navs');
     }
 }
