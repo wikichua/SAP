@@ -1,4 +1,16 @@
 <?php
+if (!function_exists('timezones')) {
+    function timezones()
+    {
+        return Help::timezones();
+    }
+}
+if (!function_exists('queue_keys')) {
+    function queue_keys($driver = 'redis')
+    {
+        return Help::queue_keys($driver);
+    }
+}
 if (!function_exists('qs_url')) {
     function qs_url($path = null, $qs = array(), $secure = null)
     {

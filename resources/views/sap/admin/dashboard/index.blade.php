@@ -8,8 +8,8 @@
             </span>
         </div>
     </div>
-    <div class="table-responsive">
-        Dashboard
+    <div class="container">
+        <x-sap::queue-dashboard />
     </div>
 @endsection
 

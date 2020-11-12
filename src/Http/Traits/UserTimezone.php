@@ -21,6 +21,11 @@ trait UserTimezone
         return $this->inUserTimezone($value);
     }
 
+    public function getFailedAtAttribute($value)
+    {
+        return $this->inUserTimezone($value);
+    }
+
     // convert date to user timezone
     public function inUserTimezone($value)
     {

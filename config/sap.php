@@ -40,6 +40,7 @@ return [
         'setting' => '\Wikichua\SAP\Models\Setting',
         'report' => '\Wikichua\SAP\Models\Report',
         'activity_log' => '\Wikichua\SAP\Models\ActivityLog',
+        'failed_job' => '\Wikichua\SAP\Models\FailedJob',
         'brand' => '\Wikichua\SAP\Models\Brand',
         'page' => '\Wikichua\SAP\Models\Page',
         'nav' => '\Wikichua\SAP\Models\Nav',

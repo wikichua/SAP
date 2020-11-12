@@ -1,7 +1,9 @@
 ## Available Helper
 
+- [timezones](#timezones)
 - [settings](#settings)
 - [activity](#activity)
+- [queue_keys](#queue_keys)
 - [viewRenderer](#viewRenderer)
 - [route_slug](#route_slug)
 - [getBrandName](#getBrandName)
@@ -10,6 +12,14 @@
 - [opendns](#opendns)
 - [iplocation](#iplocation)
 - [agent and agents](#agent-and-agents)
+
+#### timezones
+
+Listed timezones available
+
+```php
+timezones()
+```
 
 #### settings
 
@@ -23,11 +33,19 @@ Only set your value in **Setting** Module via the **Admin Panel**.
 #### activity
 
 ```php
-activity($message, $data = [], $model = null)
+activity($message, $data = [], $model = null, $ip = '')
 ```
 
 Log activity occurred.
 This will viewable in **Activity Log** Module in **Admin Panel**.
+
+#### queue_keys
+
+Listed all keys in pending withing the queue (temporarily only redis supported)
+
+```php
+queue_keys($driver = 'redis')
+```
 
 #### viewRenderer
 

@@ -12,11 +12,6 @@
     'Read Activity Logs',
     'Read System Logs',
     'Read Reports',
-    'Read Brands',
-    'Read Navs',
-    'Read Pages',
-    'Read Components',
-    'Read Carousels',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -42,26 +37,14 @@
             @can('Read Reports')
             <x-sap::menu-item :href="route('report.list')" active-pattern="report.*">Report</x-sap-menu-item>
             @endcan
-            @can('Read Brands')
-            <x-sap::menu-item :href="route('brand.list')" :active-pattern="'brand.*'">Brand</x-sap-menu-item>
-            @endcan
-            @can('Read Pages')
-            <x-sap::menu-item :href="route('page.list')" :active-pattern="'page.*'">Page</x-sap-menu-item>
-            @endcan
-            @can('Read Navs')
-            <x-sap::menu-item :href="route('nav.list')" :active-pattern="'nav.*'">Nav</x-sap-menu-item>
-            @endcan
-            @can('Read Components')
-            <x-sap::menu-item :href="route('component.list')" :active-pattern="'component.*'">Component</x-sap-menu-item>
-            @endcan
-            @can('Read Carousels')
-            <x-sap::menu-item :href="route('carousel.list')" :active-pattern="'carousel.*'">Carousel</x-sap-menu-item>
-            @endcan
             @can('Read Activity Logs')
             <x-sap::menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>
             @endcan
             @can('Read System Logs')
             <x-sap::menu-item :href="route('system_log.list')" active-pattern="system_log.*">System Log</x-sap-menu-item>
+            @endcan
+            @can('Read Failed Jobs')
+            <x-sap::menu-item :href="route('failed_job.list')" active-pattern="failed_job.*">Failed Job</x-sap-menu-item>
             @endcan
         </div>
     </div>

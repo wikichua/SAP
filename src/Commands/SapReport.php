@@ -62,7 +62,7 @@ class SapReport extends Command
             );
             $report->generated_at = \Carbon\Carbon::now();
             $report->next_generate_at = \Carbon\Carbon::now()->addSeconds($report->cache_ttl);
-            $report->save();
+            $report->saveQuietly();
         })->onQueue('report_processing');
     }
 
@@ -89,6 +89,6 @@ class SapReport extends Command
         );
         $report->generated_at = \Carbon\Carbon::now();
         $report->next_generate_at = \Carbon\Carbon::now()->addSeconds($report->cache_ttl);
-        $report->save();
+        $report->saveQuietly();
     }
 }

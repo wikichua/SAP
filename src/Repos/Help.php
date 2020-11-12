@@ -3,6 +3,7 @@ namespace Wikichua\SAP\Repos;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Queue;
 
 class Help
 {
@@ -256,5 +257,18 @@ class Help
         return Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
         });
+    }
+
+    public function queue_keys($driver = 'redis')
+    {
+        $keys = [];
+        if ($driver == 'redis') {
+            $keys = Queue::getRedis()->keys('*');
+            $queues = [];
+            foreach ($keys as $i => $key) {
+                $keys[$i] = str_replace([config('database.redis.options.prefix').'queues:'], '', $key);
+            }
+        }
+        return $keys;
     }
 }

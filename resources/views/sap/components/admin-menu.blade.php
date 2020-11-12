@@ -7,6 +7,9 @@
         'report.*',
         'activity_log.*',
         'system_log.*',
+        'failed_job.*',
+    ]"/>
+<x-sap::menu menu="cms" :active-patterns="[
         'brand.*',
         'page.*',
         'nav.*',

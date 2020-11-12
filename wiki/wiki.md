@@ -20,11 +20,12 @@ Laravel oriented package. This package is mainly for
 1. Module - CRUD generator module for main app or for brand + API resources
 1. Component - Create + manage component for main app or for brand + register to database for managing
 1. CMS - Create + manage pages and navigations for brand
-1. Reporting - Create + manage SQLs for reporting + console to run SQL within the queue
+1. Reporting - Create + manage SQLs for reporting + console to run SQL within the queue (Redis)
 1. Settings - Create + manage settings value(s) within the table (cached if enabled) + encryption for sensitive value
 1. Global Search - Indexing for Search (Not elasticsearch, algolia and etc) - in case need, use laravel scout
 1. ACL - Manage users, assign roles & permission, impersonating, check last activity details
 1. Activity Logs - Helper to create logs in database
+1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
 
 ## Requirements
 
@@ -95,6 +96,7 @@ Laravel oriented package. This package is mainly for
 1. Brand's Model specific, Brand DB Connection specific.
 1. IP Location
 1. Last Activity show by user and profile
+1. Queue Manager (Laravel Horizon is cool, but...Decided to do self made)
 
 ## Todo List
 
@@ -102,7 +104,6 @@ Laravel oriented package. This package is mainly for
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. php artisan sap:export **ModuleName**
 1. php artisan sap:import **ModuleName**
-1. Queue Manager (Laravel Horizon is cool, but...)
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
 1. Web Terminal seem cool and fun (https://github.com/recca0120/laravel-terminal)
 

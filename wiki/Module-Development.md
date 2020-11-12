@@ -195,8 +195,8 @@ Please read about [Laravel Task Scheduling](https://laravel.com/docs/8.x/schedul
 // app/Console/Kernel.php
 protected function schedule(Schedule $schedule)
 {
-    $schedule->command('sap:report',[
-        '--method' => 'queue'
+    $schedule->command('sap:report', [
+        '--method' => 'queue', // sync
     ])->withoutOverlapping()->runInBackground()->hourly();
 }
 ```
@@ -204,7 +204,7 @@ protected function schedule(Schedule $schedule)
 Please read about [Laravel Supervisor Configuration](https://laravel.com/docs/8.x/queues#supervisor-configuration)
 
 ```bash
-php artisan queue:work --queue=report_processing
+php artisan queue:work --tries=3 --backoff=3 --queue=report_processing
 ```
 
 ### Queue and Cache Closure

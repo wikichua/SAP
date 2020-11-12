@@ -2,7 +2,7 @@
 	foreach ($attributes as $key => $val) {
 		$$key = $val;
 	}
-	$value = isset($value)? $value:'';
+	$value = trim(isset($value)? $value:'');
 @endphp
 <div class="list-group-item">
     <div class="form-group row mb-0">
@@ -50,10 +50,14 @@
 				        @endforelse
 				        @break
                     @case('code')
-                        <pre class="text-muted">@json($value, JSON_PRETTY_PRINT)</pre>
+                            @if (json_decode($value))
+                            <pre class="text-muted">@json($value, JSON_PRETTY_PRINT)</pre>
+                            @else
+                            <pre class="text-muted">{!! $value !!}</pre>
+                            @endif
                         @break
 				    @default
-				        {{ trim($value) }}
+				        {{ $value }}
 				@endswitch
         	</div>
         </div>
