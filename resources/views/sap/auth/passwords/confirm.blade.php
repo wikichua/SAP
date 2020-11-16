@@ -8,6 +8,7 @@
     </div>
     <form class="user" method="POST" action="{{ route('password.confirm') }}">
         @csrf
+        @honeypot
         <div class="form-group">
             <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror"
                 name="password" required autocomplete="new-password" placeholder="Password">

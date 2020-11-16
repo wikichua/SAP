@@ -14,16 +14,14 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('setting.update',[$model->id]) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+            <x-sap::form ajax="true" method="PATCH" action="{{ route('setting.update',[$model->id]) }}">
                 <x-sap::input-field type="text" name="key" id="key" label="Key" :class="[]" :value="$model->key" />
                 <x-sap::checkbox-field name="protected" id="protected" label="Protected" :class="[]" :value="1" :checked="$model->protected ?? 0" subLabel="Apply Encryption" />
                 @include('sap::admin.setting.valueInput')
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

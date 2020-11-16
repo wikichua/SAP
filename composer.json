@@ -40,7 +40,9 @@
         "arcanedev/laravel-markdown": "dev-master",
         "spatie/async": "dev-master",
         "doctrine/cache": "^1.10",
-        "jenssegers/agent": "dev-master"
+        "jenssegers/agent": "dev-master",
+        "spatie/laravel-honeypot": "dev-master",
+        "infureal/artisan-gui": "dev-main"
     },
     "autoload": {
         "psr-4": {

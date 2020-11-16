@@ -97,6 +97,7 @@ Laravel oriented package. This package is mainly for
 1. IP Location
 1. Last Activity show by user and profile
 1. Queue Manager (Laravel Horizon is cool, but...Decided to do self made)
+1. Honeypot to secure from spammer (https://github.com/spatie/laravel-honeypot)
 
 ## Todo List
 
@@ -130,3 +131,4 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/jenssegers/laravel-mongodb
 1. https://github.com/sparksuite/simplemde-markdown-editor
 1. https://github.com/ARCANEDEV/LaravelMarkdown
+1. https://github.com/spatie/laravel-honeypot

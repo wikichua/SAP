@@ -14,9 +14,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('nav.update',[$model->id]) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+            <x-sap::form ajax="true" method="PATCH" action="{{ route('nav.update',[$model->id]) }}">
                 <x-sap::select-field name="brand_id" id="brand_id" label="Brand" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>
                 <x-sap::select-field name="locale" id="locale" label="Locale" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('locales')" :selected="$model->locale ?? []"/>
                 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name ?? ''"/>
@@ -29,7 +27,7 @@
                 <button type="submit" class="btn btn-primary">
                 Save
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

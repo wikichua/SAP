@@ -14,6 +14,7 @@
     </div>
     <form class="user" method="POST" action="{{ route('password.email') }}">
         @csrf
+        @honeypot
         <div class="form-group">
             <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email"
                 value="{{ old('email') }}" required autocomplete="email" autofocus

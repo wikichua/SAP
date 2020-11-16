@@ -1,6 +1,7 @@
 ## Available Components
 
 - [Config](#Config)
+- [form](#form)
 - [text](#text)
 - [file](#file)
 - [image](#image)
@@ -70,6 +71,22 @@
 1. *mutators*. set or get mutators for the field, in php coding method
 1. *relationship*. declare the relationship if there is
 1. *user_timezone*. true or false, usually this is needed for *datetime*, or *date* field type
+
+#### form
+
+This component included the @csrf, @honeypot and @method if method not belongs to GET and POST
+
+```php
+<x-sap::form ajax="true" method="POST" action="{{ route('your.route.name') }}" class="" confirm="If you need to confirm before form submit">
+...
+</x-sap::form>
+```
+
+- Method can be GET, POST, DELETE, PATCH, and PUT
+- Confirm will prompt a confirmation modal (swal2) before submitting to backend. This will only work on ajax = true
+- Ajax set true or false or empty or not declared. This will decide if your form submit via ajax or post request
+- Class is a string...
+
 
 #### text
 

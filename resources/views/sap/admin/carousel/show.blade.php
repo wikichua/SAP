@@ -14,7 +14,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            @csrf
             <x-sap::display-field type="text" name="slug" id="slug" label="Slug" :value="$model->slug"/>
             <x-sap::display-field type="text" name="brand_id" id="brand_id" label="Brand" :value="$model->brand_id"/>
             <x-sap::display-field type="text" name="image_url" id="image_url" label="Image" :value="$model->image_url"/>

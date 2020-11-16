@@ -16,11 +16,10 @@
         <div class="table">
             <div class="row">
                 <div class="col">
-                    <form novalidate method="POST" action="{{ route('component.try',[$model->id]) }}" id="component-try-form">
-                        @csrf
+                    <x-sap::form ajax="true" method="POST" action="{{ route('component.try',[$model->id]) }}" id="component-try-form">
                         <x-sap::textarea-field name="code" id="code" label="Try It" :class="['']" :attribute_tags="[]" value="<x-{{ strtolower($model->brand->name) }}::{{ \Str::kebab($model->name) }}></x-{{ strtolower($model->brand->name) }}::{{ \Str::kebab($model->name) }}>"/>
                         <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
-                    </form>
+                    </x-sap::form>
                 </div>
                 <div class="col">
                     <h6>Preview</h6>

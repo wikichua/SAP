@@ -7,6 +7,7 @@
     </div>
     <form method="POST" class="user" action="{{ $loginUrl ?? route('login')  }}">
         @csrf
+        @honeypot
         <div class="form-group">
             <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror"
                 placeholder="Enter Email Address..." name="email" value="{{ old('email') }}" required

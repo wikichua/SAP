@@ -14,15 +14,13 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('permission.update',[$model->id]) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+            <x-sap::form ajax="true" method="PATCH" action="{{ route('permission.update',[$model->id]) }}">
                 <x-sap::input-field type="text" name="group" id="group" label="Group" :class="[]" :value="$model->group"/>
                 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

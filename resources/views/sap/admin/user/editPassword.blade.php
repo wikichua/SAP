@@ -14,15 +14,13 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('user.updatePassword',[$id]) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+            <x-sap::form ajax="true" method="PATCH" action="{{ route('user.updatePassword',[$id]) }}">
                 <x-sap::input-field type="password" name="password" id="password" label="Password" :class="[]"/>
                 <x-sap::input-field type="password" name="password_confirmation" id="password_confirmation" label="Confirm Password" :class="[]"/>
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

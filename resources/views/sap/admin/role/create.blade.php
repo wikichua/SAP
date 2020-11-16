@@ -14,13 +14,12 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('role.store') }}" enctype="multipart/form-data">
-                @csrf
+            <x-sap::form ajax="true" method="POST" action="{{ route('role.store') }}">
                 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" value=""/>
                 <x-sap::select-field name="admin" id="admin" label="Is Admin" :class="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="[false=>'No',true=>'Yes']" :selected="[]"/>
 				<x-sap::checkboxes-field name="permissions" id="permissions" label="Permissions" :class="[]" :options="$group_permissions" :isGroup="true"/>
               	<button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

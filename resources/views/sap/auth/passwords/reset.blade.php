@@ -8,6 +8,7 @@
     </div>
     <form class="user" method="POST" action="{{ route('password.update') }}">
         @csrf
+        @honeypot
         <input type="hidden" name="token" value="{{ $token }}">
         <div class="form-group">
             <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email"

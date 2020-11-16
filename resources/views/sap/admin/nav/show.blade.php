@@ -14,7 +14,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            @csrf
             @php
                 $link = '<a href="'.route_slug(strtolower($model->brand->name).'.page',$model->route_slug,$model->route_params, $model->locale).'" target="_blank">'.$model->name.'</a>';
             @endphp

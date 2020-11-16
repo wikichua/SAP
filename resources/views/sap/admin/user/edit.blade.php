@@ -14,9 +14,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('user.update',[$model->id]) }}" enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+            <x-sap::form ajax="true" method="PATCH" action="{{ route('user.update',[$model->id]) }}">
                 <x-sap::select-field name="brand_id" id="brand_id" label="Brand" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.brand'))->query()->pluck('name','id')->toArray()" :selected="$model->brand_id ?? []"/>
                 <x-sap::input-field type="text" name="name" id="name" label="Full Name" :class="[]" :value="$model->name"/>
                 <x-sap::input-field type="email" name="email" id="email" label="Email" :class="[]" :value="$model->email"/>
@@ -26,7 +24,7 @@
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

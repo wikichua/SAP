@@ -8,13 +8,11 @@
     @endcan
     @if ($model->id != auth()->user()->id)
         @can('Delete Users')
-        <form method="POST" action="{{ route('user.destroy', $model->id) }}" class="d-inline-block" novalidate data-ajax-form data-confirm="You won't be able to revert this!">
-            @csrf
-            @method('DELETE')
+        <x-sap::form ajax="true" method="DELETE" action="{{ route('user.destroy', $model->id) }}" class="d-inline-block" confirm="You won't be able to revert this!">
             <button type="submit" class="btn btn-link text-secondary p-1" title="Delete">
                 <i class="fas fa-lg fa-trash-alt"></i>
             </button>
-        </form>
+        </x-sap::form>
         @endcan
 
         @can('Impersonate Users')

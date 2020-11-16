@@ -14,8 +14,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('report.store') }}" enctype="multipart/form-data">
-                @csrf
+            <x-sap::form ajax="true" method="POST" action="{{ route('report.store') }}">
                 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name ?? ''"/>
                 <x-sap::input-field type="number" name="cache_ttl" id="cache_ttl" label="TTL (Seconds)" :class="[]" :value="$model->cache_ttl ?? '300'"/>
                 @include('sap::admin.report.queryInput')
@@ -23,7 +22,7 @@
                 <button type="submit" class="btn btn-primary">
                 Save & Show
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

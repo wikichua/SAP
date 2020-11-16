@@ -14,13 +14,12 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <form novalidate data-ajax-form method="POST" action="{{ route('{%model_variable%}.store') }}" enctype="multipart/form-data">
-                @csrf
+            <x-sap::form ajax="true" method="POST" action="{{ route('{%model_variable%}.store') }}">
                 {%form_fields%}
                 <button type="submit" class="btn btn-primary">
                 Submit
                 </button>
-            </form>
+            </x-sap::form>
         </div>
     </div>
 </div>

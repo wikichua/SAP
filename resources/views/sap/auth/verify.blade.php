@@ -15,6 +15,7 @@
     </div>
     <form class="user" method="POST" action="{{ route('verification.resend') }}">
         @csrf
+        @honeypot
         <div class="form-group">
             <button type="submit"
                 class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.

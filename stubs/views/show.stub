@@ -14,7 +14,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            @csrf
             {%read_fields%}
         </div>
     </div>

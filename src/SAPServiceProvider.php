@@ -24,6 +24,7 @@ class SAPServiceProvider extends ServiceProvider
 
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\HttpsProtocol::class);
+        $this->app['router']->pushMiddlewareToGroup('web', \Spatie\Honeypot\ProtectAgainstSpam::class);
         $this->app['router']->pushMiddlewareToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
 
         // Publishing is only necessary when using the CLI.
@@ -119,7 +120,12 @@ class SAPServiceProvider extends ServiceProvider
             base_path('vendor/lionix/seo-manager/src/assets') =>  public_path('vendor/lionix'),
             // realrashid/sweet-alert
             base_path('vendor/realrashid/sweet-alert/src/config/sweetalert.php') => config_path('sweetalert.php'),
+            // spatie/laravel-honeypot but using modified honeypot config as don't return blankpage
+            __DIR__.'/../config/honeypot.php' => config_path('honeypot.php'),
         ], 'sap.install');
+        $this->publishes([
+            __DIR__.'/../config/honeypot.php' => config_path('honeypot.php'),
+        ], 'sap.update');
 
         // Publishing the translation files.
         /*$this->publishes([
