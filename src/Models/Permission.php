@@ -26,12 +26,14 @@ class Permission extends Model
     }
 
     // create permission group
-    public function createGroup($group, $names = [])
+    public function createGroup($group, $names = [], $user_id = '1')
     {
         foreach ($names as $name) {
             $this->create([
                 'group' => $group,
                 'name' => $name,
+                'created_by' => auth()->check()? auth()->id():$user_id,
+                'updated_by' => auth()->check()? auth()->id():$user_id,
             ]);
         }
     }
