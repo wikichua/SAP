@@ -9,6 +9,7 @@ class SapSeedData extends Migration
     public function up()
     {
         // create default admin user
+        \Cache::forget('SYSADMINID');
         $user = app(config('auth.providers.users.model'))->create([
             'name' => 'Admin',
             'email' => 'admin@email.com',

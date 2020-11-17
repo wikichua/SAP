@@ -139,3 +139,10 @@ if (!function_exists('brand')) {
         return Help::brand($brandName);
     }
 }
+
+if (!function_exists('sysAdminId')) {
+    function sysAdminId()
+    {
+        return Help::sysAdminId();
+    }
+}

@@ -23,7 +23,7 @@ class Sap{%brand_name%}BrandSeed extends Migration
             $table->uuid('updated_by')->nullable()->default(1);
         });
 
-        $user = app(config('sap.models.user'))->whereType('Admin')->first();
+        $user_id = sysAdminId();
 
         $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',
@@ -31,8 +31,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'published_at' => \Carbon\Carbon::now(),
             'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         \Cache::forget('brand-{%brand_name%}');
@@ -41,40 +41,40 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'name' => 'NavbarTop',
             'brand_id' => $brand->id,
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.component'))->query()->create([
             'name' => 'NavbarTopLogin',
             'brand_id' => $brand->id,
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.component'))->query()->create([
             'name' => 'LoginModal',
             'brand_id' => $brand->id,
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.component'))->query()->create([
             'name' => 'Carousel',
             'brand_id' => $brand->id,
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.component'))->query()->create([
             'name' => 'Alert',
             'brand_id' => $brand->id,
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.nav'))->query()->create([
@@ -86,8 +86,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'brand_id' => $brand->id,
             'status' => 'A',
             'seq' => 1,
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
         app(config('sap.models.page'))->query()->create([
             'name' => 'Sample Page',
@@ -106,8 +106,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'published_at' => \Carbon\Carbon::now(),
             'expired_at' => \Carbon\Carbon::now()->addYear(),
             'status' => 'A',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.carousel'))->query()->create([
@@ -120,8 +120,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'status' => 'A',
             'seq' => 1,
             'tags' => ['new','hot'],
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.carousel'))->query()->create([
@@ -134,8 +134,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'status' => 'A',
             'seq' => 1,
             'tags' => ['new','hot'],
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
 
         app(config('sap.models.carousel'))->query()->create([
@@ -148,8 +148,8 @@ class Sap{%brand_name%}BrandSeed extends Migration
             'status' => 'A',
             'seq' => 1,
             'tags' => ['new','hot'],
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
+            'created_by' => $user_id,
+            'updated_by' => $user_id,
         ]);
     }
 

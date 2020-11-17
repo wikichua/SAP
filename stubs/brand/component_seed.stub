@@ -11,7 +11,7 @@ class Sap{%comp_name%}ComponentSeed extends Migration
         app(config('sap.models.component'))->query()->create([
             'name' => '{%comp_name%}',
             'status' => 'P',
-            'brand_id' => {%brand_id%},
+            'brand_id' => '{%brand_id%}',
         ]);
     }
 }

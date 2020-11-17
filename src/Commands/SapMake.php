@@ -158,7 +158,7 @@ class SapMake extends Command
                         $opts[] = "'$key' => '$value'";
                     }
                     $setting_keys[] = $setting_key = "{$this->replaces['{%model_variable%}']}_{$field}";
-                    $settings_options_up[] = "app(config('sap.models.setting'))->create(['created_by' => \$user->id, 'updated_by' => \$user->id, 'key' => '$setting_key','value' => [".implode(',', $opts).']]);';
+                    $settings_options_up[] = "app(config('sap.models.setting'))->create(['created_by' => \$user_id, 'updated_by' => \$user_id, 'key' => '$setting_key','value' => [".implode(',', $opts).']]);';
                     $settings_options_down[] = "app(config('sap.models.setting'))->where('key','$setting_key')->forceDelete();";
                     $replace_for_form['{%option_key%}'] = "settings['{$setting_key}']";
                     $select_options = "settings('{$setting_key}')";

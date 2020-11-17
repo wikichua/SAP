@@ -18,10 +18,10 @@ class Sap{%model%}Table extends Migration
             $table->softDeletes();
             {%orderable_migration%}
         });
-        $user = app(config('sap.models.user'))->whereType('Admin')->first();
+        $user_id = sysAdminId();
 
         {%settings_options_up%}
-        app(config('sap.models.permission'))->createGroup('{%permission_string%}', ['Create {%permission_string%}', 'Read {%permission_string%}', 'Update {%permission_string%}', 'Delete {%permission_string%}'], app(config('sap.models.user'))->whereType('Admin')->first()->id);
+        app(config('sap.models.permission'))->createGroup('{%permission_string%}', ['Create {%permission_string%}', 'Read {%permission_string%}', 'Update {%permission_string%}', 'Delete {%permission_string%}'], $user_id);
     }
     public function down()
     {
