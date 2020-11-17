@@ -123,6 +123,7 @@ Laravel oriented package. This package is mainly for
 1. https://summernote.org/
 1. https://codemirror.net/
 1. https://momentjs.com/
+1. https://pushjs.org/
 1. https://mdbootstrap.com
 1. https://bootstrap-table.com
 1. https://github.com/UniSharp/laravel-filemanager

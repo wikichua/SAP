@@ -132,6 +132,38 @@ const fireRequest = function(form, action) {
         $('#overlayLoader').hide();
     });
 }
+const webPush = function (title, message, icon, link, timeout) {
+    Push.create(title,
+    {
+        body: message,
+        icon: icon,
+        link: link,
+        timeout: timeout,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
+}
+const toastPush = function (title, message, icon, link, timeout) {
+    var NotiToast = Swal.mixin(
+    {
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: timeout,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+    NotiToast.fire({
+        icon: 'success',
+        title: title,
+        html: message,
+    });
+}
 $(document).ready(function() {
     // display flash-message
     _.attempt(flashMessage);

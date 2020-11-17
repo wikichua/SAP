@@ -111,6 +111,10 @@ With Helper should be much more easy.
     ]);
 ```
 
+By default, this will pushed to "general" event on your default app channel.
+
+- **message** key is important as to show on the web push notification. If there is no message key defined, array of the param will be imploded to string and assigned to message key.
+
 ### Create New Brand with SAP
 
 **BrandName** - MUST be Plural + Studly Case

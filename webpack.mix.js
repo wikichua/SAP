@@ -14,8 +14,7 @@ mix.js("resources/js/app.js", "public/js")
         'resources/js/jCookie.js',
         'resources/js/sb-admin-2.js',
         'resources/js/jquery.easing.js',
-        'resources/js/serviceWorker.min.js',
-        'resources/js/push.min.js'
+        'resources/js/serviceWorker.min.js'
     ], 'public/js/all.js')
     .scripts([
         'resources/js/datatableformhandling.js'

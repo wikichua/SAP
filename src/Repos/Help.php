@@ -172,18 +172,40 @@ class Help
         return $locales;
     }
 
-    public function pushered($data = [], $channel = '', $event = 'general')
+    public function pushered($data, $channel = '', $event = 'general')
     {
-        $pusher = new \Pusher\Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            [
-                'cluster' => env('PUSHER_APP_CLUSTER'),
-                'useTLS' => true
-            ]
+        $actual_data = [];
+        if (is_object($data)) {
+            return false;
+        }
+        if (!is_array($data)) {
+            if (json_decode($data)) {
+                $data = json_decode($data, 1);
+            } else {
+                $actual_data['message'] = trim($data);
+            }
+        }
+        $actual_data['sender_id'] = sha1(
+            isset($data['sender_id'])? $data['sender_id']:(
+                auth()->check()? auth()->id():0
+            )
         );
-        $pusher->trigger((sha1($channel != '' ? $channel : env("APP_NAME"))), sha1($event), $data);
+        if (is_array($data)) {
+            if (isset($data['message'])) {
+                $actual_data = array_merge($actual_data, $data);
+            } else {
+                $actual_data['message'] = implode("<br />", $data);
+            }
+        }
+
+        $config = config('broadcasting.connections.pusher');
+        $pusher = new \Pusher\Pusher(
+            $config['key'],
+            $config['secret'],
+            $config['app_id'],
+            $config['options'],
+        );
+        return $pusher->trigger((sha1($channel != '' ? $channel : env("APP_NAME"))), sha1($event), $actual_data);
     }
 
     public function isMenuActive($patterns = [])

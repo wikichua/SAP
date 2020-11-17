@@ -101,5 +101,4 @@
     @include('sap::layouts.footer')
     @stack('scripts')
 </body>
-
 </html>

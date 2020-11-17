@@ -12,6 +12,7 @@
 - [opendns](#opendns)
 - [iplocation](#iplocation)
 - [agent and agents](#agent-and-agents)
+- [pushered](#pushered)
 
 #### timezones
 
@@ -132,3 +133,22 @@ Return open IP Location
 ```php
 iplocation($ip = '')
 ```
+
+#### pushered
+
+```php
+    pushered('hello string');
+    pushered(['hello array','hello array again']);
+    pushered(['message' => 'hello message']);
+    pushered([
+        'title' => 'hello title',
+        'message' => 'hello message',
+        'icon' => asset('your/logo'),
+        'link' => 'http://link.com',
+        'timeout' => 5000,
+    ]);
+```
+
+By default, this will pushed to "general" event on your default app channel.
+
+- **message** key is important as to show on the web push notification. If there is no message key defined, array of the param will be imploded to string and assigned to message key.
