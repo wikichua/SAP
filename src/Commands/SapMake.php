@@ -227,15 +227,14 @@ class SapMake extends Command
                     break;
                 case 'checkbox':
                     $form_stub = '<x-sap::checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :class="[{%class_tag%}]" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
-                    $type = $isMultiple? 'list':'text';
-                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="'.$type.'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="list"/>';
                     break;
                 case 'editor':
                     $form_stub = '<x-sap::editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="editor"/>';
                     break;
                 case 'markdown':
-                    $form_stub = '<x-sap::markdown-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" value="$model->{%field%} ?? \'\'"/>';
+                    $form_stub = '<x-sap::markdown-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="markdown"/>';
                     break;
                 default:

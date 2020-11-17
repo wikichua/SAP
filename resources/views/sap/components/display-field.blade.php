@@ -2,7 +2,11 @@
 	foreach ($attributes as $key => $val) {
 		$$key = $val;
 	}
-	$value = trim(isset($value)? $value:'');
+	$value = isset($value)? $value:'';
+    if (!is_array($value) && !is_object($value))
+    {
+        $value = trim($value);
+    }
 @endphp
 <div class="list-group-item">
     <div class="form-group row mb-0">
@@ -57,7 +61,11 @@
                             @endif
                         @break
 				    @default
+                        @if (is_array($value))
+                        {!! implode(',', $value) !!}
+                        @else
 				        {{ $value }}
+                        @endif
 				@endswitch
         	</div>
         </div>

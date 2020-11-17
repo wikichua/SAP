@@ -356,7 +356,7 @@ return [
             'attributes' => [],
             'list' => false,
             'search' => false,
-            'migration' => 'string:{%field%},1|nullable|default:',
+            'migration' => 'uuid:{%field%},1|nullable|default:',
             'validation' => [
                 'create' => 'required',
                 'update' => 'required',
@@ -384,7 +384,7 @@ return [
                 ],
             'list' => false,
             'search' => false,
-            'migration' => 'string:{%field%},1|nullable|default:',
+            'migration' => 'uuid:{%field%},1|nullable|default:',
             'validation' => [
                 'create' => 'required',
                 'update' => 'required',

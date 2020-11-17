@@ -11,26 +11,20 @@ class CreateRolesTable extends Migration
         cache()->forget('fillable-roles');
         // create table
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('name')->index();
             $table->boolean('admin')->default(false)->index();
             $table->timestamps();
-            $table->integer('created_by')->nullable()->default(1);
-            $table->integer('updated_by')->nullable()->default(1);
+            $table->uuid('created_by')->nullable()->default(1);
+            $table->uuid('updated_by')->nullable()->default(1);
         });
 
         // create role user relation table
         Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('role_id')->index();
-            $table->integer('user_id')->index();
+            $table->uuid('role_id')->index();
+            $table->uuid('user_id')->index();
         });
-
-        // create default admin role
-        app(config('sap.models.role'))->create([
-            'name' => 'Admin',
-            'admin' => true,
-        ]);
     }
 
     public function down()

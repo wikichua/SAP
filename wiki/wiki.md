@@ -26,6 +26,7 @@ Laravel oriented package. This package is mainly for
 1. ACL - Manage users, assign roles & permission, impersonating, check last activity details
 1. Activity Logs - Helper to create logs in database
 1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
+1. Security - UUID for replacing integer ID. Honeypot to prevent spamming.
 
 ## Requirements
 

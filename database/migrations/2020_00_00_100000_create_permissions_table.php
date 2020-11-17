@@ -11,26 +11,26 @@ class CreatePermissionsTable extends Migration
         cache()->forget('fillable-permissions');
         // create table
         Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('group');
             $table->string('name');
             $table->timestamps();
-            $table->integer('created_by')->nullable()->default(1);
-            $table->integer('updated_by')->nullable()->default(1);
+            $table->uuid('created_by')->nullable()->default(1);
+            $table->uuid('updated_by')->nullable()->default(1);
         });
 
         // create permission role relation table
         Schema::create('permission_role', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('permission_id')->index();
-            $table->integer('role_id')->index();
+            $table->uuid('permission_id')->index();
+            $table->uuid('role_id')->index();
         });
 
         // create permission user relation table
         Schema::create('permission_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('permission_id')->index();
-            $table->integer('user_id')->index();
+            $table->uuid('permission_id')->index();
+            $table->uuid('user_id')->index();
         });
     }
 

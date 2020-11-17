@@ -9,8 +9,8 @@ class SapNavTable extends Migration
     public function up()
     {
         Schema::create('navs', function (Blueprint $table) {
-            $table->increments('id', true);
-            $table->integer('brand_id')->nullable()->default(0);
+            $table->uuid('id')->primary();
+            $table->uuid('brand_id')->nullable()->default(0);
             $table->string('name')->nullable()->default('');
             $table->string('locale', 2)->nullable()->default('en');
             $table->string('group_slug')->nullable()->default('');
@@ -19,8 +19,8 @@ class SapNavTable extends Migration
             $table->json('route_params')->nullable()->default('');
             $table->integer('seq')->default(1);
             $table->string('status', 1)->nullable()->default('A');
-            $table->integer('created_by')->nullable()->default(0);
-            $table->integer('updated_by')->nullable()->default(0);
+            $table->uuid('created_by')->nullable()->default(0);
+            $table->uuid('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

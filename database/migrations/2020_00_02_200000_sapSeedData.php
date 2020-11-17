@@ -8,6 +8,26 @@ class SapSeedData extends Migration
 {
     public function up()
     {
+        // create default admin role
+        app(config('sap.models.role'))->create([
+            'name' => 'Admin',
+            'admin' => true,
+        ]);
+        // create default admin user
+        $user = app(config('auth.providers.users.model'))->create([
+            'name' => 'Admin',
+            'email' => 'admin@email.com',
+            'password' => Hash::make('admin123'),
+            'type' => 'Admin',
+        ]);
+        // give default admin user default admin role
+        $user->roles()->attach(app(config('sap.models.role'))->where('admin', true)->first()->id);
+
+        $user = app(config('auth.providers.users.model'))->create([
+            'name' => 'User',
+            'email' => 'user@email.com',
+            'password' => Hash::make('admin123'),
+        ]);
         app(config('sap.models.permission'))->createGroup('Activity Logs', ['Read Activity Logs']);
         app(config('sap.models.permission'))->createGroup('Admin Panel', ['Access Admin Panel']);
         app(config('sap.models.permission'))->createGroup('Permissions', ['Create Permissions', 'Read Permissions', 'Update Permissions', 'Delete Permissions']);

@@ -38,4 +38,23 @@ trait AllModelTraits
             activity($mode .' '. $name . ': ' . $this->id, $this->attributes, $this, static::$opendns);
         }
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = \Str::uuid();
+        });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
 }

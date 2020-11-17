@@ -10,11 +10,11 @@ class SapComponentTable extends Migration
     {
         cache()->forget('fillable-components');
         Schema::create('components', function (Blueprint $table) {
-            $table->increments('id', true);
+            $table->uuid('id')->primary();
             $table->string('name')->nullable()->default('');
-            $table->integer('brand_id')->nullable()->default(0);
-            $table->integer('created_by')->nullable()->default(0);
-            $table->integer('updated_by')->nullable()->default(0);
+            $table->uuid('brand_id')->nullable()->default(0);
+            $table->uuid('created_by')->nullable()->default(0);
+            $table->uuid('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
