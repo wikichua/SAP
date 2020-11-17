@@ -24,7 +24,7 @@ class SapConfig extends Command
                 return '';
             }
             $config_path = base_path('brand/'.$this->brand.'/config/sap');
-            $model = $this->brand.$this->argument('model');
+            $model = $this->brand.(str_replace($this->brand, '', $this->argument('model')));
         } else {
             $config_path = 'config/sap';
             $model = $this->argument('model');

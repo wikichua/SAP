@@ -10,9 +10,9 @@ class SapCarouselTable extends Migration
     {
         cache()->forget('fillable-carousels');
         Schema::create('carousels', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('slug')->nullable()->default('');
-            $table->uuid('brand_id')->nullable()->default(0);
+            $table->integer('brand_id')->nullable()->default(0);
             $table->text('image_url')->nullable();
             $table->text('caption')->nullable();
             $table->integer('seq')->nullable()->default(1);
@@ -20,8 +20,8 @@ class SapCarouselTable extends Migration
             $table->date('published_at')->nullable();
             $table->date('expired_at')->nullable();
             $table->string('status', 1)->nullable()->default('');
-            $table->uuid('created_by')->nullable()->default(0);
-            $table->uuid('updated_by')->nullable()->default(0);
+            $table->integer('created_by')->nullable()->default(0);
+            $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

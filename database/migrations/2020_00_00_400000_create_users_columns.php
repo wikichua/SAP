@@ -17,8 +17,8 @@ class CreateUsersColumns extends Migration
             $table->json('social')->nullable();
             $table->string('avatar')->nullable();
             $table->string('timezone')->default(config('app.timezone'))->index();
-            $table->uuid('created_by')->nullable()->default(1);
-            $table->uuid('updated_by')->nullable()->default(1);
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
 
         Schema::dropIfExists('password_resets');
@@ -33,7 +33,7 @@ class CreateUsersColumns extends Migration
                 $table->dropColumn('id');
             });
             Schema::table('personal_access_tokens', function (Blueprint $table) {
-                $table->uuid('id')->primary()->before('tokenable');
+                $table->increments('id')->before('tokenable');
                 $table->string('plain_text_token')->nullable()->index();
             });
         }

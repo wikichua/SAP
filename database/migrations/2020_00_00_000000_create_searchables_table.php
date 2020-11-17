@@ -9,11 +9,11 @@ class CreateSearchablesTable extends Migration
     public function up()
     {
         Schema::create('searchables', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('model');
-            $table->uuid('model_id');
+            $table->integer('model_id');
             $table->json('tags');
-            $table->uuid('brand_id')->default(0);
+            $table->integer('brand_id')->default(0);
             $table->timestamps();
 
             $table->index(['model']);

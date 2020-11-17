@@ -26,7 +26,7 @@ class SapMake extends Command
                 $this->error('Brand not found: <info>'.$this->brand.'</info>');
                 return '';
             }
-            $this->model = $this->brand.$this->argument('model');
+            $this->model = $this->brand.(str_replace($this->brand, '', $this->argument('model')));
             $config_file = base_path('brand/'.$this->brand.'/config/sap/'.$this->model.'Config.php');
         } else {
             $this->model = $this->argument('model');
@@ -414,7 +414,7 @@ EOT;
         }
         $menu_stub = $this->files->get($menu_stub);
         if ($this->brand) {
-            $toWriteInFile = base_path('brand/'.$this->brand.'/resources/views/layouts/menu.blade.php');
+            $toWriteInFile = base_path('brand/'.$this->brand.'/resources/views/admin/menu.blade.php');
         } else {
             $toWriteInFile = resource_path('views/vendor/sap/components/admin-menu.blade.php');
         }
@@ -436,7 +436,7 @@ EOT;
             return;
         }
         if ($this->brand) {
-            $model_file = base_path('brand/'.$this->brand.'/models/'.$this->replaces['{%model%}'].'.php');
+            $model_file = base_path('brand/'.$this->brand.'/Models/'.$this->replaces['{%model%}'].'.php');
         } else {
             $model_file = app_path(config('sap.custom_model_dir').'/'.$this->replaces['{%model%}'].'.php');
         }

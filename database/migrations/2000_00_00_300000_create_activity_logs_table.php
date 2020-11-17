@@ -11,16 +11,16 @@ class CreateActivityLogsTable extends Migration
         cache()->forget('fillable-activity_logs');
         // create table
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id')->nullable()->index();
-            $table->uuid('model_id')->nullable()->index();
+            $table->increments('id');
+            $table->integer('user_id')->nullable()->index();
+            $table->integer('model_id')->nullable()->index();
             $table->string('model_class')->nullable();
             $table->string('message')->index();
             $table->json('data')->nullable();
             $table->json('agents')->nullable();
             $table->string('opendns')->nullable();
             $table->json('iplocation')->nullable();
-            $table->uuid('brand_id')->nullable()->index();
+            $table->integer('brand_id')->nullable()->index();
             $table->timestamp('created_at')->index();
         });
     }

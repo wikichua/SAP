@@ -10,14 +10,14 @@ class SapBrandTable extends Migration
     {
         cache()->forget('fillable-brands');
         Schema::create('brands', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('name')->nullable()->default('');
             $table->string('domain')->nullable()->default('');
             $table->date('published_at')->nullable();
             $table->date('expired_at')->nullable();
             $table->string('status', 1)->nullable()->default('');
-            $table->uuid('created_by')->nullable()->default(0);
-            $table->uuid('updated_by')->nullable()->default(0);
+            $table->integer('created_by')->nullable()->default(0);
+            $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

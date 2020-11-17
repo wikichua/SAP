@@ -11,19 +11,19 @@ class CreateRolesTable extends Migration
         cache()->forget('fillable-roles');
         // create table
         Schema::create('roles', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('name')->index();
             $table->boolean('admin')->default(false)->index();
             $table->timestamps();
-            $table->uuid('created_by')->nullable()->default(1);
-            $table->uuid('updated_by')->nullable()->default(1);
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
 
         // create role user relation table
         Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('role_id')->index();
-            $table->uuid('user_id')->index();
+            $table->integer('role_id')->index();
+            $table->integer('user_id')->index();
         });
     }
 

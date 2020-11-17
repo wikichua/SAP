@@ -9,7 +9,7 @@ class Sap{%brand_name%}BrandSeed extends Migration
     public function up()
     {
         Schema::create('{%brand_string%}_users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -19,11 +19,11 @@ class Sap{%brand_name%}BrandSeed extends Migration
             $table->json('social')->nullable();
             $table->string('avatar')->nullable();
             $table->string('timezone')->default(config('app.timezone'))->index();
-            $table->uuid('created_by')->nullable()->default(1);
-            $table->uuid('updated_by')->nullable()->default(1);
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
 
-        $user_id = sysAdminId();
+        $user_id = 1;
 
         $brand = app(config('sap.models.brand'))->query()->create([
             'name' => '{%brand_name%}',

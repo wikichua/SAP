@@ -10,15 +10,15 @@ class Sap{%model%}Table extends Migration
     {
         cache()->forget('fillable-{%table_name%}');
         Schema::create('{%table_name%}', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             {%migration_codes%}
-            $table->uuid('created_by')->nullable()->default(0);
-            $table->uuid('updated_by')->nullable()->default(0);
+            $table->integer('created_by')->nullable()->default(0);
+            $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
             {%orderable_migration%}
         });
-        $user_id = sysAdminId();
+        $user_id = 1;
 
         {%settings_options_up%}
         app(config('sap.models.permission'))->createGroup('{%permission_string%}', ['Create {%permission_string%}', 'Read {%permission_string%}', 'Update {%permission_string%}', 'Delete {%permission_string%}'], $user_id);

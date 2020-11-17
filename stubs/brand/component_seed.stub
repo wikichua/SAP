@@ -12,6 +12,8 @@ class Sap{%comp_name%}ComponentSeed extends Migration
             'name' => '{%comp_name%}',
             'status' => 'P',
             'brand_id' => '{%brand_id%}',
+            'created_by' => 1,
+            'updated_by' => 1,
         ]);
     }
 }

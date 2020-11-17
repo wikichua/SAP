@@ -11,13 +11,13 @@ class CreateSettingsTable extends Migration
         cache()->forget('fillable-settings');
         // create table
         Schema::create('settings', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->increments('id');
             $table->string('key')->index();
             $table->longText('value')->nullable();
             $table->boolean('protected')->default(false);
             $table->timestamps();
-            $table->uuid('created_by')->nullable()->default(1);
-            $table->uuid('updated_by')->nullable()->default(1);
+            $table->integer('created_by')->nullable()->default(1);
+            $table->integer('updated_by')->nullable()->default(1);
         });
     }
 

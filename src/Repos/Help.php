@@ -135,13 +135,6 @@ class Help
         return $data;
     }
 
-    public function sysAdminId()
-    {
-        return \Cache::remember('SYSADMINID', (60 * 60 * 24), function () {
-            return app(config('sap.models.user'))->whereType('Admin')->first()->id;
-        });
-    }
-
     public function activity($message, $data = [], $model = null, $ip = '')
     {
         // unset hidden form fields
@@ -155,7 +148,7 @@ class Help
         }
 
         app(config('sap.models.activity_log'))->create([
-            'user_id' => auth()->check() ? auth()->user()->id : $this->sysAdminId(),
+            'user_id' => auth()->check() ? auth()->user()->id : 1,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,
             'message' => $message,

@@ -12,8 +12,8 @@ class AddBrandIdInUsersTable extends Migration
             $table->dropColumn('id');
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->uuid('id')->primary()->before('name');
-            $table->uuid('brand_id')->nullable()->default(null);
+            $table->increments('id')->before('name');
+            $table->integer('brand_id')->nullable()->default(null);
         });
     }
     public function down()

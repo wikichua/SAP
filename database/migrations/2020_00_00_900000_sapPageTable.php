@@ -10,8 +10,8 @@ class SapPageTable extends Migration
     {
         cache()->forget('fillable-pages');
         Schema::create('pages', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('brand_id')->nullable()->default(0);
+            $table->increments('id');
+            $table->integer('brand_id')->nullable()->default(0);
             $table->string('locale', 2)->nullable()->default('en');
             $table->string('name')->nullable()->default('');
             $table->string('template')->nullable()->default('layouts.main');
@@ -22,8 +22,8 @@ class SapPageTable extends Migration
             $table->date('published_at')->nullable();
             $table->date('expired_at')->nullable();
             $table->string('status', 1)->nullable()->default('');
-            $table->uuid('created_by')->nullable()->default(0);
-            $table->uuid('updated_by')->nullable()->default(0);
+            $table->integer('created_by')->nullable()->default(0);
+            $table->integer('updated_by')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
