@@ -27,12 +27,13 @@ Laravel oriented package. This package is mainly for
 1. Activity Logs - Helper to create logs in database
 1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
 1. Security - Honeypot to prevent spamming.
+1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
 
 ## Requirements
 
 1. A new Laravel related project (completedly new)
 1. Composer require laravel/ui (no need installing the auth scaffolding)
-1. Redis or Memcached
+1. Redis
 1. Supervisord
 1. A working NPM in your machine
 1. Knowledge in jQuery, Bootstrap, Material Design Bootstrap, Axios, Sass, Lodash & all Laravel stuffs...
