@@ -9,7 +9,7 @@
 - [Create Component which belongs to Brand Only](#Create-Component-which-belongs-to-Brand-Only)
 - [Using Pusher in your application](#Using-Pusher-in-your-application)
 - [Run Indexing Data Into Global Searchable](#Run-Indexing-Data-Into-Global-Searchable)
-- [Run report with Artisan and Task Scheduler](#Run-report-with-Artisan-and-Task-Scheduler)
+- [Run Report with Artisan and Task Scheduler](#Run-Report-with-Artisan-and-Task-Scheduler)
 - [Queue and Cache Closure](#Queue-and-Cache-Closure)
 - [PHP Debug Bar](#PHP-Debug-Bar)
 - [Disable Artisan Command](#Disable-Artisan-Command)
@@ -175,7 +175,7 @@ Run in your bash
 php artisan sap:index
 ```
 
-### Run report with Artisan and Task Scheduler
+### Run Report with Artisan and Task Scheduler
 
 ```bash
 php artisan sap:report
@@ -214,7 +214,41 @@ php artisan queue:work --tries=3 --backoff=3 --queue=report_processing
 
 ### Queue and Cache Closure
 
-Coming Soon
+#### Queue
+
+```php
+dispatch(function () use ($mail) {
+    $mail->send();
+})->onQueue('high');
+```
+
+```bash
+php artisan queue:work --queue=high,low
+```
+
+#### Cache
+
+```php
+// set cache
+cache(['key' => 'value'], $seconds);
+cache(['key' => 'value'], now()->addSeconds(10));
+// get cache
+$value = cache('key');
+// get cache, if no set return default
+$value = cache('key', 'default');
+// remove cache
+cache()->forget('key');
+// flush all caches
+cache()->flush();
+// closure with ttl
+$users = cache()->remember('users', $seconds, function () {
+    return DB::table('users')->get();
+});
+// closure without ttl and never expired
+$users = cache()->rememberForever('users', function () {
+    return DB::table('users')->get();
+});
+```
 
 ### PHP Debug Bar
 
