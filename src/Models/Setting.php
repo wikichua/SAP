@@ -104,4 +104,9 @@ class Setting extends Model
     {
         return $this->readUrl = route('setting.show', $this->id);
     }
+
+    public function onCachedEvent()
+    {
+        cache()->forget('config-settings');
+    }
 }

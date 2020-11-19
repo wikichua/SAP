@@ -79,8 +79,6 @@ class NavController extends Controller
 
         $model = app(config('sap.models.nav'))->create($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Nav Created.',
@@ -139,8 +137,6 @@ class NavController extends Controller
 
         $model->update($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Nav Updated.',
@@ -155,8 +151,6 @@ class NavController extends Controller
     {
         $model = app(config('sap.models.nav'))->query()->findOrFail($id);
         $model->delete();
-
-        Cache::flush();
 
         return response()->json([
             'status'   => 'success',

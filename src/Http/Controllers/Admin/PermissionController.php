@@ -67,8 +67,6 @@ class PermissionController extends Controller
 
         $model = app(config('sap.models.permission'))->create($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Created.',
@@ -105,8 +103,6 @@ class PermissionController extends Controller
 
         $model->update($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Updated.',
@@ -120,8 +116,6 @@ class PermissionController extends Controller
     {
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
         $model->delete();
-
-        Cache::flush();
 
         return response()->json([
             'status' => 'success',

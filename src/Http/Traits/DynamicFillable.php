@@ -16,7 +16,7 @@ trait DynamicFillable
             && count($this->fillable)) {
             return $this->fillable;
         }
-        return Cache::remember('fillable-'.$this->getTable(), (60*60*24), function () {
+        return Cache::remember('fillable:'.$this->getTable(), (60*60*24), function () {
             return Schema::connection($this->connection)->getColumnListing($this->getTable());
         });
     }

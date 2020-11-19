@@ -193,11 +193,12 @@ class SAPServiceProvider extends ServiceProvider
     protected function configSettings()
     {
         if (Schema::hasTable('settings')) {
-            foreach (app(config('sap.models.setting'))->all() as $setting) {
-                cache()->rememberForever('setting-'.$setting->key, function () use ($setting) {
-                    return Config::set('settings.'.$setting->key, $setting->value);
-                });
-            }
+            cache()->rememberForever('config-settings', function () {
+                $settings = app(config('sap.models.setting'))->all();
+                foreach ($settings as $setting) {
+                    Config::set('settings.'.$setting->key, $setting->value);
+                }
+            });
         }
     }
 

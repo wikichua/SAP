@@ -14,18 +14,25 @@ trait AllModelTraits
     protected static function booted()
     {
         static::$opendns = opendns();
-        static::created(function ($model) {
-            $model->createSearchable();
-            $model->logActivity('Created');
-        });
-        static::updated(function ($model) {
-            $model->updateSearchable();
-            $model->logActivity('Updated');
+        static::saved(function ($model) {
+            $onWhichEvent = $model->wasRecentlyCreated? 'onCreatedEvent':'onUpdatedEvent';
+            $logWhichActivity = $model->wasRecentlyCreated? 'Created':'Updated';
+            $model->executeEvents([$onWhichEvent,'onCachedEvent','updateSearchable']);
+            $model->logActivity($logWhichActivity);
         });
         static::deleted(function ($model) {
-            $model->deleteSearchable();
+            $model->executeEvents(['onDeletedEvent','onCachedEvent','deleteSearchable']);
             $model->logActivity('Deleted');
         });
+    }
+
+    protected function executeEvents(array $methods)
+    {
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                call_user_func_array([$this,$method], [$this]);
+            }
+        }
     }
 
     protected function logActivity($mode = 'Created')

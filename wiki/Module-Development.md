@@ -14,6 +14,7 @@
 - [PHP Debug Bar](#PHP-Debug-Bar)
 - [Disable Artisan Command](#Disable-Artisan-Command)
 - [Social Lite](#Social-Lite)
+- [Model Events](#Model-Events)
 
 ### Create New Module with SAP
 
@@ -285,3 +286,25 @@ You should see another login page which mainly for public access instead of admi
 You should be seeing login with social media icons appearing based on the those credential filled for your provider.
 
 As for your brand social lite login, you should hardcoded in the brand/**BrandName**/config/services.php
+
+### Model Events
+
+May refer to [Laravel Event](https://laravel.com/docs/8.x/eloquent#events).
+Due to *Saved* and *Deleted* has been used as static called, in case of need to have additional events runs on those events mentioned. Please do use as stated below.
+
+- onCreatedEvent
+- onUpdatedEvent
+- onDeletedEvent
+- onCachedEvent
+
+*onCachedEvent* basically will executed in *Saved* and *Deleted* events.
+In your **model**.php
+
+```php
+    public function onCachedEvent()
+    {
+        cache()->forget('your-cache-name');
+    }
+```
+
+*onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent*, these events will not be execute if there is no defined method in your model php.

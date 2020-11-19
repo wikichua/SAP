@@ -81,8 +81,6 @@ class PageController extends Controller
 
         $model = app(config('sap.models.page'))->create($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Page Created.',
@@ -107,7 +105,7 @@ class PageController extends Controller
         $newModel->locale = null;
         $newModel->saveQuietly();
         activity('Replicated Page: ' . $newModel->id, [], $newModel);
-        Cache::flush();
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Page Replicated.',
@@ -151,8 +149,6 @@ class PageController extends Controller
 
         $model->update($request->all());
 
-        Cache::flush();
-
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Page Updated.',
@@ -167,8 +163,6 @@ class PageController extends Controller
     {
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
         $model->delete();
-
-        Cache::flush();
 
         return response()->json([
             'status'   => 'success',

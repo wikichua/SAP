@@ -39,7 +39,7 @@ class SapSeedData extends Migration
 
         app(config('sap.models.permission'))->createGroup('Activity Logs', ['Read Activity Logs'], $user_id);
         app(config('sap.models.permission'))->createGroup('Admin Panel', ['Access Admin Panel'], $user_id);
-        app(config('sap.models.permission'))->createGroup('Permissions', ['Create Permissions', 'Read Permissions', 'Update Permissions', 'Delet,$user_ide Permissions'], $user_id);
+        app(config('sap.models.permission'))->createGroup('Permissions', ['Create Permissions', 'Read Permissions', 'Update Permissions', 'Delete Permissions'], $user_id);
         app(config('sap.models.permission'))->createGroup('Roles', ['Create Roles', 'Read Roles', 'Update Roles', 'Delete Roles'], $user_id);
         app(config('sap.models.permission'))->createGroup('Users', ['Create Users', 'Read Users', 'Update Users', 'Delete Users', 'Update Users Password'], $user_id);
         if (Schema::hasTable('personal_access_tokens')) {

@@ -37,4 +37,12 @@ class Role extends Model
     {
         return $this->readUrl = route('role.show', $this->id);
     }
+
+    public function onCachedEvent()
+    {
+        $user_ids = \DB::table('role_user')->distinct('user_id')->where('role_id', $this->id)->pluck('user_id');
+        foreach ($user_ids as $user_id) {
+            cache()->forget('permissions:'.$user_id);
+        }
+    }
 }
