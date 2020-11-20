@@ -4,7 +4,7 @@ namespace Wikichua\SAP\View\Components;
 
 use Illuminate\View\Component;
 
-class DropdownMenu extends Component
+class SearchableInput extends Component
 {
     public function __construct()
     {
@@ -12,6 +12,6 @@ class DropdownMenu extends Component
 
     public function render()
     {
-        return view('sap::components.dropdown-menu');
+        return view('sap::components.searchable-input');
     }
 }
