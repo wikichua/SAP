@@ -21,6 +21,27 @@ class GlobalSearchController extends Controller
         return view('sap::admin.dashboard.globalsearch')->with(compact('items'));
     }
 
+    public function suggest(Request $request)
+    {
+        $data = [];
+        $searchable = app(config('sap.models.searchable'))->query();
+        $queryStr = $request->input('q');
+        $searchables = $searchable->filterTags($queryStr)->take(10)->get();
+        foreach ($searchables as $item) {
+            $desc = [];
+            foreach ($item->tags as $key => $val) {
+                $desc[] = ucwords($key).' : '.$val;
+            }
+            $data[] = [
+                'title' => basename(str_replace('\\', '/', $item->model)),
+                'url' => app($item->model)->find($item->model_id)->readUrl ?? '#',
+                'created_at' => $item->updated_at ?? $item->created_at ?? '',
+                'desc' => implode('<br />', $desc),
+            ];
+        }
+        return response()->json($data);
+    }
+
     private function search(string $queryStr = '')
     {
         $searchable = app(config('sap.models.searchable'))->query();
