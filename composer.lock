@@ -594,26 +594,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.0.2",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "48212cdc0a79051d50d7fc2f0645c5a321caf926"
+                "reference": "7a8c6e56ab3ffcc538d05e8155bb42269abf1a0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/48212cdc0a79051d50d7fc2f0645c5a321caf926",
-                "reference": "48212cdc0a79051d50d7fc2f0645c5a321caf926",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/7a8c6e56ab3ffcc538d05e8155bb42269abf1a0c",
+                "reference": "7a8c6e56ab3ffcc538d05e8155bb42269abf1a0c",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1|^8.0"
+                "php": "^7.2|^8.0",
+                "webmozart/assert": "^1.7.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.11|^0.12",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-webmozart-assert": "^0.12.7",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -644,7 +647,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-13T01:26:01+00:00"
+            "time": "2020-11-24T19:55:57+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -998,12 +1001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/inFureal/artisan-gui.git",
-                "reference": "55483e6b3099a928a183aa2b7d212da3d6cea3de"
+                "reference": "7ae11c809868197abe63718ed0a673b7607de5aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/55483e6b3099a928a183aa2b7d212da3d6cea3de",
-                "reference": "55483e6b3099a928a183aa2b7d212da3d6cea3de",
+                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/7ae11c809868197abe63718ed0a673b7607de5aa",
+                "reference": "7ae11c809868197abe63718ed0a673b7607de5aa",
                 "shasum": ""
             },
             "require": {
@@ -1028,7 +1031,7 @@
                 "MIT"
             ],
             "description": "Beautiful package for [laravel:artisan] gui for cool kids.",
-            "time": "2020-11-04T19:42:37+00:00"
+            "time": "2020-11-22T08:38:40+00:00"
         },
         {
             "name": "intervention/image",
@@ -1161,16 +1164,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.102",
+            "version": "v1.2.103",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "346cfd72d11bb41f15e82654e532dc55360612ac"
+                "reference": "3efa2860959cc971f17624b40bf0699823f9d0f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/346cfd72d11bb41f15e82654e532dc55360612ac",
-                "reference": "346cfd72d11bb41f15e82654e532dc55360612ac",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/3efa2860959cc971f17624b40bf0699823f9d0f3",
+                "reference": "3efa2860959cc971f17624b40bf0699823f9d0f3",
                 "shasum": ""
             },
             "require": {
@@ -1205,7 +1208,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2020-11-04T19:23:01+00:00"
+            "time": "2020-11-23T19:49:25+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -1352,16 +1355,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.14.0",
+            "version": "v8.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b60139c9d3b475d5b5dc261c5dcafe8ca49b4a13"
+                "reference": "0be6761601feb3cc1f51ac04b5cc5fbdde7928c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b60139c9d3b475d5b5dc261c5dcafe8ca49b4a13",
-                "reference": "b60139c9d3b475d5b5dc261c5dcafe8ca49b4a13",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0be6761601feb3cc1f51ac04b5cc5fbdde7928c1",
+                "reference": "0be6761601feb3cc1f51ac04b5cc5fbdde7928c1",
                 "shasum": ""
             },
             "require": {
@@ -1434,8 +1437,8 @@
                 "illuminate/view": "self.version"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "^3.0",
-                "doctrine/dbal": "^2.6",
+                "aws/aws-sdk-php": "^3.155",
+                "doctrine/dbal": "^2.6|^3.0",
                 "filp/whoops": "^2.8",
                 "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
                 "league/flysystem-cached-adapter": "^1.0",
@@ -1447,8 +1450,8 @@
                 "symfony/cache": "^5.1"
             },
             "suggest": {
-                "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.0).",
-                "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6).",
+                "aws/aws-sdk-php": "Required to use the SQS queue driver, DynamoDb failed job storage and SES mail driver (^3.155).",
+                "doctrine/dbal": "Required to rename columns and drop SQLite columns (^2.6|^3.0).",
                 "ext-ftp": "Required to use the Flysystem FTP driver.",
                 "ext-gd": "Required to use Illuminate\\Http\\Testing\\FileFactory::image().",
                 "ext-memcached": "Required to use the memcache cache driver.",
@@ -1511,7 +1514,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-11-10T14:47:10+00:00"
+            "time": "2020-11-24T16:13:01+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1572,12 +1575,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "2d50bf7d43855ce2515981dda332d782b0160bab"
+                "reference": "caf221ad8e2123cef16b963615ceb8640820c4ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/2d50bf7d43855ce2515981dda332d782b0160bab",
-                "reference": "2d50bf7d43855ce2515981dda332d782b0160bab",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/caf221ad8e2123cef16b963615ceb8640820c4ac",
+                "reference": "caf221ad8e2123cef16b963615ceb8640820c4ac",
                 "shasum": ""
             },
             "require": {
@@ -1624,7 +1627,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2020-11-03T19:14:07+00:00"
+            "time": "2020-11-24T17:31:57+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -1632,12 +1635,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "c084240148b2c92bfe4f80eb3aec3a7957cf4125"
+                "reference": "cdb7cf0004c94d0dfa1c93340b1da91dd19cddee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/c084240148b2c92bfe4f80eb3aec3a7957cf4125",
-                "reference": "c084240148b2c92bfe4f80eb3aec3a7957cf4125",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/cdb7cf0004c94d0dfa1c93340b1da91dd19cddee",
+                "reference": "cdb7cf0004c94d0dfa1c93340b1da91dd19cddee",
                 "shasum": ""
             },
             "require": {
@@ -1689,7 +1692,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2020-11-03T19:25:28+00:00"
+            "time": "2020-11-24T17:35:17+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3481,17 +3484,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/async.git",
-                "reference": "de00127d72b9d8394dd6fde05435c17d5980c617"
+                "reference": "e410c38a93b93589dfd8046b4b93cdaa6a9b7de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/async/zipball/de00127d72b9d8394dd6fde05435c17d5980c617",
-                "reference": "de00127d72b9d8394dd6fde05435c17d5980c617",
+                "url": "https://api.github.com/repos/spatie/async/zipball/e410c38a93b93589dfd8046b4b93cdaa6a9b7de2",
+                "reference": "e410c38a93b93589dfd8046b4b93cdaa6a9b7de2",
                 "shasum": ""
             },
             "require": {
                 "opis/closure": "^3.4.2",
-                "php": "^7.1",
+                "php": "^7.1 || ^8.0",
                 "symfony/process": "^3.3 || ^4.0 || ^5.0"
             },
             "require-dev": {
@@ -3530,7 +3533,13 @@
                 "async",
                 "spatie"
             ],
-            "time": "2020-10-12T09:05:23+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-20T06:05:35+00:00"
         },
         {
             "name": "spatie/laravel-honeypot",
@@ -5914,12 +5923,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/UniSharp/laravel-filemanager.git",
-                "reference": "582b6ee5db851a1ddeff8085dcb56e17218dbf10"
+                "reference": "d3bac1f70a4be358d2398b6e816899dd163babe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/582b6ee5db851a1ddeff8085dcb56e17218dbf10",
-                "reference": "582b6ee5db851a1ddeff8085dcb56e17218dbf10",
+                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/d3bac1f70a4be358d2398b6e816899dd163babe4",
+                "reference": "d3bac1f70a4be358d2398b6e816899dd163babe4",
                 "shasum": ""
             },
             "require": {
@@ -5981,7 +5990,7 @@
                 "tinymce",
                 "upload"
             ],
-            "time": "2020-09-13T14:59:41+00:00"
+            "time": "2020-11-18T05:12:18+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -6128,6 +6137,55 @@
                 }
             ],
             "time": "2020-11-12T00:07:28+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozart/assert.git",
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0 || ^8.0",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "conflict": {
+                "phpstan/phpstan": "<0.12.20",
+                "vimeo/psalm": "<3.9.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.36 || ^7.5.13"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "time": "2020-07-08T17:02:28+00:00"
         }
     ],
     "packages-dev": [],
