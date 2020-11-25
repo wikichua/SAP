@@ -64,7 +64,7 @@ class SapMake extends Command
         $this->replaces['{%custom_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Admin':config('sap.custom_controller_namespace');
         $this->replaces['{%custom_api_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Api':config('sap.custom_api_controller_namespace');
         $this->replaces['{%custom_model_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Models':ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
-        $this->replaces['{%page_path%}'] = $this->brand? strtolower($this->brand).'::admin':'admin';
+        $this->replaces['{%page_path%}'] = $this->brand? $this->brand.'::admin':'admin';
         $this->replaces['{%brand_view_namespace%}'] = $this->brand? '$config = require(base_path(\'brand/'.$this->brand.'/config/main.php\'));
         \View::addNamespace(\''.$this->brand.'\', $config[\'resources_path\']);':'';
 
@@ -449,8 +449,8 @@ EOT;
     protected function controller()
     {
         if ($this->brand) {
-            if (!$this->files->exists(base_path('brand/'.$this->brand.'/controllers/Admin'))) {
-                $this->files->makeDirectory(base_path('brand/'.$this->brand.'/controllers/Admin'), 0755, true);
+            if (!$this->files->exists(base_path('brand/'.$this->brand.'/Controllers/Admin'))) {
+                $this->files->makeDirectory(base_path('brand/'.$this->brand.'/Controllers/Admin'), 0755, true);
             }
         } else {
             if (!$this->files->exists(app_path(config('sap.custom_controller_dir')))) {
@@ -463,7 +463,7 @@ EOT;
             return;
         }
         if ($this->brand) {
-            $controller_file = base_path('brand/'.$this->brand.'/controllers/Admin/'.$this->replaces['{%model%}'].'Controller.php');
+            $controller_file = base_path('brand/'.$this->brand.'/Controllers/Admin/'.$this->replaces['{%model%}'].'Controller.php');
         } else {
             $controller_file = app_path(config('sap.custom_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
         }
@@ -476,8 +476,8 @@ EOT;
     protected function api_controller()
     {
         if ($this->brand) {
-            if (!$this->files->exists(base_path('brand/'.$this->brand.'/controllers/Api'))) {
-                $this->files->makeDirectory(base_path('brand/'.$this->brand.'/controllers/Api'), 0755, true);
+            if (!$this->files->exists(base_path('brand/'.$this->brand.'/Controllers/Api'))) {
+                $this->files->makeDirectory(base_path('brand/'.$this->brand.'/Controllers/Api'), 0755, true);
             }
         } else {
             if (!$this->files->exists(app_path(config('sap.custom_api_controller_dir')))) {
@@ -490,7 +490,7 @@ EOT;
             return;
         }
         if ($this->brand) {
-            $controller_file = base_path('brand/'.$this->brand.'/controllers/Api/'.$this->replaces['{%model%}'].'Controller.php');
+            $controller_file = base_path('brand/'.$this->brand.'/Controllers/Api/'.$this->replaces['{%model%}'].'Controller.php');
         } else {
             $controller_file = app_path(config('sap.custom_api_controller_dir').'/'.$this->replaces['{%model%}'].'Controller.php');
         }
