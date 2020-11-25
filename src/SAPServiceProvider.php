@@ -86,20 +86,25 @@ class SAPServiceProvider extends ServiceProvider
         // Publishing the configuration file.
         $this->publishes([
             __DIR__.'/../config/sap.php' => config_path('sap.php'),
-        ], 'sap.config');
+        ], 'sap.export.config');
 
         // Publishing the views.
         $this->publishes([
             __DIR__.'/../resources/views/sap' => base_path('resources/views/vendor/sap'),
-        ], 'sap.view');
+        ], 'sap.export.view');
 
         $this->publishes([
             __DIR__.'/../resources/views/sap/components' => base_path('resources/views/vendor/sap/components'),
-        ], 'sap.component');
+        ], 'sap.export.component');
 
         $this->publishes([
             __DIR__.'/../resources/views/sap/components/menus' => base_path('resources/views/vendor/sap/components/menus'),
-        ], 'sap.menus');
+        ], 'sap.export.menus');
+
+        $this->publishes([
+            __DIR__.'/Models' => app_path('Models/Sap'),
+            __DIR__.'/../config/sap.php' => config_path('sap.php'),
+        ], 'sap.export.model');
 
         $this->publishes([
             __DIR__.'/../resources/views/sap/components/admin-menu.blade.php' => base_path('resources/views/vendor/sap/components/admin-menu.blade.php'),
@@ -123,9 +128,6 @@ class SAPServiceProvider extends ServiceProvider
             // spatie/laravel-honeypot but using modified honeypot config as don't return blankpage
             __DIR__.'/../config/honeypot.php' => config_path('honeypot.php'),
         ], 'sap.install');
-        $this->publishes([
-            __DIR__.'/../config/honeypot.php' => config_path('honeypot.php'),
-        ], 'sap.update');
 
         // Publishing the translation files.
         /*$this->publishes([
