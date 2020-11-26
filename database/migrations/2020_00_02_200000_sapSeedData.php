@@ -74,12 +74,14 @@ class SapSeedData extends Migration
         app(config('sap.models.permission'))->createGroup('Brands', ['Read Brands', 'Update Brands'], $user_id);
         app(config('sap.models.permission'))->createGroup('Components', ['Read Components'], $user_id);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'page_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
-        app(config('sap.models.permission'))->createGroup('Pages', ['Create Pages', 'Read Pages', 'Update Pages', 'Delete Pages'], $user_id);
+        app(config('sap.models.permission'))->createGroup('Pages', ['Create Pages', 'Read Pages', 'Update Pages', 'Delete Pages', 'Replicate Pages'], $user_id);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'nav_status','value' => ['A' => 'Active','I' => 'Inactive']]);
         app(config('sap.models.permission'))->createGroup('Navs', ['Create Navs', 'Read Navs', 'Update Navs', 'Delete Navs'], $user_id);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'carousel_tags','value' => ['new' => 'New','hot' => 'Hot','recommended' => 'Recommended']]);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'carousel_status','value' => ['A' => 'Active','I' => 'Inactive']]);
         app(config('sap.models.permission'))->createGroup('Carousels', ['Create Carousels', 'Read Carousels', 'Update Carousels', 'Delete Carousels'], $user_id);
+        app(config('sap.models.permission'))->createGroup('Files', ['Upload Files', 'Rename Files', 'Delete Files', 'Copy Files'], $user_id);
+        // app(config('sap.models.permission'))->createGroup('Folders', ['Create Folders', 'Rename Folders', 'Delete Files', 'Copy Folders'], $user_id);
     }
     public function down()
     {

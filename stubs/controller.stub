@@ -4,6 +4,7 @@ namespace {%custom_controller_namespace%};
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use {%custom_model_namespace%}\{%model_class%};
 
 class {%model_class%}Controller extends Controller

@@ -10,6 +10,7 @@
     'Read Pages',
     'Read Components',
     'Read Carousels',
+    'Read Files',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -34,6 +35,9 @@
             @endcan
             @can('Read Carousels')
             <x-sap::menu-item :href="route('carousel.list')" :active-pattern="'carousel.*'">Carousel</x-sap-menu-item>
+            @endcan
+            @can('Read Files')
+            <x-sap::menu-item :href="route('file.list')" :active-pattern="'file.*'">Files</x-sap-menu-item>
             @endcan
         </div>
     </div>

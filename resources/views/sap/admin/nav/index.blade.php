@@ -9,9 +9,11 @@
                     <h3 class="m-0 font-weight-bold text-primary">Nav Listing</h3>
                 </div>
                 <div class="btn-group float-right" role="group" id="toolbar-primary">
+                    @can('Create Navs')
                     <a class="btn btn-outline-secondary" href="{{ route('nav.create') }}">
                         <i class="fas fa-folder-plus mr-2"></i>New
                     </a>
+                    @endcan
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#filterModalCenter">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
