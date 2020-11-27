@@ -281,7 +281,7 @@ class FileController extends Controller
             'status'   => 'success',
             'flash'    => 'Folder Deleted.',
             'reload'   => false,
-            'relist'   => false,
+            'relist'   => relist,
             'redirect' => false,
         ]);
     }
