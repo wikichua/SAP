@@ -9,6 +9,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
@@ -17,10 +18,15 @@ class FileController extends Controller
     {
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read', 'preview']);
-        $this->middleware('can:Create Files')->only(['create', 'store']);
-        $this->middleware('can:Read Files')->only(['index', 'read', 'preview']);
-        $this->middleware('can:Update Files')->only(['edit', 'update']);
-        $this->middleware('can:Delete Files')->only('delete');
+        $this->middleware('can:Upload Files')->only(['upload']);
+        $this->middleware('can:Rename Files')->only(['rename']);
+        $this->middleware('can:Delete Files')->only('destroy');
+        $this->middleware('can:Copy Files')->only('duplicate');
+
+        $this->middleware('can:Create Folders')->only(['make']);
+        $this->middleware('can:Rename Folders')->only(['change']);
+        $this->middleware('can:Delete Folders')->only('remove');
+        $this->middleware('can:Copy Folders')->only('clone');
     }
 
     public function index(Request $request, $path = '')
@@ -33,11 +39,12 @@ class FileController extends Controller
             }
             $files = [];
             foreach (Storage::disk('public')->files($path) as $file) {
+                $filename = basename($file);
                 $filepath = str_replace('/', ':', $file);
                 $files[] = [
                     'path' => $file,
-                    'filename' => basename($file),
-                    'actionsView' => view('sap::admin.file.actions', compact('filepath'))->render(),
+                    'filename' => $filename,
+                    'actionsView' => view('sap::admin.file.actions', compact('filepath', 'filename'))->render(),
                 ];
             }
             $paginated = $this->paginate($files, $request->get('take', 25));
@@ -63,39 +70,46 @@ class FileController extends Controller
         $path = str_replace(':', '/', $request->input('path'));
         $pathArray = explode('/', $path);
         $pathCount = count($pathArray);
-        // dd($pathCount);
         if ($pathCount >= 1) {
             $currentDirectory = $pathArray[$pathCount - 1] != ''? $pathArray[$pathCount - 1]:'Top';
-            $directories[] = [
-                'path' => str_replace('/', ':', $path),
-                'label' => $currentDirectory,
-                'title' => 'Current directory <strong>'.$currentDirectory.'</strong>',
-            ];
+
             if ($currentDirectory != 'Top') {
                 unset($pathArray[$pathCount - 1]);
-                $directories[] = [
+                $data = [
                     'path' => implode(':', $pathArray),
                     'label' => count($pathArray) == 1? 'Top':last($pathArray),
                     'title' => 'Back',
                 ];
+                $directories[] = [
+                    'view' => '<button data-href="'.$data['path'].'" class="list-group-item list-group-item-action goToDirectory" id="goToTopDirectory" data-title="'.$data['label'].'">'.$data['title'].'</button>',
+                ];
             }
+
+            $data = [
+                'path' => str_replace('/', ':', $path),
+                'label' => $currentDirectory,
+                'title' => 'Current directory <strong>'.$currentDirectory.'</strong>',
+                'dirname' => basename($path),
+            ];
+            $directories[] = [
+                'view' => view('sap::admin.file.directories', compact('data'))->render(),
+            ];
         }
         foreach (Storage::disk('public')->directories($path) as $directory) {
-            $directories[] = [
+            $data = [
                 'path' => str_replace('/', ':', $directory),
                 'label' => basename($directory),
                 'title' => basename($directory),
+                'dirname' => basename($directory),
+            ];
+            $directories[] = [
+                'view' => view('sap::admin.file.directories', compact('data'))->render(),
             ];
         }
         return $directories;
     }
 
     public function upload(Request $request, $path = '')
-    {
-        return view('sap::admin.file.upload', compact('path'));
-    }
-
-    public function store(Request $request, $path = '')
     {
         $request->validate([
             'files'     => 'required',
@@ -113,8 +127,9 @@ class FileController extends Controller
             'status'   => 'success',
             'flash'    => 'File Uploaded.',
             'reload'   => false,
-            'relist'   => false,
-            'redirect' => route('file.list', [$path]),
+            'relist'   => true,
+            'redirect' => false,
+            'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
         ]);
     }
@@ -133,16 +148,7 @@ class FileController extends Controller
         return view($brandName.'::pages.page', compact('model'));
     }*/
 
-    public function duplicate($path = '')
-    {
-        $listpath = str_replace(':', '/', $path);
-        $pathArray = explode('/', $listpath);
-        unset($pathArray[count($pathArray) - 1]);
-        $listpath = implode(':', $pathArray);
-        return view('sap::admin.file.duplicate', compact('path', 'listpath'));
-    }
-
-    public function copied(Request $request, $path = '')
+    public function duplicate(Request $request, $path = '')
     {
         $path = str_replace(':', '/', $path);
 
@@ -159,22 +165,14 @@ class FileController extends Controller
             'status'   => 'success',
             'flash'    => 'File Duplicated.',
             'reload'   => false,
-            'relist'   => false,
-            'redirect' => route('file.duplicate', [$newPath]),
+            'relist'   => true,
+            'redirect' => false,
+            'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
         ]);
     }
 
     public function rename(Request $request, $path = '')
-    {
-        $listpath = str_replace(':', '/', $path);
-        $pathArray = explode('/', $listpath);
-        unset($pathArray[count($pathArray) - 1]);
-        $listpath = implode(':', $pathArray);
-        return view('sap::admin.file.rename', compact('path', 'listpath'));
-    }
-
-    public function update(Request $request, $path = '')
     {
         $path = str_replace(':', '/', $path);
 
@@ -191,9 +189,75 @@ class FileController extends Controller
             'status'   => 'success',
             'flash'    => 'File Renamed.',
             'reload'   => false,
-            'relist'   => false,
-            'redirect' => route('file.rename', [$newPath]),
+            'relist'   => true,
+            'redirect' => false,
+            'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
+        ]);
+    }
+
+    public function change(Request $request, $path = '')
+    {
+        $path = str_replace(':', '/', $path);
+
+        $request->validate([
+            'name'     => 'required',
+        ]);
+        $pathArray = explode('/', $path);
+        unset($pathArray[count($pathArray) - 1]);
+        $pathArray[] = $request->get('name');
+        $newPath = implode('/', $pathArray);
+        Storage::disk('public')->move($path, $newPath);
+        $newPath = str_replace('/', ':', $newPath);
+        return response()->json([
+            'status'   => 'success',
+            'flash'    => 'Folder Renamed.',
+            'reload'   => false,
+            'relist'   => true,
+            'redirect' => false,
+        ]);
+    }
+
+    public function clone(Request $request, $path = '')
+    {
+        $path = str_replace(':', '/', $path);
+
+        $request->validate([
+            'name'     => 'required',
+        ]);
+        $pathArray = explode('/', $path);
+        unset($pathArray[count($pathArray) - 1]);
+        $pathArray[] = $request->get('name');
+        $newPath = implode('/', $pathArray);
+        File::copyDirectory(storage_path('app/public/'.$path), storage_path('app/public/'.$newPath));
+        $newPath = str_replace('/', ':', $newPath);
+        return response()->json([
+            'status'   => 'success',
+            'flash'    => 'Folder Duplicated.',
+            'reload'   => false,
+            'relist'   => true,
+            'redirect' => false,
+        ]);
+    }
+
+    public function make(Request $request, $path = '')
+    {
+        $path = str_replace(':', '/', $path);
+
+        $request->validate([
+            'name'     => 'required',
+        ]);
+        $pathArray = explode('/', $path);
+        $pathArray[] = $request->get('name');
+        $newPath = implode('/', $pathArray);
+        File::makeDirectory(storage_path('app/public/'.$newPath));
+        $newPath = str_replace('/', ':', $newPath);
+        return response()->json([
+            'status'   => 'success',
+            'flash'    => 'Folder Created.',
+            'reload'   => false,
+            'relist'   => true,
+            'redirect' => false,
         ]);
     }
 
@@ -205,6 +269,19 @@ class FileController extends Controller
             'flash'    => 'File Deleted.',
             'reload'   => false,
             'relist'   => true,
+            'redirect' => false,
+        ]);
+    }
+
+    public function remove($path)
+    {
+        File::cleanDirectory(storage_path('app/public/'.str_replace(':', '/', $path)));
+        File::deleteDirectory(storage_path('app/public/'.str_replace(':', '/', $path)));
+        return response()->json([
+            'status'   => 'success',
+            'flash'    => 'Folder Deleted.',
+            'reload'   => false,
+            'relist'   => false,
             'redirect' => false,
         ]);
     }

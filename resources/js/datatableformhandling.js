@@ -18,7 +18,6 @@ const loadDatatable = function(url, filters, take) {
     }).then((response) => {
         let resp = response.data;
         let data = resp.paginated.data;
-        theCurrentRow = data;
         listTable.bootstrapTable('load', data);
         if (_.isUndefined(resp.links) === false) {
             let links = resp.links;

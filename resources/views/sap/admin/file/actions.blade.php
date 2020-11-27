@@ -1,8 +1,8 @@
 @can('Rename Files')
-    <a href="{{ route('file.rename', $filepath) }}" class="btn btn-link text-secondary p-1" title="Rename"><i class="fas fa-lg fa-edit"></i></a>
+    <button type="button" data-href="{{ route('file.rename', $filepath) }}"  data-filename="{{ $filename }}" class="btn btn-link text-secondary p-1 renameBtn" title="Rename"><i class="fas fa-lg fa-file-signature"></i></button>
 @endcan
 @can('Copy Files')
-    <a href="{{ route('file.duplicate', $filepath) }}" class="btn btn-link text-secondary p-1" title="Duplicate"><i class="fas fa-lg fa-clone"></i></a>
+    <button type="button" data-href="{{ route('file.duplicate', $filepath) }}"  data-filename="{{ $filename }}" class="btn btn-link text-secondary p-1 duplicateBtn" title="Duplicate"><i class="fas fa-lg fa-copy"></i></button>
 @endcan
 @can('Delete Files')
 <x-sap::form ajax="true" method="DELETE" action="{{ route('file.destroy', $filepath) }}" class="d-inline-block" confirm="You won't be able to revert this!">
