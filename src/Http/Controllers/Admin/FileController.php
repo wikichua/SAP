@@ -27,23 +27,36 @@ class FileController extends Controller
         $this->middleware('can:Rename Folders')->only(['change']);
         $this->middleware('can:Delete Folders')->only('remove');
         $this->middleware('can:Copy Folders')->only('clone');
+
+        // $brand_id = auth()->user()->brand_id;
+        $brand_id = 1;
+        if ($brand_id) {
+            $this->storagePath = storage_path('app/public/brand/'.$brand_id);
+            File::ensureDirectoryExists($this->storagePath);
+        } else {
+            $this->storagePath = storage_path('app/public');
+        }
     }
 
     public function index(Request $request, $path = '')
     {
         if ($request->ajax()) {
             $filters = json_decode($request->get('filters'), 1);
-            $path = '';
+            $path = $this->storagePath;
             if (isset($filters['path'])) {
-                $path = str_replace(':', '/', $filters['path']);
+                $path .= '/'.str_replace(':', '/', $filters['path']);
             }
             $files = [];
-            foreach (Storage::disk('public')->files($path) as $file) {
-                $filename = basename($file);
-                $filepath = str_replace('/', ':', $file);
+            $storagePath = str_replace(storage_path('app'), '', $this->storagePath);
+            foreach (File::files($path) as $file) {
+                $filename = $file->getBasename();
+                $temp_filepath = ltrim(str_replace($this->storagePath, '', $file->getPathname()), '/');
+                $filepath = ltrim(str_replace('/', ':', $temp_filepath), '/');
                 $files[] = [
-                    'path' => $file,
-                    'filename' => $filename,
+                    'path' => '<a href="'.str_replace('public/', '', Storage::disk('public')->url($storagePath.'/'.$temp_filepath)).'" target="_blank">'.$temp_filepath.'</a>',
+                    'last_modified' => \Carbon\Carbon::parse(Storage::lastModified($storagePath.'/'.$temp_filepath), auth()->user()->timezone)->toDateTimeString(),
+                    'extension' => $file->getExtension(),
+                    'size' => Storage::size($storagePath.'/'.$temp_filepath).' kb',
                     'actionsView' => view('sap::admin.file.actions', compact('filepath', 'filename'))->render(),
                 ];
             }
@@ -58,7 +71,9 @@ class FileController extends Controller
         $getUrl = route('file.list');
         $html   = [
             ['title' => 'Path', 'data' => 'path', 'sortable' => false],
-            ['title' => 'File', 'data' => 'filename', 'sortable' => false],
+            ['title' => 'Type', 'data' => 'extension', 'sortable' => false],
+            ['title' => 'Size', 'data' => 'size', 'sortable' => false],
+            ['title' => 'Modified', 'data' => 'last_modified', 'sortable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];
         return view('sap::admin.file.index', compact('html', 'getUrl', 'path'));
@@ -72,7 +87,6 @@ class FileController extends Controller
         $pathCount = count($pathArray);
         if ($pathCount >= 1) {
             $currentDirectory = $pathArray[$pathCount - 1] != ''? $pathArray[$pathCount - 1]:'Top';
-
             if ($currentDirectory != 'Top') {
                 unset($pathArray[$pathCount - 1]);
                 $data = [
@@ -90,12 +104,14 @@ class FileController extends Controller
                 'label' => $currentDirectory,
                 'title' => 'Current directory <strong>'.$currentDirectory.'</strong>',
                 'dirname' => basename($path),
+                'dom_id' => 'currentPathId'
             ];
             $directories[] = [
                 'view' => view('sap::admin.file.directories', compact('data'))->render(),
             ];
         }
-        foreach (Storage::disk('public')->directories($path) as $directory) {
+        foreach (File::directories($this->storagePath.'/'.$path) as $directory) {
+            $directory = str_replace($this->storagePath.'/', '', $directory);
             $data = [
                 'path' => str_replace('/', ':', $directory),
                 'label' => basename($directory),
@@ -114,15 +130,18 @@ class FileController extends Controller
         $request->validate([
             'files'     => 'required',
         ]);
-        $path = str_replace(':', '/', $path);
+        $storagePath = str_replace(storage_path('app'), '', $this->storagePath);
+        if ($path != '') {
+            $path = $storagePath.'/'.str_replace(':', '/', $path);
+        } else {
+            $path = $storagePath;
+        }
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $key => $file) {
                 $name = $request->file('files.'.$key)->getClientOriginalName();
-                $extension = $request->file('files.'.$key)->extension();
-                Storage::disk('public')->putFileAs($path, $request->file('files.'.$key), $name.'.'.$extension);
+                $upload_path = $request->file('files.'.$key)->storeAs($path, $name);
             }
         }
-        $path = str_replace('/', ':', $path);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'File Uploaded.',
@@ -150,8 +169,7 @@ class FileController extends Controller
 
     public function duplicate(Request $request, $path = '')
     {
-        $path = str_replace(':', '/', $path);
-
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
             'name'     => 'required',
         ]);
@@ -159,7 +177,7 @@ class FileController extends Controller
         unset($pathArray[count($pathArray) - 1]);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
-        Storage::disk('public')->copy($path, $newPath);
+        File::copy($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
         return response()->json([
             'status'   => 'success',
@@ -174,8 +192,7 @@ class FileController extends Controller
 
     public function rename(Request $request, $path = '')
     {
-        $path = str_replace(':', '/', $path);
-
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
             'name'     => 'required',
         ]);
@@ -183,7 +200,7 @@ class FileController extends Controller
         unset($pathArray[count($pathArray) - 1]);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
-        Storage::disk('public')->move($path, $newPath);
+        File::move($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
         return response()->json([
             'status'   => 'success',
@@ -198,8 +215,7 @@ class FileController extends Controller
 
     public function change(Request $request, $path = '')
     {
-        $path = str_replace(':', '/', $path);
-
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
             'name'     => 'required',
         ]);
@@ -207,7 +223,7 @@ class FileController extends Controller
         unset($pathArray[count($pathArray) - 1]);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
-        Storage::disk('public')->move($path, $newPath);
+        File::move($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
         return response()->json([
             'status'   => 'success',
@@ -220,8 +236,7 @@ class FileController extends Controller
 
     public function clone(Request $request, $path = '')
     {
-        $path = str_replace(':', '/', $path);
-
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
             'name'     => 'required',
         ]);
@@ -229,7 +244,7 @@ class FileController extends Controller
         unset($pathArray[count($pathArray) - 1]);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
-        File::copyDirectory(storage_path('app/public/'.$path), storage_path('app/public/'.$newPath));
+        File::copyDirectory($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
         return response()->json([
             'status'   => 'success',
@@ -242,16 +257,14 @@ class FileController extends Controller
 
     public function make(Request $request, $path = '')
     {
-        $path = str_replace(':', '/', $path);
-
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
             'name'     => 'required',
         ]);
         $pathArray = explode('/', $path);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
-        File::makeDirectory(storage_path('app/public/'.$newPath));
-        $newPath = str_replace('/', ':', $newPath);
+        File::makeDirectory($newPath);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Folder Created.',
@@ -263,7 +276,7 @@ class FileController extends Controller
 
     public function destroy($path)
     {
-        Storage::disk('public')->delete(str_replace(':', '/', $path));
+        File::delete($this->storagePath.'/'.str_replace(':', '/', $path));
         return response()->json([
             'status'   => 'success',
             'flash'    => 'File Deleted.',
@@ -275,18 +288,19 @@ class FileController extends Controller
 
     public function remove($path)
     {
-        File::cleanDirectory(storage_path('app/public/'.str_replace(':', '/', $path)));
-        File::deleteDirectory(storage_path('app/public/'.str_replace(':', '/', $path)));
+        $path = $this->storagePath.'/'.str_replace(':', '/', $path);
+        File::cleanDirectory($path);
+        File::deleteDirectory($path);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Folder Deleted.',
             'reload'   => false,
-            'relist'   => relist,
+            'relist'   => true,
             'redirect' => false,
         ]);
     }
 
-    protected function paginate($items, $perPage = 15, $page = null)
+    protected function paginate($items, $perPage = 25, $page = null)
     {
         $pageName = 'page';
         $page     = $page ?: (Paginator::resolveCurrentPage($pageName) ?: 1);

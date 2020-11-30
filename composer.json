@@ -42,8 +42,7 @@
         "doctrine/cache": "^1.10",
         "jenssegers/agent": "dev-master",
         "spatie/laravel-honeypot": "dev-master",
-        "infureal/artisan-gui": "dev-main",
-        "league/flysystem": "^2.0"
+        "infureal/artisan-gui": "dev-main"
     },
     "autoload": {
         "psr-4": {

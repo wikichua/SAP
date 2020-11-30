@@ -252,7 +252,7 @@ class SapMake extends Command
             foreach(\$request->file('$field') as \$key => \$file)
             {
                 // \$uploaded_files[] = str_replace('public', 'storage', \$request->file('$field.'.\$key)->store('public/$model_variable/$field'));
-                \$uploaded_files[] = Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field.'.\$key));
+                \$uploaded_files[] = str_replace('public', 'storage', Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field.'.\$key)));
             }
             unset(\$request['$field']);
             \$request->merge([
@@ -264,7 +264,7 @@ EOT;
                     $upload_strings[] = <<<EOT
         if (\$request->hasFile('$field')) {
             // \$path = str_replace('public', 'storage', \$request->file('$field')->store('public/$model_variable/$field'));
-            \$path = Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field'));
+            \$path = str_replace('public', 'storage', Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field')));
             unset(\$request['$field']);
             \$request->merge([
                 '$field' => \$path,

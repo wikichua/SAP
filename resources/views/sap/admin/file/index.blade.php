@@ -68,7 +68,6 @@
 @push('scripts')
 <script id="directoriesTemplate" type="text/x-lodash-template">
 <% _.forEach(data, function(item) { %>
-{{-- <button data-href="<%- item.path %>" class="list-group-item list-group-item-action goToDirectory" data-title="<%- item.label %>"><%= item.title %></button> --}}
 <%= item.view %>
 <% }); %>
 </script>
@@ -159,7 +158,6 @@ $(function() {
         } else if ($(this).hasClass('copyFolderBtn')) {
             title = 'Folder duplicate to...';
         }
-
         if ($(this).hasClass('deleteFolderBtn')) {
             Swal.fire({
                 title: 'Are you sure to delete this folder?',
@@ -180,7 +178,7 @@ $(function() {
                             }
                             if (_.isUndefined(resp.relist) == false && resp.relist) {
                                 flashMessage();
-                                $('.goToDirectory').eq(3).trigger('click');
+                                $('#currentPathId').trigger('click');
                             }
                         }
                     }).catch((error) => {
@@ -219,7 +217,7 @@ $(function() {
                             }
                             if (_.isUndefined(resp.relist) == false && resp.relist) {
                                 flashMessage();
-                                $('.goToDirectory').eq(3).trigger('click');
+                                $('#currentPathId').trigger('click');
                             }
                         }
                     }).catch((error) => {

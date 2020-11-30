@@ -1,6 +1,6 @@
 <li class="list-group-item">{!! $data['title'] !!}
     <div class="float-right">
-        <button data-href="{{ $data['path'] }}" class="btn btn-outline-primary btn-sm badge badge-pill goToDirectory" data-title="{{ $data['label'] }}" title="Open Folder">
+        <button data-href="{{ $data['path'] }}" class="btn btn-outline-primary btn-sm badge badge-pill goToDirectory" data-title="{{ $data['label'] }}" title="Open Folder" id="{{ $data['dom_id'] ?? '' }}">
         <i class="fas fa-folder-open"></i>
         </button>
         @can('Rename Folders')
