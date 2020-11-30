@@ -28,6 +28,7 @@ Laravel oriented package. This package is mainly for
 1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
 1. Security - Honeypot to prevent spamming.
 1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
+1. File Managers - App & Brand specific. User will only get access to its own brand management.
 
 ## Requirements
 
@@ -100,10 +101,10 @@ Laravel oriented package. This package is mainly for
 1. Last Activity show by user and profile
 1. Queue Manager (Laravel Horizon is cool, but...Decided to do self made)
 1. Honeypot to secure from spammer (https://github.com/spatie/laravel-honeypot)
+1. Brand specific file manager - check user brand, only access to their own brand folder.
 
 ## Todo List
 
-1. Brand specific file manager - check user brand, only access to their own brand folder.
 1. Brand specific file manager - cloud based
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
