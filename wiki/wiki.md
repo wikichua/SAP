@@ -106,6 +106,7 @@ Laravel oriented package. This package is mainly for
 ## Todo List
 
 1. Brand specific file manager - cloud based
+1. Integration with Clockwork (https://underground.works/clockwork/#documentation)
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
 1. php artisan sap:export **ModuleName**
@@ -138,3 +139,4 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/sparksuite/simplemde-markdown-editor
 1. https://github.com/ARCANEDEV/LaravelMarkdown
 1. https://github.com/spatie/laravel-honeypot
+1. https://underground.works/clockwork/#documentation
