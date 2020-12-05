@@ -51,17 +51,6 @@ class SAPServiceProvider extends ServiceProvider
 
             Paginator::useBootstrap();
         }
-
-        // Registering package commands.
-        $this->commands([
-            Commands\SapConfig::class,
-            Commands\SapMake::class,
-            Commands\SapBrand::class,
-            Commands\SapComponent::class,
-            Commands\SapIndex::class,
-            Commands\SapReport::class,
-            Commands\SapService::class,
-        ]);
     }
 
     public function register()
@@ -83,6 +72,18 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function bootForConsole()
     {
+        // Registering package commands.
+        $this->commands([
+            Commands\SapConfig::class,
+            Commands\SapMake::class,
+            Commands\SapBrand::class,
+            Commands\SapComponent::class,
+            Commands\SapIndex::class,
+            Commands\SapReport::class,
+            Commands\SapService::class,
+            Commands\SapExport::class,
+        ]);
+
         // Publishing the configuration file.
         $this->publishes([
             __DIR__.'/../config/sap.php' => config_path('sap.php'),
@@ -137,25 +138,25 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function loadRoutes()
     {
-        $files = File::files(__DIR__.'/routers/');
+        $files = File::files(__DIR__.'/routes/');
         foreach ($files as $file) {
             Route::middleware('web')
                 ->group($file->getPathname());
         }
-        $files = File::files(__DIR__.'/routers/api');
+        $files = File::files(__DIR__.'/routes/api');
         foreach ($files as $file) {
             Route::middleware('api')
                 ->group($file->getPathname());
         }
-        if (File::exists(app_path('../routes/routers'))) {
-            $files = File::files(app_path('../routes/routers/'));
+        if (File::exists(app_path('../routes/sap'))) {
+            $files = File::files(app_path('../routes/sap/'));
             foreach ($files as $file) {
                 Route::middleware('web')
                     ->group($file->getPathname());
             }
         }
-        if (File::exists(app_path('../routes/routers/api'))) {
-            $files = File::files(app_path('../routes/routers/api'));
+        if (File::exists(app_path('../routes/sap/api'))) {
+            $files = File::files(app_path('../routes/sap/api'));
             foreach ($files as $file) {
                 Route::middleware('api')
                     ->group($file->getPathname());

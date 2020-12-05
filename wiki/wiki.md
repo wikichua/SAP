@@ -102,6 +102,7 @@ Laravel oriented package. This package is mainly for
 1. Queue Manager (Laravel Horizon is cool, but...Decided to do self made)
 1. Honeypot to secure from spammer (https://github.com/spatie/laravel-honeypot)
 1. Brand specific file manager - check user brand, only access to their own brand folder.
+1. php artisan sap:export **ModuleName**
 
 ## Todo List
 
@@ -109,7 +110,6 @@ Laravel oriented package. This package is mainly for
 1. Integration with Clockwork (https://underground.works/clockwork/#documentation)
 1. Surveillance (https://github.com/neelkanthk/laravel-surveillance)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
-1. php artisan sap:export **ModuleName**
 1. php artisan sap:import **ModuleName**
 1. Easily integrated with internal microservice or external microservice by lumen or any framework.
 1. Web Terminal seem cool and fun (https://github.com/recca0120/laravel-terminal)

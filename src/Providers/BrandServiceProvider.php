@@ -18,20 +18,20 @@ class BrandServiceProvider extends ServiceProvider
             if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) { // load from admin route
                 $dirs = File::directories($brand_path);
                 foreach ($dirs as $dir) {
-                    if (File::exists($dir.'/web.php')) {
-                        $this->loadRoutesFrom($dir.'/web.php');
+                    if (File::exists($dir.'/routes/web.php')) {
+                        $this->loadRoutesFrom($dir.'/routes/web.php');
                     }
-                    if (File::isDirectory($dir.'/database')) {
-                        $this->loadMigrationsFrom($dir.'/database');
+                    if (File::isDirectory($dir.'/database/migrations')) {
+                        $this->loadMigrationsFrom($dir.'/database/migrations');
                     }
                     // load admin routes in brand
-                    if (File::exists($dir.'/routers')) {
-                        $files = File::files($dir.'/routers/');
+                    if (File::exists($dir.'/routes/sap')) {
+                        $files = File::files($dir.'/routes/sap/');
                         foreach ($files as $file) {
                             $this->loadRoutesFrom($file);
                         }
-                        if (File::exists($dir.'/routers/api')) {
-                            $files = File::files($dir.'/routers/api/');
+                        if (File::exists($dir.'/routes/sap/api')) {
+                            $files = File::files($dir.'/routes/sap/api/');
                             foreach ($files as $file) {
                                 $this->loadRoutesFrom($file);
                             }
@@ -68,12 +68,12 @@ class BrandServiceProvider extends ServiceProvider
             $brand = \Help::brand($brandName);
             if ($brand) {
                 $dir = base_path('brand/'.$brand->name);
-                if (File::exists($dir.'/web.php')) {
+                if (File::exists($dir.'/routes/web.php')) {
                     $this->registerBrandServiceProviders($dir);
                     // $dotenv = \Dotenv\Dotenv::createImmutable($dir, '.env');
                     // $dotenv->load();
                     // $this->app->loadEnvironmentFrom($dir.'/.env');
-                    \Route::middleware('web')->group($dir.'/web.php');
+                    \Route::middleware('web')->group($dir.'/routes/web.php');
                     // $this->loadTranslationsFrom($dir.'/lang', $brandName);
                     // $this->loadViewsFrom($dir, $brandName);
                 }

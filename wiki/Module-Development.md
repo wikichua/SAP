@@ -93,6 +93,28 @@ You may like to add your business model as a service.
 
 #### Create Export and Import Module with SAP
 
+#### Export Module
+
+Run in your bash
+
+```bash
+php artisan sap:export *ModuleName*
+```
+
+Export Brand Module
+
+```bash
+php artisan sap:export *ModuleName* --brand=*BrandName*
+```
+
+Export to your preferred path
+
+```bash
+php artisan sap:export *ModuleName* "~/Desktop" --brand=*BrandName*
+```
+
+#### Import Module
+
 Coming soon
 
 #### Using Pusher in your application

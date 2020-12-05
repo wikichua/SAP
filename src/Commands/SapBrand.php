@@ -130,7 +130,8 @@ class SapBrand extends Command
 
     protected function route()
     {
-        $route_file = $this->brand_path.'/web.php';
+        $this->files->ensureDirectoryExists($this->brand_path.'/routes');
+        $route_file = $this->brand_path.'/routes/web.php';
         $route_stub = $this->stub_path.'/web.php.stub';
         if (!$this->files->exists($route_stub)) {
             $this->error('Web stub file not found: <info>'.$route_stub.'</info>');

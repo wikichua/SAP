@@ -356,7 +356,7 @@ return [
             'attributes' => [],
             'list' => false,
             'search' => false,
-            'migration' => 'integer:{%field%},1|nullable|default:',
+            'migration' => 'integer:{%field%}|nullable|default:0',
             'validation' => [
                 'create' => 'required',
                 'update' => 'required',
@@ -384,7 +384,7 @@ return [
                 ],
             'list' => false,
             'search' => false,
-            'migration' => 'integer:{%field%},1|nullable|default:',
+            'migration' => 'integer:{%field%}|nullable|default:0',
             'validation' => [
                 'create' => 'required',
                 'update' => 'required',
