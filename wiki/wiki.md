@@ -18,6 +18,7 @@ Laravel oriented package. This package is mainly for
 
 1. Multisites - Create + manage multiple domain brand homepage + register to database for managing
 1. Module - CRUD generator module for main app or for brand + API resources
+1. Export & Import Module (Site specific - module created for site could be export and import to another site) via Artisan Console
 1. Component - Create + manage component for main app or for brand + register to database for managing
 1. CMS - Create + manage pages and navigations for brand
 1. Reporting - Create + manage SQLs for reporting + console to run SQL within the queue (Redis)
@@ -28,7 +29,7 @@ Laravel oriented package. This package is mainly for
 1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
 1. Security - Honeypot to prevent spamming. Settings data store as encrypted in database (manually trigger)
 1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
-1. File Managers - App & Brand specific. User will only get access to its own brand management.
+1. File Managers - App & Site specific. User will only get access to its own brand management.
 
 ## Requirements
 
