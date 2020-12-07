@@ -246,9 +246,9 @@ class SapBrand extends Command
             return;
         }
         $filename = "sap{$this->brand}BrandSeed.php";
-        $this->files->ensureDirectoryExists(base_path('brand/'.$this->brand.'/database'), 0755, true);
-        $migration_file = base_path('brand/'.$this->brand.'/database/'.date('Y_m_d_000000_').$filename);
-        foreach ($this->files->files(base_path('brand/'.$this->brand.'/database/')) as $file) {
+        $this->files->ensureDirectoryExists(base_path('brand/'.$this->brand.'/database/migrations/'), 0755, true);
+        $migration_file = base_path('brand/'.$this->brand.'/database/migrations/'.date('Y_m_d_000000_').$filename);
+        foreach ($this->files->files(base_path('brand/'.$this->brand.'/database/migrations/')) as $file) {
             if (str_contains($file->getPathname(), $filename)) {
                 $migration_file = $file->getPathname();
                 $msg = 'Migration file overwritten';

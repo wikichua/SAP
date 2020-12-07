@@ -82,6 +82,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapReport::class,
             Commands\SapService::class,
             Commands\SapExport::class,
+            Commands\SapImport::class,
         ]);
 
         // Publishing the configuration file.

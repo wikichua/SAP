@@ -115,7 +115,20 @@ php artisan sap:export *ModuleName* "~/Desktop" --brand=*BrandName*
 
 #### Import Module
 
-Coming soon
+Run in your bash
+
+```bash
+php artisan sap:import */path/to/your/zip/file/location/module.zip*
+```
+
+Import Brand Module
+
+```bash
+php artisan sap:import */path/to/your/zip/file/location/module.zip* --brand=*BrandName*
+```
+
+Note: Brand's Module is transferable to another Brand.
+Meaning that, You can export a module from Brand A, and import it back to Brand B by specifiying *--brand=BrandB*
 
 #### Using Pusher in your application
 
