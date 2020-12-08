@@ -61,5 +61,9 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
 
         Route::match(['get'], '/search', 'Admin\GlobalSearchController@index')->name('global.search');
         Route::match(['post'], '/search/suggest', 'Admin\GlobalSearchController@suggest')->name('global.suggest');
+
+        Route::get('builder', function () {
+            return view('sap::admin.builder.index');
+        });
     });
 });
