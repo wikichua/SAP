@@ -105,6 +105,7 @@ Laravel oriented package. This package is mainly for
 1. Honeypot to secure from spammer (https://github.com/spatie/laravel-honeypot)
 1. Brand specific file manager - check user brand, only access to their own brand folder.
 1. Module Import & Export (Brand to another Brand)
+1. Cronjob Admin
 
 ## Todo List
 
