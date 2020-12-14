@@ -23,14 +23,16 @@ class AdminMenu extends Component
 
     public function render()
     {
-        $dirs = File::directories(base_path('brand'));
-        foreach ($dirs as $dir) {
-            $config = [];
-            if (File::exists($dir.'/config/main.php')) {
-                $config = require($dir.'/config/main.php');
-                if (File::exists($config['admin_path'].'/menu.blade.php')) {
-                    View::addNamespace(basename($dir), $config['admin_path']);
-                    $this->brandMenus[] = basename($dir).'::menu';
+        if (File::exists(base_path('brand'))) {
+            $dirs = File::directories(base_path('brand'));
+            foreach ($dirs as $dir) {
+                $config = [];
+                if (File::exists($dir.'/config/main.php')) {
+                    $config = require($dir.'/config/main.php');
+                    if (File::exists($config['admin_path'].'/menu.blade.php')) {
+                        View::addNamespace(basename($dir), $config['admin_path']);
+                        $this->brandMenus[] = basename($dir).'::menu';
+                    }
                 }
             }
         }
