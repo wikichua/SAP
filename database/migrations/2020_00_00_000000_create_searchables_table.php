@@ -8,6 +8,7 @@ class CreateSearchablesTable extends Migration
 {
     public function up()
     {
+        cache()->tags(['fillable'])->flush();
         Schema::create('searchables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('model');

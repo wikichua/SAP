@@ -8,7 +8,7 @@ class SapCarouselTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-carousels');
+        cache()->tags(['fillable'])->flush();
         Schema::create('carousels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->nullable()->default('');

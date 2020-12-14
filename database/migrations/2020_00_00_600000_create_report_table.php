@@ -8,7 +8,7 @@ class CreateReportTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-reports');
+        cache()->tags(['fillable'])->flush();
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->default('')->unique();

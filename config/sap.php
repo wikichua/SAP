@@ -44,6 +44,7 @@ return [
         'nav' => '\Wikichua\SAP\Models\Nav',
         'component' => '\Wikichua\SAP\Models\Component',
         'carousel' => '\Wikichua\SAP\Models\Carousel',
+        'cronjob' => '\Wikichua\SAP\Models\Cronjob',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'activity_log' => [

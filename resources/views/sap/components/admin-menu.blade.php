@@ -8,6 +8,7 @@
         'activity_log.*',
         'system_log.*',
         'failed_job.*',
+        'cronjob.*',
     ]"/>
 <x-sap::menu menu="cms" :active-patterns="[
         'brand.*',

@@ -12,6 +12,7 @@
 - [Run Report with Artisan and Task Scheduler](#Run-Report-with-Artisan-and-Task-Scheduler)
 - [Queue and Cache Closure](#Queue-and-Cache-Closure)
 - [PHP Debug Bar](#PHP-Debug-Bar)
+- [Enable Cronjob Admin](#Enable-Cronjob-Admin)
 - [Disable Artisan Command](#Disable-Artisan-Command)
 - [Social Lite](#Social-Lite)
 - [Model Events](#Model-Events)
@@ -298,6 +299,24 @@ At your debugbar.php
         'horizon*',
         'api*',
     ],
+```
+
+### Enable Cronjob Admin
+
+In your app/Console/Kernel.php
+
+```php
+class Kernel extends ConsoleKernel
+{
+    use \Wikichua\SAP\Http\Traits\ArtisanTrait;
+```
+
+Then at the schedule(Schedule $schedule)
+
+```php
+    protected function schedule(Schedule $schedule)
+    {
+        $this->runCronjobs($schedule);
 ```
 
 ### Disable Artisan Command

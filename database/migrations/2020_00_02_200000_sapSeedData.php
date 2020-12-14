@@ -54,20 +54,9 @@ class SapSeedData extends Migration
             'value' => ["Admin Panel" => "Admin Panel", "Permission" => "Permission", "Setting" => "Setting", "Role" => "Role", "User" => "User", "Activity Log" => "Activity Log", "System Log" => "System Log"],
         ]);
 
-        app(config('sap.models.setting'))->create([
-            'created_by' => $user_id, 'updated_by' => $user_id,
-            'key' => 'user_types',
-            'value' => ["Admin" => "Admin", "User" => "User"],
-        ]);
-
-        app(config('sap.models.setting'))->create([
-            'created_by' => $user_id, 'updated_by' => $user_id,
-            'key' => 'user_status',
-            'value' => ["A" => "Active", "I" => "Inactive"],
-        ]);
-
+        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'user_types', 'value' => ["Admin" => "Admin", "User" => "User"], ]);
+        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'user_status', 'value' => ["A" => "Active", "I" => "Inactive"], ]);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'locales','value' => ['en' => 'EN']]);
-
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'report_status','value' => ['A' => 'Active','I' => 'Inactive']]);
         app(config('sap.models.permission'))->createGroup('Reports', ['Create Reports', 'Read Reports', 'Update Reports', 'Delete Reports'], $user_id);
         app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id,'key' => 'brand_status','value' => ['A' => 'Published','P' => 'Pending','E' => 'Expired']]);
@@ -82,6 +71,8 @@ class SapSeedData extends Migration
         app(config('sap.models.permission'))->createGroup('Carousels', ['Create Carousels', 'Read Carousels', 'Update Carousels', 'Delete Carousels'], $user_id);
         app(config('sap.models.permission'))->createGroup('Files', ['Upload Files', 'Rename Files', 'Delete Files', 'Copy Files'], $user_id);
         app(config('sap.models.permission'))->createGroup('Folders', ['Create Folders', 'Rename Folders', 'Delete Files', 'Copy Folders'], $user_id);
+        app(config('sap.models.permission'))->createGroup('Cronjobs', ['Create Cronjobs', 'Read Cronjobs', 'Update Cronjobs', 'Delete Cronjobs'], $user_id);
+        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'cronjob_status', 'value' => ["A" => "Active", "I" => "Inactive"], ]);
     }
     public function down()
     {

@@ -1,4 +1,10 @@
 <?php
+if (!function_exists('cronjob_frequencies')) {
+    function cronjob_frequencies()
+    {
+        return Help::cronjob_frequencies();
+    }
+}
 if (!function_exists('timezones')) {
     function timezones()
     {

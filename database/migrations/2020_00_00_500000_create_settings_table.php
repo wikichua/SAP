@@ -8,8 +8,7 @@ class CreateSettingsTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-settings');
-        // create table
+        cache()->tags(['fillable'])->flush();
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key')->index();

@@ -8,7 +8,7 @@ class SapPageTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-pages');
+        cache()->tags(['fillable'])->flush();
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('brand_id')->nullable()->default(0);

@@ -32,7 +32,7 @@ trait AdminUser
         if ($user_id == '' || $user_id == null) {
             $user_id = auth()->id();
         }
-        return Cache::remember('permissions:'.$user_id, (60*60*24), function () {
+        return Cache::tags('permissions')->remember('permissions:'.$user_id, (60*60*24), function () {
             return $this->permissions->merge($this->roles->flatMap(function ($role) {
                 return $role->permissions;
             }));

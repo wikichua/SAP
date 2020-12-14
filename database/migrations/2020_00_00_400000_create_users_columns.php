@@ -10,8 +10,7 @@ class CreateUsersColumns extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-users');
-        // create columns
+        cache()->tags(['fillable'])->flush();
         Schema::table('users', function (Blueprint $table) {
             $table->string('type')->default('User');
             $table->json('social')->nullable();

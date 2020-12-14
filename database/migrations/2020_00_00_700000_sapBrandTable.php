@@ -8,7 +8,7 @@ class SapBrandTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-brands');
+        cache()->tags(['fillable'])->flush();
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->default('');

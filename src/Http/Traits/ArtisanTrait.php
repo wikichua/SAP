@@ -2,6 +2,8 @@
 
 namespace Wikichua\SAP\Http\Traits;
 
+use Illuminate\Console\Scheduling\Schedule;
+
 trait ArtisanTrait
 {
     public function disable(array $commands = [], array $envs = ['production'])
@@ -11,6 +13,25 @@ trait ArtisanTrait
                 \Artisan::command($command, function () {
                     $this->comment('You are not allowed to do this in production!');
                 })->describe('Override default command in production.');
+            }
+        }
+    }
+    public function runCronjobs(Schedule $schedule)
+    {
+        $cronjobs = cache()->tags('cronjob')->rememberForever('cronjobs', function() {
+            return app(config('sap.models.cronjob'))->whereStatus('A')->get();
+        });
+        foreach ($cronjobs as $cronjob) {
+            $frequency = $cronjob->frequency;
+            $param = '';
+            if ($frequency == 'everySeconds') {
+                $frequency = 'cron';
+                $param = '* * * * *';
+            }
+            if ($cronjob->mode == 'art') {
+                $schedule->command($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);
+            } else {
+                $schedule->exec($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);
             }
         }
     }

@@ -241,6 +241,30 @@ class Help
         return array_combine(timezone_identifiers_list(), timezone_identifiers_list());
     }
 
+    public function cronjob_frequencies()
+    {
+        return [
+            'everyMinute' => 'Every Minute',
+            'everyTwoMinutes' => 'Every Two Minutes',
+            'everyThreeMinutes' => 'Every Three Minutes',
+            'everyFourMinutes' => 'Every Four Minutes',
+            'everyFiveMinutes' => 'Every Five Minutes',
+            'everyTenMinutes' => 'Every Ten Minutes',
+            'everyFifteenMinutes' => 'Every Fifteen Minutes',
+            'everyThirtyMinutes' => 'Every Thirty Minutes',
+            'everyTwoHours' => 'Every Two Hours',
+            'everyThreeHours' => 'Every Three Hours',
+            'everyFourHours' => 'Every Four Hours',
+            'everySixHours' => 'Every Six Hours',
+            'hourly' => 'Hourly',
+            'daily' => 'Daily',
+            'weekly' => 'Weekly',
+            'monthly' => 'Monthly',
+            'quarterly' => 'Quarterly',
+            'yearly' => 'Yearly',
+        ];
+    }
+
     public function slug_route($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
     {
         if ($locale == '') {

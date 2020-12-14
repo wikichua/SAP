@@ -30,6 +30,7 @@ Laravel oriented package. This package is mainly for
 1. Security - Honeypot to prevent spamming. Settings data store as encrypted in database (manually trigger)
 1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
 1. File Managers - App & Site specific. User will only get access to its own brand management.
+1. Cronjob Admin - Developer just need to write the script using Artisan Command, then commit. The CRUD have to be done in the Admin Panel.
 
 ## Requirements
 

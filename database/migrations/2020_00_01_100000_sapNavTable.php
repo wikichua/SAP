@@ -8,6 +8,7 @@ class SapNavTable extends Migration
 {
     public function up()
     {
+        cache()->tags(['fillable'])->flush();
         Schema::create('navs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('brand_id')->nullable()->default(0);

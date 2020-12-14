@@ -12,6 +12,7 @@
     'Read Activity Logs',
     'Read System Logs',
     'Read Reports',
+    'Read Cronjobs',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -36,6 +37,9 @@
             @endcan
             @can('Read Reports')
             <x-sap::menu-item :href="route('report.list')" active-pattern="report.*">Report</x-sap-menu-item>
+            @endcan
+            @can('Read Cronjobs')
+            <x-sap::menu-item :href="route('cronjob.list')" active-pattern="cronjob.*">Cron Job</x-sap-menu-item>
             @endcan
             @can('Read Activity Logs')
             <x-sap::menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>

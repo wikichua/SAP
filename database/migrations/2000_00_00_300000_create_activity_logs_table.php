@@ -8,8 +8,7 @@ class CreateActivityLogsTable extends Migration
 {
     public function up()
     {
-        cache()->forget('fillable-activity_logs');
-        // create table
+        cache()->tags(['fillable'])->flush();
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable()->index();
