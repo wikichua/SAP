@@ -21,10 +21,12 @@ class SAPServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
         $this->app['router']->aliasMiddleware('auth', 'Wikichua\SAP\Middleware\Authenticate');
         $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\SAP\Middleware\AuthAdmin');
+        // $this->app['router']->aliasMiddleware('optimizeImages', 'Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages');
 
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\HttpsProtocol::class);
         $this->app['router']->pushMiddlewareToGroup('web', \Spatie\Honeypot\ProtectAgainstSpam::class);
+        $this->app['router']->pushMiddlewareToGroup('web', \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class);
         $this->app['router']->pushMiddlewareToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
 
         // Publishing is only necessary when using the CLI.

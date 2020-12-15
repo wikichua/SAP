@@ -29,7 +29,7 @@ Laravel oriented package. This package is mainly for
 1. Failed Queue/Job - Retry on the platform itself, glance at the pending, notify, reserved, priority and delayed jobs count (Redis)
 1. Security - Honeypot to prevent spamming. Settings data store as encrypted in database (manually trigger)
 1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
-1. File Managers - App & Site specific. User will only get access to its own brand management.
+1. File Managers - App & Site specific. User will only get access to its own brand management. (auto optimizing images)
 1. Cronjob Admin - Developer just need to write the script using Artisan Command, then commit. The CRUD have to be done in the Admin Panel.
 
 ## Requirements
@@ -106,6 +106,7 @@ Laravel oriented package. This package is mainly for
 1. Brand specific file manager - check user brand, only access to their own brand folder.
 1. Module Import & Export (Brand to another Brand)
 1. Cronjob Admin
+1. Middleware optimize image
 
 ## Todo List
 
@@ -144,3 +145,4 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/ARCANEDEV/LaravelMarkdown
 1. https://github.com/spatie/laravel-honeypot
 1. https://underground.works/clockwork/#documentation
+1. https://github.com/spatie/laravel-image-optimizer
