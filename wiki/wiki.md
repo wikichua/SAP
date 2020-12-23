@@ -111,6 +111,7 @@ Laravel oriented package. This package is mainly for
 ## Todo List
 
 1. Caching Response (https://github.com/spatie/laravel-responsecache)
+1. Mailer Editor (https://github.com/Qoraiche/laravel-mail-editor)
 1. Brand specific file manager - cloud based
 1. HTML Builder? (https://grapesjs.com/docs/)
 1. SEO Manager (https://github.com/lionix-team/seo-manager)
