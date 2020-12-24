@@ -22,6 +22,8 @@ class CreateCronjobsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        app(config('sap.models.permission'))->createGroup('Cronjobs', ['Create Cronjobs', 'Read Cronjobs', 'Update Cronjobs', 'Delete Cronjobs'], 1);
+        app(config('sap.models.setting'))->create(['created_by' => 1, 'updated_by' => 1, 'key' => 'cronjob_status', 'value' => ["A" => "Active", "I" => "Inactive"], ]);
         app(config('sap.models.cronjob'))->query()->create([
             'name' => 'Inspire',
             'command' => 'inspire',
@@ -30,6 +32,12 @@ class CreateCronjobsTable extends Migration
     }
     public function down()
     {
+        app(config('sap.models.permission'))->whereIn('group', [
+            'Cronjobs',
+        ])->delete();
+        app(config('sap.models.setting'))->whereIn('key', [
+            'cronjob_status',
+        ])->delete();
         Schema::dropIfExists('cronjobs');
     }
 }

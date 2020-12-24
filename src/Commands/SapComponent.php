@@ -77,8 +77,8 @@ class SapComponent extends Command
         $migration_file = database_path('migrations/'.date('Y_m_d_000000_').$filename);
 
         if ($this->brand) {
-            $database_dir = base_path('brand/'.$this->brand.'/database');
-            $migration_file = base_path('brand/'.$this->brand.'/database/'.date('Y_m_d_000000_').$filename);
+            $database_dir = base_path('brand/'.$this->brand.'/database/migrations');
+            $migration_file = base_path('brand/'.$this->brand.'/database/migrations/'.date('Y_m_d_000000_').$filename);
         }
         foreach ($this->files->files($database_dir) as $file) {
             if (str_contains($file->getPathname(), $filename)) {

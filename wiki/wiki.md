@@ -31,6 +31,7 @@ Laravel oriented package. This package is mainly for
 1. Model Events - Developer could push additions operation into *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent* methods.
 1. File Managers - App & Site specific. User will only get access to its own brand management. (auto optimizing images)
 1. Cronjob Admin - Developer just need to write the script using Artisan Command, then commit. The CRUD have to be done in the Admin Panel.
+1. Mail View Editor - Developer can create mailable using sap:mailer, content team could deploy the layout of the email body in HTML and Text.
 
 ## Requirements
 
@@ -107,6 +108,7 @@ Laravel oriented package. This package is mainly for
 1. Module Import & Export (Brand to another Brand)
 1. Cronjob Admin
 1. Middleware optimize image
+1. Mailer body layout manager
 
 ## Todo List
 
@@ -149,3 +151,4 @@ Laravel oriented package. This package is mainly for
 1. https://underground.works/clockwork/#documentation
 1. https://github.com/spatie/laravel-image-optimizer
 1. https://github.com/spatie/laravel-responsecache
+1. https://github.com/spatie/laravel-database-mail-templates

@@ -44,7 +44,8 @@
         "spatie/laravel-honeypot": "dev-master",
         "infureal/artisan-gui": "dev-main",
         "spatie/image-optimizer": "^1.3",
-        "spatie/laravel-image-optimizer": "^1.6"
+        "spatie/laravel-image-optimizer": "^1.6",
+        "spatie/laravel-database-mail-templates": "dev-master"
     },
     "autoload": {
         "psr-4": {

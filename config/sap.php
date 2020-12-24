@@ -13,6 +13,8 @@ return [
     'custom_pub_path' => 'pub',
     'custom_service_namespace' => 'App\Services',
     'custom_service_dir' => 'Services',
+    'custom_mail_namespace' => 'App\Mail',
+    'custom_mail_dir' => 'Mail',
     'custom_facade_namespace' => 'App\Facades',
     'custom_facade_dir' => 'Facades',
     /* end customization */
@@ -45,6 +47,7 @@ return [
         'component' => '\Wikichua\SAP\Models\Component',
         'carousel' => '\Wikichua\SAP\Models\Carousel',
         'cronjob' => '\Wikichua\SAP\Models\Cronjob',
+        'mailer' => '\Wikichua\SAP\Models\Mailer',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'activity_log' => [

@@ -32,6 +32,7 @@ class SAPServiceProvider extends ServiceProvider
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         }
 
         $this->loadComponents();
@@ -42,7 +43,6 @@ class SAPServiceProvider extends ServiceProvider
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if (\Str::of(env('APP_URL'))->is('*'.request()->getHost())) {
             $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
@@ -85,6 +85,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapService::class,
             Commands\SapExport::class,
             Commands\SapImport::class,
+            Commands\SapMailer::class,
         ]);
 
         // Publishing the configuration file.

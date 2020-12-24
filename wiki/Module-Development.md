@@ -16,6 +16,7 @@
 - [Disable Artisan Command](#Disable-Artisan-Command)
 - [Social Lite](#Social-Lite)
 - [Model Events](#Model-Events)
+- [Create Mailer with SAP](#Create-Mailer-with-SAP)
 
 ### Create New Module with SAP
 
@@ -396,3 +397,23 @@ In your **model**.php
 ```
 
 *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent*, these events will not be execute if there is no defined method in your model php.
+
+### Create Mailer with SAP
+
+Run in your bash
+
+```bash
+php artisan sap:mailer *MailName*
+```
+
+For specific brand
+
+Run in your bash
+
+```bash
+php artisan sap:mailer *MailName* --brand=*BrandName*
+```
+
+Run migrate to seed the mailer record
+
+To send or queue email please refer to (Laravel Mail)[https://laravel.com/docs/8.x/mail#sending-mail]

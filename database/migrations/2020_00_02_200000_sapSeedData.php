@@ -71,8 +71,6 @@ class SapSeedData extends Migration
         app(config('sap.models.permission'))->createGroup('Carousels', ['Create Carousels', 'Read Carousels', 'Update Carousels', 'Delete Carousels'], $user_id);
         app(config('sap.models.permission'))->createGroup('Files', ['Upload Files', 'Rename Files', 'Delete Files', 'Copy Files'], $user_id);
         app(config('sap.models.permission'))->createGroup('Folders', ['Create Folders', 'Rename Folders', 'Delete Files', 'Copy Folders'], $user_id);
-        app(config('sap.models.permission'))->createGroup('Cronjobs', ['Create Cronjobs', 'Read Cronjobs', 'Update Cronjobs', 'Delete Cronjobs'], $user_id);
-        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'cronjob_status', 'value' => ["A" => "Active", "I" => "Inactive"], ]);
     }
     public function down()
     {

@@ -1,23 +1,24 @@
 <x-sap::menu menu="dashboard" />
 <x-sap::menu menu="admin" :active-patterns="[
-        'user.*',
-        'permission.*',
-        'role.*',
-        'setting.*',
-        'report.*',
-        'activity_log.*',
-        'system_log.*',
-        'failed_job.*',
-        'cronjob.*',
-    ]"/>
+    'user.*',
+    'permission.*',
+    'role.*',
+    'setting.*',
+    'report.*',
+    'activity_log.*',
+    'system_log.*',
+    'failed_job.*',
+    'cronjob.*',
+]"/>
 <x-sap::menu menu="cms" :active-patterns="[
-        'brand.*',
-        'page.*',
-        'nav.*',
-        'component.*',
-        'carousel.*',
-        'file.*',
-    ]"/>
+    'brand.*',
+    'page.*',
+    'nav.*',
+    'component.*',
+    'carousel.*',
+    'file.*',
+    'mailer.*',
+]"/>
 @if (Route::has('lfm.home'))
 <x-sap::menu menu="menu" label="File Manager" :route="route('lfm.home')" icon="fas fa-fw fa-folder" :active-patterns="['lfm.*']"/>
 @endif

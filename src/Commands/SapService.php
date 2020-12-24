@@ -24,6 +24,7 @@ class SapService extends Command
 
         if ($this->brand) {
             $this->brandName = \Str::studly($this->option('brand'));
+            $this->name .= $this->brandName;
             $this->brand($this->brandName);
         } else {
             $this->app();
@@ -53,11 +54,11 @@ class SapService extends Command
     }
     protected function brand($brand_string)
     {
-        $brand_service_path = base_path('brand/'.$brand_string.'/services');
+        $brand_service_path = base_path('brand/'.$brand_string.'/Services');
         if (File::exists($brand_service_path) != true) {
             File::makeDirectory($brand_service_path);
         }
-        $brand_facade_path = base_path('brand/'.$brand_string.'/facades');
+        $brand_facade_path = base_path('brand/'.$brand_string.'/Facades');
         if (File::exists($brand_facade_path) != true) {
             File::makeDirectory($brand_facade_path);
         }
@@ -81,7 +82,7 @@ class SapService extends Command
         $namespace = config('sap.custom_facade_namespace');
         $return = "\App\Services\\$name::class";
         if ($isBrand) {
-            $namespace = "Brand\\$this->brandName\Facades\\$name";
+            $namespace = "Brand\\$this->brandName\Facades";
             $return = "\Brand\\$this->brandName\Services\\$name::class";
         }
 
@@ -106,7 +107,7 @@ EOT;
         $name = $this->name;
         $namespace = config('sap.custom_service_namespace');
         if ($isBrand) {
-            $namespace = "Brand\\$this->brandName\Services\\$name";
+            $namespace = "Brand\\$this->brandName\Services";
         }
 
         return <<<EOT

@@ -31,7 +31,6 @@ class SapReport extends Command
                     case 'queue':
                         $this->queue($report);
                         break;
-
                     default:
                         $this->sync($report);
                         break;
