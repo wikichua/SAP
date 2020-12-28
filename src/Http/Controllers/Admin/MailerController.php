@@ -27,6 +27,7 @@ class MailerController extends Controller
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.mailer.actions', compact('model'))->render();
+                $model->parameters = app($model->mailable)->getVariables();
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -42,6 +43,7 @@ class MailerController extends Controller
         $html = [
             ['title' => 'Mailable', 'data' => 'mailable', 'sortable' => false, 'filterable' => true],
             ['title' => 'Subject', 'data' => 'subject', 'sortable' => false, 'filterable' => true],
+            ['title' => 'Available Params', 'data' => 'parameters', 'sortable' => false, 'filterable' => true],
             ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
