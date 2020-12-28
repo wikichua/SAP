@@ -53,6 +53,7 @@ class MailerController extends Controller
     public function show($id)
     {
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
+        $preview = app($model->mailable);
         return view('sap::admin.mailer.show', compact('model'));
     }
 
@@ -98,5 +99,15 @@ class MailerController extends Controller
             'relist' => true,
             'redirect' => false,
         ]);
+    }
+
+    public function preview(Request $request, $id)
+    {
+        $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
+        $params = app($model->mailable)->getVariables();
+        if ($request->isMethod('post')) {
+            return app($model->mailable)->preview();
+        }
+        return view('sap::admin.mailer.preview', compact('model', 'params'));
     }
 }

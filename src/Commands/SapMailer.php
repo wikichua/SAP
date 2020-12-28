@@ -104,20 +104,31 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\MailTemplates\TemplateMailable;
+use Wikichua\SAP\Http\Traits\MailableTrait;
 
 class {$name} extends TemplateMailable
 {
-    use Queueable, SerializesModels;
+    use Queueable, SerializesModels, MailableTrait;
 
-    public \$name;
+    public \$name, \$email;
 
-    public function __construct()
+    /*
+    Usage :
+    \$user = app(config('sap.models.user'))->find(2);
+    Mail::to(\$user->email)->send(app('$namespace\\$name')->init(\$user));
+    */
+    public function init(\$user = null)
     {
-        \$user = app(config('sap.models.user'))->first();
-        \$this->name = \$user->name;
+        // All your codes should be here
+        if (\$user) {
+            \$this->name = \$user->name;
+            \$this->email = \$user->email;
+        }
+        // Keep this please
+        return \$this;
     }
 
-    public function getHtmlLayout(): string
+    public function getHtmlLayout(): ?string
     {
         // Blade view: `return view('mailLayouts.main', \$data)->render();`
         return '{{{ body }}}';

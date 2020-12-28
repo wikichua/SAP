@@ -20,7 +20,7 @@ class CreateMailTemplatesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        app(config('sap.models.permission'))->createGroup('Mailers', ['Read Mailers', 'Update Mailers', 'Delete Mailers'], 1);
+        app(config('sap.models.permission'))->createGroup('Mailers', ['Read Mailers', 'Preview Mailers', 'Update Mailers', 'Delete Mailers'], 1);
         /*app(config('sap.models.mailer'))->create([
             'mailable' => \App\Mail\GreetingMail::class,
             'subject' => 'Welcome, {{ name }}',

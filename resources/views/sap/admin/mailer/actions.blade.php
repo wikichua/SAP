@@ -1,5 +1,8 @@
 <div class="text-right text-nowrap">
     <a href="{{ route('mailer.show', $model->id) }}" class="btn btn-link text-secondary p-1" title="Read"><i class="fas fa-lg fa-eye"></i></a>
+    @can('Preview Mailers')
+    <a href="{{ route('mailer.preview', $model->id) }}" class="btn btn-link text-secondary p-1" title="Preview"><i class="fas fa-lg fa-laptop-code"></i></a>
+    @endcan
     @can('Update Mailers')
     <a href="{{ route('mailer.edit', $model->id) }}" class="btn btn-link text-secondary p-1" title="Update"><i class="fas fa-lg fa-edit"></i></a>
     @endcan

@@ -6,10 +6,11 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
     Route::group(['prefix' => 'mailer', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
         Route::match(['get', 'head'], 'list', 'MailerController@index')->name('mailer.list');
         Route::match(['get', 'head'], '{mailer}/read', 'MailerController@show')->name('mailer.show');
-
         Route::match(['get', 'head'], '{mailer}/edit', 'MailerController@edit')->name('mailer.edit');
         Route::match(['put', 'patch'], '{mailer}/update', 'MailerController@update')->name('mailer.update');
-
         Route::match(['delete'], '{mailer}/delete', 'MailerController@destroy')->name('mailer.destroy');
+
+        Route::match(['get', 'head'], '{mailer}/preview', 'MailerController@preview')->name('mailer.preview');
+        Route::match(['post'], '{mailer}/preview', 'MailerController@preview')->name('mailer.preview');
     });
 });
