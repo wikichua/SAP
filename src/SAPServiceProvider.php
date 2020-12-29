@@ -211,5 +211,31 @@ class SAPServiceProvider extends ServiceProvider
 
     protected function bladeDirectives()
     {
+        Blade::directive('impersonating', function ($guard = null) {
+            return "<?php if (is_impersonating({$guard})) : ?>";
+        });
+
+        Blade::directive('endImpersonating', function () {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('canImpersonate', function ($guard = null) {
+            return "<?php if (can_impersonate({$guard})) : ?>";
+        });
+
+        Blade::directive('endCanImpersonate', function () {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('canBeImpersonated', function ($expression) {
+            $args = preg_split("/,(\s+)?/", $expression);
+            $guard = $args[1] ?? null;
+
+            return "<?php if (can_be_impersonated({$args[0]}, {$guard})) : ?>";
+        });
+
+        Blade::directive('endCanBeImpersonated', function () {
+            return '<?php endif; ?>';
+        });
     }
 }
