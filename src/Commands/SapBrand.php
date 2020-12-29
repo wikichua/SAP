@@ -99,6 +99,7 @@ class SapBrand extends Command
         $this->justCopy('resources/views/pages');
         $this->justCopy('resources/views/components');
         $this->justCopy('resources/views/admin');
+        $this->justCopy('resources/lang');
         $this->justCopy('config');
     }
 

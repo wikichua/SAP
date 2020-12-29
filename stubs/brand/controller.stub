@@ -24,7 +24,7 @@ class {%brand_name%}Controller extends Controller
         if ($slug != '') {
             $this->page($request, $locale, $slug);
         }
-        $greetings = 'Hello '.$this->brand->name;
+        $greetings = __('{%brand_string%}::locale.greeting').' '.$this->brand->name;
         alert()->image($greetings,'Thanks for using SAP by Wiki','https://source.unsplash.com/random/800x600?greetings',800,600);
         return $this->getViewPage('index', compact('greetings'));
     }

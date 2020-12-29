@@ -30,7 +30,7 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
         View::addNamespace('{%brand_string%}', config('main.resources_path',base_path('brand/{%brand_name%}/resources/views')));
         Blade::componentNamespace('Brand\\{%brand_name%}\\Components', '{%brand_string%}');
         // <x-{%brand_string%}::component-name />
-
+        $this->loadTranslationsFrom(base_path('brand/{%brand_name%}/resources/lang'), '{%brand_string%}');
         $this->app['router']->pushMiddlewareToGroup('web', \Brand\{%brand_name%}\Middlewares\{%brand_name%}Middleware::class);
     }
 }
