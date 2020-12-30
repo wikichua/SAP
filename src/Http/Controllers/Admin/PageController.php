@@ -118,8 +118,10 @@ class PageController extends Controller
     public function preview($id)
     {
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
-        $brandName = strtolower($model->brand->name);
-        \View::addNamespace($brandName, base_path('brand/'.$brandName));
+        if ($model->brand_id != 0) {
+            $brandName = strtolower($model->brand_name);
+            View::addNamespace($brandName, base_path('brand/'.$model->brand->name.'/resources/views'));
+        }
         return view($brandName.'::pages.page', compact('model'));
     }
 
