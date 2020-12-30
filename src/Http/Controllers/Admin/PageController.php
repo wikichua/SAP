@@ -119,8 +119,21 @@ class PageController extends Controller
     {
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
         if ($model->brand_id != 0) {
-            $brandName = strtolower($model->brand_name);
-            View::addNamespace($brandName, base_path('brand/'.$model->brand->name.'/resources/views'));
+            $brandName = strtolower($model->brand->name);
+            \View::addNamespace($brandName, base_path('brand/'.$model->brand->name.'/resources/views'));
+            \Blade::componentNamespace('\\Brand\\'.$model->brand->name.'\\Components', $brandName);
+            \Config::set('auth.guards', [
+                'brand_web' => [
+                    'driver' => 'session',
+                    'provider' => 'brand_users',
+                ]
+            ]);
+            \Config::set('auth.providers', [
+                'brand_users' => [
+                    'driver' => 'eloquent',
+                    'model' => '\\Brand\\'.$model->brand->name.'\\Models\\User',
+                ],
+            ]);
         }
         return view($brandName.'::pages.page', compact('model'));
     }
