@@ -152,3 +152,4 @@ Laravel oriented package. This package is mainly for
 1. https://github.com/spatie/laravel-image-optimizer
 1. https://github.com/spatie/laravel-responsecache
 1. https://github.com/spatie/laravel-database-mail-templates
+1. https://github.com/envault/envault
