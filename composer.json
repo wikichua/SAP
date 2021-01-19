@@ -29,7 +29,7 @@
         "lab404/laravel-impersonate": "dev-master",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "rap2hpoutre/fast-excel": "^2.1",
-        "tightenco/ziggy": "^0.9.4",
+        "tightenco/ziggy": "^1.0.4",
         "barryvdh/laravel-debugbar": "^3.5",
         "paragonie/sodium_compat": "^1.13",
         "psr/cache": "dev-master",
