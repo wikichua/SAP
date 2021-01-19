@@ -25,4 +25,26 @@ mix.js("resources/js/app.js", "public/js")
     .sass(
         "resources/sass/app.scss",
         "public/css"
-    );
+    ).extract([
+        'jquery',
+        'axios',
+        'lodash',
+        'moment',
+        'popper.js',
+        'push.js',
+        'pusher-js'
+    ])
+    .extract([
+        'bootstrap',
+        'bootstrap-daterangepicker',
+        'bootstrap-select',
+        'bootstrap-table',
+        'daterangepicker',
+        'gijgo',
+        'sweetalert2'
+    ],'public/bootstrap/bootstrap-lib')
+    .extract([
+        'codemirror',
+        'simplemde',
+        'summernote'
+    ],'public/bootstrap/editor-lib');

@@ -12,10 +12,9 @@
     <title>@yield('title') | {{ config('app.name') }}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('bootstrap/bootstrap-lib.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     @stack('styles')
-
-    @routes
 </head>
 
 <body class="bg-gradient-primary">
@@ -43,6 +42,10 @@
             </div>
         </div>
     </div>
+    @routes
+    <script src="{{ asset('js/manifest.js') }}"></script>
+    <script src="{{ asset('js/vendor.js') }}"></script>
+    <script src="{{ asset('bootstrap/bootstrap-lib.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
     @stack('scripts')
