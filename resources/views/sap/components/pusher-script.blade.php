@@ -4,7 +4,7 @@ $(function() {
     if (Push.Permission.has() != true) {
         Push.Permission.request();
     }
-    Pusher.logToConsole = '{{ env('APP_DEBUG') }}';
+    Pusher.logToConsole = '{{ config('app.debug') }}';
     let pusher = new Pusher('{{ $app_key }}', {
       cluster: '{{ $cluster }}',
       useTLS: true

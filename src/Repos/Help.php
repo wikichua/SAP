@@ -205,7 +205,7 @@ class Help
             $config['app_id'],
             $config['options'],
         );
-        return $pusher->trigger((sha1($channel != '' ? $channel : env("APP_NAME"))), sha1($event), $actual_data);
+        return $pusher->trigger((sha1($channel != '' ? $channel : config("app.name"))), sha1($event), $actual_data);
     }
 
     public function isMenuActive($patterns = [])
