@@ -12,7 +12,6 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('bootstrap/bootstrap-lib.css') }}" rel="stylesheet">
-    <link href="{{ asset('bootstrap/editor-lib.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
