@@ -2,27 +2,27 @@
     "private": true,
     "scripts": {
         "dev": "npm install --save; php artisan ziggy:generate resources/js/ziggy.js; npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm install --save; php artisan ziggy:generate resources/js/ziggy.js; npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "mix --production"
     },
     "devDependencies": {
-        "sass": "^1.26.11",
-        "sass-loader": "^8.0.0",
-        "laravel-mix": "^5.0.5",
-        "vue-template-compiler": "^2.6.11"
+        "laravel-mix": "^6.0.10",
+        "postcss": "^8.2.4",
+        "sass": "^1.32.4",
+        "sass-loader": "^10.1.1"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.14.0",
-        "axios": "^0.19.2",
+        "@fortawesome/fontawesome-free": "^5.15.2",
+        "axios": "^0.21",
         "bootstrap": "^4.5.2",
         "bootstrap-daterangepicker": "^3.1.0",
         "bootstrap-select": "^1.13.18",
         "bootstrap-table": "^1.18.0",
-        "codemirror": "^5.56.0",
+        "codemirror": "^5.59.1",
         "cross-env": "^7.0",
         "daterangepicker": "^3.1.0",
         "gijgo": "^1.9.13",
@@ -32,9 +32,9 @@
         "popper.js": "^1.12",
         "push.js": "^1.0.12",
         "pusher-js": "^7.0.0",
+        "resolve-url-loader": "^3.1.1",
         "simplemde": "^1.11.2",
         "summernote": "^0.8.18",
-        "sweetalert2": "^9.17.1",
-        "resolve-url-loader": "^3.1.1"
+        "sweetalert2": "^10.13.0"
     }
 }

@@ -5,26 +5,23 @@
   "main": "webpack.mix.js",
   "scripts": {
     "dev": "npm install --save; php ./../../artisan ziggy:generate ./brand/{%brand_name%}/resources/js/ziggy.js; npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
-    "watch-poll": "npm run watch -- --watch-poll",
-    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
     "prod": "npm install --save; php ./../../artisan ziggy:generate ./brand/{%brand_name%}/resources/js/ziggy.js; npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "mix --production"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jquery": "^3.5.1",
-    "popper.js": "^1.12",
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "bootstrap": "^4.5.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.14.0",
     "cross-env": "^7.0.2",
-    "laravel-mix": "^5.0.4"
+    "jquery": "^3.5.1",
+    "laravel-mix": "^6.0.10",
+    "popper.js": "^1.12",
+    "postcss": "^8.2.4"
   }
 }
