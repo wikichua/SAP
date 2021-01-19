@@ -16,6 +16,7 @@
     }
     </style>
     @stack('styles')
+    @routes
   </head>
   <body>
     <!-- Navbar -->

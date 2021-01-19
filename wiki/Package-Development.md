@@ -16,3 +16,10 @@ Run in your bash
 composer require wikichua/sap:dev-master
 php artisan storage:link
 ```
+
+Update NPM Packages version
+
+```bash
+npm outdated --save/--save-dev
+npm update --save/--save-dev -f
+```

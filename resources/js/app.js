@@ -1,6 +1,6 @@
 require("./bootstrap");
-import route from "ziggy";
-import { Ziggy } from './ziggy';
+// import route from "ziggy";
+// import { Ziggy } from './ziggy';
 require('bootstrap-select');
 
 window.moment = require('moment');
