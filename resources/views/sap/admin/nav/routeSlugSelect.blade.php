@@ -17,6 +17,7 @@ $(function () {
             // $('#route_slug').selectpicker('refresh');
             @if (isset($model->route_slug) && $model->route_slug != '')
             // $('#route_slug').selectpicker('val', '{{ $model->route_slug }}');
+            $('#route_slug').val('{{ $model->route_slug }}');
             @endif
         }).catch((error) => {
           console.error(error);
