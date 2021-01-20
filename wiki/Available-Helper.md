@@ -5,8 +5,10 @@
 - [activity](#activity)
 - [queue_keys](#queue_keys)
 - [viewRenderer](#viewRenderer)
+- [renderSlug](#renderSlug)
 - [route_slug](#route_slug)
 - [getBrandName](#getBrandName)
+- [getBrand](#getBrand)
 - [getDomain](#getDomain)
 - [brand](#brand)
 - [opendns](#opendns)
@@ -57,6 +59,15 @@ viewRenderer($__php, $__data = [])
 In case you want to render the **View Blade**.
 This helper able to render the view seperately.
 
+
+#### renderSlug
+
+```php
+renderSlug($slug, $locale = '')
+```
+
+Render the slug passed in directly
+
 #### route_slug
 
 ```php
@@ -75,6 +86,14 @@ getBrandName($domain = '')
 ```
 
 If in case you will need to get your brand name for whatever reason, you may pass the domain that currently on
+
+#### getBrand
+
+```php
+getBrand()
+```
+
+If in case you will need to get your current brand for a reason.
 
 ```php
 $domain = request()->getHost();

@@ -79,3 +79,11 @@ In your browser
 Access to your https://***YourProject***.test/admin.
 Email : admin@email.com
 Password : admin123
+
+Make sure you remove this from your web.php
+
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+```

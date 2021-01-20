@@ -7,10 +7,11 @@ trait BrandControllerTrait
 {
     public function register($brandName)
     {
-        $this->brand = cache()->remember('register-'.$brandName, (60*60*24), function () use($brandName){
+        $this->brand = cache()->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()
                 ->where('name', $brandName)->first();
         });
+        \Config::set('main.brand', $this->brand);
         return $this;
     }
     public function setLocale()

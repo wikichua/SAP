@@ -317,4 +317,18 @@ class Help
         }
         return $keys;
     }
+
+    public function getBrand()
+    {
+        return config('main.brand', new stdClass);
+    }
+    public function renderSlug($slug, $locale = '')
+    {
+        $model = app(config('sap.models.page'))->query()
+            ->where('brand_id', config('main.brand')->id)
+            ->where('locale', app()->getLocale())
+            ->where('slug', strtolower($slug))
+            ->first();
+        return $this->viewRenderer($model->blade);
+    }
 }

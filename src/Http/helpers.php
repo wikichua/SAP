@@ -145,3 +145,15 @@ if (!function_exists('brand')) {
         return Help::brand($brandName);
     }
 }
+if (!function_exists('renderSlug')) {
+    function renderSlug($slug, $locale = '')
+    {
+        return Help::renderSlug($slug, $locale);
+    }
+}
+if (!function_exists('getBrand')) {
+    function getBrand()
+    {
+        return Help::getBrand();
+    }
+}
