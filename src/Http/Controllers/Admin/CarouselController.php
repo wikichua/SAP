@@ -158,7 +158,7 @@ class CarouselController extends Controller
         ]);
     }
 
-    public function orderable(Request $request, $orderable = '')
+    public function orderable(Request $request, $orderable = '', $brand_id = '')
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.carousel'))->query()
@@ -166,11 +166,14 @@ class CarouselController extends Controller
             if ($orderable != '') {
                 $models->where('slug', $orderable);
             }
+            if ($brand_id != '') {
+                $models->where('brand_id', $brand_id);
+            }
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
-        $getUrl = route('carousel.orderable', $orderable);
-        $actUrl = route('carousel.orderableUpdate', $orderable);
+        $getUrl = route('carousel.orderable', [$orderable, $brand_id]);
+        $actUrl = route('carousel.orderableUpdate', [$orderable, $brand_id]);
         $html = [
             ['title' => 'ID', 'data' => 'id'],
             ['title' => 'Slug', 'data' => 'slug'],
@@ -179,13 +182,16 @@ class CarouselController extends Controller
         return view('sap::admin.carousel.orderable', compact('html', 'getUrl', 'actUrl'));
     }
 
-    public function orderableUpdate(Request $request, $orderable = '')
+    public function orderableUpdate(Request $request, $orderable = '', $brand_id = '')
     {
         $newRow = $request->get('newRow');
         $models = app(config('sap.models.carousel'))->query()->select('id')
             ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
         if ($orderable != '') {
             $models->where('slug', $orderable);
+        }
+        if ($brand_id != '') {
+            $models->where('brand_id', $brand_id);
         }
         $models = $models->whereIn('id', explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {

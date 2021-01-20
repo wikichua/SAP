@@ -16,7 +16,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
 
         Route::match(['delete'], '{model}/delete', 'CarouselController@destroy')->name('carousel.destroy');
 
-        Route::match(['get', 'head'], 'orderable/{groupValue?}', 'CarouselController@orderable')->name('carousel.orderable');
-        Route::match(['post'], 'orderable/update/{groupValue?}', 'CarouselController@orderableUpdate')->name('carousel.orderableUpdate');
+        Route::match(['get', 'head'], 'orderable/{groupValue?}/{brand_id?}', 'CarouselController@orderable')->name('carousel.orderable');
+        Route::match(['post'], 'orderable/update/{groupValue?}/{brand_id?}', 'CarouselController@orderableUpdate')->name('carousel.orderableUpdate');
     });
 });

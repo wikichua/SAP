@@ -29,7 +29,8 @@ class NavController extends Controller
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.nav.actions', compact('model'))->render();
-                $model->link = '<a href="'.route_slug(strtolower($model->brand->name).'.page', $model->route_slug, $model->route_params, $model->locale).'" target="_blank">'.$model->name.'</a>';
+                // $model->link = '<a href="'.route_slug(strtolower($model->brand->name).'.page', $model->route_slug, $model->route_params, $model->locale).'" target="_blank">'.$model->name.'</a>';
+                $model->link = $model->name;
             }
             if ($request->get('filters', '') != '') {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
@@ -176,7 +177,7 @@ class NavController extends Controller
         return response()->json($pages);
     }
 
-    public function orderable(Request $request, $orderable = '')
+    public function orderable(Request $request, $orderable = '', $brand_id = '')
     {
         if ($request->ajax()) {
             $models = app(config('sap.models.nav'))->query()
@@ -184,11 +185,14 @@ class NavController extends Controller
             if ($orderable != '') {
                 $models->where('group_slug', $orderable);
             }
+            if ($brand_id != '') {
+                $models->where('brand_id', $brand_id);
+            }
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
-        $getUrl = route('nav.orderable', $orderable);
-        $actUrl = route('nav.orderableUpdate', $orderable);
+        $getUrl = route('nav.orderable', [$orderable, $brand_id]);
+        $actUrl = route('nav.orderableUpdate', [$orderable, $brand_id]);
         $html = [
             ['title' => 'ID', 'data' => 'id'],
             ['title' => 'Group Slug', 'data' => 'group_slug'],
@@ -197,13 +201,16 @@ class NavController extends Controller
         return view('sap::admin.nav.orderable', compact('html', 'getUrl', 'actUrl'));
     }
 
-    public function orderableUpdate(Request $request, $orderable = '')
+    public function orderableUpdate(Request $request, $orderable = '', $brand_id = '')
     {
         $newRow = $request->get('newRow');
         $models = app(config('sap.models.nav'))->query()->select('id')
             ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
         if ($orderable != '') {
             $models->where('group_slug', $orderable);
+        }
+        if ($brand_id != '') {
+            $models->where('brand_id', $brand_id);
         }
         $models = $models->whereIn('id', explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {
