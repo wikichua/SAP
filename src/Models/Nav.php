@@ -41,7 +41,7 @@ class Nav extends Model
 
     public function getStatusNameAttribute($value)
     {
-        return settings('nav_status')[$this->attributes['status']];
+        return isset($this->attributes['status'])? settings('nav_status')[$this->attributes['status']]:'';
     }
 
     public function scopeFilterName($query, $search)
