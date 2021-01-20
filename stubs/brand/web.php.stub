@@ -7,17 +7,22 @@ Route::name('{%brand_string%}.')
     ->domain(getDomain())
     ->namespace('\Brand\{%brand_name%}\Controllers')
     ->group(function () {
-        Route::group([
+        Route::group(
+            [
             'prefix'=>'{locale?}',
             'middleware' => ['{%brand_string%}:guest'],
             'where' => ['locale' => '[a-z]{2}']
         ],
-        function () {
-            Route::get('/', '{%brand_name%}Controller@index')->name('home');
-            Route::get('/{slug}', '{%brand_name%}Controller@page')->name('page');
-            // customized, to exclude access to page method, need at least 2 paths
-            // Route::get('/one/two', '{%brand_name%}Controller@example')->name('example');
-        });
+            function () {
+                Route::get('/', '{%brand_name%}Controller@index')->name('home');
+                /* customized route */
+                // customized, to exclude access to page method, need at least 2 paths
+                // Route::get('/one', '{%brand_name%}Controller@example1')->name('example1');
+                // Route::get('/one/two', '{%brand_name%}Controller@example2')->name('example2');
+                /* customized route end */
+                Route::get('/{slug}', '{%brand_name%}Controller@page')->name('page');
+            }
+        );
         Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}:guest']], function () {
             Route::post('/login', 'LoginController@login')->name('login');
             Route::match(['get','post'], 'login/{provider}', 'LoginController@redirectToProvider')->name('social.login');
