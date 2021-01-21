@@ -18,7 +18,8 @@
     ],
     "suggest": {
         "laravel/ui": "^2.4|^3.0",
-        "laravel/horizon": "Yes! We do need this package :-)"
+        "laravel/horizon": "Yes! We do need this package :-)",
+        "unisharp/laravel-filemanager": "dev-master to try this"
     },
     "require": {
         "pusher/pusher-php-server": "^4.1",
