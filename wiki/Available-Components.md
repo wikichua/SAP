@@ -1,4 +1,4 @@
-## Available Components
+# Available Components
 
 - [Config](#Config)
 - [form](#form)
@@ -17,7 +17,7 @@
 - [datalist](#datalist)
 - [display](#display)
 
-### Brand Components
+## Brand Components
 
 - [alert](#alert)
 - [carousel](#carousel)
@@ -25,7 +25,7 @@
 - [navbar top](#navbar-top)
 - [navbar top login](#navbar-top-login)
 
-#### Config
+### <a name="Config"></a>Config
 
 ```php
 'name' => [
@@ -72,7 +72,7 @@
 1. *relationship*. declare the relationship if there is
 1. *user_timezone*. true or false, usually this is needed for *datetime*, or *date* field type
 
-#### form
+### <a name="form"></a>form
 
 This component included the @csrf, @honeypot and @method if method not belongs to GET and POST
 
@@ -88,19 +88,19 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 - Class is a string...
 
 
-#### text
+### <a name="text"></a>text
 
 ```php
 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="['']" :attribute_tags="[]" :value="$model->name ?? ''"/>
 ```
 
-#### file
+### <a name="file"></a>file
 
 ```php
 <x-sap::file-field type="file" name="file" id="file" label="File" :class="['']" :attribute_tags="[]" :value="$model->file ?? ''"/>
 ```
 
-#### image
+### <a name="image"></a>image
 
 ```php
 <x-sap::image-field type="image" name="image" id="image" label="Image" :class="['']" :attribute_tags="[]" :value="$model->images ?? ''"/>
@@ -110,43 +110,43 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 <x-sap::image-field type="images" name="images" id="images" label="Images" :class="['']" :attribute_tags="['multiple'=>'multiple']" :value="$model->images ?? ''"/>
 ```
 
-#### date
+### <a name="date"></a>date
 
 ```php
 <x-sap::date-field name="date" id="date" label="Date" :class="['']" :attribute_tags="[]" :value="$model->date ?? ''"/>
 ```
 
-#### time
+### <a name="time"></a>time
 
 ```php
 <x-sap::time-field name="time" id="time" label="Time" :class="['']" :attribute_tags="[]" :value="$model->time ?? ''"/>
 ```
 
-#### number
+### <a name="number"></a>number
 
 ```php
 <x-sap::input-field type="number" name="number" id="number" label="Number" :class="['']" :attribute_tags="['min'=>'1', 'max'=>'100']" :value="$model->number ?? ''"/>
 ```
 
-#### editor
+### <a name="editor"></a>editor
 
 ```php
 <x-sap::editor-field name="editor" id="editor" label="Editor" :class="['']" :attribute_tags="[]" :value="$model->editor ?? ''"/>
 ```
 
-#### markdown
+### <a name="markdown"></a>markdown
 
 ```php
 <x-sap::markdown-field name="markdown" id="markdown" label="Markdown" :class="['']" :attribute_tags="[]" :value="$model->markdown ?? ''"/>
 ```
 
-#### textarea
+### <a name="textarea"></a>textarea
 
 ```php
 <x-sap::textarea-field name="textarea" id="textarea" label="Textarea" :class="['']" :attribute_tags="[]" :value="$model->textarea ?? ''"/>
 ```
 
-#### select
+### <a name="select"></a>select
 
 ```php
 <x-sap::select-field name="select" id="select" label="select" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('*modulename*_select')" :selected="$model->select ?? []"/>
@@ -156,19 +156,19 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 <x-sap::select-field name="user" id="user" label="User" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.user'))->query()->pluck('name','id')->toArray()" :selected="$model->user ?? []"/>
 ```
 
-#### checkbox
+### <a name="checkbox"></a>checkbox
 
 ```php
 <x-sap::checkboxes-field name="checkbox" id="checkbox" label="Checkbox" :options="settings('*modulename*_checkbox')" :checked="$model->checkbox ?? []" :isGroup="false" :stacked="1"/>
 ```
 
-#### radio
+### <a name="radio"></a>radio
 
 ```php
 <x-sap::radios-field name="radio" id="radio" label="Radio" :options="settings('*modulename*_radio')" :checked="$model->radio ?? []" :isGroup="false" :stacked="0"/>
 ```
 
-#### datalist
+### <a name="datalist"></a>datalist
 
 ```php
 <x-sap::datalist-field name="datalist" id="datalist" label="Datalist" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="settings('*modulename*_datalist')" :selected="$model->datalist ?? []"/>
@@ -178,7 +178,7 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 <x-sap::datalist-field name="datalist" id="datalist" label="Datalist" :class="['']" :attribute_tags="[]" :data="['style'=>'border bg-white','live-search'=>false]" :options="app(config('sap.models.user'))->query()->pluck('name','id')->toArray()" :selected="$model->datalist ?? []"/>
 ```
 
-#### display
+### <a name="display"></a>display
 
 ```php
 <x-sap::display-field name="markdown" id="markdown" label="Markdown" value="{!! $model->markdown !!}" type="markdown"/>
@@ -191,31 +191,31 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 <x-sap::display-field name="json" id="json" label="JSON" :value="$model->json" type="json"/>
 ```
 
-#### alert
+### <a name="alert"></a>alert
 
 ```php
 <x-*brandname*::alert />
 ```
 
-#### carousel
+### <a name="carousel"></a>carousel
 
 ```php
 <x-*brandname*::carousel slug="sample-carousel" :tags="['new','hot']" />
 ```
 
-#### login modal
+### <a name="login-modal"></a>login modal
 
 ```php
 <x-*brandname*::login-modal />
 ```
 
-#### navbar top
+### <a name="navbar-top"></a>navbar top
 
 ```php
 <x-*brandname*::navbar-top groupSlug="sample-navbar" />
 ```
 
-#### navbar top login
+### <a name="navbar-top-login"></a>navbar top login
 
 ```php
 <x-*brandname*::navbar-top-login />

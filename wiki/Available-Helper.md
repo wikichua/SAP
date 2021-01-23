@@ -16,7 +16,7 @@
 - [agent and agents](#agent-and-agents)
 - [pushered](#pushered)
 
-#### timezones
+### <a name="timezones"></a>timezones
 
 Listed timezones available
 
@@ -24,7 +24,7 @@ Listed timezones available
 timezones()
 ```
 
-#### settings
+### <a name="settings"></a>settings
 
 ```php
 settings($name, $default = '')
@@ -33,7 +33,7 @@ settings($name, $default = '')
 Return values from **Setting** Model.
 Only set your value in **Setting** Module via the **Admin Panel**.
 
-#### activity
+### <a name="activity"></a>activity
 
 ```php
 activity($message, $data = [], $model = null, $ip = '')
@@ -42,7 +42,7 @@ activity($message, $data = [], $model = null, $ip = '')
 Log activity occurred.
 This will viewable in **Activity Log** Module in **Admin Panel**.
 
-#### queue_keys
+### <a name="queue_keys"></a>queue_keys
 
 Listed all keys in pending withing the queue (temporarily only redis supported)
 
@@ -50,7 +50,7 @@ Listed all keys in pending withing the queue (temporarily only redis supported)
 queue_keys($driver = 'redis')
 ```
 
-#### viewRenderer
+### <a name="viewRenderer"></a>viewRenderer
 
 ```php
 viewRenderer($__php, $__data = [])
@@ -60,7 +60,7 @@ In case you want to render the **View Blade**.
 This helper able to render the view seperately.
 
 
-#### renderSlug
+### <a name="renderSlug"></a>renderSlug
 
 ```php
 renderSlug($slug, $locale = '')
@@ -68,7 +68,7 @@ renderSlug($slug, $locale = '')
 
 Render the slug passed in directly
 
-#### route_slug
+### <a name="route_slug"></a>route_slug
 
 ```php
 route_slug($name, string $slug, array $parameters = [], $locale ='')
@@ -79,7 +79,7 @@ This helper allow only **slug** string and compute the complete url with append 
 So if your navigation content of different locale, you could just use this helper without purposely set the locale.
 This helper will use locale that user choosed and appended with it.
 
-#### getBrandName
+### <a name="getBrandName"></a>getBrandName
 
 ```php
 getBrandName($domain = '')
@@ -87,7 +87,7 @@ getBrandName($domain = '')
 
 If in case you will need to get your brand name for whatever reason, you may pass the domain that currently on
 
-#### getBrand
+### <a name="getBrand"></a>getBrand
 
 ```php
 getBrand()
@@ -99,7 +99,7 @@ If in case you will need to get your current brand for a reason.
 $domain = request()->getHost();
 ```
 
-#### getDomain
+### <a name="getDomain"></a>getDomain
 
 ```php
 getDomain($name)
@@ -107,7 +107,7 @@ getDomain($name)
 
 If in case you will need to get your primary & aliases domains, simply pass the brand name.
 
-#### brand
+### <a name="brand"></a>brand
 
 ```php
 brand($brandName)
@@ -121,7 +121,7 @@ auth()
 
 This **brand** helper is getting the brand model and cached to reduce multiple calls to the database.
 
-#### agent and agents
+### <a name="agent-and-agents"></a>agent and agents
 
 Return instance from [jenssegers/agent](https://github.com/jenssegers/agent)
 
@@ -137,7 +137,7 @@ key = null to return all
 available keys:
 headers, ips, opendns, iplocation, languages, device, platform, platform_version, browser, browser_version, isDesktop, isPhone, isRobot
 
-#### opendns
+### <a name="opendns"></a>opendns
 
 Return open IP
 
@@ -145,7 +145,7 @@ Return open IP
 opendns()
 ```
 
-#### iplocation
+### <a name="iplocation"></a>iplocation
 
 Return open IP Location
 
@@ -153,7 +153,7 @@ Return open IP Location
 iplocation($ip = '')
 ```
 
-#### pushered
+### <a name="pushered"></a>pushered
 
 ```php
     pushered('hello string');

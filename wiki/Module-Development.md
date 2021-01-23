@@ -18,11 +18,11 @@
 - [Model Events](#Model-Events)
 - [Create Mailer with SAP](#Create-Mailer-with-SAP)
 
-### Create New Module with SAP
+### <a name="Create-New-Module-with-SAP"></a>Create New Module with SAP
 
 **ModuleName** - MUST be Plural + Studly Case
 
-#### Create Config
+#### <a name="Create-Config"></a>Create Config
 
 Run in your bash
 
@@ -39,7 +39,7 @@ php artsan sap:config *ModuleName* --Brand=*BrandName*
 [Config Sample](../stubs/config.stub)
 Add or remove any configuration that doesn't need and set *ready* to *true*
 
-#### Make Module
+#### <a name="Make-Module"></a>Make Module
 
 Run in your bash
 
@@ -73,7 +73,7 @@ Since you had done make the CRUD, we will help you set ready to false to prevent
 Config has changed: /var/www/l8/config/sap/LinuxOsConfig.php
 ```
 
-### Create New Service
+### <a name="Create-New-Service"></a>Create New Service
 
 **ServiceName** - MUST be Plural + Studly Case
 
@@ -83,7 +83,7 @@ Run in your bash
 php artisan sap:service *ServiceName*
 ```
 
-### Create Service which belongs to Brand Only
+### <a name="Create-Service-which-belongs-to-Brand-Only"></a>Create Service which belongs to Brand Only
 
 Run in your bash
 
@@ -93,9 +93,9 @@ php artisan sap:service *ServiceName* --brand=*BrandName*
 
 You may like to add your business model as a service.
 
-#### Create Export and Import Module with SAP
+#### <a name="Create-Export-and-Import-Module-with-SAP"></a>Create Export and Import Module with SAP
 
-#### Export Module
+#### <a name="Export-Module"></a>Export Module
 
 Run in your bash
 
@@ -115,7 +115,7 @@ Export to your preferred path
 php artisan sap:export *ModuleName* "~/Desktop" --brand=*BrandName*
 ```
 
-#### Import Module
+#### <a name="Import-Module"></a>Import Module
 
 Run in your bash
 
@@ -132,7 +132,7 @@ php artisan sap:import */path/to/your/zip/file/location/module.zip* --brand=*Bra
 Note: Brand's Module is transferable to another Brand.
 Meaning that, You can export a module from Brand A, and import it back to Brand B by specifiying *--brand=BrandB*
 
-#### Using Pusher in your application
+#### <a name="Using-Pusher-in-your-application"></a>Using Pusher in your application
 
 With Helper should be much more easy.
 
@@ -153,7 +153,7 @@ By default, this will pushed to "general" event on your default app channel.
 
 - **message** key is important as to show on the web push notification. If there is no message key defined, array of the param will be imploded to string and assigned to message key.
 
-### Create New Brand with SAP
+### <a name="Create-New-Brand-with-SAP"></a>Create New Brand with SAP
 
 **BrandName** - MUST be Plural + Studly Case
 
@@ -188,7 +188,7 @@ This brand will be scaffolded with the set of
 
 More about [Brand Development](Brand-Development.md)
 
-### Create New Component with SAP
+### <a name="Create-New-Component-with-SAP"></a>Create New Component with SAP
 
 Run in your bash
 
@@ -196,7 +196,7 @@ Run in your bash
 php artisan sap:comp *ComponentName*
 ```
 
-### Create Component which belongs to Brand Only
+### <a name="Create-Component-which-belongs-to-Brand-Only"></a>Create Component which belongs to Brand Only
 
 Run in your bash
 
@@ -204,7 +204,7 @@ Run in your bash
 php artisan sap:comp *ComponentName* --brand=*BrandName*
 ```
 
-### Run Indexing Data Into Global Searchable
+### <a name="Run-Indexing-Data-Into-Global-Searchable"></a>Run Indexing Data Into Global Searchable
 
 Run in your bash
 
@@ -212,7 +212,7 @@ Run in your bash
 php artisan sap:index
 ```
 
-### Run Report with Artisan and Task Scheduler
+### <a name="Run-Report-with-Artisan-and-Task-Scheduler"></a>Run Report with Artisan and Task Scheduler
 
 ```bash
 php artisan sap:report
@@ -249,9 +249,9 @@ Please read about [Laravel Supervisor Configuration](https://laravel.com/docs/8.
 php artisan queue:work --tries=3 --backoff=3 --queue=report_processing
 ```
 
-### Queue and Cache Closure
+### <a name="Queue-and-Cache-Closure"></a>Queue and Cache Closure
 
-#### Queue
+#### <a name="Queue"></a>Queue
 
 ```php
 dispatch(function () use ($mail) {
@@ -263,7 +263,7 @@ dispatch(function () use ($mail) {
 php artisan queue:work --queue=high,low
 ```
 
-#### Cache
+#### <a name="Cache"></a>Cache
 
 ```php
 // set cache
@@ -287,7 +287,7 @@ $users = cache()->rememberForever('users', function () {
 });
 ```
 
-### PHP Debug Bar
+### <a name="PHP-Debug-Bar"></a>PHP Debug Bar
 
 This feature is automatic enable in non production environment
 However, you will need to exclude it in api related routes
@@ -302,7 +302,7 @@ At your debugbar.php
     ],
 ```
 
-### Enable Cronjob Admin
+### <a name="Enable-Cronjob-Admin"></a>Enable Cronjob Admin
 
 In your app/Console/Kernel.php
 
@@ -320,7 +320,7 @@ Then at the schedule(Schedule $schedule)
         $this->runCronjobs($schedule);
 ```
 
-### Disable Artisan Command
+### <a name="Disable-Artisan-Command"></a>Disable Artisan Command
 
 In your app/Console/Kernel.php
 
@@ -340,7 +340,7 @@ Then at the commands()
 
 Notes: 1st argument takes array for the command to be disabled while the 2nd argument is an array for environment that you want it to be run on.
 
-### Social Lite
+### <a name="Social-Lite"></a>Social Lite
 
 In your User.php model
 
@@ -376,7 +376,7 @@ You should be seeing login with social media icons appearing based on the those 
 
 As for your brand social lite login, you should hardcoded in the brand/**BrandName**/config/services.php
 
-### Model Events
+### <a name="Model-Events"></a>Model Events
 
 May refer to [Laravel Event](https://laravel.com/docs/8.x/eloquent#events).
 Due to *Saved* and *Deleted* has been used as static called, in case of need to have additional events runs on those events mentioned. Please do use as stated below.
@@ -398,7 +398,7 @@ In your **model**.php
 
 *onCreatedEvent*, *onUpdatedEvent*, *onDeletedEvent*, *onCachedEvent*, these events will not be execute if there is no defined method in your model php.
 
-### Create Mailer with SAP
+### <a name="Create-Mailer-with-SAP"></a>Create Mailer with SAP
 
 Run in your bash
 

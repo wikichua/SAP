@@ -25,6 +25,9 @@
 @if (Route::has('seo.home'))
 <x-sap::menu menu="menu" label="SEO Manager" :route="route('seo.home')" icon="fas fa-fw fa-folder" :active-patterns="['seo.*']"/>
 @endif
+@if (Route::has('wiki.home'))
+<x-sap::menu menu="menu" label="Wiki Docs" :route="route('wiki.home')" icon="fab fa-fw fa-wikipedia-w" :active-patterns="['wiki.*']"/>
+@endif
 <!--DoNotRemoveMe-->
 @foreach ($brandMenus as $brandMenu)
 @include($brandMenu)

@@ -12,7 +12,7 @@
 - [Component](#Component)
 - [Module](#Module)
 
-### Init
+### <a name="Init"></a>Init
 
 **BrandName** - MUST be Plural + Studly Case
 
@@ -22,11 +22,11 @@ Run in your bash
 php artisan sap:brand *BrandName* --domain=*domain.test*
 ```
 
-### Config
+### <a name="Config"></a>Config
 
 By default, few files will be added
 
-##### main.php
+##### <a name="main.php"></a>main.php
 
 ```php
 return [
@@ -47,7 +47,7 @@ Add the namespaces of you model into models section for easy access via
 app(config('main.models.user'))->query()->all();
 ```
 
-##### domains.php
+##### <a name="domains.php"></a>domains.php
 
 Add aliases to allow more domain aliases pointed to main domain
 
@@ -61,17 +61,17 @@ return [
 
 ```
 
-##### auth.php
+##### <a name="auth.php"></a>auth.php
 
 Basically this is the same concept as Laravel
 
 Each brand should have it's own user table, auth guard, user model
 
-##### services.php
+##### <a name="services.php"></a>services.php
 
 Mainly this is the extended for social lite configurations
 
-### Route
+### <a name="Route"></a>Route
 
 Referring to web.php
 
@@ -114,19 +114,19 @@ Or
 
 > Route::any('three_chars_at_least/other_path_name')
 
-### Middleware
+### <a name="Middleware"></a>Middleware
 
 By default I keep it clean as it is. This is good to run certain rules before hitting to the controller.
 
 Such as, checking IP, obtain Affiliate info, redirecting to mobile or web url and etc...
 
-### Service Provide
+### <a name="Service-Provide"></a>Service Provide
 
 Not advisable to change unless you know what you need.
 
 This is basically use for registering or deregister some settings or configuration that required to ensure the brand directory works as it should.
 
-### Controller
+### <a name="Controller"></a>Controller
 
 Freely to add this.
 
@@ -136,7 +136,7 @@ There is no artisan for this yet, but feel free to use
 
 Then copy the file to your brand controllers directory and change the namespace accordingly
 
-### Model
+### <a name="Model"></a>Model
 
 Freely to add this.
 
@@ -152,17 +152,17 @@ Advise to add this into your **main.php** in model section. This could allow eas
 app(config('main.models.*sample*'))->query()->all();
 ```
 
-### View
+### <a name="View"></a>View
 
 May refer to [Laravel Blade Document](https://laravel.com/docs/8.x/views)
 
-##### Directory Structure:
+##### <a name="Directory-Structure:"></a>Directory Structure:
 
 1. layouts
 1. pages
 1. components
 
-### NPM
+### <a name="NPM"></a>NPM
 
 Suggest using webpack laravel mix.
 
@@ -176,7 +176,7 @@ or
 
 This basically will perform npm install, php artisan ziggy:generate, then build that create public directory in the brand and symlink to your laravel application public directory
 
-### Component
+### <a name="Component"></a>Component
 
 Make the component via artisan using
 
@@ -186,16 +186,16 @@ If there is no brand option input, it will create at the laravel application lev
 
 Using this artisan command will include the "component seed" for the admin panel to keep track if the available component registered.
 
-##### Usage
+##### <a name="Usage"></a>Usage
 
 ```html
 <x-*BrandName*::*component-name* />
 ```
-### Module
+### <a name="Module"></a>Module
 
 Make the module via artisan using
 
-#### Create Config
+#### <a name="Create-Config"></a>Create Config
 
 Run in your bash
 
@@ -206,7 +206,7 @@ php artsan sap:config *ModuleName* --brand=*BrandName*
 [Config Sample](../stubs/config.stub)
 Add or remove any configuration that doesn't need and set *ready* to *true*
 
-#### Make Module
+#### <a name="Make-Module"></a>Make Module
 
 Run in your bash
 

@@ -13,5 +13,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], '/', 'DashboardController@index')->name('admin');
         Route::match(['get', 'head'], '/lfm', 'DashboardController@lfm')->name('lfm.home');
         Route::match(['get', 'head'], '/seo', 'DashboardController@seo')->name('seo.home');
+        Route::match(['get', 'head'], '/wiki/{file?}', 'DashboardController@wiki')->name('wiki.home');
     });
 });
