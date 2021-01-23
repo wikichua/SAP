@@ -172,6 +172,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
+        $model->roles()->sync([]);
         $model->delete();
 
         return response()->json([
