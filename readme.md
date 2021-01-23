@@ -1,3 +1,3 @@
 # Simple Admin Panel (CRUD generator + CMS)
 
-Read [Wiki](wiki/wiki.md)
+Read [Wiki](wiki/Index.md)

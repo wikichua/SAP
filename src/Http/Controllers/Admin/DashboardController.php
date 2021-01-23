@@ -23,12 +23,11 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.seo');
     }
-    public function wiki(Request $request, $file = 'wiki.md')
+    public function wiki(Request $request, $file = 'index.md')
     {
         $md = \File::get(base_path('vendor/wikichua/sap/wiki/'.$file));
         $search = [
             '(Installation.md)',
-            '(Package-Development.md)',
             '(Module-Development.md)',
             '(Brand-Development.md)',
             '(Available-Components.md)',
@@ -36,7 +35,6 @@ class DashboardController extends Controller
         ];
         $replace = [
             '('.route('wiki.home', ['Installation.md']).')',
-            '('.route('wiki.home', ['Package-Development.md']).')',
             '('.route('wiki.home', ['Module-Development.md']).')',
             '('.route('wiki.home', ['Brand-Development.md']).')',
             '('.route('wiki.home', ['Available-Components.md']).')',
