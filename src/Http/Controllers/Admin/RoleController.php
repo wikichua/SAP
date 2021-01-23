@@ -137,6 +137,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
+        $model->permissions()->sync([]);
         $model->delete();
 
         return response()->json([
