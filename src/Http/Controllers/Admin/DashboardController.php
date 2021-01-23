@@ -23,7 +23,7 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.seo');
     }
-    public function wiki(Request $request, $file = 'index.md')
+    public function wiki(Request $request, $file = 'Index.md')
     {
         $md = \File::get(base_path('vendor/wikichua/sap/wiki/'.$file));
         $search = [
