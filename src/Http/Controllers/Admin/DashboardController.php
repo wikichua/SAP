@@ -26,6 +26,24 @@ class DashboardController extends Controller
     public function wiki(Request $request, $file = 'wiki.md')
     {
         $md = \File::get(base_path('vendor/wikichua/sap/wiki/'.$file));
+        $search = [
+            '(Package-Development.md)',
+            '(Module-Development.md)',
+            '(Brand-Development.md)',
+            '(Available-Components.md)',
+            '(Available-Helper.md)',
+        ];
+        $replace = [
+            '('.route('wiki.home', ['Package-Development.md']).')',
+            '('.route('wiki.home', ['Module-Development.md']).')',
+            '('.route('wiki.home', ['Brand-Development.md']).')',
+            '('.route('wiki.home', ['Available-Components.md']).')',
+            '('.route('wiki.home', ['Available-Helper.md']).')',
+        ];
+        if (\Str::contains($md, $search)) {
+            $md = str_replace($search, $replace, $md);
+        }
+
         return view('sap::admin.dashboard.wiki', compact('md'));
     }
 }
