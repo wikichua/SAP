@@ -27,6 +27,7 @@ class DashboardController extends Controller
     {
         $md = \File::get(base_path('vendor/wikichua/sap/wiki/'.$file));
         $search = [
+            '(Installation.md)',
             '(Package-Development.md)',
             '(Module-Development.md)',
             '(Brand-Development.md)',
@@ -34,6 +35,7 @@ class DashboardController extends Controller
             '(Available-Helper.md)',
         ];
         $replace = [
+            '('.route('wiki.home', ['Installation.md']).')',
             '('.route('wiki.home', ['Package-Development.md']).')',
             '('.route('wiki.home', ['Module-Development.md']).')',
             '('.route('wiki.home', ['Brand-Development.md']).')',
