@@ -4,12 +4,12 @@
   "description": "",
   "main": "webpack.mix.js",
   "scripts": {
-    "dev": "npm install --save; php ./../../artisan ziggy:generate ./brand/{%brand_name%}/resources/js/ziggy.js; npm run development",
+    "dev": "npm install --save; npm run development",
     "development": "mix",
     "watch": "mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
-    "prod": "npm install --save; php ./../../artisan ziggy:generate ./brand/{%brand_name%}/resources/js/ziggy.js; npm run production",
+    "prod": "npm install --save; npm run production",
     "production": "mix --production"
   },
   "keywords": [],
