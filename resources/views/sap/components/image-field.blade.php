@@ -29,6 +29,11 @@
             <div class="row">
                 @foreach ($values as $k => $val)
                 @if ($val != '')
+                    @php
+                        if (!str_contains($val, 'storage')) {
+                            $val = 'storage/'.$val;
+                        }
+                    @endphp
                 <div class="col-2">
                     <button type="button" class="text-danger btn btn-link position-absolute text-decoration-none font-weight-bolder">
                         <i class="fas fa-times-circle"></i>
