@@ -12,15 +12,17 @@ class PusherScript extends Component
 
     public function render()
     {
-        if (env('PUSHER_APP_KEY') == '') {
+        $config = config('broadcasting.connections.pusher');
+
+        if ($config['key'] == '') {
             return '';
         }
         $my_encrypted_id = sha1(auth()->check()? auth()->id():0);
-        $cluster = env('PUSHER_APP_CLUSTER', 'ap1');
-        $app_key = env('PUSHER_APP_KEY');
+        $cluster = $config['options']['cluster'];
+        $app_key = $config['key'];
         $app_logo = asset('sap/logo.png');
-        $app_title = env('APP_NAME').' Web Notification';
-        $channel = sha1(env('APP_NAME'));
+        $app_title = config('app.name').' Web Notification';
+        $channel = sha1(config('app.name'));
         $general_event = sha1('general');
         return view('sap::components.pusher-script')->with(compact(
             'my_encrypted_id',
