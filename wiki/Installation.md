@@ -65,9 +65,11 @@ npm run dev
 
 Optional publishing, run in your bash
 
+You probably need to export the config, but view is really up to you if you will need to make changes.
+
 ```bash
-php artisan vendor:publish --tag=sap.view
-php artisan vendor:publish --tag=sap.config
+php artisan vendor:publish --tag=sap.export.config
+php artisan vendor:publish --tag=sap.export.view
 ```
 
 In your browser
