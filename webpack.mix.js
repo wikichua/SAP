@@ -21,7 +21,7 @@ mix.js("resources/js/app.js", "public/js")
         'axios',
         'lodash',
         'moment',
-        'popper.js',
+        'popper.js'
     ])
     .extract([
         'bootstrap',
