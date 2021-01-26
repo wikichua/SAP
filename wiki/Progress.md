@@ -76,6 +76,7 @@
 1. Cronjob Admin
 1. Middleware optimize image
 1. Mailer body layout manager
+1. Pusher Manager
 
 ## <a name="Todo-List"></a>Todo List
 

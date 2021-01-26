@@ -1,15 +1,27 @@
 <?php
 
-namespace Wikichua\SAP\View\Components;
+namespace Brand\{%brand_name%}\Components;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
 
 class PusherScript extends Component
 {
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
+        //
     }
 
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\View\View|string
+     */
     public function render()
     {
         $config = config('broadcasting.connections.pusher');
@@ -23,7 +35,7 @@ class PusherScript extends Component
         $app_title = config('app.name').' Web Notification';
         $channel = sha1(config('app.name'));
         $general_event = sha1('general');
-        return view('sap::components.pusher-script')->with(compact(
+        return view('{%brand_string%}::components.pusher-script')->with(compact(
             'my_encrypted_id',
             'cluster',
             'app_key',
