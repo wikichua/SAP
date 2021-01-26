@@ -32,7 +32,11 @@ class SapPusher extends Command
         }
         $pushers = $pushers->get();
         foreach ($pushers as $pusher) {
-            pushered($pusher->toArray(), $channel = '', $pusher->event);
+            $channel = '';
+            if ($brand) {
+                $channel = strtolower($brand->name);
+            }
+            pushered($pusher->toArray(), $channel, $pusher->event);
             $pusher->status = 'S';
             $pusher->save();
         }

@@ -1,5 +1,7 @@
 @once
 @push('scripts')
+<script src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js" ></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/serviceWorker.min.js"></script>
 <script src="//js.pusher.com/7.0/pusher.min.js"></script>
 <script>
 $(function() {

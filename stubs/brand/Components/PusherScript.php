@@ -14,7 +14,7 @@ class PusherScript extends Component
      */
     public function __construct()
     {
-        //
+        $this->brand = '{%brand_string%}';
     }
 
     /**
@@ -33,7 +33,7 @@ class PusherScript extends Component
         $app_key = $config['key'];
         $app_logo = asset('sap/logo.png');
         $app_title = config('app.name').' Web Notification';
-        $channel = sha1(config('app.name'));
+        $channel = sha1($this->brand);
         $general_event = sha1('general');
         return view('{%brand_string%}::components.pusher-script')->with(compact(
             'my_encrypted_id',

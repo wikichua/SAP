@@ -149,12 +149,16 @@ class PusherController extends Controller
     public function push($id)
     {
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
-        pushered($model->toArray(), $channel = '', $model->event);
+        $channel = '';
+        if ($model->brand) {
+            $channel = strtolower($model->brand->name);
+        }
+        pushered($model->toArray(), $channel, $model->event);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Pusher Message Pushed.',
             'reload'   => false,
-            'relist'   => false,
+            'relist'   => true,
             'redirect' => false,
         ]);
     }
