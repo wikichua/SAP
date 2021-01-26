@@ -3,6 +3,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js" ></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/serviceWorker.min.js"></script>
 <script src="//js.pusher.com/7.0/pusher.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10.13.3/dist/sweetalert2.all.min.js"></script>
 <script>
 $(function() {
     if (Push.Permission.has() != true) {
@@ -42,11 +43,35 @@ $(function() {
         }
 
         if (Push.Permission.has()) {
-            webPush(title, message, icon, link, timeout);
+            Push.create(title,{
+                    body: message,
+                    icon: icon,
+                    link: link,
+                    timeout: timeout,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
         } else {
-            toastPush(title, message, icon, link, timeout);
+            var NotiToast = Swal.mixin(
+            {
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: timeout,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            NotiToast.fire({
+                icon: 'success',
+                title: title,
+                html: message,
+            });
         }
-
     }
     channel.bind('{{ $general_event }}', general_callback);
 });
