@@ -12,6 +12,7 @@
     'Read Carousels',
     'Read Files',
     'Read Mailers',
+    'Read Pushers',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -42,6 +43,9 @@
             @endcan
             @can('Read Mailers')
             <x-sap::menu-item :href="route('mailer.list')" :active-pattern="'mailer.*'">Mailers</x-sap-menu-item>
+            @endcan
+            @can('Read Pushers')
+            <x-sap::menu-item :href="route('pusher.list')" :active-pattern="'pusher.*'" icon="fas fa-envelope-open-text">Pusher</x-sap-menu-item>
             @endcan
         </div>
     </div>

@@ -199,6 +199,10 @@ class SapMake extends Command
                     $form_stub = '<x-sap::date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="date"/>';
                     break;
+                case 'datetime':
+                    $form_stub = '<x-sap::datetime-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
+                    $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="datetime"/>';
+                    break;
                 case 'image':
                     $form_stub = '<x-sap::image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="image"/>';

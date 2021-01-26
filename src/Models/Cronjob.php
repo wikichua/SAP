@@ -54,4 +54,9 @@ class Cronjob extends Eloquent
     {
         return $this->readUrl = route('carousel.show', $this->id);
     }
+
+    public function onCachedEvent()
+    {
+        cache()->tags('cronjob')->flush();
+    }
 }

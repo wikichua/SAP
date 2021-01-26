@@ -17,6 +17,7 @@
 - [Social Lite](#Social-Lite)
 - [Model Events](#Model-Events)
 - [Create Mailer with SAP](#Create-Mailer-with-SAP)
+- [Running Pusher Scheduling](#Running-Pusher-Scheduling)
 
 ### <a name="Create-New-Module-with-SAP"></a>Create New Module with SAP
 
@@ -417,3 +418,21 @@ php artisan sap:mailer *MailName* --brand=*BrandName*
 Run migrate to seed the mailer record
 
 To send or queue email please refer to (Laravel Mail)[https://laravel.com/docs/8.x/mail#sending-mail]
+
+### <a name="Running-Pusher-Scheduling"></a>Running Pusher Scheduling
+
+Run in your bash for platform
+
+```bash
+php artisan sap:pusher
+```
+
+For specific brand
+
+Run in your bash
+
+```bash
+php artisan sap:pusher --brand=*BrandName*
+```
+
+You could put this within the cronjob management as well.

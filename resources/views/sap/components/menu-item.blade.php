@@ -3,4 +3,4 @@
         $$key = $val;
     }
 @endphp
-<a class="collapse-item {{ $menuActive? 'active':'' }}" href="{{ $href }}">{{ $slot }}</a>
+<a class="collapse-item {{ $menuActive? 'active':'' }}" href="{{ $href }}"><i class="mr-1 {{ $icon ?? '' }}"></i>{{ $slot }}</a>

@@ -45,4 +45,9 @@ trait AllModelTraits
             activity($mode .' '. $name . ': ' . $this->id, $this->attributes, $this, static::$opendns);
         }
     }
+
+    public function setReadUrlAttribute($value)
+    {
+        return ;
+    }
 }

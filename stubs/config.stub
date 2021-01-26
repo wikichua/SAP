@@ -145,6 +145,25 @@ return [
             'user_timezone' => false,
         ],
 
+        'date_time' => [
+            'label' => 'Date Time',
+            'type' => 'datetime',
+            'class' => [],
+            'attributes' => [],
+            'list' => true,
+            'search' => true,
+            'migration' => 'datetime:{%field%}|nullable',
+            'validation' => [
+                'create' => 'required',
+                'update' => 'required',
+            ],
+            'options' => [],
+            'casts' => '',
+            'mutators' => [],
+            'relationship' => '',
+            'user_timezone' => true,
+        ],
+
         'published_at' => [
             'label' => 'Post Published Date',
             'type' => 'date',

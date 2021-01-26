@@ -7,6 +7,7 @@
 - [image](#image)
 - [date](#date)
 - [time](#time)
+- [datetime](#datetime)
 - [number](#number)
 - [editor](#editor)
 - [markdown](#markdown)
@@ -120,6 +121,12 @@ This component included the @csrf, @honeypot and @method if method not belongs t
 
 ```php
 <x-sap::time-field name="time" id="time" label="Time" :class="['']" :attribute_tags="[]" :value="$model->time ?? ''"/>
+```
+
+### <a name="datetime"></a>datetime
+
+```php
+<x-sap::datetime-field name="datetime" id="datetime" label="Date Time" :class="['']" :attribute_tags="[]" :value="$model->datetime ?? ''"/>
 ```
 
 ### <a name="number"></a>number

@@ -48,6 +48,7 @@ return [
         'carousel' => '\Wikichua\SAP\Models\Carousel',
         'cronjob' => '\Wikichua\SAP\Models\Cronjob',
         'mailer' => '\Wikichua\SAP\Models\Mailer',
+        'pusher' => '\Wikichua\SAP\Models\Pusher',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'activity_log' => [
