@@ -12,7 +12,7 @@ $(function() {
     let channel = pusher.subscribe('{{ $channel }}');
 
     let general_callback = function(data) {
-        if (_.isUndefined(data.sender_id) === false && data.sender_id != '{{ $my_encrypted_id }}') {
+        if (_.isUndefined(data.sender_id) === false && data.sender_id != '{{ $my_encrypted_id }}' || 1) {
             let icon = '{{ $app_logo }}';
             if (_.isUndefined(data.icon) === false) {
                 icon = data.icon;

@@ -28,7 +28,6 @@ class PusherScript extends Component
         if ($config['key'] == '') {
             return '';
         }
-        $my_encrypted_id = sha1(auth()->check()? auth()->id():0);
         $cluster = $config['options']['cluster'];
         $app_key = $config['key'];
         $app_logo = asset('sap/logo.png');
@@ -36,7 +35,6 @@ class PusherScript extends Component
         $channel = sha1($this->brand);
         $general_event = sha1('general');
         return view('{%brand_string%}::components.pusher-script')->with(compact(
-            'my_encrypted_id',
             'cluster',
             'app_key',
             'app_logo',
