@@ -1,5 +1,6 @@
 @once
 @push('scripts')
+<script src="//js.pusher.com/7.0/pusher.min.js"></script>
 <script>
 $(function() {
     if (Push.Permission.has() != true) {

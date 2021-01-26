@@ -95,7 +95,7 @@
 
     <x-{%brand_string%}::login-modal />
     <x-{%brand_string%}::alert />
-
+    <x-{%brand_string%}::pusher-script />
     <script src="{{ asset('{%brand_name%}/js/app.js') }}"></script>
     <script src="{{ asset('{%brand_name%}/js/all.js') }}"></script>
     <script type="text/javascript">

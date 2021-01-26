@@ -24,31 +24,31 @@
         <div class="bg-white py-2 collapse-inner rounded">
             {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
             @can('Read Users')
-            <x-sap::menu-item :href="route('user.list')" active-pattern="user.*">User</x-sap-menu-item>
+            <x-sap::menu-item :href="route('user.list')" active-pattern="user.*" icon="fas fa-users">User</x-sap-menu-item>
             @endcan
             @can('Read Roles')
-            <x-sap::menu-item :href="route('role.list')" active-pattern="role.*">Role</x-sap-menu-item>
+            <x-sap::menu-item :href="route('role.list')" active-pattern="role.*" icon="fas fa-id-badge">Role</x-sap-menu-item>
             @endcan
             @can('Read Permissions')
-            <x-sap::menu-item :href="route('permission.list')" active-pattern="permission.*">Permission</x-sap-menu-item>
+            <x-sap::menu-item :href="route('permission.list')" active-pattern="permission.*" icon="fas fa-lock">Permission</x-sap-menu-item>
             @endcan
             @can('Read Settings')
-            <x-sap::menu-item :href="route('setting.list')" active-pattern="setting.*">Setting</x-sap-menu-item>
+            <x-sap::menu-item :href="route('setting.list')" active-pattern="setting.*" icon="fas fa-cogs">Setting</x-sap-menu-item>
             @endcan
             @can('Read Reports')
-            <x-sap::menu-item :href="route('report.list')" active-pattern="report.*">Report</x-sap-menu-item>
+            <x-sap::menu-item :href="route('report.list')" active-pattern="report.*" icon="fas fa-file-contract">Report</x-sap-menu-item>
             @endcan
             @can('Read Cronjobs')
-            <x-sap::menu-item :href="route('cronjob.list')" active-pattern="cronjob.*">Cron Job</x-sap-menu-item>
+            <x-sap::menu-item :href="route('cronjob.list')" active-pattern="cronjob.*" icon="fas fa-voicemail">Cron Job</x-sap-menu-item>
             @endcan
             @can('Read Activity Logs')
-            <x-sap::menu-item :href="route('activity_log.list')" active-pattern="activity_log.*">Activity Log</x-sap-menu-item>
+            <x-sap::menu-item :href="route('activity_log.list')" active-pattern="activity_log.*" icon="fas fa-stream">Activity Log</x-sap-menu-item>
             @endcan
             @can('Read System Logs')
-            <x-sap::menu-item :href="route('system_log.list')" active-pattern="system_log.*">System Log</x-sap-menu-item>
+            <x-sap::menu-item :href="route('system_log.list')" active-pattern="system_log.*" icon="fas fa-bug">System Log</x-sap-menu-item>
             @endcan
             @can('Read Failed Jobs')
-            <x-sap::menu-item :href="route('failed_job.list')" active-pattern="failed_job.*">Failed Job</x-sap-menu-item>
+            <x-sap::menu-item :href="route('failed_job.list')" active-pattern="failed_job.*" icon="fas fa-recycle">Failed Job</x-sap-menu-item>
             @endcan
         </div>
     </div>
