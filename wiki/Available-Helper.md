@@ -156,6 +156,10 @@ iplocation($ip = '')
 ### <a name="pushered"></a>pushered
 
 ```php
+pushered($data, $channel = '', $event = 'general', $locale = 'en', $driver = '');
+```
+
+```php
     pushered('hello string');
     pushered(['hello array','hello array again']);
     pushered(['message' => 'hello message']);

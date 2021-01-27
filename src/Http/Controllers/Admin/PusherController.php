@@ -153,7 +153,7 @@ class PusherController extends Controller
         if ($model->brand) {
             $channel = strtolower($model->brand->name);
         }
-        pushered($model->toArray(), $channel, $model->event);
+        pushered($model->toArray(), $channel, $model->event, $model->locale);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Pusher Message Pushed.',

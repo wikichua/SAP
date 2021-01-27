@@ -36,7 +36,7 @@ class SapPusher extends Command
             if ($brand) {
                 $channel = strtolower($brand->name);
             }
-            pushered($pusher->toArray(), $channel, $pusher->event);
+            pushered($pusher->toArray(), $channel, $pusher->event, $pusher->locale);
             $pusher->status = 'S';
             $pusher->save();
         }
