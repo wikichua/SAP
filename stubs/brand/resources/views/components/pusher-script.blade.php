@@ -36,9 +36,34 @@ $(function() {
             message = data;
         }
         if (Push.Permission.has()) {
-            webPush(title, message, icon, link, timeout);
+            Push.create(title,{
+                    body: message,
+                    icon: icon,
+                    link: link,
+                    timeout: timeout,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
         } else {
-            toastPush(title, message, icon, link, timeout);
+            var NotiToast = Swal.mixin(
+            {
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: timeout,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            NotiToast.fire({
+                icon: 'success',
+                title: title,
+                html: message,
+            });
         }
     }
     @if ($driver == 'pusher')
