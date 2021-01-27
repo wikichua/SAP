@@ -17,6 +17,7 @@ return [
     'custom_mail_dir' => 'Mail',
     'custom_facade_namespace' => 'App\Facades',
     'custom_facade_dir' => 'Facades',
+    'custom_broadcast_driver' => 'ably', // pusher or ably or ''
     /* end customization */
 
     'hidden_auth_route_names' => [

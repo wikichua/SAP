@@ -1,17 +1,15 @@
+@once
 @push('scripts')
+<x-sap::pusherjs driver='{{ $driver }}' />
 <script>
 $(function() {
     if (Push.Permission.has() != true) {
         Push.Permission.request();
     }
-    Pusher.logToConsole = '{{ config('app.debug') }}';
-    let pusher = new Pusher('{{ $app_key }}', {
-      cluster: '{{ $cluster }}',
-      useTLS: true
-    });
-    let channel = pusher.subscribe('{{ $channel }}');
-
     let general_callback = function(data) {
+        if (_.isUndefined(data.data) === false) {
+            data = data.data;
+        }
         if (_.isUndefined(data.sender_id) === false && data.sender_id != '{{ $my_encrypted_id }}') {
             let icon = '{{ $app_logo }}';
             if (_.isUndefined(data.icon) === false) {
@@ -37,7 +35,6 @@ $(function() {
             } else if (_.isString(data)){
                 message = data;
             }
-
             if (Push.Permission.has()) {
                 webPush(title, message, icon, link, timeout);
             } else {
@@ -45,7 +42,21 @@ $(function() {
             }
         }
     }
+    @if ($driver == 'pusher')
+    Pusher.logToConsole = '{{ config('app.debug') }}';
+    let pusher = new Pusher('{{ $app_key }}', {
+      cluster: '{{ $cluster }}',
+      useTLS: true
+    });
+    let channel = pusher.subscribe('{{ $channel }}');
     channel.bind('{{ $general_event }}', general_callback);
+    @endif
+    @if ($driver == 'ably')
+    var ably = new Ably.Realtime('{{ $app_key }}');
+    var channel = ably.channels.get('{{ $channel }}');
+    channel.subscribe('{{ $general_event }}', general_callback);
+    @endif
 });
 </script>
 @endpush
+@endonce

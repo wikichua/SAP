@@ -172,8 +172,14 @@ class Help
         return $locales;
     }
 
-    public function pushered($data, $channel = '', $event = 'general')
+    public function pushered($data, $channel = '', $event = 'general', $locale = 'en', $driver = '')
     {
+        if ($driver == '') {
+            $driver = config('sap.custom_broadcast_driver');
+        }
+        if ($driver == '') {
+            return false;
+        }
         $actual_data = [];
         if (is_object($data)) {
             return false;
@@ -198,14 +204,22 @@ class Help
             }
         }
 
-        $config = config('broadcasting.connections.pusher');
-        $pusher = new \Pusher\Pusher(
-            $config['key'],
-            $config['secret'],
-            $config['app_id'],
-            $config['options'],
-        );
-        return $pusher->trigger((sha1($channel != '' ? $channel : config("app.name"))), sha1($event), $actual_data);
+        $channel = sha1($channel != '' ? $channel : config("app.name"));
+        $event = sha1($event.'-'.$locale);
+        $config = config('broadcasting.connections.'.$driver);
+        if ($driver == 'pusher') {
+            $pusher = new \Pusher\Pusher(
+                $config['key'],
+                $config['secret'],
+                $config['app_id'],
+                $config['options'],
+            );
+            return $pusher->trigger($channel, $event, $actual_data);
+        }
+        if ($driver == 'ably') {
+            $ably = new \Ably\AblyRest($config['key']);
+            return $ably->channel($channel)->publish($event, $actual_data);
+        }
     }
 
     public function isMenuActive($patterns = [])

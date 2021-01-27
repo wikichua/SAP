@@ -22,7 +22,6 @@ const Toast = window.Toast = Swal.mixin({
 
 const CodeMirror = window.CodeMirror = require('codemirror/src/codemirror');
 const SimpleMDE = window.SimpleMDE = require('simplemde/dist/simplemde.min');
-const Push = window.Push = require('push.js/bin/push.min');
 require('summernote/dist/summernote-bs4');
 require('gijgo/js/gijgo');
 require('bootstrap-table');

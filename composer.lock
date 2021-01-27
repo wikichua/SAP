@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef74863595fb6f2e48e1b4e63928d00b",
+    "content-hash": "4b64a8eb8b3c27820613f87ca8166d46",
     "packages": [
+        {
+            "name": "ably/ably-php",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ably/ably-php.git",
+                "reference": "2a036347f46f951dd4aa62a5a3cceaa92df28970"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ably/ably-php/zipball/2a036347f46f951dd4aa62a5a3cceaa92df28970",
+                "reference": "2a036347f46f951dd4aa62a5a3cceaa92df28970",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-openssl": "*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ably\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ably",
+                    "email": "support@ably.io"
+                }
+            ],
+            "description": "Ably REST client library for PHP.",
+            "homepage": "https://www.ably.io/",
+            "keywords": [
+                "ably",
+                "messages",
+                "messaging"
+            ],
+            "time": "2020-07-23T07:57:10+00:00"
+        },
         {
             "name": "arcanedev/laravel-markdown",
             "version": "dev-master",
@@ -1002,17 +1050,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/inFureal/artisan-gui.git",
-                "reference": "7ae11c809868197abe63718ed0a673b7607de5aa"
+                "reference": "a7157a217c602259ea223835072ea4c467e6d0dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/7ae11c809868197abe63718ed0a673b7607de5aa",
-                "reference": "7ae11c809868197abe63718ed0a673b7607de5aa",
+                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/a7157a217c602259ea223835072ea4c467e6d0dc",
+                "reference": "a7157a217c602259ea223835072ea4c467e6d0dc",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^8.0",
-                "php": "^7.3"
+                "php": "^7.3|^8.0"
             },
             "type": "library",
             "extra": {
@@ -1032,7 +1080,7 @@
                 "MIT"
             ],
             "description": "Beautiful package for [laravel:artisan] gui for cool kids.",
-            "time": "2020-11-22T08:38:40+00:00"
+            "time": "2021-01-23T10:47:43+00:00"
         },
         {
             "name": "intervention/image",
@@ -1221,12 +1269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/agent.git",
-                "reference": "1bacac5ab1cb415792bb74620e66a954ea740816"
+                "reference": "1d91c71bc076a60061e0498216c0caf849eced94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/agent/zipball/1bacac5ab1cb415792bb74620e66a954ea740816",
-                "reference": "1bacac5ab1cb415792bb74620e66a954ea740816",
+                "url": "https://api.github.com/repos/jenssegers/agent/zipball/1d91c71bc076a60061e0498216c0caf849eced94",
+                "reference": "1d91c71bc076a60061e0498216c0caf849eced94",
                 "shasum": ""
             },
             "require": {
@@ -1292,7 +1340,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T09:34:26+00:00"
+            "time": "2021-01-24T07:38:41+00:00"
         },
         {
             "name": "lab404/laravel-impersonate",
@@ -6403,12 +6451,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -6465,7 +6513,8 @@
         "jenssegers/agent": 20,
         "spatie/laravel-honeypot": 20,
         "infureal/artisan-gui": 20,
-        "spatie/laravel-database-mail-templates": 20
+        "spatie/laravel-database-mail-templates": 20,
+        "ably/ably-php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
