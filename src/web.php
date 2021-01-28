@@ -65,5 +65,8 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::get('builder', function () {
             return view('sap::admin.builder.index');
         });
+        // ReAuth
+        Route::match(['get'], 'reauth', 'Auth\ReauthController@reauth')->name('reauth');
+        Route::match(['post'], 'reauth', 'Auth\ReauthController@processReauth')->name('reauth.confirm');
     });
 });

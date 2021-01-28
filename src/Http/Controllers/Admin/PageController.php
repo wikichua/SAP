@@ -16,7 +16,9 @@ class PageController extends Controller
         $this->middleware('can:Create Pages')->only(['create', 'store']);
         $this->middleware('can:Read Pages')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Pages')->only(['edit', 'update']);
-        $this->middleware('can:Delete Pages')->only('delete');
+        $this->middleware('can:Delete Pages')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

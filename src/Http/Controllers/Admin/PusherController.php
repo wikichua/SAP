@@ -16,8 +16,10 @@ class PusherController extends Controller
         $this->middleware('can:Create Pushers')->only(['create', 'store']);
         $this->middleware('can:Read Pushers')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Pushers')->only(['edit', 'update']);
-        $this->middleware('can:Delete Pushers')->only('delete');
+        $this->middleware('can:Delete Pushers')->only('destroy');
         $this->middleware('can:Push Pushers')->only('push');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

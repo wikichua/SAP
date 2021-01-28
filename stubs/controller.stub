@@ -17,7 +17,10 @@ class {%model_class%}Controller extends Controller
         $this->middleware('can:Create {%permission_string%}')->only(['create', 'store']);
         $this->middleware('can:Read {%permission_string%}')->only(['index', 'read']);
         $this->middleware('can:Update {%permission_string%}')->only(['edit', 'update']);
-        $this->middleware('can:Delete {%permission_string%}')->only('delete');
+        $this->middleware('can:Delete {%permission_string%}')->only('destroy');
+
+        // to protect your activity and reauthenticate if user is genuine
+        // $this->middleware('reauth_admin')->only(['edit','destroy']);
 
         {%brand_view_namespace%}
     }

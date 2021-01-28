@@ -14,7 +14,7 @@ class CarouselController extends Controller
         $this->middleware('can:Create Carousels')->only(['create', 'store']);
         $this->middleware('can:Read Carousels')->only(['index', 'read']);
         $this->middleware('can:Update Carousels')->only(['edit', 'update']);
-        $this->middleware('can:Delete Carousels')->only('delete');
+        $this->middleware('can:Delete Carousels')->only('destroy');
     }
 
     public function index(Request $request)

@@ -21,6 +21,7 @@ class SAPServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\SAP\Middleware\IntendUrl');
         $this->app['router']->aliasMiddleware('auth', 'Wikichua\SAP\Middleware\Authenticate');
         $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\SAP\Middleware\AuthAdmin');
+        $this->app['router']->aliasMiddleware('reauth_admin', 'Wikichua\SAP\Middleware\ReAuth');
         // $this->app['router']->aliasMiddleware('optimizeImages', 'Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages');
 
         $this->app['router']->pushMiddlewareToGroup('web', \Wikichua\SAP\Middleware\PhpDebugBar::class);

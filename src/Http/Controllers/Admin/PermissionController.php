@@ -15,7 +15,9 @@ class PermissionController extends Controller
         $this->middleware('can:Create Permissions')->only(['create', 'store']);
         $this->middleware('can:Read Permissions')->only(['index', 'read']);
         $this->middleware('can:Update Permissions')->only(['edit', 'update']);
-        $this->middleware('can:Delete Permissions')->only('delete');
+        $this->middleware('can:Delete Permissions')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

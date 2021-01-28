@@ -59,4 +59,8 @@ return [
             'token',
         ],
     ],
+    'reauth' => [
+        'timeout' => 600, // default 10 mins
+        'reset' => true,
+    ],
 ];

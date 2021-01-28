@@ -14,7 +14,9 @@ class UserPersonalAccessTokenController extends Controller
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Create Personal Access Token')->only(['create', 'store']);
         $this->middleware('can:Read Personal Access Token')->only(['index', 'read']);
-        $this->middleware('can:Delete Personal Access Token')->only('delete');
+        $this->middleware('can:Delete Personal Access Token')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request, $user_id)

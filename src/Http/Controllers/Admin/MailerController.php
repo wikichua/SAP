@@ -14,7 +14,7 @@ class MailerController extends Controller
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Read Mailers')->only(['index', 'read']);
         $this->middleware('can:Update Mailers')->only(['edit', 'update']);
-        $this->middleware('can:Delete Mailers')->only('delete');
+        $this->middleware('can:Delete Mailers')->only('destroy');
     }
 
     public function index(Request $request)

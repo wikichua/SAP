@@ -15,7 +15,9 @@ class CronjobController extends Controller
         $this->middleware('can:Create Cronjobs')->only(['create', 'store']);
         $this->middleware('can:Read Cronjobs')->only(['index', 'read']);
         $this->middleware('can:Update Cronjobs')->only(['edit', 'update']);
-        $this->middleware('can:Delete Cronjobs')->only('delete');
+        $this->middleware('can:Delete Cronjobs')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

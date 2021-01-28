@@ -15,7 +15,7 @@ class NavController extends Controller
         $this->middleware('can:Create Navs')->only(['create', 'store']);
         $this->middleware('can:Read Navs')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Navs')->only(['edit', 'update']);
-        $this->middleware('can:Delete Navs')->only('delete');
+        $this->middleware('can:Delete Navs')->only('destroy');
     }
 
     public function index(Request $request)

@@ -15,7 +15,9 @@ class RoleController extends Controller
         $this->middleware('can:Create Roles')->only(['create', 'store']);
         $this->middleware('can:Read Roles')->only(['index', 'read']);
         $this->middleware('can:Update Roles')->only(['edit', 'update']);
-        $this->middleware('can:Delete Roles')->only('delete');
+        $this->middleware('can:Delete Roles')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

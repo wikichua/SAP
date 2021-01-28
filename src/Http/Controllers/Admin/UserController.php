@@ -15,7 +15,9 @@ class UserController extends Controller
         $this->middleware('can:Read Users')->only(['index', 'read']);
         $this->middleware('can:Update Users')->only(['edit', 'update']);
         $this->middleware('can:Update Users Password')->only(['editPassword', 'updatePassword']);
-        $this->middleware('can:Delete Users')->only('delete');
+        $this->middleware('can:Delete Users')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy', 'editPassword']);
     }
 
     public function index(Request $request)

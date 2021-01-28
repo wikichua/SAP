@@ -14,7 +14,9 @@ class SettingController extends Controller
         $this->middleware('can:Create Settings')->only(['create', 'store']);
         $this->middleware('can:Read Settings')->only(['index', 'read']);
         $this->middleware('can:Update Settings')->only(['edit', 'update']);
-        $this->middleware('can:Delete Settings')->only('delete');
+        $this->middleware('can:Delete Settings')->only('destroy');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

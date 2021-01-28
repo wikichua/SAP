@@ -16,8 +16,10 @@ class ReportController extends Controller
         $this->middleware('can:Create Reports')->only(['create', 'store']);
         $this->middleware('can:Read Reports')->only(['index', 'read']);
         $this->middleware('can:Update Reports')->only(['edit', 'update']);
-        $this->middleware('can:Delete Reports')->only('delete');
+        $this->middleware('can:Delete Reports')->only('destroy');
         $this->middleware('can:Export Reports')->only('export');
+
+        $this->middleware('reauth_admin')->only(['edit','destroy']);
     }
 
     public function index(Request $request)

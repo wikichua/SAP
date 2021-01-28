@@ -18,6 +18,7 @@
 - [Model Events](#Model-Events)
 - [Create Mailer with SAP](#Create-Mailer-with-SAP)
 - [Running Pusher Scheduling](#Running-Pusher-Scheduling)
+- [Reauthenticating Activity](#Reauthenticating-Activity)
 
 ### <a name="Create-New-Module-with-SAP"></a>Create New Module with SAP
 
@@ -436,3 +437,13 @@ php artisan sap:pusher --brand=*BrandName*
 ```
 
 You could put this within the cronjob management as well.
+
+### <a name="Reauthenticating-Activity"></a>Reauthenticating Activity
+
+In your **Module**Controller.php at contructor, add this as middleware layer to check if right user is still valid.
+
+Validity last for 10 mins after reauthenticated
+
+```php
+$this->middleware('reauth_admin')->only(['edit','destroy']);
+```
