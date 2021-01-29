@@ -9,6 +9,7 @@
     'system_log.*',
     'failed_job.*',
     'cronjob.*',
+    'mailer.*',
 ]"/>
 <x-sap::menu menu="cms" :active-patterns="[
     'brand.*',
@@ -17,7 +18,6 @@
     'component.*',
     'carousel.*',
     'file.*',
-    'mailer.*',
     'pusher.*',
 ]"/>
 @if (Route::has('lfm.home'))

@@ -11,7 +11,6 @@
     'Read Components',
     'Read Carousels',
     'Read Files',
-    'Read Mailers',
     'Read Pushers',
 ])
 <li class="nav-item">
@@ -40,9 +39,6 @@
             @endcan
             @can('Read Files')
             <x-sap::menu-item :href="route('file.list')" :active-pattern="'file.*'" icon="fas fa-archive">Files</x-sap-menu-item>
-            @endcan
-            @can('Read Mailers')
-            <x-sap::menu-item :href="route('mailer.list')" :active-pattern="'mailer.*'" icon="fas fa-mail-bulk">Mailers</x-sap-menu-item>
             @endcan
             @can('Read Pushers')
             <x-sap::menu-item :href="route('pusher.list')" :active-pattern="'pusher.*'" icon="fas fa-envelope-open-text">Pusher</x-sap-menu-item>

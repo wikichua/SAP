@@ -13,6 +13,7 @@
     'Read System Logs',
     'Read Reports',
     'Read Cronjobs',
+    'Read Mailers',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -49,6 +50,9 @@
             @endcan
             @can('Read Failed Jobs')
             <x-sap::menu-item :href="route('failed_job.list')" active-pattern="failed_job.*" icon="fas fa-recycle">Failed Job</x-sap-menu-item>
+            @endcan
+            @can('Read Mailers')
+            <x-sap::menu-item :href="route('mailer.list')" :active-pattern="'mailer.*'" icon="fas fa-mail-bulk">Mailers</x-sap-menu-item>
             @endcan
         </div>
     </div>
