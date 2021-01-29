@@ -8,10 +8,12 @@ trait ModelScopes
 {
     public function scopeCheckBrand($query)
     {
-        if (array_search('brand_id', $this->getFillable())) {
-            $brand_id = auth()->user()->brand_id;
-            if ($brand_id) {
+        $brand_id = auth()->user()->brand_id;
+        if ($brand_id) {
+            if (array_search('brand_id', $this->getFillable())) {
                 return $query->where('brand_id', $brand_id);
+            } elseif (class_basename($this) == 'Brand') {
+                return $query->where('id', $brand_id);
             }
         }
         return $query;

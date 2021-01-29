@@ -40,7 +40,6 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         if (!config('sap.hidden_auth_route_names.logout', false)) {
             Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         }
-        Route::impersonate();
         Route::match(['post'], 'editor/upload/image', function (Request $request) {
             $url = '';
             if ($request->file('image')->isValid()) {
@@ -68,5 +67,9 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         // ReAuth
         Route::match(['get'], 'reauth', 'Auth\ReauthController@reauth')->name('reauth');
         Route::match(['post'], 'reauth', 'Auth\ReauthController@processReauth')->name('reauth.confirm');
+
+        Route::group(['middleware' => ['reauth_admin']], function () {
+            Route::impersonate();
+        });
     });
 });
