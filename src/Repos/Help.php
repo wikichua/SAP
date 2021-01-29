@@ -356,15 +356,19 @@ class Help
     {
         $models = cache()->tags('page')->remember('page-'.$brandName, (60*60*24), function () use ($brandName) {
             $brand = getBrand($brandName);
-            return app(config('sap.models.page'))->query()
+            if ($brand) {
+                return app(config('sap.models.page'))->query()
                 ->where('brand_id', $brand->id)
                 ->where('slug', 'not like', 'https://%')
                 ->where('slug', 'not like', 'http://%')
                 ->get();
+            }
         });
-        foreach ($models as $model) {
-            $routeName = str_replace('/', '.', $model->slug);
-            Route::get('/'.$model->slug, $controller)->name('page.'.$routeName);
+        if ($models) {
+            foreach ($models as $model) {
+                $routeName = str_replace('/', '.', $model->slug);
+                Route::get('/'.$model->slug, $controller)->name('page.'.$routeName);
+            }
         }
     }
 }
