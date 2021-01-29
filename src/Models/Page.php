@@ -97,4 +97,9 @@ class Page extends Model
     {
         return $this->belongsTo(config('sap.models.brand'), 'brand_id', 'id');
     }
+
+    public function onCachedEvent()
+    {
+        cache()->tags(['page'])->flush();
+    }
 }

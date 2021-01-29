@@ -23,7 +23,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
       <div class="container">
         <!-- Brand -->
-        <a class="navbar-brand" href="{{ slug_route('{%brand_string%}.home','') }}">
+        <a class="navbar-brand" href="{{ route_slug('{%brand_string%}.home','') }}">
           <strong>{%brand_name%}</strong>
         </a>
         <!-- Collapse -->

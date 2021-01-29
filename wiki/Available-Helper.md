@@ -90,7 +90,7 @@ If in case you will need to get your brand name for whatever reason, you may pas
 ### <a name="getBrand"></a>getBrand
 
 ```php
-getBrand()
+getBrand($brandName)
 ```
 
 If in case you will need to get your current brand for a reason.

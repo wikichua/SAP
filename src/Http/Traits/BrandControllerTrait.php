@@ -7,7 +7,7 @@ trait BrandControllerTrait
 {
     public function register($brandName)
     {
-        $this->brand = cache()->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
+        $this->brand = cache()->tags('brand')->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()
                 ->where('name', $brandName)->first();
         });
@@ -23,8 +23,13 @@ trait BrandControllerTrait
         app()->setLocale($locale);
         return $this;
     }
-    public function page(Request $request, $locale, $slug)
+    public function page(Request $request, $locale, $slug = '')
     {
+        if ($slug == '' && count($request->segments()) > 1) {
+            $segs = $request->segments();
+            unset($segs[0]);
+            $slug = implode('/', $segs);
+        }
         $model = app(config('sap.models.page'))->query()
             ->where('brand_id', $this->brand->id)
             ->where('locale', app()->getLocale())

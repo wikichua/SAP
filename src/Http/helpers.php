@@ -115,16 +115,10 @@ if (!function_exists('viewRenderer')) {
         return Help::viewRenderer($__php, $__data);
     }
 }
-if (!function_exists('slug_route')) {
-    function slug_route($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
-    {
-        return Help::slug_route($name, $slug, $parameters, $locale, $absolute);
-    }
-}
 if (!function_exists('route_slug')) {
     function route_slug($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
     {
-        return Help::slug_route($name, $slug, $parameters, $locale, $absolute);
+        return Help::route_slug($name, $slug, $parameters, $locale, $absolute);
     }
 }
 if (!function_exists('getBrandName')) {
@@ -152,8 +146,8 @@ if (!function_exists('renderSlug')) {
     }
 }
 if (!function_exists('getBrand')) {
-    function getBrand()
+    function getBrand($brandName)
     {
-        return Help::getBrand();
+        return Help::getBrand($brandName);
     }
 }

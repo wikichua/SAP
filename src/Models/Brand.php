@@ -87,4 +87,9 @@ class Brand extends Model
     {
         return $this->readUrl = route('brand.show', $this->id);
     }
+
+    public function onCachedEvent()
+    {
+        cache()->tags(['brand','page'])->flush();
+    }
 }

@@ -20,7 +20,7 @@ Route::name('{%brand_string%}.')
                 // Route::get('/one', '{%brand_name%}Controller@example1')->name('example1');
                 // Route::get('/one/two', '{%brand_name%}Controller@example2')->name('example2');
                 /* customized route end */
-                Route::get('/{slug}', '{%brand_name%}Controller@page')->name('page');
+                Help::subPathRoutes('{%brand_name%}', '{%brand_name%}Controller@page');
             }
         );
         Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}:guest']], function () {

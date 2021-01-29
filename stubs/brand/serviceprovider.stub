@@ -22,6 +22,7 @@ class {%brand_name%}ServiceProvider extends ServiceProvider
                 Config::set($name, require($confFile));
             }
         }
+        getBrand('{%brand_name%}');
     }
     public function boot()
     {

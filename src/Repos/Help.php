@@ -1,6 +1,7 @@
 <?php
 namespace Wikichua\SAP\Repos;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
@@ -279,17 +280,18 @@ class Help
         ];
     }
 
-    public function slug_route($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
+    public function route_slug($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
     {
         if ($locale == '') {
             $locale = app()->getLocale() != ''? app()->getLocale():config('app.locale');
         }
-        return route($name, array_merge([$locale,$slug], $parameters), $absolute);
+        $string = $slug != ''? '.'.str_replace('/', '.', $slug):'';
+        return route($name.$string, array_merge([$locale], $parameters), $absolute);
     }
 
     public function getBrandName($domain = '')
     {
-        $configs =  Cache::remember('brand-configs', (60*60*24), function () {
+        $configs =  Cache::tags('brand')->remember('brand-configs', (60*60*24), function () {
             $configs = [];
             $dirs = File::directories(base_path('brand'));
             foreach ($dirs as $dir) {
@@ -314,7 +316,7 @@ class Help
     public function brand($brandName = '')
     {
         $brandName = $brandName != ''? $brandName:$this->getBrandName(request()->getHost());
-        return Cache::remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
+        return Cache::tags('brand')->remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
         });
     }
@@ -332,9 +334,14 @@ class Help
         return $keys;
     }
 
-    public function getBrand()
+    public function getBrand($brandName)
     {
-        return config('main.brand', new stdClass);
+        $brand = cache()->tags('brand')->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
+            return app(config('sap.models.brand'))->query()
+                ->where('name', $brandName)->first();
+        });
+        \Config::set('main.brand', $brand);
+        return $brand;
     }
     public function renderSlug($slug, $locale = '')
     {
@@ -344,5 +351,20 @@ class Help
             ->where('slug', strtolower($slug))
             ->first();
         return $this->viewRenderer($model->blade);
+    }
+    public function subPathRoutes($brandName, $controller)
+    {
+        $models = cache()->tags('page')->remember('page-'.$brandName, (60*60*24), function () use ($brandName) {
+            $brand = getBrand($brandName);
+            return app(config('sap.models.page'))->query()
+                ->where('brand_id', $brand->id)
+                ->where('slug', 'not like', 'https://%')
+                ->where('slug', 'not like', 'http://%')
+                ->get();
+        });
+        foreach ($models as $model) {
+            $routeName = str_replace('/', '.', $model->slug);
+            Route::get('/'.$model->slug, $controller)->name('page.'.$routeName);
+        }
     }
 }
