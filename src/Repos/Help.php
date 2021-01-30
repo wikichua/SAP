@@ -311,10 +311,9 @@ class Help
     {
         $domains = $this->getBrandNameByHost();
         $return = isset($domains[request()->getHost()])? request()->getHost():null;
-
         if ($brandName != '' && $return == null) {
             $domains = array_flip($domains);
-            $return = isset($domains[$brandName])? $brandName:null;
+            $return = isset($domains[$brandName])? (app()->runningInConsole()? $brandName:$domains[$brandName]):null;
         }
         return $return;
     }
