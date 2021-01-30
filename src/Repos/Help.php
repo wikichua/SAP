@@ -289,7 +289,7 @@ class Help
         return route($name.$string, array_merge([$locale], $parameters), $absolute);
     }
 
-    public function getBrandName($domain = '')
+    public function getBrandNameByHost($domain = '')
     {
         $configs =  Cache::tags('brand')->remember('brand-configs', (60*60*24), function () {
             $configs = [];
@@ -307,15 +307,21 @@ class Help
         return $domain == ''? $configs:$configs[$domain];
     }
 
-    public function getDomain()
+    public function getDomain($brandName = '')
     {
-        $domains = $this->getBrandName();
-        return isset($domains[request()->getHost()])? request()->getHost():'null';
+        $domains = $this->getBrandNameByHost();
+        $return = isset($domains[request()->getHost()])? request()->getHost():null;
+
+        if ($brandName != '' && $return == null) {
+            $domains = array_flip($domains);
+            $return = isset($domains[$brandName])? $brandName:null;
+        }
+        return $return;
     }
 
     public function brand($brandName = '')
     {
-        $brandName = $brandName != ''? $brandName:$this->getBrandName(request()->getHost());
+        $brandName = $brandName != ''? $brandName:$this->getBrandNameByHost(request()->getHost());
         return Cache::tags('brand')->remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
         });

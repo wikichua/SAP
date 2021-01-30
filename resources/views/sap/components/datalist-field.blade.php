@@ -23,6 +23,7 @@
             {{ 'data-'.$data_key }}="{{ $data_value }}"
         @endforeach
         value="{{ isset($value)? $value:'' }}"
+        autocomplete="off"
     >
     <span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
     <datalist id="{{ $uniqueId }}">

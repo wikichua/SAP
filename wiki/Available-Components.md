@@ -231,6 +231,8 @@ driver can be (pusher)[https://pusher.com/] / (ably)[https://www.ably.io/]
 <x-*brandname*::navbar-top groupSlug="sample-navbar" />
 ```
 
+For absolute route paths, simply add "path/to/your-slug" in **page manager** under *slug* input
+
 ### <a name="navbar-top-login"></a>navbar top login
 
 ```php

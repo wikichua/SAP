@@ -121,16 +121,16 @@ if (!function_exists('route_slug')) {
         return Help::route_slug($name, $slug, $parameters, $locale, $absolute);
     }
 }
-if (!function_exists('getBrandName')) {
-    function getBrandName($domain = '')
+if (!function_exists('getBrandNameByHost')) {
+    function getBrandNameByHost($domain = '')
     {
-        return Help::getBrandName($domain);
+        return Help::getBrandNameByHost($domain);
     }
 }
 if (!function_exists('getDomain')) {
-    function getDomain()
+    function getDomain($brandName = '')
     {
-        return Help::getDomain();
+        return Help::getDomain($brandName);
     }
 }
 if (!function_exists('brand')) {

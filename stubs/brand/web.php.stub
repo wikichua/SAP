@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/en');
 Route::name('{%brand_string%}.')
-    ->domain(getDomain())
+    ->domain(getDomain('{%brand_name%}'))
     ->namespace('\Brand\{%brand_name%}\Controllers')
     ->group(function () {
         Route::group(

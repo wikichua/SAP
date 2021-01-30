@@ -7,7 +7,7 @@
 - [viewRenderer](#viewRenderer)
 - [renderSlug](#renderSlug)
 - [route_slug](#route_slug)
-- [getBrandName](#getBrandName)
+- [getBrandNameByHost](#getBrandNameByHost)
 - [getBrand](#getBrand)
 - [getDomain](#getDomain)
 - [brand](#brand)
@@ -79,10 +79,10 @@ This helper allow only **slug** string and compute the complete url with append 
 So if your navigation content of different locale, you could just use this helper without purposely set the locale.
 This helper will use locale that user choosed and appended with it.
 
-### <a name="getBrandName"></a>getBrandName
+### <a name="getBrandNameByHost"></a>getBrandNameByHost
 
 ```php
-getBrandName($domain = '')
+getBrandNameByHost($domain = '')
 ```
 
 If in case you will need to get your brand name for whatever reason, you may pass the domain that currently on
