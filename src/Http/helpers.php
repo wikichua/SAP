@@ -134,7 +134,7 @@ if (!function_exists('getDomain')) {
     }
 }
 if (!function_exists('brand')) {
-    function brand($brandName)
+    function brand($brandName = '')
     {
         return Help::brand($brandName);
     }
