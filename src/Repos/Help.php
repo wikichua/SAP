@@ -372,7 +372,7 @@ class Help
         if ($models) {
             foreach ($models as $model) {
                 $routeName = str_replace('/', '.', $model->slug);
-                Route::get('/'.$model->slug, $controller)->name('page.'.$routeName);
+                Route::get('/'.$model->slug, $controller)->name($routeName);
             }
         }
     }

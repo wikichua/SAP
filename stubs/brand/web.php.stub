@@ -14,13 +14,15 @@ Route::name('{%brand_string%}.')
             'where' => ['locale' => '[a-z]{2}']
         ],
             function () {
-                Route::get('/', '{%brand_name%}Controller@index')->name('home');
-                /* customized route */
-                // customized, to exclude access to page method, need at least 2 paths
-                // Route::get('/one', '{%brand_name%}Controller@example1')->name('example1');
-                // Route::get('/one/two', '{%brand_name%}Controller@example2')->name('example2');
-                /* customized route end */
-                Help::subPathRoutes('{%brand_name%}', '{%brand_name%}Controller@page');
+                Route::name('page.')->group(function () {
+                    Route::get('/', '{%brand_name%}Controller@index')->name('home');
+                    Help::subPathRoutes('{%brand_name%}', '{%brand_name%}Controller@page');
+                    /* customized route */
+                    // customized, to exclude access to page method, need at least 2 paths
+                    // Route::get('/one', '{%brand_name%}Controller@example1')->name('example1');
+                    // Route::get('/one/two', '{%brand_name%}Controller@example2')->name('example2');
+                    /* customized route end */
+                });
             }
         );
         Route::group(['prefix'=>'auth','middleware' => ['{%brand_string%}:guest']], function () {
