@@ -106,7 +106,7 @@ class Help
                 'status','message','continent','continentCode','country','countryCode','region','regionName','city','district','zip','lat','lon','timezone','offset','currency','isp','org','as','asname','reverse','mobile','proxy','hosting','query'
             ];
             return json_decode(\Http::get('//ip-api.com/json/'.$ip, ['fields' => implode(',', $fields)]), 1);
-        });
+        }) + ['locale' => request()->route('locale')];
     }
 
     public function agent()
