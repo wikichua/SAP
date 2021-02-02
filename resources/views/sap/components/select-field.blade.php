@@ -21,7 +21,9 @@
             {{ 'data-'.$data_key }}="{{ $data_value }}"
         @endforeach
     	>
+        @if (!isset($attribute_tags) || !in_array('multiple',$attribute_tags))
         <option value=""></option>
+        @endif
         @foreach($options as $key => $val)
         <option value="{{ $key }}" {{ isset($selected) && in_array($key, $selected)? 'selected':'' }}>{{ $val }}</option>
         @endforeach
