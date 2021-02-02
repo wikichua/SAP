@@ -101,7 +101,7 @@ class Help
         if ($ip == '') {
             $ip = $this->opendns();
         }
-        return Cache::remember('iplocation:'.$ip, (60 * 60 * 24), function () use ($ip) {
+        return Cache::remember('iplocation:'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
             $fields = [
                 'status','message','continent','continentCode','country','countryCode','region','regionName','city','district','zip','lat','lon','timezone','offset','currency','isp','org','as','asname','reverse','mobile','proxy','hosting','query'
             ];
