@@ -16,6 +16,6 @@ class AuthMiddleware
         if (auth('brand_web')->check()) {
             return $next($request);
         }
-        return redirect()->route('{%brand_string%}.home');
+        return redirect()->route('{%brand_string%}.page.home');
     }
 }
