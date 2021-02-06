@@ -51,6 +51,11 @@ trait ModelScopes
         return $query;
     }
 
+    public function scopeWhereDateInBetween($query, $field_start_at, $value, $field_end_at)
+    {
+        return $query->where($field_start_at, '<=', $value)->where($field_end_at, '>=', $value);
+    }
+
     public function getDateFilter($search)
     {
         if (\Str::contains($search, ' - ')) { // date range
