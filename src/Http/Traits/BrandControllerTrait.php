@@ -25,7 +25,7 @@ trait BrandControllerTrait
     }
     public function slug(Request $request, $slug)
     {
-        if ($slug == '' && count($request->segments()) > 1) {
+        if (count($request->segments()) > 1) {
             $segs = $request->segments();
             unset($segs[0]);
             $slug = implode('/', $segs);
