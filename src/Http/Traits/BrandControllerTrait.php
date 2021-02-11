@@ -23,7 +23,7 @@ trait BrandControllerTrait
         app()->setLocale($locale);
         return $this;
     }
-    public function slug(Request $request, $slug)
+    public function slug(Request $request)
     {
         if (count($request->segments()) > 1) {
             $segs = $request->segments();
@@ -40,9 +40,9 @@ trait BrandControllerTrait
         }
         return $model;
     }
-    public function page(Request $request, $locale, $slug = '')
+    public function page(Request $request, $locale)
     {
-        $model = $this->slug($request, $slug);
+        $model = $this->slug($request);
         return $this->getViewPage('page', compact('model'));
     }
 
