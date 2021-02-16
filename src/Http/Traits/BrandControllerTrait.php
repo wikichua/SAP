@@ -43,7 +43,7 @@ trait BrandControllerTrait
     public function page(Request $request, $locale)
     {
         $model = $this->slug($request);
-        return $this->getViewPage('page', compact('model'));
+        return $this->getViewPage($model->blade_file ?? 'page', compact('model'));
     }
 
     public function getViewPage($file, array $compact = [])
