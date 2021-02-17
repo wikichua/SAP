@@ -27,6 +27,11 @@ $(function() {
         minHeight: null,
         maxHeight: null,
         callbacks: {
+            onInit: function() {
+                @if (isset($codeview) && $codeview == true)
+                $("div.note-editor button.btn-codeview").click();
+                @endif
+            },
             onImageUpload: function(files) {
                 let file = files[0];
                 onImageUpload(files[0],$(this));
