@@ -9,7 +9,7 @@
           <i class="fas fa-code fa-2x indigo-text"></i>
         </div>
         <div class="col-10">
-          {!! Help::viewRenderer($model->blade) !!}
+          {!! Help::viewRenderer(html_entity_decode($model->blade),get_defined_vars()) !!}
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
 
 @push('scripts')
     @foreach ($model->scripts as $script)
-    {!! $script ?? '' !!}
+    {!! viewRenderer($script,get_defined_vars()) !!}
     @endforeach
 @endpush
 
