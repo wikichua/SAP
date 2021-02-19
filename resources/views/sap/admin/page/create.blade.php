@@ -22,7 +22,7 @@
                 <x-sap::input-field type="text" name="name" id="name" label="Name" :class="[]" :value="$model->name ?? ''"/>
                 <x-sap::input-field type="text" name="slug" id="slug" label="Slug" :class="[]" :value="$model->slug ?? ''"/>
                 @include('sap::admin.page.styleInput')
-                <x-sap::editor-field name="blade" id="blade" label="Content" :class="['']" :attribute_tags="[]" :value="$model->blade ?? ''" :codeview='true'/>
+                <x-sap::editor-field name="blade" id="blade" label="Content" :class="['']" :attribute_tags="[]" :value="$model->blade ?? ''" :codeview='false'/>
                 @include('sap::admin.page.scriptInput')
                 <x-sap::date-field name="published_at" id="published_at" label="Published Date" :class="['']" :attribute_tags="[]" :value="$model->published_at ?? ''"/>
                 <x-sap::date-field name="expired_at" id="expired_at" label="Expired Date" :class="['']" :attribute_tags="[]" :value="$model->expired_at ?? ''"/>
