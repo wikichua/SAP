@@ -15,6 +15,6 @@
 		@foreach ($data as $data_key => $data_value)
             {{ 'data-'.$data_key }}="{{ $data_value }}"
         @endforeach
-        >{{ $value ?? '' }}</textarea>
+        >{{ html_entity_decode($value ?? '') }}</textarea>
 	<span class="invalid-feedback font-weight-bold" role="alert" id="{{ $name }}-alert"><span>
 </div>
