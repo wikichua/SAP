@@ -15,6 +15,7 @@
 - [iplocation](#iplocation)
 - [agent and agents](#agent-and-agents)
 - [pushered](#pushered)
+- [setAlert](#setAlert)
 
 ### <a name="timezones"></a>timezones
 
@@ -175,3 +176,49 @@ pushered($data, $channel = '', $event = 'general', $locale = 'en', $driver = '')
 By default, this will pushed to "general" event on your default app channel.
 
 - **message** key is important as to show on the web push notification. If there is no message key defined, array of the param will be imploded to string and assigned to message key.
+
+### <a name="sendAlert"></a>sendAlert
+
+```php
+sendAlert(array $data = []);
+
+// example sending every users
+sendAlert([
+    'brand_id' => 0,
+    'link' => null,
+    'message' => 'Permission Deleted. ('.$model->name.')',
+    'sender_id' => auth()->id(),
+    'receiver_id' => 0,
+    'icon' => 'fas fa-lock'
+]);
+
+// example sending 1 user
+sendAlert([
+    'brand_id' => 0,
+    'link' => null,
+    'message' => 'Permission Deleted. ('.$model->name.')',
+    'sender_id' => auth()->id(),
+    'receiver_id' => 1,
+    'icon' => 'fas fa-lock'
+]);
+
+// example sending only admin user
+sendAlert([
+    'brand_id' => 0,
+    'link' => null,
+    'message' => 'User Deleted. ('.$model->name.')',
+    'sender_id' => auth()->id(),
+    'receiver_id' => app(config('sap.models.user'))->where('type','Admin')->plucks('id')->toArray(),
+    'icon' => 'fas fa-user'
+]);
+
+// example sending only brand admin user
+sendAlert([
+    'brand_id' => 1,
+    'link' => null,
+    'message' => 'User Deleted. ('.$model->name.')',
+    'sender_id' => auth()->id(),
+    'receiver_id' => app(config('sap.models.user'))->->where('brand_id',1)->where('type','Admin')->plucks('id')->toArray(),
+    'icon' => 'fas fa-user'
+]);
+```

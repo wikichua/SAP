@@ -7,5 +7,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['get', 'head'], 'list', 'ActivityLogController@index')->name('activity_log.list');
 
         Route::match(['get', 'head'], '{activity_log}/read', 'ActivityLogController@show')->name('activity_log.show');
+
+        Route::match(['put', 'patch'], '{alert}/set/read', 'ActivityLogController@setRead')->name('alert.set.read');
     });
 });

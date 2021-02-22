@@ -151,3 +151,9 @@ if (!function_exists('getBrand')) {
         return Help::getBrand($brandName);
     }
 }
+if (!function_exists('sendAlert')) {
+    function sendAlert(array $data = [])
+    {
+        return Help::sendAlert($data);
+    }
+}

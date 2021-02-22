@@ -376,4 +376,20 @@ class Help
             }
         }
     }
+    public function sendAlert(array $data = [])
+    {
+        // brand_id,link,message,sender_id,receiver_id
+        if (count($data) && $data['receiver_id'] != auth()->id()) {
+            if (is_array($data['receiver_id'])) {
+                $receiver_ids = $data['receiver_id'];
+                foreach ($receiver_ids as $receiver_id) {
+                    $data['receiver_id'] = $receiver_id;
+                    app(config('sap.models.alert'))->create($data);
+                }
+            } else {
+                app(config('sap.models.alert'))->create($data);
+            }
+        }
+        return true;
+    }
 }

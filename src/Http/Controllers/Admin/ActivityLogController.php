@@ -52,4 +52,11 @@ class ActivityLogController extends Controller
         $model = app(config('sap.models.activity_log'))->query()->findOrFail($id);
         return view('sap::admin.activity_log.show', compact('model'));
     }
+
+    public function setRead($id)
+    {
+        $model = app(config('sap.models.alert'))->query()->findOrFail($id);
+        $model->update(['status' => 'r']);
+        return $model->link;
+    }
 }

@@ -8,6 +8,7 @@ class Permission extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
+    protected $menu_icon = 'fas fa-lock';
     protected $activity_logged = true;
 
     protected $appends = ['readUrl'];

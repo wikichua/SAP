@@ -72,6 +72,15 @@ class {%model_class%}Controller extends Controller
 
         $model = {%model_class%}::query()->create($request->input());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'New '.$model->activity_name.' Added.',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => '{%model_class%} Created.',
@@ -103,6 +112,15 @@ class {%model_class%}Controller extends Controller
 
         $model->update($request->input());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => $model->activity_name.' Updated.',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => '{%model_class%} Updated.',
@@ -115,6 +133,15 @@ class {%model_class%}Controller extends Controller
     public function destroy({%model_class%} $model)
     {
         $model->delete();
+
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => $model->activity_name.' Deleted.',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',

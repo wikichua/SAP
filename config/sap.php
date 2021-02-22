@@ -50,6 +50,7 @@ return [
         'cronjob' => '\Wikichua\SAP\Models\Cronjob',
         'mailer' => '\Wikichua\SAP\Models\Mailer',
         'pusher' => '\Wikichua\SAP\Models\Pusher',
+        'alert' => '\Wikichua\SAP\Models\Alert',
     ],
     'stub_path' => 'vendor/wikichua/sap/stubs',
     'activity_log' => [

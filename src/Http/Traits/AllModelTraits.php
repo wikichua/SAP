@@ -37,7 +37,7 @@ trait AllModelTraits
 
     protected function logActivity($mode = 'Created')
     {
-        if (!\Str::contains(get_class($this), ['Searchable','ActivityLog']) && isset($this->activity_logged) && $this->activity_logged) {
+        if (!\Str::contains(get_class($this), ['Searchable','ActivityLog','Alert']) && isset($this->activity_logged) && $this->activity_logged) {
             $name = basename(str_replace('\\', '/', get_class($this)));
             if (isset($this->activity_name)) {
                 $name = $this->activity_name;

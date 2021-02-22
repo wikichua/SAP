@@ -69,6 +69,15 @@ class PermissionController extends Controller
 
         $model = app(config('sap.models.permission'))->create($request->all());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'New Permission Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => 'fas fa-lock'
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Created.',
@@ -105,6 +114,15 @@ class PermissionController extends Controller
 
         $model->update($request->all());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Permission Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => 'fas fa-lock'
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Updated.',
@@ -118,6 +136,15 @@ class PermissionController extends Controller
     {
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
         $model->delete();
+
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Permission Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => 0,
+            'icon' => 'fas fa-lock'
+        ]);
 
         return response()->json([
             'status' => 'success',
