@@ -30,6 +30,7 @@ Laravel oriented package. This package is mainly for
 1. Cronjob Admin - Developer just need to write the script using Artisan Command, then commit. The CRUD have to be done in the Admin Panel.
 1. Mail View Editor - Developer can create mailable using sap:mailer, content team could deploy the layout of the email body in HTML and Text.
 1. Pusher Manager - Web Push Notification, Real Time Messenger
+1. Alert Notification - Not fancy but simple notification like facebook
 
 ## <a name="Requirements"></a>Requirements
 
