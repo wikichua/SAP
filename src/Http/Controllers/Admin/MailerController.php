@@ -78,6 +78,14 @@ class MailerController extends Controller
         ]);
 
         $model->update($request->all());
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Mailer Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Mailers'),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -91,6 +99,14 @@ class MailerController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Mailer Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Mailers'),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
         return response()->json([
             'status' => 'success',

@@ -83,6 +83,15 @@ class PageController extends Controller
 
         $model = app(config('sap.models.page'))->create($request->all());
 
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $model->readUrl,
+            'message' => 'New Page Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Pages', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Page Created.',

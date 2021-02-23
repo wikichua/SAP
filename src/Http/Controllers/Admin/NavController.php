@@ -79,6 +79,14 @@ class NavController extends Controller
         ]);
 
         $model = app(config('sap.models.nav'))->create($request->all());
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $model->readUrl,
+            'message' => 'New Nav Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Navs', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status'   => 'success',
@@ -103,6 +111,14 @@ class NavController extends Controller
         $newModel->push();
         $newModel->locale = null;
         $newModel->save();
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $newModel->readUrl,
+            'message' => 'New Nav Replicated. ('.$newModel->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Navs', $request->input('brand_id', 0)),
+            'icon' => $newModel->menu_icon
+        ]);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Nav Replicated.',
@@ -137,7 +153,14 @@ class NavController extends Controller
         ]);
 
         $model->update($request->all());
-
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $model->readUrl,
+            'message' => 'Nav Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Navs', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Nav Updated.',
@@ -151,6 +174,14 @@ class NavController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => null,
+            'message' => 'Nav Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Navs', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([
@@ -218,6 +249,14 @@ class NavController extends Controller
             $model->saveQuietly();
         }
         activity('Updated Nav: ' . $model->id, $request->input(), $model, $model);
+        sendAlert([
+            'brand_id' => $brand_id,
+            'link' => $model->readUrl,
+            'message' => 'Nav Position Reordered. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Navs', $brand_id),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',

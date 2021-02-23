@@ -15,7 +15,8 @@
 - [iplocation](#iplocation)
 - [agent and agents](#agent-and-agents)
 - [pushered](#pushered)
-- [setAlert](#setAlert)
+- [sendAlert](#sendAlert)
+- [permissionUserIds](#permissionUserIds)
 
 ### <a name="timezones"></a>timezones
 
@@ -222,3 +223,11 @@ sendAlert([
     'icon' => 'fas fa-user'
 ]);
 ```
+
+### <a name="permissionUserIds"></a>permissionUserIds
+
+```php
+permissionUserIds('Read Users', $request->input('brand_id', 0));
+```
+
+Return as Array of the list of user with permission name given

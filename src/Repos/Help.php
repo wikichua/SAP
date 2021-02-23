@@ -379,17 +379,34 @@ class Help
     public function sendAlert(array $data = [])
     {
         // brand_id,link,message,sender_id,receiver_id
-        if (count($data) && $data['receiver_id'] != auth()->id()) {
+        if (count($data) && $data['receiver_id'] != auth()->id() && $data['receiver_id'] != 0) {
             if (is_array($data['receiver_id'])) {
-                $receiver_ids = $data['receiver_id'];
-                foreach ($receiver_ids as $receiver_id) {
-                    $data['receiver_id'] = $receiver_id;
-                    app(config('sap.models.alert'))->create($data);
-                }
+                dispatch(function () use ($data) {
+                    $receiver_ids = $data['receiver_id'];
+                    foreach ($receiver_ids as $receiver_id) {
+                        $data['receiver_id'] = $receiver_id;
+                        if ($data['receiver_id'] != auth()->id()) {
+                            app(config('sap.models.alert'))->create($data);
+                        }
+                    }
+                });
             } else {
                 app(config('sap.models.alert'))->create($data);
             }
         }
         return true;
+    }
+    public function permissionUserIds($permission, $brand_id = 0)
+    {
+        $permission = app(config('sap.models.permission'))->where('name', $permission)->first();
+        return cache()->tags(['permissions'])->rememberForever('permission_users:'.$permission->id.':'.$brand_id, function () use ($permission, $brand_id) {
+            $ids = [];
+            $ids = app(config('sap.models.role'))->where('name', 'Admin')->first()->users()->whereNull('brand_id')->pluck('users.id')->toArray();
+            $roles = $permission->roles;
+            foreach ($roles as $role) {
+                $ids = array_merge($ids, $role->users()->where('brand_id', $brand_id)->pluck('users.id')->toArray());
+            }
+            return $ids = array_unique($ids);
+        });
     }
 }

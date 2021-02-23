@@ -82,6 +82,15 @@ class PusherController extends Controller
 
         $model = app(config('sap.models.pusher'))->create($request->all());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'New Pusher Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Pushers'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Pusher Created.',
@@ -124,6 +133,15 @@ class PusherController extends Controller
 
         $model->update($request->all());
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Pusher Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Pushers'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Pusher Updated.',
@@ -137,6 +155,14 @@ class PusherController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Pusher Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Pushers'),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([
@@ -156,6 +182,14 @@ class PusherController extends Controller
             $channel = strtolower($model->brand->name);
         }
         pushered($model->toArray(), $channel, $model->event, $model->locale);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Pusher Executed. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Pushers'),
+            'icon' => $model->menu_icon
+        ]);
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Pusher Message Pushed.',

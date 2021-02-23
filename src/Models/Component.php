@@ -11,6 +11,7 @@ class Component extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $menu_icon = 'fas fa-cube';
 
     protected $dates = ['deleted_at'];
     protected $fillable = [

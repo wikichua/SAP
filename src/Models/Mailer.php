@@ -11,6 +11,7 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $table = 'mail_templates';
+    protected $menu_icon = 'fas fa-mail-bulk';
     protected $activity_logged = true;
 
     protected $dates = ['deleted_at'];

@@ -85,6 +85,15 @@ class CarouselController extends Controller
 
         $model = app(config('sap.models.carousel'))->query()->create($request->input());
 
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $model->readUrl,
+            'message' => 'New Carousel Added. ('.$model->slug.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Created.',
@@ -134,6 +143,15 @@ class CarouselController extends Controller
 
         $model->update($request->input());
 
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => $model->readUrl,
+            'message' => 'Carousel Updated. ('.$model->slug.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Updated.',
@@ -146,7 +164,14 @@ class CarouselController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
-
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => null,
+            'message' => 'Carousel Deleted. ('.$model->slug.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([
@@ -200,7 +225,14 @@ class CarouselController extends Controller
         }
 
         activity('Reordered Carousel: ' . $newRow, $models->pluck('seq', 'id'), $model);
-
+        sendAlert([
+            'brand_id' => $brand_id,
+            'link' => $model->readUrl,
+            'message' => 'Carousel Position Reordered. ('.$model->slug.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Carousels', $brand_id),
+            'icon' => $model->menu_icon
+        ]);
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Reordered.',

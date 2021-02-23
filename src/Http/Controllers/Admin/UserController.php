@@ -70,7 +70,6 @@ class UserController extends Controller
             'email' => 'required',
             'type' => 'required',
             'timezone' => 'required',
-            'roles' => 'required',
             'password_confirmation' => 'required',
             'password' => ['required','confirmed'],
         ]);
@@ -84,6 +83,15 @@ class UserController extends Controller
 
         $model = app(config('sap.models.user'))->create($request->input());
         $model->roles()->sync($request->get('roles'));
+
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => null,
+            'message' => 'New User Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -122,7 +130,6 @@ class UserController extends Controller
             'email' => 'required',
             'timezone' => 'required',
             'type' => 'required',
-            'roles' => 'required',
         ]);
 
         $request->merge([
@@ -132,6 +139,15 @@ class UserController extends Controller
 
         $model->update($request->input());
         $model->roles()->sync($request->get('roles'));
+
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => null,
+            'message' => 'User Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -175,6 +191,14 @@ class UserController extends Controller
     {
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $model->roles()->sync([]);
+        sendAlert([
+            'brand_id' => $request->input('brand_id', 0),
+            'link' => null,
+            'message' => 'User Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([

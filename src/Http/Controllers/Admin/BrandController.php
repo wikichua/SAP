@@ -78,7 +78,14 @@ class BrandController extends Controller
         $model->update($request->input());
 
         \Cache::forget('brand-'.$model->name);
-
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Brand Added. ('.$model->slug.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Brands'),
+            'icon' => $model->menu_icon
+        ]);
         return response()->json([
             'status' => 'success',
             'flash' => 'Brand Updated.',

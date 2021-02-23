@@ -157,3 +157,9 @@ if (!function_exists('sendAlert')) {
         return Help::sendAlert($data);
     }
 }
+if (!function_exists('permissionUserIds')) {
+    function permissionUserIds($permission, $brand_id = 0)
+    {
+        return Help::permissionUserIds($permission, $brand_id);
+    }
+}

@@ -56,10 +56,11 @@ class Permission extends Model
 
     public function onCachedEvent()
     {
-        $role_ids = $this->roles()->pluck('role_id');
-        $user_ids = \DB::table('role_user')->distinct('user_id')->whereIn('role_id', $role_ids)->pluck('user_id');
-        foreach ($user_ids as $user_id) {
-            cache()->forget('permissions:'.$user_id);
-        }
+        cache()->tags('permissions')->flush();
+        // $role_ids = $this->roles()->pluck('role_id');
+        // $user_ids = \DB::table('role_user')->distinct('user_id')->whereIn('role_id', $role_ids)->pluck('user_id');
+        // foreach ($user_ids as $user_id) {
+        //     cache()->forget('permissions:'.$user_id);
+        // }
     }
 }

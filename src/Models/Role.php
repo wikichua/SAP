@@ -10,12 +10,17 @@ class Role extends Model
 
     protected $appends = ['isAdmin','readUrl'];
     public $searchableFields = ['name'];
+    protected $menu_icon = 'fas fa-id-badge';
 
     protected $activity_logged = true;
 
     public function permissions()
     {
         return $this->belongsToMany(config('sap.models.permission'));
+    }
+    public function users()
+    {
+        return $this->belongsToMany(config('sap.models.user'));
     }
 
     public function getIsAdminAttribute($value)
@@ -40,9 +45,10 @@ class Role extends Model
 
     public function onCachedEvent()
     {
-        $user_ids = \DB::table('role_user')->distinct('user_id')->where('role_id', $this->id)->pluck('user_id');
-        foreach ($user_ids as $user_id) {
-            cache()->forget('permissions:'.$user_id);
-        }
+        cache()->tags('permissions')->flush();
+        // $user_ids = \DB::table('role_user')->distinct('user_id')->where('role_id', $this->id)->pluck('user_id');
+        // foreach ($user_ids as $user_id) {
+        //     cache()->forget('permissions:'.$user_id);
+        // }
     }
 }

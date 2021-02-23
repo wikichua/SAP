@@ -74,6 +74,14 @@ class ReportController extends Controller
         ]);
 
         $model = app(config('sap.models.report'))->create($request->all());
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'New Report Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Reports'),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -136,6 +144,14 @@ class ReportController extends Controller
         ]);
 
         $model->update($request->all());
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Report Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Reports'),
+            'icon' => $model->menu_icon
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -150,6 +166,14 @@ class ReportController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Report Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Reports'),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([

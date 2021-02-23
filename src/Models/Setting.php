@@ -9,6 +9,7 @@ class Setting extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $menu_icon = 'fas fa-cogs';
 
     protected $appends = ['isMultiple', 'rows','readUrl'];
     public $searchableFields = ['key'];

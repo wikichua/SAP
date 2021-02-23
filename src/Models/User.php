@@ -16,6 +16,7 @@ abstract class User extends Authenticatable
     use \Lab404\Impersonate\Models\Impersonate;
 
     protected $activity_logged = true;
+    protected $menu_icon = 'fas fa-users';
 
     protected $appends = ['roles_string','readUrl'];
     // protected $fillable = [];
@@ -78,6 +79,7 @@ abstract class User extends Authenticatable
 
     public function onCachedEvent()
     {
-        cache()->forget('permissions:'.$this->id);
+        // cache()->forget('permissions:'.$this->id);
+        cache()->tags('permissions')->flush();
     }
 }

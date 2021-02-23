@@ -82,6 +82,15 @@ class RoleController extends Controller
         $model = app(config('sap.models.role'))->create($request->all());
         $model->permissions()->sync($request->get('permissions'));
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'New Role Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Roles'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Role Created.',
@@ -127,6 +136,15 @@ class RoleController extends Controller
         $model->update($request->all());
         $model->permissions()->sync($request->get('permissions'));
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => $model->readUrl,
+            'message' => 'Role Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Roles'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Role Updated.',
@@ -140,6 +158,14 @@ class RoleController extends Controller
     {
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
         $model->permissions()->sync([]);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'New Role Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Roles'),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([

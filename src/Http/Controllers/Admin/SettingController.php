@@ -73,6 +73,15 @@ class SettingController extends Controller
 
         cache()->forget('setting-' . $model->key);
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'New Setting Added. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Settings'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Setting Created.',
@@ -114,6 +123,15 @@ class SettingController extends Controller
 
         cache()->forget('setting-' . $model->key);
 
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Setting Updated. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Settings'),
+            'icon' => $model->menu_icon
+        ]);
+
         return response()->json([
             'status'   => 'success',
             'flash'    => 'Setting Updated.',
@@ -126,6 +144,14 @@ class SettingController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.setting'))->query()->findOrFail($id);
+        sendAlert([
+            'brand_id' => 0,
+            'link' => null,
+            'message' => 'Setting Deleted. ('.$model->name.')',
+            'sender_id' => auth()->id(),
+            'receiver_id' => permissionUserIds('Read Settings'),
+            'icon' => $model->menu_icon
+        ]);
         $model->delete();
 
         return response()->json([

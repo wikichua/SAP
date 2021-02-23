@@ -75,7 +75,7 @@ class PermissionController extends Controller
             'message' => 'New Permission Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => 'fas fa-lock'
+            'icon' => $model->menu_icon
         ]);
 
         return response()->json([
@@ -120,7 +120,7 @@ class PermissionController extends Controller
             'message' => 'Permission Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => 'fas fa-lock'
+            'icon' => $model->menu_icon
         ]);
 
         return response()->json([
@@ -135,17 +135,15 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
-        $model->delete();
-
         sendAlert([
             'brand_id' => 0,
             'link' => null,
             'message' => 'Permission Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => 'fas fa-lock'
+            'icon' => $model->menu_icon
         ]);
-
+        $model->delete();
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Deleted.',

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FailedJob extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    protected $menu_icon = 'fas fa-recycle';
 
     protected $dates = ['failed_at'];
 
