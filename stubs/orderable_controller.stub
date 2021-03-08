@@ -9,6 +9,10 @@
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Ordering {%model_string%} Position');
+        });
         $getUrl = route('{%model_variable%}.orderable',$orderable);
         $actUrl = route('{%model_variable%}.orderableUpdate',$orderable);
         $html = [

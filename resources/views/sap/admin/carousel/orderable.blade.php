@@ -3,11 +3,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="btn-toolbar justify-content-between" role="toolbar">
-                <div class="btn-group" role="group">
-                    <a href="{{ route('carousel.list') }}" class="btn btn-link">
-                        <i class="fas fa-angle-double-left mr-2"></i></a>
-                    <h3 class="m-0 font-weight-bold text-primary">Carousel Sortable</h3>
-                </div>
+               <div class="btn-group" role="group">
+                {{ \Breadcrumbs::render('breadcrumb') }}
+            </div>
             </div>
         </div>
         <div class="card-body">

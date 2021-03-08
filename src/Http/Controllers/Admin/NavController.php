@@ -16,6 +16,9 @@ class NavController extends Controller
         $this->middleware('can:Read Navs')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Navs')->only(['edit', 'update']);
         $this->middleware('can:Delete Navs')->only('destroy');
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Nav Listing', route('nav.list'));
+        });
     }
 
     public function index(Request $request)
@@ -58,6 +61,10 @@ class NavController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Nav');
+        });
         return view('sap::admin.nav.create');
     }
 
@@ -100,6 +107,10 @@ class NavController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Nav');
+        });
         $model = app(config('sap.models.nav'))->query()->findOrFail($id);
         return view('sap::admin.nav.show', compact('model'));
     }
@@ -130,6 +141,10 @@ class NavController extends Controller
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Nav');
+        });
         $model = app(config('sap.models.nav'))->query()->findOrFail($id);
         return view('sap::admin.nav.edit', compact('model'));
     }
@@ -222,6 +237,10 @@ class NavController extends Controller
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Ordering Nav Position');
+        });
         $getUrl = route('nav.orderable', [$orderable, $brand_id]);
         $actUrl = route('nav.orderableUpdate', [$orderable, $brand_id]);
         $html = [

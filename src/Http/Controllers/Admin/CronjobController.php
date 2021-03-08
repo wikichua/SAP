@@ -18,6 +18,10 @@ class CronjobController extends Controller
         $this->middleware('can:Delete Cronjobs')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Cron Jobs Listing', route('cronjob.list'));
+        });
     }
 
     public function index(Request $request)
@@ -55,6 +59,10 @@ class CronjobController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Cron Job');
+        });
         return view('sap::admin.cronjob.create');
     }
 
@@ -83,12 +91,20 @@ class CronjobController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Cron Job');
+        });
         $model = app(config('sap.models.cronjob'))->query()->findOrFail($id);
         return view('sap::admin.cronjob.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Cron Job');
+        });
         $model = app(config('sap.models.cronjob'))->query()->findOrFail($id);
         return view('sap::admin.cronjob.edit', compact('model'));
     }

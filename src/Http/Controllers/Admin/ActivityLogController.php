@@ -12,6 +12,9 @@ class ActivityLogController extends Controller
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Read Activity Logs')->only(['index', 'read']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Activities Log Listing', route('activity_log.list'));
+        });
     }
 
     public function index(Request $request)
@@ -49,6 +52,10 @@ class ActivityLogController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) use ($id) {
+            $trail->parent('home');
+            $trail->push('Show Activity Log');
+        });
         $model = app(config('sap.models.activity_log'))->query()->findOrFail($id);
         return view('sap::admin.activity_log.show', compact('model'));
     }

@@ -20,6 +20,9 @@ class PusherController extends Controller
         $this->middleware('can:Push Pushers')->only('push');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Pusher Listing', route('pusher.list'));
+        });
     }
 
     public function index(Request $request)
@@ -60,6 +63,10 @@ class PusherController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Pusher');
+        });
         return view('sap::admin.pusher.create');
     }
 
@@ -103,12 +110,20 @@ class PusherController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Pusher');
+        });
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
         return view('sap::admin.pusher.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Pusher');
+        });
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
         return view('sap::admin.pusher.edit', compact('model'));
     }

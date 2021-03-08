@@ -28,14 +28,17 @@ class FileController extends Controller
         $this->middleware('can:Delete Folders')->only('remove');
         $this->middleware('can:Copy Folders')->only('clone');
 
-        // $brand_id = auth()->user()->brand_id;
-        $brand_id = 1;
+        // $brand_id = 1;
+        $brand_id = auth()->user()->brand_id ?? 0;
         if ($brand_id) {
             $this->storagePath = storage_path('app/public/brand/'.$brand_id);
             File::ensureDirectoryExists($this->storagePath);
         } else {
             $this->storagePath = storage_path('app/public');
         }
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Files Listing', route('file.list'));
+        });
     }
 
     public function index(Request $request, $path = '')

@@ -23,6 +23,10 @@ class {%model_class%}Controller extends Controller
         // $this->middleware('reauth_admin')->only(['edit','destroy']);
 
         {%brand_view_namespace%}
+
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('{%permission_string%} Listing', route('{%model_variable%}.list'));
+        });
     }
 
     public function index(Request $request)
@@ -56,6 +60,10 @@ class {%model_class%}Controller extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('New {%model_string%}');
+        });
         return view($this->page_path.'{%model_variable%}.create');
     }
 
@@ -92,11 +100,19 @@ class {%model_class%}Controller extends Controller
 
     public function show({%model_class%} $model)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show {%model_string%}');
+        });
         return view($this->page_path.'{%model_variable%}.show', compact('model'));
     }
 
     public function edit(Request $request, {%model_class%} $model)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit {%model_string%}');
+        });
         return view($this->page_path.'{%model_variable%}.edit', compact('model'));
     }
 

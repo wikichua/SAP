@@ -16,6 +16,9 @@ class FailedJobController extends Controller
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Read Failed Jobs')->only(['index', 'read']);
         $this->middleware('can:Retry Failed Jobs')->only(['retry']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Failed Jobs Listing', route('failed_job.list'));
+        });
     }
 
     public function summary(Request $request)
@@ -61,6 +64,10 @@ class FailedJobController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Failed Job');
+        });
         $model = app(config('sap.models.failed_job'))->query()->findOrFail($id);
         return view('sap::admin.failed_job.show', compact('model'));
     }

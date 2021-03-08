@@ -17,6 +17,13 @@ class UserPersonalAccessTokenController extends Controller
         $this->middleware('can:Delete Personal Access Token')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('user_home', function ($trail) {
+            $trail->push('User Listing', route('user.list'));
+        });
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->parent('user_home');
+            $trail->push('User Access Token Listing', route('pat.list', [request()->route()->parameter('user')]));
+        });
     }
 
     public function index(Request $request, $user_id)
@@ -43,6 +50,10 @@ class UserPersonalAccessTokenController extends Controller
 
     public function create(Request $request, $user_id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create User Access Token');
+        });
         $user = app(config('sap.models.user'))->query()->find($user_id);
         return view('sap::admin.pat.create', compact('user', 'user_id'));
     }

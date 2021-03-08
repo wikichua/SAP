@@ -18,6 +18,9 @@ class UserController extends Controller
         $this->middleware('can:Delete Users')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy', 'editPassword']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('User Listing', route('user.list'));
+        });
     }
 
     public function index(Request $request)
@@ -59,6 +62,10 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create User');
+        });
         $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
         return view('sap::admin.user.create', compact('roles'));
     }
@@ -104,6 +111,10 @@ class UserController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show User');
+        });
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $last_activity = $model->activitylogs()->first();
         $model->last_activity = [
@@ -116,6 +127,10 @@ class UserController extends Controller
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit User');
+        });
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
         return view('sap::admin.user.edit', compact('roles', 'model'));
@@ -160,6 +175,10 @@ class UserController extends Controller
 
     public function editPassword(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit User Password');
+        });
         return view('sap::admin.user.editPassword', compact('id'));
     }
 

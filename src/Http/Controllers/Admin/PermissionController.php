@@ -18,6 +18,9 @@ class PermissionController extends Controller
         $this->middleware('can:Delete Permissions')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Permission Listing', route('permission.list'));
+        });
     }
 
     public function index(Request $request)
@@ -52,6 +55,10 @@ class PermissionController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Permission');
+        });
         return view('sap::admin.permission.create');
     }
 
@@ -89,12 +96,20 @@ class PermissionController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Permission');
+        });
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
         return view('sap::admin.permission.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Permission');
+        });
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
         return view('sap::admin.permission.edit', compact('model'));
     }

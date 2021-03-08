@@ -4,9 +4,7 @@
     <div class="card-header py-3">
         <div class="btn-toolbar justify-content-between" role="toolbar">
             <div class="btn-group" role="group">
-                <a href="{{ route('activity_log.list') }}" class="btn btn-link">
-                <i class="fas fa-angle-double-left mr-2"></i></a>
-                <h3 class="m-0 font-weight-bold text-primary">Show Activity Log</h3>
+                {{ \Breadcrumbs::render('breadcrumb') }}
             </div>
             <div class="btn-group" role="group">
             </div>
@@ -21,9 +19,9 @@
             <x-sap::display-field type="text" name="model_class" id="model_class" label="Model" :value="$model->model_class ?? ''"/>
             <x-sap::display-field type="text" name="created_at" id="created_at" label="Created At" :value="$model->created_at ?? ''"/>
             <x-sap::display-field type="text" name="message" id="message" label="Message" :value="$model->message ?? ''"/>
-            <x-sap::display-field type="code" name="data" id="data" label="Data" :value="$model->data ?? ''"/>
-            <x-sap::display-field type="code" name="agents" id="agents" label="Agents" :value="$model->agents ?? ''"/>
-            <x-sap::display-field type="code" name="iplocation" id="iplocation" label="Ip Location" :value="$model->iplocation ?? ''"/>
+            <x-sap::display-field type="json" name="data" id="data" label="Data" :value="$model->data ?? ''"/>
+            <x-sap::display-field type="json" name="agents" id="agents" label="Agents" :value="$model->agents ?? ''"/>
+            <x-sap::display-field type="json" name="iplocation" id="iplocation" label="Ip Location" :value="$model->iplocation ?? ''"/>
         </div>
     </div>
 </div>

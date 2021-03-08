@@ -14,6 +14,9 @@ class ComponentController extends Controller
         $this->middleware(['auth_admin', 'can:Access Admin Panel']);
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Read Components')->only(['index', 'read']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Component Listing', route('component.list'));
+        });
     }
 
     public function index(Request $request)
@@ -51,6 +54,10 @@ class ComponentController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('show', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Component');
+        });
         $model = app(config('sap.models.component'))->query()->findOrFail($id);
         return view('sap::admin.component.show', compact('model'));
     }

@@ -18,6 +18,9 @@ class RoleController extends Controller
         $this->middleware('can:Delete Roles')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Role Listing', route('role.list'));
+        });
     }
 
     public function index(Request $request)
@@ -55,6 +58,10 @@ class RoleController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Role');
+        });
         $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
         $group_permissions = [];
         foreach ($permissions as $group => $perms) {
@@ -102,12 +109,20 @@ class RoleController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Role');
+        });
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
         return view('sap::admin.role.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Role');
+        });
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
         $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
         $group_permissions = [];

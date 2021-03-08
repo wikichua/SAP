@@ -14,6 +14,10 @@ class BrandController extends Controller
         $this->middleware('intend_url')->only(['index', 'read']);
         $this->middleware('can:Read Brands')->only(['index', 'read']);
         $this->middleware('can:Update Brands')->only(['edit', 'update']);
+
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Brand Listing', route('brand.list'));
+        });
     }
 
     public function index(Request $request)
@@ -51,12 +55,20 @@ class BrandController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('show', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Brand');
+        });
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
         return view('sap::admin.brand.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('edit', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Brand');
+        });
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
         return view('sap::admin.brand.edit', compact('model'));
     }

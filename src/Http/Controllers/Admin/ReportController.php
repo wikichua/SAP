@@ -20,6 +20,9 @@ class ReportController extends Controller
         $this->middleware('can:Export Reports')->only('export');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Report Listing', route('report.list'));
+        });
     }
 
     public function index(Request $request)
@@ -58,6 +61,10 @@ class ReportController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Report');
+        });
         return view('sap::admin.report.create');
     }
 
@@ -95,6 +102,10 @@ class ReportController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Report');
+        });
         $models = [];
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
         $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
@@ -126,6 +137,10 @@ class ReportController extends Controller
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Report');
+        });
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
         return view('sap::admin.report.edit', compact('model'));
     }

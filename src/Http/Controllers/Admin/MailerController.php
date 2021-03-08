@@ -15,6 +15,9 @@ class MailerController extends Controller
         $this->middleware('can:Read Mailers')->only(['index', 'read']);
         $this->middleware('can:Update Mailers')->only(['edit', 'update']);
         $this->middleware('can:Delete Mailers')->only('destroy');
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Mailer Listing', route('mailer.list'));
+        });
     }
 
     public function index(Request $request)
@@ -52,6 +55,10 @@ class MailerController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Mailer');
+        });
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
         $preview = app($model->mailable);
         return view('sap::admin.mailer.show', compact('model'));
@@ -59,6 +66,10 @@ class MailerController extends Controller
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Mailer');
+        });
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
         return view('sap::admin.mailer.edit', compact('model'));
     }
@@ -119,6 +130,10 @@ class MailerController extends Controller
 
     public function preview(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Preview Mailer');
+        });
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
         $params = app($model->mailable)->getVariables();
         if ($request->isMethod('post')) {

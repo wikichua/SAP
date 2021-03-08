@@ -19,6 +19,9 @@ class PageController extends Controller
         $this->middleware('can:Delete Pages')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Page Listing', route('page.list'));
+        });
     }
 
     public function index(Request $request)
@@ -61,6 +64,10 @@ class PageController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Page');
+        });
         return view('sap::admin.page.create');
     }
 
@@ -104,6 +111,10 @@ class PageController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Page');
+        });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
         return view('sap::admin.page.show', compact('model'));
     }
@@ -128,6 +139,10 @@ class PageController extends Controller
 
     public function preview($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Preview Page');
+        });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
         if ($model->brand_id != 0) {
             $brandName = strtolower($model->brand->name);
@@ -151,6 +166,10 @@ class PageController extends Controller
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Page');
+        });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
         return view('sap::admin.page.edit', compact('model'));
     }

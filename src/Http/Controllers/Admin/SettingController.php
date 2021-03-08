@@ -17,6 +17,9 @@ class SettingController extends Controller
         $this->middleware('can:Delete Settings')->only('destroy');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Setting Listing', route('setting.list'));
+        });
     }
 
     public function index(Request $request)
@@ -52,6 +55,10 @@ class SettingController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Setting');
+        });
         return view('sap::admin.setting.create');
     }
 
@@ -93,12 +100,20 @@ class SettingController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Setting');
+        });
         $model = app(config('sap.models.setting'))->query()->findOrFail($id);
         return view('sap::admin.setting.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Setting');
+        });
         $model = app(config('sap.models.setting'))->query()->findOrFail($id);
         return view('sap::admin.setting.edit', compact('model'));
     }

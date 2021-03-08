@@ -15,6 +15,10 @@ class CarouselController extends Controller
         $this->middleware('can:Read Carousels')->only(['index', 'read']);
         $this->middleware('can:Update Carousels')->only(['edit', 'update']);
         $this->middleware('can:Delete Carousels')->only('destroy');
+
+        \Breadcrumbs::for('home', function ($trail) {
+            $trail->push('Carousel Listing', route('carousel.list'));
+        });
     }
 
     public function index(Request $request)
@@ -55,6 +59,10 @@ class CarouselController extends Controller
 
     public function create(Request $request)
     {
+        \Breadcrumbs::for('create', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Create Carousel');
+        });
         return view('sap::admin.carousel.create');
     }
 
@@ -105,12 +113,20 @@ class CarouselController extends Controller
 
     public function show($id)
     {
+        \Breadcrumbs::for('show', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Show Carousel');
+        });
         $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
         return view('sap::admin.carousel.show', compact('model'));
     }
 
     public function edit(Request $request, $id)
     {
+        \Breadcrumbs::for('edit', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Edit Carousel');
+        });
         $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
         return view('sap::admin.carousel.edit', compact('model'));
     }
@@ -197,6 +213,10 @@ class CarouselController extends Controller
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
+        \Breadcrumbs::for('sortable', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Ordering Carousel Position');
+        });
         $getUrl = route('carousel.orderable', [$orderable, $brand_id]);
         $actUrl = route('carousel.orderableUpdate', [$orderable, $brand_id]);
         $html = [
