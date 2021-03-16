@@ -13,6 +13,7 @@ class Role extends Model
     protected $menu_icon = 'fas fa-id-badge';
 
     protected $activity_logged = true;
+    protected $snapshot = true;
 
     public function permissions()
     {

@@ -11,6 +11,7 @@ class Page extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $menu_icon = 'fas fa-envelope-open-text';
     protected $dates = ['deleted_at'];
     protected $fillable = [

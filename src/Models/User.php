@@ -16,6 +16,7 @@ abstract class User extends Authenticatable
     use \Lab404\Impersonate\Models\Impersonate;
 
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $menu_icon = 'fas fa-users';
 
     protected $appends = ['roles_string','readUrl'];

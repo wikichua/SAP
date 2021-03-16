@@ -10,6 +10,7 @@
     'failed_job.*',
     'cronjob.*',
     'mailer.*',
+    'versionizer.*',
 ]"/>
 <x-sap::menu menu="cms" :active-patterns="[
     'brand.*',

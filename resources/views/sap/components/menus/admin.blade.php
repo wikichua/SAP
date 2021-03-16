@@ -14,6 +14,7 @@
     'Read Reports',
     'Read Cronjobs',
     'Read Mailers',
+    'Read Versionizers',
 ])
 <li class="nav-item">
     <a class="nav-link {{ $groupActive? '':'collapsed' }}" href="#" data-toggle="collapse" data-target="#{{ $id }}" aria-expanded="true"
@@ -53,6 +54,9 @@
             @endcan
             @can('Read Mailers')
             <x-sap::menu-item :href="route('mailer.list')" :active-pattern="'mailer.*'" icon="fas fa-mail-bulk">Mailers</x-sap-menu-item>
+            @endcan
+            @can('Read Versionizers')
+            <x-sap::menu-item :href="route('versionizer.list')" :active-pattern="'versionizer.*'" icon="fas fa-code-branch">Versionizers</x-sap-menu-item>
             @endcan
         </div>
     </div>

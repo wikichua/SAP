@@ -10,6 +10,7 @@ class Permission extends Model
 
     protected $menu_icon = 'fas fa-lock';
     protected $activity_logged = true;
+    protected $snapshot = true;
 
     protected $appends = ['readUrl'];
     public $searchableFields = ['name','group'];

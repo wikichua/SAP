@@ -11,6 +11,7 @@ class Cronjob extends Eloquent
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $menu_icon = 'fas fa-voicemail';
 
     protected $dates = ['deleted_at'];

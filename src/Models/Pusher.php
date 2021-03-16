@@ -9,6 +9,7 @@ class Pusher extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $menu_icon = 'fas fa-recycle';
     protected $fillable = [
         'created_by',

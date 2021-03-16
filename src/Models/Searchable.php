@@ -19,6 +19,10 @@ class Searchable extends Model
     protected $casts = [
         'tags' => 'array'
     ];
+    public function brand()
+    {
+        return $this->belongsTo(config('sap.models.brand'))->withDefault(['name' => null]);
+    }
     public function scopeFilterTags($query, $search)
     {
         $searches = [

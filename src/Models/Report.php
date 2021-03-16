@@ -11,6 +11,7 @@ class Report extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $menu_icon = 'fas fa-file-contract';
 
     protected $dates = ['deleted_at'];

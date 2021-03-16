@@ -34,6 +34,7 @@ return [
     'component_namespace' => '\Wikichua\SAP\View\Components',
     'routes_dir' => 'routes/web.php',
     'models' => [
+        'versionizer' => '\Wikichua\SAP\Models\Versionizer',
         'searchable' => '\Wikichua\SAP\Models\Searchable',
         'user' => config('auth.providers.users.model', '\App\User'),
         'role' => '\Wikichua\SAP\Models\Role',

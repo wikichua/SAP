@@ -31,6 +31,7 @@ Laravel oriented package. This package is mainly for
 1. Mail View Editor - Developer can create mailable using sap:mailer, content team could deploy the layout of the email body in HTML and Text.
 1. Pusher Manager - Web Push Notification, Real Time Messenger
 1. Alert Notification - Not fancy but simple notification like facebook
+1. Snapshot Table Row - Able to let Admin to restore the changed data, or deleted data
 
 ## <a name="Requirements"></a>Requirements
 

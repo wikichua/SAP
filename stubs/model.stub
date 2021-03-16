@@ -12,6 +12,7 @@ class {%model_class%} extends Eloquent
 
     protected $menu_icon = '{%menu_icon%}';
     protected $activity_logged = true;
+    protected $snapshot = true;
     protected $activity_name = '{%model_class%}';
 
     protected $dates = ['deleted_at'];
