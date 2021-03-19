@@ -15,7 +15,7 @@ class BrandServiceProvider extends ServiceProvider
     {
         $brand_path = base_path('brand');
         if (Schema::hasTable('brands') && File::isDirectory($brand_path)) {
-            if (app()->runningInConsole() || \Str::of(config('app.url'))->is('*'.request()->getHost())) { // load from admin route
+            if (app()->runningInConsole() || (isset(parse_url(config('app.url'))['host']) && parse_url(config('app.url'))['host'] == request()->getHost())) { // load from admin route
                 $dirs = File::directories($brand_path);
                 foreach ($dirs as $dir) {
                     if (File::exists($dir.'/routes/web.php')) {

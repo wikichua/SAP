@@ -45,7 +45,7 @@ class SAPServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'sap');
         $this->loadViewsFrom(__DIR__.'/../resources/views/sap', 'sap');
 
-        if (\Str::of(config('app.url'))->is('*'.request()->getHost())) {
+        if ((isset(parse_url(config('app.url'))['host']) && parse_url(config('app.url'))['host'] == request()->getHost())) {
             $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
             $this->loadRoutes();
             $this->loadRoutesFrom(__DIR__.'/pub.php');
