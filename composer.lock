@@ -1091,16 +1091,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.7.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3"
+                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/53330f47520498c0ae1f61f7e2c90f55690c06a3",
-                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/35ea11d335fd638b5882ff1725228b3d35496ab1",
+                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1",
                 "shasum": ""
             },
             "require": {
@@ -1158,7 +1158,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2020-09-30T07:37:11+00:00"
+            "time": "2021-03-21T16:25:00+00:00"
         },
         {
             "name": "infureal/artisan-gui",
@@ -1524,16 +1524,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.32.1",
+            "version": "v8.33.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "7c37b64f8153c16b6406f5c28cf37828ebbe8846"
+                "reference": "354c57b8cb457549114074c500944455a288d6cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/7c37b64f8153c16b6406f5c28cf37828ebbe8846",
-                "reference": "7c37b64f8153c16b6406f5c28cf37828ebbe8846",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/354c57b8cb457549114074c500944455a288d6cc",
+                "reference": "354c57b8cb457549114074c500944455a288d6cc",
                 "shasum": ""
             },
             "require": {
@@ -1684,7 +1684,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2021-03-09T15:37:45+00:00"
+            "time": "2021-03-16T19:42:32+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1692,12 +1692,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/helpers.git",
-                "reference": "1c9876d2b925e1190fd4bff1380d314ee6b44ec3"
+                "reference": "1c3c128fa96bad2bc338eab1823fe7372e0c5328"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/helpers/zipball/1c9876d2b925e1190fd4bff1380d314ee6b44ec3",
-                "reference": "1c9876d2b925e1190fd4bff1380d314ee6b44ec3",
+                "url": "https://api.github.com/repos/laravel/helpers/zipball/1c3c128fa96bad2bc338eab1823fe7372e0c5328",
+                "reference": "1c3c128fa96bad2bc338eab1823fe7372e0c5328",
                 "shasum": ""
             },
             "require": {
@@ -1729,7 +1729,7 @@
                 },
                 {
                     "name": "Dries Vints",
-                    "email": "dries.vints@gmail.com"
+                    "email": "dries@laravel.com"
                 }
             ],
             "description": "Provides backwards compatibility for helpers in the latest Laravel release.",
@@ -1737,7 +1737,7 @@
                 "helpers",
                 "laravel"
             ],
-            "time": "2021-03-11T16:42:59+00:00"
+            "time": "2021-03-19T15:09:28+00:00"
         },
         {
             "name": "laravel/sanctum",
