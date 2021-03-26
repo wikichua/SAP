@@ -8,12 +8,10 @@
             </span>
         </div>
     </div>
-    <div class="embed-responsive embed-responsive-16by9">
-        <div class="embed-responsive-item">
-            @php
-                include_once base_path('vendor/amnuts/opcache-gui/index.php');
-            @endphp
-        </div>
+    <div>
+    @php
+        include_once base_path('vendor/amnuts/opcache-gui/index.php');
+    @endphp
     </div>
 @endsection
 
