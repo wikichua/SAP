@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec6e432cf95bb29236515c212285b6de",
+    "content-hash": "a7e4b688477be63780b8f47161741f1d",
     "packages": [
         {
             "name": "ably/ably-php",
@@ -53,6 +53,57 @@
                 "messaging"
             ],
             "time": "2021-03-12T13:33:16+00:00"
+        },
+        {
+            "name": "amnuts/opcache-gui",
+            "version": "3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amnuts/opcache-gui.git",
+                "reference": "d660fbee43ad12a1a5114bdedad88625cf4db91c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amnuts/opcache-gui/zipball/d660fbee43ad12a1a5114bdedad88625cf4db91c",
+                "reference": "d660fbee43ad12a1a5114bdedad88625cf4db91c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-zend-opcache": "*",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Amnuts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Collington",
+                    "email": "andy@amnuts.com",
+                    "homepage": "http://www.amnuts.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/amnuts/opcache-gui/graphs/contributors"
+                }
+            ],
+            "description": "A clean, effective and responsive interface for Zend OPcache, with real(ish)-time monitoring, filtering and the ability to invalidate files",
+            "keywords": [
+                "Opcache",
+                "cache",
+                "gui",
+                "interface",
+                "opcodes"
+            ],
+            "time": "2020-12-16T15:55:55+00:00"
         },
         {
             "name": "arcanedev/laravel-markdown",
@@ -942,22 +993,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79"
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0aa74dfb41ae110835923ef10a9d803a22d50e79",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7008573787b430c1c1f650e3722d9bba59967628",
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.4",
-                "guzzlehttp/psr7": "^1.7",
+                "guzzlehttp/psr7": "^1.7 || ^2.0",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0"
             },
@@ -965,6 +1016,7 @@
                 "psr/http-client-implementation": "1.0"
             },
             "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-curl": "*",
                 "php-http/client-integration-tests": "^3.0",
                 "phpunit/phpunit": "^8.5.5 || ^9.3.5",
@@ -978,7 +1030,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.1-dev"
+                    "dev-master": "7.3-dev"
                 }
             },
             "autoload": {
@@ -1036,7 +1088,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T11:47:56+00:00"
+            "time": "2021-03-23T11:33:13+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1524,16 +1576,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.33.1",
+            "version": "v8.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "354c57b8cb457549114074c500944455a288d6cc"
+                "reference": "81892ca110795a9c46c7e198cba7763bfd2af0bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/354c57b8cb457549114074c500944455a288d6cc",
-                "reference": "354c57b8cb457549114074c500944455a288d6cc",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/81892ca110795a9c46c7e198cba7763bfd2af0bf",
+                "reference": "81892ca110795a9c46c7e198cba7763bfd2af0bf",
                 "shasum": ""
             },
             "require": {
@@ -1684,7 +1736,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2021-03-16T19:42:32+00:00"
+            "time": "2021-03-23T15:12:51+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1745,12 +1797,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "deb8c1639f34bf8c9d7fea242a3e32e570ecfcf9"
+                "reference": "b173a16823ea22044c5a9b3085d9eb5b27eefed4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/deb8c1639f34bf8c9d7fea242a3e32e570ecfcf9",
-                "reference": "deb8c1639f34bf8c9d7fea242a3e32e570ecfcf9",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/b173a16823ea22044c5a9b3085d9eb5b27eefed4",
+                "reference": "b173a16823ea22044c5a9b3085d9eb5b27eefed4",
                 "shasum": ""
             },
             "require": {
@@ -1797,7 +1849,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2021-03-09T19:18:18+00:00"
+            "time": "2021-03-23T17:34:51+00:00"
         },
         {
             "name": "laravel/socialite",

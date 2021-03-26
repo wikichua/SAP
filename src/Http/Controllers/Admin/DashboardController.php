@@ -23,6 +23,10 @@ class DashboardController extends Controller
     {
         return view('sap::admin.dashboard.seo');
     }
+    public function opcache(Request $request)
+    {
+        return view('sap::admin.dashboard.opcache');
+    }
     public function wiki(Request $request, $file = 'Index.md')
     {
         $md = \File::get(base_path('vendor/wikichua/sap/wiki/'.$file));

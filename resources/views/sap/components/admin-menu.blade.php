@@ -21,6 +21,9 @@
     'file.*',
     'pusher.*',
 ]"/>
+@if (Route::has('opcache.home'))
+<x-sap::menu menu="menu" label="OpCache Manager" :route="route('opcache.home')" icon="fas fa-fw fa-boxes" :active-patterns="['opcache.*']"/>
+@endif
 @if (Route::has('lfm.home'))
 <x-sap::menu menu="menu" label="File Manager" :route="route('lfm.home')" icon="fas fa-fw fa-folder" :active-patterns="['lfm.*']"/>
 @endif

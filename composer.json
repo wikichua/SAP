@@ -48,7 +48,8 @@
         "spatie/laravel-database-mail-templates": "dev-master",
         "ably/ably-php": "dev-main",
         "psr/cache": "^1.0",
-        "diglactic/laravel-breadcrumbs": "^6.1"
+        "diglactic/laravel-breadcrumbs": "^6.1",
+        "amnuts/opcache-gui": "^3.2"
     },
     "autoload": {
         "psr-4": {
