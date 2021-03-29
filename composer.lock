@@ -1218,12 +1218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/inFureal/artisan-gui.git",
-                "reference": "88c53937ae58ca9d124a7397139a6446795b7fcc"
+                "reference": "1f61c84ee7645438c2a49c81ed9a322e91938d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/88c53937ae58ca9d124a7397139a6446795b7fcc",
-                "reference": "88c53937ae58ca9d124a7397139a6446795b7fcc",
+                "url": "https://api.github.com/repos/inFureal/artisan-gui/zipball/1f61c84ee7645438c2a49c81ed9a322e91938d3b",
+                "reference": "1f61c84ee7645438c2a49c81ed9a322e91938d3b",
                 "shasum": ""
             },
             "require": {
@@ -1248,7 +1248,7 @@
                 "MIT"
             ],
             "description": "Beautiful package for [laravel:artisan] gui for cool kids.",
-            "time": "2021-03-11T19:48:06+00:00"
+            "time": "2021-03-25T21:58:39+00:00"
         },
         {
             "name": "intervention/image",
@@ -1857,12 +1857,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "52c2cca06c84f6aeec8ed3082749724d41d9a2a4"
+                "reference": "9ebee5e736de8544a19d82553c8e55801d723e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/52c2cca06c84f6aeec8ed3082749724d41d9a2a4",
-                "reference": "52c2cca06c84f6aeec8ed3082749724d41d9a2a4",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/9ebee5e736de8544a19d82553c8e55801d723e82",
+                "reference": "9ebee5e736de8544a19d82553c8e55801d723e82",
                 "shasum": ""
             },
             "require": {
@@ -1914,20 +1914,20 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2021-03-05T21:11:46+00:00"
+            "time": "2021-03-25T14:52:40+00:00"
         },
         {
             "name": "league/commonmark",
-            "version": "1.5.7",
+            "version": "1.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "11df9b36fd4f1d2b727a73bf14931d81373b9a54"
+                "reference": "08fa59b8e4e34ea8a773d55139ae9ac0e0aecbaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/11df9b36fd4f1d2b727a73bf14931d81373b9a54",
-                "reference": "11df9b36fd4f1d2b727a73bf14931d81373b9a54",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/08fa59b8e4e34ea8a773d55139ae9ac0e0aecbaf",
+                "reference": "08fa59b8e4e34ea8a773d55139ae9ac0e0aecbaf",
                 "shasum": ""
             },
             "require": {
@@ -2009,7 +2009,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-31T13:49:32+00:00"
+            "time": "2021-03-28T18:51:39+00:00"
         },
         {
             "name": "league/flysystem",
@@ -3932,12 +3932,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-honeypot.git",
-                "reference": "3dd4319c3d42a9db2bae30582844528799bb22d2"
+                "reference": "6e252708c6ec05d94b4ab7d508ea114c9b626985"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-honeypot/zipball/3dd4319c3d42a9db2bae30582844528799bb22d2",
-                "reference": "3dd4319c3d42a9db2bae30582844528799bb22d2",
+                "url": "https://api.github.com/repos/spatie/laravel-honeypot/zipball/6e252708c6ec05d94b4ab7d508ea114c9b626985",
+                "reference": "6e252708c6ec05d94b4ab7d508ea114c9b626985",
                 "shasum": ""
             },
             "require": {
@@ -3992,7 +3992,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-11-03T12:56:39+00:00"
+            "time": "2021-03-26T07:36:18+00:00"
         },
         {
             "name": "spatie/laravel-image-optimizer",
