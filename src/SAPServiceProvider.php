@@ -88,6 +88,7 @@ class SAPServiceProvider extends ServiceProvider
             Commands\SapImport::class,
             Commands\SapMailer::class,
             Commands\SapPusher::class,
+            Commands\SapVhost::class,
         ]);
 
         // Publishing the configuration file.
