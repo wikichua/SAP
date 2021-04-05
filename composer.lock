@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ably/ably-php.git",
-                "reference": "7271326c18148b72f4ae4805df60976de81663c1"
+                "reference": "e52f8c599a68dba683a116e9ec0610431e5143e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ably/ably-php/zipball/7271326c18148b72f4ae4805df60976de81663c1",
-                "reference": "7271326c18148b72f4ae4805df60976de81663c1",
+                "url": "https://api.github.com/repos/ably/ably-php/zipball/e52f8c599a68dba683a116e9ec0610431e5143e8",
+                "reference": "e52f8c599a68dba683a116e9ec0610431e5143e8",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "messages",
                 "messaging"
             ],
-            "time": "2021-03-12T13:33:16+00:00"
+            "time": "2021-04-01T17:59:01+00:00"
         },
         {
             "name": "amnuts/opcache-gui",
@@ -2890,23 +2890,22 @@
         },
         {
             "name": "predis/predis",
-            "version": "v1.1.6",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/predis/predis.git",
-                "reference": "9930e933c67446962997b05201c69c2319bf26de"
+                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/9930e933c67446962997b05201c69c2319bf26de",
-                "reference": "9930e933c67446962997b05201c69c2319bf26de",
+                "url": "https://api.github.com/repos/predis/predis/zipball/b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
+                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
             "require-dev": {
-                "cweagans/composer-patches": "^1.6",
                 "phpunit/phpunit": "~4.8"
             },
             "suggest": {
@@ -2914,18 +2913,6 @@
                 "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
             },
             "type": "library",
-            "extra": {
-                "composer-exit-on-patch-failure": true,
-                "patches": {
-                    "phpunit/phpunit-mock-objects": {
-                        "Fix PHP 7 and 8 compatibility": "./tests/phpunit_mock_objects.patch"
-                    },
-                    "phpunit/phpunit": {
-                        "Fix PHP 7 compatibility": "./tests/phpunit_php7.patch",
-                        "Fix PHP 8 compatibility": "./tests/phpunit_php8.patch"
-                    }
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Predis\\": "src/"
@@ -2961,7 +2948,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-11T19:18:05+00:00"
+            "time": "2021-04-04T19:34:46+00:00"
         },
         {
             "name": "psr/cache",
@@ -6289,16 +6276,16 @@
         },
         {
             "name": "tightenco/ziggy",
-            "version": "v1.0.5",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/ziggy.git",
-                "reference": "be2b257b7a1a4d712e370505324220127595c0ae"
+                "reference": "ac0833645f25b51acf9e3d523d6bf8633938f9c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/ziggy/zipball/be2b257b7a1a4d712e370505324220127595c0ae",
-                "reference": "be2b257b7a1a4d712e370505324220127595c0ae",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/ac0833645f25b51acf9e3d523d6bf8633938f9c5",
+                "reference": "ac0833645f25b51acf9e3d523d6bf8633938f9c5",
                 "shasum": ""
             },
             "require": {
@@ -6347,7 +6334,7 @@
                 "laravel",
                 "routes"
             ],
-            "time": "2021-02-05T15:30:28+00:00"
+            "time": "2021-04-02T17:17:05+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
