@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ably/ably-php.git",
-                "reference": "e52f8c599a68dba683a116e9ec0610431e5143e8"
+                "reference": "465f3d3d8d37d9f4cf62b85132f14a879fba3d5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ably/ably-php/zipball/e52f8c599a68dba683a116e9ec0610431e5143e8",
-                "reference": "e52f8c599a68dba683a116e9ec0610431e5143e8",
+                "url": "https://api.github.com/repos/ably/ably-php/zipball/465f3d3d8d37d9f4cf62b85132f14a879fba3d5c",
+                "reference": "465f3d3d8d37d9f4cf62b85132f14a879fba3d5c",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "messages",
                 "messaging"
             ],
-            "time": "2021-04-01T17:59:01+00:00"
+            "time": "2021-04-06T08:22:42+00:00"
         },
         {
             "name": "amnuts/opcache-gui",
@@ -234,16 +234,16 @@
         },
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.5.2",
+            "version": "v3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "cae0a8d1cb89b0f0522f65e60465e16d738e069b"
+                "reference": "b8af309dea71eab3f2c942652969f518130228ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/cae0a8d1cb89b0f0522f65e60465e16d738e069b",
-                "reference": "cae0a8d1cb89b0f0522f65e60465e16d738e069b",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/b8af309dea71eab3f2c942652969f518130228ee",
+                "reference": "b8af309dea71eab3f2c942652969f518130228ee",
                 "shasum": ""
             },
             "require": {
@@ -307,7 +307,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-06T14:21:44+00:00"
+            "time": "2021-04-06T18:11:42+00:00"
         },
         {
             "name": "box/spout",
@@ -1576,16 +1576,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.35.1",
+            "version": "v8.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d118c0df39e7524131176aaf76493eae63a8a602"
+                "reference": "91c454715b81b9a39f718651d4e2f8104d45e7c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d118c0df39e7524131176aaf76493eae63a8a602",
-                "reference": "d118c0df39e7524131176aaf76493eae63a8a602",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/91c454715b81b9a39f718651d4e2f8104d45e7c2",
+                "reference": "91c454715b81b9a39f718651d4e2f8104d45e7c2",
                 "shasum": ""
             },
             "require": {
@@ -1736,7 +1736,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2021-03-30T21:34:17+00:00"
+            "time": "2021-04-06T21:14:06+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1797,12 +1797,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "b173a16823ea22044c5a9b3085d9eb5b27eefed4"
+                "reference": "97224f7e62d828f0f208a7e809114480866557a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/b173a16823ea22044c5a9b3085d9eb5b27eefed4",
-                "reference": "b173a16823ea22044c5a9b3085d9eb5b27eefed4",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/97224f7e62d828f0f208a7e809114480866557a5",
+                "reference": "97224f7e62d828f0f208a7e809114480866557a5",
                 "shasum": ""
             },
             "require": {
@@ -1849,7 +1849,7 @@
                 "laravel",
                 "sanctum"
             ],
-            "time": "2021-03-23T17:34:51+00:00"
+            "time": "2021-04-06T14:33:20+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -1857,12 +1857,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "9ebee5e736de8544a19d82553c8e55801d723e82"
+                "reference": "504ab251a810ebd01b7f247f5bbfa6b3acc3ecde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/9ebee5e736de8544a19d82553c8e55801d723e82",
-                "reference": "9ebee5e736de8544a19d82553c8e55801d723e82",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/504ab251a810ebd01b7f247f5bbfa6b3acc3ecde",
+                "reference": "504ab251a810ebd01b7f247f5bbfa6b3acc3ecde",
                 "shasum": ""
             },
             "require": {
@@ -1914,7 +1914,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2021-03-25T14:52:40+00:00"
+            "time": "2021-04-06T14:38:59+00:00"
         },
         {
             "name": "league/commonmark",
