@@ -6,6 +6,20 @@
 composer config github-oauth.github.com 86e253009610b1ce0718f68da57b2a454a8d78e3
 ```
 
+OR in auth.json
+
+```json
+{
+    "http-basic": {
+        "github.com": {
+            "username": "wikichua",
+            "password": "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"
+        }
+    }
+}
+```
+
+
 ### Add Repositories in your composer.json
 
 Add this into your composer.json
