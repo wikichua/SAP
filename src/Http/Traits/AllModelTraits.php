@@ -13,7 +13,7 @@ trait AllModelTraits
 
     protected static function booted()
     {
-        static::$opendns = opendns();
+        static::$opendns = trim(static::$opendns) == '' ?? opendns();
         static::saved(function ($model) {
             $onWhichEvent = $model->wasRecentlyCreated? 'onCreatedEvent':'onUpdatedEvent';
             $mode = $model->wasRecentlyCreated? 'Created':'Updated';
