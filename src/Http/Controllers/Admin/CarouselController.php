@@ -59,7 +59,7 @@ class CarouselController extends Controller
 
     public function create(Request $request)
     {
-        \Breadcrumbs::for('create', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Create Carousel');
         });
@@ -113,7 +113,7 @@ class CarouselController extends Controller
 
     public function show($id)
     {
-        \Breadcrumbs::for('show', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Carousel');
         });
@@ -123,7 +123,7 @@ class CarouselController extends Controller
 
     public function edit(Request $request, $id)
     {
-        \Breadcrumbs::for('edit', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Edit Carousel');
         });
@@ -213,7 +213,7 @@ class CarouselController extends Controller
             $paginated['data'] = $models->take(100)->get();
             return compact('paginated');
         }
-        \Breadcrumbs::for('sortable', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Ordering Carousel Position');
         });

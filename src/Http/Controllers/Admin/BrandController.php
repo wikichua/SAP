@@ -55,7 +55,7 @@ class BrandController extends Controller
 
     public function show($id)
     {
-        \Breadcrumbs::for('show', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Brand');
         });
@@ -65,7 +65,7 @@ class BrandController extends Controller
 
     public function edit(Request $request, $id)
     {
-        \Breadcrumbs::for('edit', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Edit Brand');
         });

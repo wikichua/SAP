@@ -54,7 +54,7 @@ class ComponentController extends Controller
 
     public function show($id)
     {
-        \Breadcrumbs::for('show', function ($trail) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Component');
         });
