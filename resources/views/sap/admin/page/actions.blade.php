@@ -17,4 +17,7 @@
         </button>
     </x-sap::form>
     @endcan
+    @can('Migrate Pages')
+    <a href="{{ route('page.migration', $model->id) }}" class="btn btn-link text-secondary p-1" title="Update"><i class="fas fa-lg fa-code"></i></a>
+    @endcan
 </div>

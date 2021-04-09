@@ -17,6 +17,7 @@ class PageController extends Controller
         $this->middleware('can:Read Pages')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Pages')->only(['edit', 'update']);
         $this->middleware('can:Delete Pages')->only('destroy');
+        $this->middleware('can:Migrate Pages')->only('migration');
 
         $this->middleware('reauth_admin')->only(['edit','destroy']);
         \Breadcrumbs::for('home', function ($trail) {
@@ -234,5 +235,25 @@ class PageController extends Controller
             }
         }
         return response()->json($templates);
+    }
+
+    public function migration(Request $request, $id)
+    {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Migration Script');
+        });
+        $model = app(config('sap.models.page'))->query()->findOrFail($id);
+        $brandString = $model->brand->name;
+        unset($model->id);
+        $model->brand_id = '$brand->id';
+        $model->created_by = 1;
+        $model->updated_by = 1;
+        $code = str_replace('\'$brand->id\'', '$brand->id', var_export($model->getAttributes(), 1));
+        $string = <<<EOL
+        \$brand = app(config('sap.models.brand'))->query()->where('name','{$brandString}')->first();
+        app(config('sap.models.page'))->query()->create({$code});
+        EOL;
+        return view('sap::admin.page.migration', compact('string'));
     }
 }

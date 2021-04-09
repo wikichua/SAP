@@ -16,6 +16,7 @@ class NavController extends Controller
         $this->middleware('can:Read Navs')->only(['index', 'read', 'preview']);
         $this->middleware('can:Update Navs')->only(['edit', 'update']);
         $this->middleware('can:Delete Navs')->only('destroy');
+        $this->middleware('can:Migrate Navs')->only('migration');
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Nav Listing', route('nav.list'));
         });
@@ -284,5 +285,25 @@ class NavController extends Controller
             'relist' => true,
             'redirect' => false,
         ]);
+    }
+
+    public function migration(Request $request, $id)
+    {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
+            $trail->parent('home');
+            $trail->push('Migration Script');
+        });
+        $model = app(config('sap.models.nav'))->query()->findOrFail($id);
+        $brandString = $model->brand->name;
+        unset($model->id);
+        $model->brand_id = '$brand->id';
+        $model->created_by = 1;
+        $model->updated_by = 1;
+        $code = str_replace('\'$brand->id\'', '$brand->id', var_export($model->getAttributes(), 1));
+        $string = <<<EOL
+        \$brand = app(config('sap.models.brand'))->query()->where('name','{$brandString}')->first();
+        app(config('sap.models.nav'))->query()->create({$code});
+        EOL;
+        return view('sap::admin.nav.migration', compact('string'));
     }
 }
