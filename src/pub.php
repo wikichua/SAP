@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web'], 'namespace' => config('sap.controller_namespace').'\Pub'], function () {
     Route::group(['middleware' => ['guest']], function () {

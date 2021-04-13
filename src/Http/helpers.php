@@ -18,7 +18,7 @@ if (!function_exists('queue_keys')) {
     }
 }
 if (!function_exists('qs_url')) {
-    function qs_url($path = null, $qs = array(), $secure = null)
+    function qs_url($path = null, $qs = [], $secure = null)
     {
         return Help::qs_url($path, $qs, $secure);
     }

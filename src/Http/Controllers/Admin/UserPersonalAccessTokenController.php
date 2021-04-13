@@ -2,9 +2,9 @@
 
 namespace Wikichua\SAP\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\Sanctum;
+use App\Http\Controllers\Controller;
 
 class UserPersonalAccessTokenController extends Controller
 {

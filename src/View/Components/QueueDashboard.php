@@ -2,8 +2,8 @@
 
 namespace Wikichua\SAP\View\Components;
 
-use Illuminate\Support\Facades\Queue;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Queue;
 
 class QueueDashboard extends Component
 {

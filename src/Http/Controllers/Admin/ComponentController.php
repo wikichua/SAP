@@ -2,10 +2,10 @@
 
 namespace Wikichua\SAP\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Blade;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 
 class ComponentController extends Controller
 {

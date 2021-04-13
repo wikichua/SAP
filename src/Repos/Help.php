@@ -1,14 +1,14 @@
 <?php
 namespace Wikichua\SAP\Repos;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Route;
 
 class Help
 {
-    public function qs_url($path = null, $qs = array(), $secure = null)
+    public function qs_url($path = null, $qs = [], $secure = null)
     {
         $url = app('url')->to($path, $secure);
         if (count($qs)) {

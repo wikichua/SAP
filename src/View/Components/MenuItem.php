@@ -6,7 +6,9 @@ use Illuminate\View\Component;
 
 class MenuItem extends Component
 {
-    public $activePattern, $href, $menuActive;
+    public $activePattern;
+    public $href;
+    public $menuActive;
 
     public function __construct($activePattern = '')
     {
@@ -18,9 +20,9 @@ class MenuItem extends Component
         $this->menuActive = false;
 
         if ($this->activePattern != '') {
-        	$this->menuActive = preg_match('/'.($this->activePattern).'/', request()->route()->getName())? true:false;
+            $this->menuActive = preg_match('/'.($this->activePattern).'/', request()->route()->getName())? true:false;
         }
 
-    	return view('sap::components.menu-item');
+        return view('sap::components.menu-item');
     }
 }

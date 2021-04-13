@@ -2,8 +2,8 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Notifications\Notifiable;

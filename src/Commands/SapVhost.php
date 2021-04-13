@@ -24,7 +24,7 @@ class SapVhost extends Command
             $result = shell_exec("sudo ". $vhostsh.' '.$action.' '.$domain.' '.$path);
             $this->line($result);
         } else {
-            $hosts = explode(PHP_EOL,shell_exec("cat /etc/hosts"));
+            $hosts = explode(PHP_EOL, shell_exec("cat /etc/hosts"));
             $results = [];
             foreach ($hosts as $host) {
                 if (str_contains($host, '127.0.0.1')) {

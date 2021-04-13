@@ -2,9 +2,9 @@
 
 namespace Wikichua\SAP\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Wikichua\SAP\Commands\SapBrand;
+use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
 {

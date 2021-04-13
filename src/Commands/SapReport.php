@@ -3,8 +3,8 @@
 namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 
 class SapReport extends Command
 {

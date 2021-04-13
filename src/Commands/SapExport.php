@@ -1,9 +1,9 @@
 <?php
 namespace Wikichua\SAP\Commands;
 
+use ZipArchive;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use ZipArchive;
 
 class SapExport extends Command
 {

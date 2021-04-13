@@ -2,10 +2,10 @@
 
 namespace Wikichua\SAP\View\Components;
 
-use Illuminate\Support\Facades\Blade;
+use Illuminate\View\Component;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Illuminate\View\Component;
+use Illuminate\Support\Facades\Blade;
 
 class AdminMenu extends Component
 {

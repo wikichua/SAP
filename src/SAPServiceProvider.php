@@ -2,17 +2,17 @@
 
 namespace Wikichua\SAP;
 
-use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class SAPServiceProvider extends ServiceProvider
 {
@@ -115,11 +115,16 @@ class SAPServiceProvider extends ServiceProvider
         ], 'sap.export.model');
 
         $this->publishes([
+            // __DIR__.'/../.php_cs' => base_path('.php_cs'),
+        ], 'sap.update');
+
+        $this->publishes([
             __DIR__.'/../resources/views/sap/components/admin-menu.blade.php' => base_path('resources/views/vendor/sap/components/admin-menu.blade.php'),
             __DIR__.'/../resources/js' => base_path('resources/js'),
             __DIR__.'/../resources/sass' => base_path('resources/sass'),
             __DIR__.'/../package.json' => base_path('package.json'),
             __DIR__.'/../webpack.mix.js' => base_path('webpack.mix.js'),
+            __DIR__.'/../.php_cs' => base_path('.php_cs'),
             // php debugbar
             base_path('vendor/barryvdh/laravel-debugbar/config/debugbar.php') => config_path('debugbar.php'),
             // sanctum

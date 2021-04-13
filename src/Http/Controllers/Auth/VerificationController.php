@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller
 {
-
     use VerifiesEmails;
 
     protected $redirectTo = RouteServiceProvider::HOME;

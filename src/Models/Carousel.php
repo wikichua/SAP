@@ -2,8 +2,8 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Carousel extends Eloquent
 {

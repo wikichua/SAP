@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
     if (!config('sap.hidden_auth_route_names.logout', false)) {

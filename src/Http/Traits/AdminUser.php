@@ -2,8 +2,8 @@
 
 namespace Wikichua\SAP\Http\Traits;
 
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Wikichua\SAP\Notifications\ResetAdminPassword;
 
 trait AdminUser

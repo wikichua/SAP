@@ -18,7 +18,7 @@ trait ArtisanTrait
     }
     public function runCronjobs(Schedule $schedule)
     {
-        $cronjobs = cache()->tags('cronjob')->rememberForever('cronjobs', function() {
+        $cronjobs = cache()->tags('cronjob')->rememberForever('cronjobs', function () {
             return app(config('sap.models.cronjob'))->whereStatus('A')->get();
         });
         foreach ($cronjobs as $cronjob) {
