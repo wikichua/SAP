@@ -16,6 +16,7 @@ trait ArtisanTrait
             }
         }
     }
+
     public function runCronjobs(Schedule $schedule)
     {
         $cronjobs = cache()->tags('cronjob')->rememberForever('cronjobs', function () {
@@ -24,11 +25,11 @@ trait ArtisanTrait
         foreach ($cronjobs as $cronjob) {
             $frequency = $cronjob->frequency;
             $param = '';
-            if ($frequency == 'everySeconds') {
+            if ('everySeconds' == $frequency) {
                 $frequency = 'cron';
                 $param = '* * * * *';
             }
-            if ($cronjob->mode == 'art') {
+            if ('art' == $cronjob->mode) {
                 $schedule->command($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);
             } else {
                 $schedule->exec($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);

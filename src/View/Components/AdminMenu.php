@@ -5,7 +5,6 @@ namespace Wikichua\SAP\View\Components;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Blade;
 
 class AdminMenu extends Component
 {
@@ -28,7 +27,7 @@ class AdminMenu extends Component
             foreach ($dirs as $dir) {
                 $config = [];
                 if (File::exists($dir.'/config/main.php')) {
-                    $config = require($dir.'/config/main.php');
+                    $config = require $dir.'/config/main.php';
                     if (File::exists($config['admin_path'].'/menu.blade.php')) {
                         View::addNamespace(basename($dir), $config['admin_path']);
                         $this->brandMenus[] = basename($dir).'::menu';
@@ -36,6 +35,7 @@ class AdminMenu extends Component
                 }
             }
         }
+
         return view('sap::components.admin-menu');
     }
 }

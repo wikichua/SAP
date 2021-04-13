@@ -3,7 +3,6 @@
 namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 
 class SapReport extends Command
@@ -21,18 +20,21 @@ class SapReport extends Command
         $name = $this->argument('name', '');
         $method = $this->option('method');
         $reports = app(config('sap.models.report'))->query()->where('status', 'A');
-        if ($name != '') {
+        if ('' != $name) {
             $reports->where('name', $name);
         }
         $reports = $reports->get();
         foreach ($reports as $report) {
-            if (Cache::get('report-'.str_slug($report->name)) == null) {
+            if (null == Cache::get('report-'.str_slug($report->name))) {
                 switch ($method) {
                     case 'queue':
                         $this->queue($report);
+
                         break;
+
                     default:
                         $this->sync($report);
+
                         break;
                 }
             }
@@ -52,10 +54,11 @@ class SapReport extends Command
                     if (count($report->queries)) {
                         foreach ($report->queries as $sql) {
                             $results[] = array_map(function ($value) {
-                                return (array)$value;
+                                return (array) $value;
                             }, \DB::select($sql));
                         }
                     }
+
                     return $results;
                 }
             );
@@ -77,12 +80,13 @@ class SapReport extends Command
                     $bar->start();
                     foreach ($report->queries as $sql) {
                         $results[] = array_map(function ($value) {
-                            return (array)$value;
+                            return (array) $value;
                         }, \DB::select($sql));
                         $bar->advance();
                     }
                     $bar->finish();
                 }
+
                 return $results;
             }
         );

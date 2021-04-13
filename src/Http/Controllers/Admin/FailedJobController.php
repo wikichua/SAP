@@ -35,20 +35,22 @@ class FailedJobController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.failed_job'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.failed_job.actions', compact('model'))->render();
                 $model->exception = Str::limit($model->exception, 100);
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('failed_job.list');
@@ -59,6 +61,7 @@ class FailedJobController extends Controller
             ['title' => 'Exception', 'data' => 'exception'],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.failed_job.index', compact('html', 'getUrl'));
     }
 
@@ -69,6 +72,7 @@ class FailedJobController extends Controller
             $trail->push('Show Failed Job');
         });
         $model = app(config('sap.models.failed_job'))->query()->findOrFail($id);
+
         return view('sap::admin.failed_job.show', compact('model'));
     }
 
@@ -77,14 +81,15 @@ class FailedJobController extends Controller
         $model = app(config('sap.models.failed_job'))->query()->findOrFail($id);
         Cache::flush();
         Artisan::call('queue:retry', [
-            'id' => $model->uuid
+            'id' => $model->uuid,
         ]);
-        activity('Retry queue: ' . $model->id, [], $model);
+        activity('Retry queue: '.$model->id, [], $model);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Retried Queue.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Retried Queue.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }

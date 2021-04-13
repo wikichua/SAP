@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    public $searchableFields = ['key'];
 
     protected $activity_logged = true;
     protected $snapshot = true;
     protected $menu_icon = 'fas fa-cogs';
 
-    protected $appends = ['isMultiple', 'rows','readUrl'];
-    public $searchableFields = ['key'];
+    protected $appends = ['isMultiple', 'rows', 'readUrl'];
     protected $fillable = [
         'key',
         'value',
@@ -26,16 +26,19 @@ class Setting extends Model
     {
         return $query->where('key', 'like', "%{$search}%");
     }
+
     public function getValueAttribute($value)
     {
-        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+        if (isset($this->attributes['protected']) && 1 == $this->attributes['protected']) {
             $value = decrypt(trim($value));
         }
         if (json_decode($value)) {
             return json_decode($value, 1);
         }
+
         return $value;
     }
+
     public function setValueAttribute($value)
     {
         if (is_array($value)) {
@@ -43,25 +46,28 @@ class Setting extends Model
         } else {
             $this->attributes['value'] = $value;
         }
-        if (request()->has('protected') && request()->get('protected') == 1) {
+        if (request()->has('protected') && 1 == request()->get('protected')) {
             $this->attributes['value'] = encrypt($this->attributes['value']);
         }
     }
+
     public function getIsMultipleAttribute()
     {
         $value = $this->attributes['value'];
-        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+        if (isset($this->attributes['protected']) && 1 == $this->attributes['protected']) {
             $value = decrypt($value);
         }
         if (json_decode($value)) {
             return true;
         }
+
         return false;
     }
+
     public function getRowsAttribute()
     {
         $value = $this->attributes['value'];
-        if (isset($this->attributes['protected']) && $this->attributes['protected'] == 1) {
+        if (isset($this->attributes['protected']) && 1 == $this->attributes['protected']) {
             $value = decrypt($value);
         }
         if (json_decode($value)) {
@@ -73,19 +79,22 @@ class Setting extends Model
                     'value' => $val,
                 ];
             }
+
             return $rows;
         }
+
         return [
             'index' => null,
             'value' => null,
         ];
     }
+
     public function getAllSettings()
     {
         $sets = [];
         $settings = app(config('sap.models.setting'))->all();
         foreach ($settings as $setting) {
-            if ($setting->protected == 1) {
+            if (1 == $setting->protected) {
                 $setting->value = decrypt($setting->value);
             }
             if (is_array($setting->value)) {
@@ -99,6 +108,7 @@ class Setting extends Model
                 $sets[$setting->key] = $setting->value;
             }
         }
+
         return $sets;
     }
 

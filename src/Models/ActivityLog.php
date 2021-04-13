@@ -9,6 +9,7 @@ class ActivityLog extends Model
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
 
     const UPDATED_AT = null;
+    public $searchableFields = [];
     protected $fillable = [
         'id',
         'user_id',
@@ -28,12 +29,11 @@ class ActivityLog extends Model
         'agents' => 'array',
         'iplocation' => 'array',
     ];
-    public $searchableFields = [];
 
     protected $masks = [
         'password',
         'password_confirmation',
-        'token'
+        'token',
     ];
 
     // user relationship
@@ -62,6 +62,7 @@ class ActivityLog extends Model
                 $data[$key] = '***censored***';
             }
         }
+
         return $data;
     }
 }

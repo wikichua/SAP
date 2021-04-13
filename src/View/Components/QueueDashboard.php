@@ -15,13 +15,14 @@ class QueueDashboard extends Component
     {
         $queues = [];
         $msg = 'For now only Redis supportted on this dashboard';
-        if (config('queue.default') == 'redis') {
+        if ('redis' == config('queue.default')) {
             $msg = '';
             $keys = queue_keys();
             foreach ($keys as $key) {
                 $queues[$key] = Queue::size($key);
             }
         }
+
         return view('sap::components.queue-dashboard')->with(compact('queues', 'msg'));
     }
 }

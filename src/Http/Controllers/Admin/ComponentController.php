@@ -26,20 +26,22 @@ class ComponentController extends Controller
                 ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.component.actions', compact('model'))->render();
-                $model->usage = "&lt;x-$model->brand_name::".\Str::kebab($model->name).">&lt;/x-$model->brand_name::".\Str::kebab($model->name).">";
+                $model->usage = "&lt;x-{$model->brand_name}::".\Str::kebab($model->name).">&lt;/x-{$model->brand_name}::".\Str::kebab($model->name).'>';
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('component.list');
@@ -49,6 +51,7 @@ class ComponentController extends Controller
             ['title' => 'Usage Example', 'data' => 'usage', 'sortable' => false, 'filterable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.component.index', compact('html', 'getUrl'));
     }
 
@@ -59,6 +62,7 @@ class ComponentController extends Controller
             $trail->push('Show Component');
         });
         $model = app(config('sap.models.component'))->query()->findOrFail($id);
+
         return view('sap::admin.component.show', compact('model'));
     }
 
@@ -66,12 +70,13 @@ class ComponentController extends Controller
     {
         $model = app(config('sap.models.component'))->query()->findOrFail($id);
         $request->validate([
-            "code" => "required",
+            'code' => 'required',
         ]);
-        if ($model->brand_id != 0) {
+        if (0 != $model->brand_id) {
             View::addNamespace(strtolower($model->brand_name), base_path('brand/'.$model->brand->name.'/resources/views'));
             Blade::componentNamespace('\\Brand\\'.$model->brand->name.'\\Components', strtolower($model->brand_name));
         }
+
         return viewRenderer($request->input('code'));
     }
 }

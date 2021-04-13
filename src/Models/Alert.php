@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Alert extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    public $searchableFields = [];
 
     protected $fillable = [
         'sender_id',
@@ -15,11 +16,10 @@ class Alert extends Model
         'message',
         'icon',
         'link',
-        'status'
+        'status',
     ];
 
     protected $appends = [];
-    public $searchableFields = [];
 
     public function brand()
     {

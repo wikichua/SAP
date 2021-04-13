@@ -29,10 +29,11 @@ trait AdminUser
     // combined user + role permissions
     public function flatPermissions($user_id = '')
     {
-        if ($user_id == '' || $user_id == null) {
+        if ('' == $user_id || null == $user_id) {
             $user_id = auth()->id();
         }
-        return Cache::tags('permissions')->remember('permissions:'.$user_id, (60*60*24), function () {
+
+        return Cache::tags('permissions')->remember('permissions:'.$user_id, (60 * 60 * 24), function () {
             return $this->permissions->merge($this->roles->flatMap(function ($role) {
                 return $role->permissions;
             }));
@@ -63,6 +64,7 @@ trait AdminUser
                 $permissions[] = $permission->name;
             }
         }
+
         return $permissions;
     }
 }

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
-
-    protected $appends = ['isAdmin','readUrl'];
     public $searchableFields = ['name'];
+
+    protected $appends = ['isAdmin', 'readUrl'];
     protected $menu_icon = 'fas fa-id-badge';
 
     protected $activity_logged = true;
@@ -19,6 +19,7 @@ class Role extends Model
     {
         return $this->belongsToMany(config('sap.models.permission'));
     }
+
     public function users()
     {
         return $this->belongsToMany(config('sap.models.user'));
@@ -26,7 +27,7 @@ class Role extends Model
 
     public function getIsAdminAttribute($value)
     {
-        return $this->admin? 'Yes':'No';
+        return $this->admin ? 'Yes' : 'No';
     }
 
     public function scopeFilterName($query, $search)

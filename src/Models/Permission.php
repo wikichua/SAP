@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    public $searchableFields = ['name', 'group'];
 
     protected $menu_icon = 'fas fa-lock';
     protected $activity_logged = true;
     protected $snapshot = true;
 
     protected $appends = ['readUrl'];
-    public $searchableFields = ['name','group'];
 
     // roles relationship
     public function roles()
@@ -34,8 +34,8 @@ class Permission extends Model
             $this->create([
                 'group' => $group,
                 'name' => $name,
-                'created_by' => auth()->check()? auth()->id():$user_id,
-                'updated_by' => auth()->check()? auth()->id():$user_id,
+                'created_by' => auth()->check() ? auth()->id() : $user_id,
+                'updated_by' => auth()->check() ? auth()->id() : $user_id,
             ]);
         }
     }

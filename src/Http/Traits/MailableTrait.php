@@ -12,6 +12,7 @@ trait MailableTrait
                 $this->{$key} = $value;
             }
         }
+
         return $this;
     }
 }

@@ -14,14 +14,14 @@ abstract class User extends Authenticatable
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
     use \Laravel\Sanctum\HasApiTokens;
     use \Lab404\Impersonate\Models\Impersonate;
+    // protected $fillable = [];
+    public $searchableFields = ['name', 'email'];
 
     protected $activity_logged = true;
     protected $snapshot = true;
     protected $menu_icon = 'fas fa-users';
 
-    protected $appends = ['roles_string','readUrl'];
-    // protected $fillable = [];
-    public $searchableFields = ['name','email'];
+    protected $appends = ['roles_string', 'readUrl'];
     // protected $casts = [
     //     'social' => 'array',
     // ];
@@ -64,7 +64,7 @@ abstract class User extends Authenticatable
 
         return $query->whereBetween('created_at', [
             $this->inUserTimezone($start_at),
-            $this->inUserTimezone($stop_at)
+            $this->inUserTimezone($stop_at),
         ]);
     }
 

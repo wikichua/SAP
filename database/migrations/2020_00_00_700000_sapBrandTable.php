@@ -22,6 +22,7 @@ class SapBrandTable extends Migration
             $table->softDeletes();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('brands');

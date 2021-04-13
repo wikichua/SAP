@@ -1,13 +1,9 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
-
     'default' => env('DB_CONNECTION', 'mysql'),
 
     'connections' => [
-
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -27,7 +23,5 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
     ],
-
 ];

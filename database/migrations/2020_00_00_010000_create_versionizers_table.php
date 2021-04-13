@@ -23,8 +23,8 @@ class CreateVersionizersTable extends Migration
 
             $table->index(['model']);
             $table->index(['brand_id']);
-            $table->index(['model','model_id']);
-            $table->index(['model','model_id','brand_id']);
+            $table->index(['model', 'model_id']);
+            $table->index(['model', 'model_id', 'brand_id']);
         });
     }
 

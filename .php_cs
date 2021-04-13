@@ -9,6 +9,9 @@ $finder = \PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRules([
+        '@PHP80Migration' => true,
+        '@PhpCsFixer' => true,
+        '@PSR2' => true,
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => ['sortAlgorithm' => 'length'],

@@ -4,7 +4,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class MailerController extends Controller
 {
@@ -26,20 +25,22 @@ class MailerController extends Controller
             $models = app(config('sap.models.mailer'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.mailer.actions', compact('model'))->render();
                 $model->parameters = app($model->mailable)->getVariables();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('mailer.list');
@@ -50,6 +51,7 @@ class MailerController extends Controller
             ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.mailer.index', compact('html', 'getUrl'));
     }
 
@@ -61,6 +63,7 @@ class MailerController extends Controller
         });
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
         $preview = app($model->mailable);
+
         return view('sap::admin.mailer.show', compact('model'));
     }
 
@@ -71,6 +74,7 @@ class MailerController extends Controller
             $trail->push('Edit Mailer');
         });
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
+
         return view('sap::admin.mailer.edit', compact('model'));
     }
 
@@ -79,9 +83,9 @@ class MailerController extends Controller
         $model = app(config('sap.models.mailer'))->query()->findOrFail($id);
 
         $request->validate([
-            'subject' => "required",
-            'html_template' => "required",
-            'text_template' => "required",
+            'subject' => 'required',
+            'html_template' => 'required',
+            'text_template' => 'required',
         ]);
 
         $request->merge([
@@ -95,7 +99,7 @@ class MailerController extends Controller
             'message' => 'Mailer Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Mailers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -116,9 +120,10 @@ class MailerController extends Controller
             'message' => 'Mailer Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Mailers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Mailer Deleted.',
@@ -139,6 +144,7 @@ class MailerController extends Controller
         if ($request->isMethod('post')) {
             return app($model->mailable)->preview();
         }
+
         return view('sap::admin.mailer.preview', compact('model', 'params'));
     }
 }

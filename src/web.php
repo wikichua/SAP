@@ -4,9 +4,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'), 'middleware' => ['web'], 'namespace' => config('sap.controller_namespace')], function () {
     if (!config('sap.hidden_auth_route_names.logout', false)) {
-        Route::match(['post','get'], 'logout', 'Auth\LoginController@logout')->name('logout');
+        Route::match(['post', 'get'], 'logout', 'Auth\LoginController@logout')->name('logout');
     }
     if (!config('sap.hidden_auth_route_names.password_email', false)) {
         Route::match(['post'], 'password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -48,13 +48,14 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
                         'public',
                         'storage',
                         $request->file('image')
-                        ->storeAs(
-                            'public/editor',
-                            Str::uuid() . '.' . $request->file('image')->extension()
-                        )
+                            ->storeAs(
+                                'public/editor',
+                                Str::uuid().'.'.$request->file('image')->extension()
+                            )
                     )
                 );
             }
+
             return response()->json(compact('url'));
         })->name('editor.upload_image');
 

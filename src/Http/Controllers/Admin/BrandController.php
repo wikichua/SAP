@@ -3,7 +3,6 @@
 namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Wikichua\SAP\Commands\SapBrand;
 use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
@@ -26,19 +25,21 @@ class BrandController extends Controller
             $models = app(config('sap.models.brand'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.brand.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('brand.list');
@@ -50,6 +51,7 @@ class BrandController extends Controller
             ['title' => 'Status', 'data' => 'status_name', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.brand.index', compact('html', 'getUrl'));
     }
 
@@ -60,6 +62,7 @@ class BrandController extends Controller
             $trail->push('Show Brand');
         });
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
+
         return view('sap::admin.brand.show', compact('model'));
     }
 
@@ -70,6 +73,7 @@ class BrandController extends Controller
             $trail->push('Edit Brand');
         });
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
+
         return view('sap::admin.brand.edit', compact('model'));
     }
 
@@ -77,10 +81,10 @@ class BrandController extends Controller
     {
         $model = app(config('sap.models.brand'))->query()->findOrFail($id);
         $request->validate([
-            "domain" => "required",
-            "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
+            'domain' => 'required',
+            'published_at' => 'required',
+            'expired_at' => 'required',
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -96,8 +100,9 @@ class BrandController extends Controller
             'message' => 'Brand Added. ('.$model->slug.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Brands'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Brand Updated.',

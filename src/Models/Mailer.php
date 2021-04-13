@@ -2,9 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Model;
-
 class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +19,7 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
         'html_template',
         'text_template',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
 
     protected $appends = [
@@ -32,7 +29,6 @@ class Mailer extends \Spatie\MailTemplates\Models\MailTemplate
     protected $searchableFields = ['subject'];
 
     protected $casts = [
-
     ];
 
     public function scopeFilterSubject($query, $search)

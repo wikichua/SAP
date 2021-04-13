@@ -19,12 +19,13 @@ class SapPusher extends Command
         $now = \Carbon\Carbon::now();
         $pushers = app(config('sap.models.pusher'))->query()->where('status', 'A')->whereBetween('scheduled_at', [$now, $now->addMinute()]);
         $brand = $this->option('brand');
-        if ($brand != '') {
+        if ('' != $brand) {
             $brand = app(config('sap.models.brand'))->query()->where('name', $brand)->where('status', 'A')->first();
             if ($brand) {
                 $pushers->where('brand_id', $brand->id);
             } else {
-                $this->error($brand . ' does not activated or not existed!');
+                $this->error($brand.' does not activated or not existed!');
+
                 return;
             }
         } else {

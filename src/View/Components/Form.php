@@ -25,11 +25,11 @@ class Form extends Component
     ) {
         $uniqid = uniqid();
         $this->method = strtoupper($method);
-        $this->ajax = $ajax === 'true'? 'data-ajax-form':'';
+        $this->ajax = 'true' === $ajax ? 'data-ajax-form' : '';
         $this->action = $action;
         $this->class = $class;
-        $this->id = $id == ''? $uniqid: $id;
-        $this->name = $name == ''? $uniqid: $name;
+        $this->id = '' == $id ? $uniqid : $id;
+        $this->name = '' == $name ? $uniqid : $name;
         $this->confirm = $confirm;
     }
 

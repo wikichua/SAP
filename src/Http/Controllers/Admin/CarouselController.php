@@ -28,20 +28,22 @@ class CarouselController extends Controller
                 ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.carousel.actions', compact('model'))->render();
                 $model->image = '<img src="'.asset($model->image_url).'" style="max-height:50px;" />';
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('carousel.list');
@@ -54,6 +56,7 @@ class CarouselController extends Controller
             ['title' => 'Expired Date', 'data' => 'expired_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.carousel.index', compact('html', 'getUrl'));
     }
 
@@ -63,21 +66,22 @@ class CarouselController extends Controller
             $trail->parent('home');
             $trail->push('Create Carousel');
         });
+
         return view('sap::admin.carousel.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            "slug" => "required|min:4",
-            "brand_id" => "required",
-            "image_url" => "required",
-            "caption" => "",
-            "seq" => "required",
-            "tags" => "required",
-            "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
+            'slug' => 'required|min:4',
+            'brand_id' => 'required',
+            'image_url' => 'required',
+            'caption' => '',
+            'seq' => 'required',
+            'tags' => 'required',
+            'published_at' => 'required',
+            'expired_at' => 'required',
+            'status' => 'required',
         ]);
         if ($request->hasFile('image_url')) {
             $path = str_replace('public', 'storage', $request->file('image_url')->store('public/carousel/image_url'));
@@ -99,7 +103,7 @@ class CarouselController extends Controller
             'message' => 'New Carousel Added. ('.$model->slug.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -118,6 +122,7 @@ class CarouselController extends Controller
             $trail->push('Show Carousel');
         });
         $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
+
         return view('sap::admin.carousel.show', compact('model'));
     }
 
@@ -128,21 +133,22 @@ class CarouselController extends Controller
             $trail->push('Edit Carousel');
         });
         $model = app(config('sap.models.carousel'))->query()->findOrFail($id);
+
         return view('sap::admin.carousel.edit', compact('model'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            "slug" => "required|min:4",
-            "brand_id" => "required",
-            "image_url" => "required",
-            "caption" => "",
-            "seq" => "required",
-            "tags" => "required",
-            "published_at" => "required",
-            "expired_at" => "required",
-            "status" => "required",
+            'slug' => 'required|min:4',
+            'brand_id' => 'required',
+            'image_url' => 'required',
+            'caption' => '',
+            'seq' => 'required',
+            'tags' => 'required',
+            'published_at' => 'required',
+            'expired_at' => 'required',
+            'status' => 'required',
         ]);
         if ($request->hasFile('image_url')) {
             $path = str_replace('public', 'storage', $request->file('image_url')->store('public/carousel/image_url'));
@@ -165,7 +171,7 @@ class CarouselController extends Controller
             'message' => 'Carousel Updated. ('.$model->slug.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -186,7 +192,7 @@ class CarouselController extends Controller
             'message' => 'Carousel Deleted. ('.$model->slug.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Carousels', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
 
@@ -204,13 +210,14 @@ class CarouselController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.carousel'))->query()
                 ->checkBrand()->orderBy('seq');
-            if ($orderable != '') {
+            if ('' != $orderable) {
                 $models->where('slug', $orderable);
             }
-            if ($brand_id != '') {
+            if ('' != $brand_id) {
                 $models->where('brand_id', $brand_id);
             }
             $paginated['data'] = $models->take(100)->get();
+
             return compact('paginated');
         }
         \Breadcrumbs::for('breadcrumb', function ($trail) {
@@ -224,6 +231,7 @@ class CarouselController extends Controller
             ['title' => 'Slug', 'data' => 'slug'],
             ['title' => 'Image Url', 'data' => 'image_url'],
         ];
+
         return view('sap::admin.carousel.orderable', compact('html', 'getUrl', 'actUrl'));
     }
 
@@ -232,27 +240,28 @@ class CarouselController extends Controller
         $newRow = $request->get('newRow');
         $models = app(config('sap.models.carousel'))->query()->select('id')
             ->checkBrand()->orderByRaw('FIELD(id,'.$newRow.')');
-        if ($orderable != '') {
+        if ('' != $orderable) {
             $models->where('slug', $orderable);
         }
-        if ($brand_id != '') {
+        if ('' != $brand_id) {
             $models->where('brand_id', $brand_id);
         }
         $models = $models->whereIn('id', explode(',', $newRow))->take(100)->get();
         foreach ($models as $seq => $model) {
-            $model->seq = $seq+1;
+            $model->seq = $seq + 1;
             $model->saveQuietly();
         }
 
-        activity('Reordered Carousel: ' . $newRow, $models->pluck('seq', 'id'), $model);
+        activity('Reordered Carousel: '.$newRow, $models->pluck('seq', 'id'), $model);
         sendAlert([
             'brand_id' => $brand_id,
             'link' => $model->readUrl,
             'message' => 'Carousel Position Reordered. ('.$model->slug.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Carousels', $brand_id),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Carousel Reordered.',

@@ -28,6 +28,7 @@ class SapPageTable extends Migration
             $table->softDeletes();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('pages');

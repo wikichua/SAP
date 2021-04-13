@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model

@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
-    Route::group(['prefix' => 'file', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'), 'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
+    Route::group(['prefix' => 'file', 'namespace' => config('sap.controller_namespace').'\Admin'], function () {
         Route::match(['post'], 'directories', 'FileController@directories')->name('folder.directories');
         Route::match(['put'], 'directories/make/{path?}', 'FileController@make')->name('folder.make');
         Route::match(['put'], 'directories/{path?}/rename', 'FileController@change')->name('folder.change');

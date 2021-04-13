@@ -10,10 +10,11 @@ class ProfileController extends Controller
     public function show(Request $request)
     {
         return response()->json([
-              'status_code' => 200,
-              'data' => $request->user(),
+            'status_code' => 200,
+            'data' => $request->user(),
         ]);
     }
+
     public function update(Request $request)
     {
         $model = $request->user();
@@ -29,13 +30,14 @@ class ProfileController extends Controller
 
         $model->update($request->all());
 
-        activity('Updated User: ' . $model->id, $request->all(), $model);
+        activity('Updated User: '.$model->id, $request->all(), $model);
 
         return response()->json([
             'status_code' => 200,
             'data' => $request->user(),
         ]);
     }
+
     public function updatePassword(Request $request)
     {
         $model = $request->user();
@@ -52,7 +54,7 @@ class ProfileController extends Controller
 
         $model->update($request->all());
 
-        activity('Update Profile Password: ' . $model->id, $request->all(), $model);
+        activity('Update Profile Password: '.$model->id, $request->all(), $model);
 
         return response()->json([
             'status_code' => 200,

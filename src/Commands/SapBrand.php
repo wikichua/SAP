@@ -14,14 +14,14 @@ class SapBrand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->files = new Filesystem;
+        $this->files = new Filesystem();
         $this->stub_path = config('sap.stub_path').'/brand';
     }
 
     public function handle()
     {
         $this->brand = \Str::studly($this->argument('brand'));
-        $this->domain = !empty($this->option('domain'))? $this->option('domain'):(strtolower($this->brand).'.test');
+        $this->domain = !empty($this->option('domain')) ? $this->option('domain') : (strtolower($this->brand).'.test');
         $this->replaces['{%domain%}'] = $domain = $this->domain;
         $this->replaces['{%brand_name%}'] = $brand_name = $this->brand;
         $this->replaces['{%brand_capital%}'] = $brand_capital = strtoupper($this->brand);
@@ -51,20 +51,21 @@ class SapBrand extends Command
         \Cache::forget('brand-configs');
         \Cache::forget('brand-'.$brand_name);
         if ($this->confirm('Do you wish to run composer dumpautoload for '.$this->brand_path.'?')) {
-            shell_exec('composer dumpautoload; cd '.$this->brand_path. '; npm run dev');
+            shell_exec('composer dumpautoload; cd '.$this->brand_path.'; npm run dev');
         }
     }
 
     protected function autoload()
     {
         $composerjson = base_path('composer.json');
-        if (File::exists($composerjson) == false || File::isWritable($composerjson) == false) {
+        if (false == File::exists($composerjson) || false == File::isWritable($composerjson)) {
             $this->error('composer.json undetected or is not writable');
+
             return;
         }
         $str[] = '"psr-4": {';
         $str[] = "\t\t\t".'"Brand\\\": "brand/",';
-        if (strpos(File::get($composerjson), '"Brand\\\": "brand/",') == false) {
+        if (false == strpos(File::get($composerjson), '"Brand\\\": "brand/",')) {
             $content = \Str::replaceFirst($str[0], implode(PHP_EOL, $str), File::get($composerjson));
             File::replace($composerjson, $content);
         }
@@ -91,7 +92,7 @@ class SapBrand extends Command
         }
         if (!$this->files->exists(public_path($this->replaces['{%brand_name%}']))) {
             if ($this->files->exists($this->brand_path.'/public')) {
-                shell_exec('ln -s '.$this->brand_path.'/public' .' '.public_path($this->replaces['{%brand_name%}']));
+                shell_exec('ln -s '.$this->brand_path.'/public'.' '.public_path($this->replaces['{%brand_name%}']));
                 $this->line('symlink created: <info>'.public_path($this->replaces['{%brand_name%}']).'</info>');
             }
         }
@@ -114,6 +115,7 @@ class SapBrand extends Command
         $route_stub = $this->stub_path.'/web.php.stub';
         if (!$this->files->exists($route_stub)) {
             $this->error('Web stub file not found: <info>'.$route_stub.'</info>');
+
             return;
         }
         $route_stub = $this->files->get($route_stub);
@@ -133,6 +135,7 @@ class SapBrand extends Command
         $controller_stub = $this->stub_path.'/controller.stub';
         if (!$this->files->exists($controller_stub)) {
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
+
             return;
         }
         $controller_dir = 'brand/'.$this->brand.'/Controllers';
@@ -152,6 +155,7 @@ class SapBrand extends Command
         $stub = $this->stub_path.'/serviceprovider.stub';
         if (!$this->files->exists($stub)) {
             $this->error('Service Provider stub file not found: <info>'.$stub.'</info>');
+
             return;
         }
         $dir = 'brand/'.$this->brand.'/Providers';
@@ -169,6 +173,7 @@ class SapBrand extends Command
         $stub = $this->stub_path.'/middleware.stub';
         if (!$this->files->exists($stub)) {
             $this->error('Middleware stub file not found: <info>'.$stub.'</info>');
+
             return;
         }
         $dir = 'brand/'.$this->brand.'/Middlewares';
@@ -222,6 +227,7 @@ class SapBrand extends Command
         $migration_stub = $this->stub_path.'/brand_seed.stub';
         if (!$this->files->exists($migration_stub)) {
             $this->error('Migration stub file not found: <info>'.$migration_stub.'</info>');
+
             return;
         }
         $filename = "sap{$this->brand}BrandSeed.php";
@@ -258,6 +264,7 @@ class SapBrand extends Command
         foreach ($this->replaces as $search => $replace) {
             $content = str_replace($search, $replace, $content);
         }
+
         return $content;
     }
 }

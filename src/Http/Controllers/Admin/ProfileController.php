@@ -16,12 +16,14 @@ class ProfileController extends Controller
             'message' => $last_activity->message,
             'iplocation' => $last_activity->iplocation,
         ];
+
         return view('sap::admin.profile.show', compact('model'));
     }
 
     public function edit(Request $request)
     {
         $model = auth()->user();
+
         return view('sap::admin.profile.edit', compact('model'));
     }
 
@@ -52,6 +54,7 @@ class ProfileController extends Controller
     public function editPassword(Request $request)
     {
         $model = auth()->user();
+
         return view('sap::admin.profile.editPassword', compact('model'));
     }
 

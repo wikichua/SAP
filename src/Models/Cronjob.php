@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Cronjob extends Eloquent
@@ -32,7 +31,7 @@ class Cronjob extends Eloquent
     ];
 
     protected $searchableFields = [
-        'name'
+        'name',
     ];
 
     protected $casts = [];

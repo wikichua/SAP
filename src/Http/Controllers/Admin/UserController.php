@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->middleware('can:Update Users Password')->only(['editPassword', 'updatePassword']);
         $this->middleware('can:Delete Users')->only('destroy');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy', 'editPassword']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy', 'editPassword']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('User Listing', route('user.list'));
         });
@@ -31,20 +31,22 @@ class UserController extends Controller
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', '')) // be treated as default sorting rules
-                ->with('roles');
+                ->with('roles')
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.user.actions', compact('model'))->render();
                 $model->brand_name = $model->brand->name ?? '';
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('user.list');
@@ -57,6 +59,7 @@ class UserController extends Controller
             ['title' => 'Roles', 'data' => 'roles_string'],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.user.index', compact('html', 'getUrl'));
     }
 
@@ -67,6 +70,7 @@ class UserController extends Controller
             $trail->push('Create User');
         });
         $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
+
         return view('sap::admin.user.create', compact('roles'));
     }
 
@@ -78,7 +82,7 @@ class UserController extends Controller
             'type' => 'required',
             'timezone' => 'required',
             'password_confirmation' => 'required',
-            'password' => ['required','confirmed'],
+            'password' => ['required', 'confirmed'],
         ]);
 
         $request->merge([
@@ -97,7 +101,7 @@ class UserController extends Controller
             'message' => 'New User Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -122,6 +126,7 @@ class UserController extends Controller
             'message' => $last_activity->message,
             'iplocation' => $last_activity->iplocation,
         ];
+
         return view('sap::admin.user.show', compact('model'));
     }
 
@@ -133,6 +138,7 @@ class UserController extends Controller
         });
         $model = app(config('sap.models.user'))->query()->findOrFail($id);
         $roles = app(config('sap.models.role'))->pluck('name', 'id')->sortBy('name');
+
         return view('sap::admin.user.edit', compact('roles', 'model'));
     }
 
@@ -161,7 +167,7 @@ class UserController extends Controller
             'message' => 'User Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -179,6 +185,7 @@ class UserController extends Controller
             $trail->parent('home');
             $trail->push('Edit User Password');
         });
+
         return view('sap::admin.user.editPassword', compact('id'));
     }
 
@@ -216,7 +223,7 @@ class UserController extends Controller
             'message' => 'User Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Users', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
 

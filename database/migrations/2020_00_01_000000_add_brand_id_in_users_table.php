@@ -16,6 +16,7 @@ class AddBrandIdInUsersTable extends Migration
             $table->integer('brand_id')->nullable()->default(null);
         });
     }
+
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
@@ -18,11 +19,12 @@ class SapMake extends Command
 
     public function handle()
     {
-        $this->brand = $this->option('brand')? \Str::studly($this->option('brand')):null;
+        $this->brand = $this->option('brand') ? \Str::studly($this->option('brand')) : null;
         if ($this->brand) {
             $brand = app(config('sap.models.brand'))->query()->where('name', strtolower($this->brand))->first();
             if (!$brand) {
                 $this->error('Brand not found: <info>'.$this->brand.'</info>');
+
                 return '';
             }
             $this->model = $this->brand.(str_replace($this->brand, '', $this->argument('model')));
@@ -34,12 +36,14 @@ class SapMake extends Command
 
         if (!$this->file->exists($config_file)) {
             $this->error('Config file not found: <info>'.$config_file.'</info>');
+
             return;
         }
         $this->config = include $config_file;
         if (!$this->config['ready']) {
             if (false == $this->option('force')) {
                 $this->error('Config file not ready: <info>'.$config_file.'</info>');
+
                 return;
             }
         }
@@ -60,12 +64,12 @@ class SapMake extends Command
     {
         // $this->replaces['{%route_as%}'] = $this->brand? strtolower($this->brand).'.':'';
         $this->replaces['{%route_as%}'] = '';
-        $this->replaces['{%custom_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Admin':config('sap.custom_controller_namespace');
-        $this->replaces['{%custom_api_controller_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Controllers\\Api':config('sap.custom_api_controller_namespace');
-        $this->replaces['{%custom_model_namespace%}'] = $this->brand? 'Brand\\'.$this->brand.'\\Models':ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
-        $this->replaces['{%page_path%}'] = $this->brand? $this->brand.'::admin':'admin';
-        $this->replaces['{%brand_view_namespace%}'] = $this->brand? '$config = require(base_path(\'brand/'.$this->brand.'/config/main.php\'));
-        \View::addNamespace(\''.$this->brand.'\', $config[\'resources_path\']);':'';
+        $this->replaces['{%custom_controller_namespace%}'] = $this->brand ? 'Brand\\'.$this->brand.'\\Controllers\\Admin' : config('sap.custom_controller_namespace');
+        $this->replaces['{%custom_api_controller_namespace%}'] = $this->brand ? 'Brand\\'.$this->brand.'\\Controllers\\Api' : config('sap.custom_api_controller_namespace');
+        $this->replaces['{%custom_model_namespace%}'] = $this->brand ? 'Brand\\'.$this->brand.'\\Models' : ucfirst(str_replace('/', '\\', config('sap.custom_model_namespace')));
+        $this->replaces['{%page_path%}'] = $this->brand ? $this->brand.'::admin' : 'admin';
+        $this->replaces['{%brand_view_namespace%}'] = $this->brand ? '$config = require(base_path(\'brand/'.$this->brand.'/config/main.php\'));
+        \View::addNamespace(\''.$this->brand.'\', $config[\'resources_path\']);' : '';
 
         $this->replaces['{%model%}'] = $this->model;
         $this->replaces['{%model_class%}'] = $this->replaces['{%model%}'];
@@ -154,11 +158,11 @@ class SapMake extends Command
                 if (isset($options['options']) && is_array($options['options']) && count($options['options'])) {
                     $opts = [];
                     foreach ($options['options'] as $key => $value) {
-                        $opts[] = "'$key' => '$value'";
+                        $opts[] = "'{$key}' => '{$value}'";
                     }
                     $setting_keys[] = $setting_key = "{$this->replaces['{%model_variable%}']}_{$field}";
-                    $settings_options_up[] = "app(config('sap.models.setting'))->create(['created_by' => \$user_id, 'updated_by' => \$user_id, 'key' => '$setting_key','value' => [".implode(',', $opts).']]);';
-                    $settings_options_down[] = "app(config('sap.models.setting'))->where('key','$setting_key')->forceDelete();";
+                    $settings_options_up[] = "app(config('sap.models.setting'))->create(['created_by' => \$user_id, 'updated_by' => \$user_id, 'key' => '{$setting_key}','value' => [".implode(',', $opts).']]);';
+                    $settings_options_down[] = "app(config('sap.models.setting'))->where('key','{$setting_key}')->forceDelete();";
                     $replace_for_form['{%option_key%}'] = "settings['{$setting_key}']";
                     $select_options = "settings('{$setting_key}')";
                 }
@@ -173,7 +177,7 @@ class SapMake extends Command
                 $temp_attrs = [];
                 foreach ($options['attributes'] as $attr_key => $attr_val) {
                     $temp_attrs[] = "'{$attr_key}'=>'{$attr_val}'";
-                    if ($attr_key == 'multiple') {
+                    if ('multiple' == $attr_key) {
                         $isMultiple = true;
                     }
                 }
@@ -182,6 +186,7 @@ class SapMake extends Command
             $replace_for_form['{%class_tag%}'] = "'".implode("',\n'", $options['class'])."'";
 
             $form_stub = '';
+
             switch ($options['type']) {
                 case 'email':
                 case 'number':
@@ -190,58 +195,85 @@ class SapMake extends Command
                 case 'url':
                     $form_stub = '<x-sap::input-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
+
                     break;
+
                 case 'time':
                     $form_stub = '<x-sap::time-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
+
                     break;
+
                 case 'date':
                     $form_stub = '<x-sap::date-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="date"/>';
+
                     break;
+
                 case 'datetime':
                     $form_stub = '<x-sap::datetime-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="datetime"/>';
+
                     break;
+
                 case 'image':
                     $form_stub = '<x-sap::image-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="image"/>';
+
                     break;
+
                 case 'file':
                     $form_stub = '<x-sap::file-field type="'.$options['type'].'" name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="file"/>';
+
                     break;
+
                 case 'textarea':
                     $form_stub = '<x-sap::textarea-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
+
                     break;
+
                 case 'select':
                     $form_stub = '<x-sap::select-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
-                    $type = $isMultiple? 'list':'text';
+                    $type = $isMultiple ? 'list' : 'text';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="'.$type.'"/>';
+
                     break;
+
                 case 'datalist':
                     $form_stub = '<x-sap::datalist-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :data="[\'style\'=>\'border bg-white\',\'live-search\'=>false]" :options="'.$select_options.'" :selected="$model->{%field%} ?? []"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
+
                     break;
+
                 case 'radio':
                     $form_stub = '<x-sap::radios-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="text"/>';
+
                     break;
+
                 case 'checkbox':
                     $form_stub = '<x-sap::checkboxes-field name="{%field%}" id="{%field%}" label="{%label%}" :options="'.$select_options.'" :checked="$model->{%field%} ?? []" :isGroup="false" :class="[{%class_tag%}]" :stacked="'.($options['stacked'] ? 1 : 0).'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" :value="$model->{%field%}" type="list"/>';
+
                     break;
+
                 case 'editor':
                     $form_stub = '<x-sap::editor-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="editor"/>';
+
                     break;
+
                 case 'markdown':
                     $form_stub = '<x-sap::markdown-field name="{%field%}" id="{%field%}" label="{%label%}" :class="[{%class_tag%}]" :attribute_tags="[{%attributes_tag%}]" :value="$model->{%field%} ?? \'\'"/>';
                     $read_stub = '<x-sap::display-field name="{%field%}" id="{%field%}" label="{%label%}" value="{!! $model->{%field%} !!}" type="markdown"/>';
+
                     break;
+
                 default:
                     $this->error('Input Type not supported: <info>'.$field.':'.$options['type'].'</info>');
+
                     break;
             }
             $form_fields[] = str_replace(array_keys($replace_for_form), $replace_for_form, $form_stub);
@@ -250,30 +282,30 @@ class SapMake extends Command
             if (in_array($options['type'], ['file', 'image'])) {
                 if (isset($options['attributes']['multiple']) && 'multiple' == $options['attributes']['multiple']) {
                     $upload_strings[] = <<<EOT
-        \$uploaded_files = [];
-        if (\$request->hasFile('$field')) {
-            foreach(\$request->file('$field') as \$key => \$file)
-            {
-                // \$uploaded_files[] = str_replace('public', 'storage', \$request->file('$field.'.\$key)->store('public/$model_variable/$field'));
-                \$uploaded_files[] = str_replace('public', 'storage', Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field.'.\$key)));
-            }
-            unset(\$request['$field']);
-            \$request->merge([
-                '$field' => \$uploaded_files,
-            ]);
-        }
-EOT;
+                                \$uploaded_files = [];
+                                if (\$request->hasFile('{$field}')) {
+                                    foreach(\$request->file('{$field}') as \$key => \$file)
+                                    {
+                                        // \$uploaded_files[] = str_replace('public', 'storage', \$request->file('{$field}.'.\$key)->store('public/{$model_variable}/{$field}'));
+                                        \$uploaded_files[] = str_replace('public', 'storage', Storage::disk('public')->putFile('{$model_variable}/{$field}', \$request->file('{$field}.'.\$key)));
+                                    }
+                                    unset(\$request['{$field}']);
+                                    \$request->merge([
+                                        '{$field}' => \$uploaded_files,
+                                    ]);
+                                }
+                        EOT;
                 } else {
                     $upload_strings[] = <<<EOT
-        if (\$request->hasFile('$field')) {
-            // \$path = str_replace('public', 'storage', \$request->file('$field')->store('public/$model_variable/$field'));
-            \$path = str_replace('public', 'storage', Storage::disk('public')->putFile('$model_variable/$field', \$request->file('$field')));
-            unset(\$request['$field']);
-            \$request->merge([
-                '$field' => \$path,
-            ]);
-        }
-EOT;
+                                if (\$request->hasFile('{$field}')) {
+                                    // \$path = str_replace('public', 'storage', \$request->file('{$field}')->store('public/{$model_variable}/{$field}'));
+                                    \$path = str_replace('public', 'storage', Storage::disk('public')->putFile('{$model_variable}/{$field}', \$request->file('{$field}')));
+                                    unset(\$request['{$field}']);
+                                    \$request->merge([
+                                        '{$field}' => \$path,
+                                    ]);
+                                }
+                        EOT;
                 }
             }
 
@@ -285,24 +317,30 @@ EOT;
 
                 $searches[] = '<div class="form-group">';
                 $searches[] = $this->indent().'<label for="'.$field.'">'.$options['label'].'</label>';
+
                 switch ($options['type']) {
                     case 'date':
                         $scopes[] = $this->indent().'$date = $this->getDateFilter($search);';
                         $scopes[] = $this->indent().'return $query->whereBetween(\''.$field.'\', [ $this->inUserTimezone($date[\'start_at\']), $this->inUserTimezone($date[\'stop_at\'])]);';
                         $searches[] = $this->indent().'<x-sap::search-date-field type="text" name="'.$field.'" id="'.$field.'"/>';
+
                         break;
+
                     case 'select':
                     case 'datalist':
                     case 'radio':
                     case 'checkbox':
                         $scopes[] = $this->indent().'    return $query->whereIn(\''.$field.'\', $search);';
                         $searches[] = $this->indent().'<x-sap::search-select-field name="'.$field.'" id="'.$field.'" :options="'.$select_options.'"/>';
+
                         break;
+
                     case 'text':
                     case 'textarea':
                         $scopes[] = $this->indent().'return $query->where(\''.$field.'\', \'like\', "%{$search}%");';
                         $searches[] = $this->indent().'<x-sap::search-input-field type="text" name="'.$field.'" id="'.$field.'"/>';
                         $searchable_fields[] = "'".$field."'";
+
                         break;
                 }
 
@@ -370,6 +408,7 @@ EOT;
         $route_stub = $this->stub_path.'/route.stub';
         if (!$this->file->exists($route_stub)) {
             $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
+
             return;
         }
         $route_stub = $this->file->get($route_stub);
@@ -392,6 +431,7 @@ EOT;
         $route_stub = $this->stub_path.'/api_route.stub';
         if (!$this->file->exists($route_stub)) {
             $this->error('API Route stub file not found: <info>'.$route_stub.'</info>');
+
             return;
         }
         $route_stub = $this->file->get($route_stub);
@@ -407,6 +447,7 @@ EOT;
         $menu_stub = $this->stub_path.'/menu.stub';
         if (!$this->file->exists($menu_stub)) {
             $this->error('Menu stub file not found: <info>'.$menu_stub.'</info>');
+
             return;
         }
         $menu_stub = $this->file->get($menu_stub);
@@ -430,6 +471,7 @@ EOT;
         $model_stub = $this->stub_path.'/model.stub';
         if (!$this->file->exists($model_stub)) {
             $this->error('Model stub file not found: <info>'.$model_stub.'</info>');
+
             return;
         }
         if ($this->brand) {
@@ -457,6 +499,7 @@ EOT;
         $controller_stub = $this->stub_path.'/controller.stub';
         if (!$this->file->exists($controller_stub)) {
             $this->error('Controller stub file not found: <info>'.$controller_stub.'</info>');
+
             return;
         }
         if ($this->brand) {
@@ -484,6 +527,7 @@ EOT;
         $controller_stub = $this->stub_path.'/api_controller.stub';
         if (!$this->file->exists($controller_stub)) {
             $this->error('Api Controller stub file not found: <info>'.$controller_stub.'</info>');
+
             return;
         }
         if ($this->brand) {
@@ -499,7 +543,7 @@ EOT;
     protected function views()
     {
         $view_files = ['search', 'index', 'edit', 'create', 'show', 'actions'];
-        if ($this->config['orderable'] !== false) {
+        if (false !== $this->config['orderable']) {
             $view_files[] = 'orderable';
         }
 
@@ -517,6 +561,7 @@ EOT;
             $view_stub = $this->stub_path.'/views/'.$mode.'.stub';
             if (!$this->file->exists($view_stub)) {
                 $this->error('View stub file not found: <info>'.$view_stub.'</info>');
+
                 return;
             }
 
@@ -534,6 +579,7 @@ EOT;
         $migration_stub = $this->stub_path.'/migration.stub';
         if (!$this->file->exists($migration_stub)) {
             $this->error('Migration stub file not found: <info>'.$migration_stub.'</info>');
+
             return;
         }
         $filename = "sap{$this->model}Table.php";
@@ -551,7 +597,6 @@ EOT;
             }
         }
 
-
         $migrations_stub = $this->file->get($migration_stub);
         $this->file->put($migration_file, $this->replaceholder($migrations_stub));
         $this->line($msg.': <info>'.$migration_file.'</info>');
@@ -560,9 +605,10 @@ EOT;
     protected function orderable()
     {
         $orderable = $this->config['orderable'];
-        if ($orderable === false) {
+        if (false === $orderable) {
             $this->replaces['{%orderable_migration%}'] = $this->replaces['{%orderable_link%}'] = $this->replaces['{%orderable_field%}'] = $this->replaces['{%orderable_label%}'] = $this->replaces['{%orderable_routes%}'] = $this->replaces['{%orderable_controller%}'] = '';
-            return ;
+
+            return;
         }
         $this->replaces['{%orderable_field%}'] = $orderable;
         $this->replaces['{%orderable_label%}'] = $this->config['form'][$orderable]['label'];
@@ -598,7 +644,7 @@ EOT;
             $params_typed = [];
             if (isset($method_params[1])) {
                 foreach (explode(',', $method_params[1]) as $param) {
-                    $params_typed[] = (in_array($param, ['true', 'false']) || is_numeric($param)) ? $param : "'$param'";
+                    $params_typed[] = (in_array($param, ['true', 'false']) || is_numeric($param)) ? $param : "'{$param}'";
                 }
             }
             $chains[] = $method.'('.implode(', ', $params_typed).')';

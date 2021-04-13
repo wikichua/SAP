@@ -16,7 +16,7 @@ class UserPersonalAccessTokenController extends Controller
         $this->middleware('can:Read Personal Access Token')->only(['index', 'read']);
         $this->middleware('can:Delete Personal Access Token')->only('destroy');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('user_home', function ($trail) {
             $trail->push('User Listing', route('user.list'));
         });
@@ -31,10 +31,12 @@ class UserPersonalAccessTokenController extends Controller
         if ($request->ajax()) {
             $models = app(Sanctum::$personalAccessTokenModel)->query()
                 ->checkBrand()
-                ->where('tokenable_id', $user_id);
+                ->where('tokenable_id', $user_id)
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('pat.list', [$user_id]);
@@ -45,6 +47,7 @@ class UserPersonalAccessTokenController extends Controller
             ['title' => 'Last Actived', 'data' => 'last_used_at', 'sortable' => true],
         ];
         $user = app(config('sap.models.user'))->query()->find($user_id);
+
         return view('sap::admin.pat.index', compact('html', 'getUrl', 'user', 'user_id'));
     }
 
@@ -55,21 +58,23 @@ class UserPersonalAccessTokenController extends Controller
             $trail->push('Create User Access Token');
         });
         $user = app(config('sap.models.user'))->query()->find($user_id);
+
         return view('sap::admin.pat.create', compact('user', 'user_id'));
     }
 
     public function store(Request $request, $user_id)
     {
         $user = app(config('sap.models.user'))->query()->find($user_id);
-        $permissions = $user->roles->contains('admin', true)? ['*']:$user->flatPermissions()->toArray();
+        $permissions = $user->roles->contains('admin', true) ? ['*'] : $user->flatPermissions()->toArray();
         $tokenResult = $user->createToken($request->input('name', 'authToken'), $permissions)->plainTextToken;
         $tokenResult = explode('|', $tokenResult);
         $model = app(Sanctum::$personalAccessTokenModel)->query()
-                ->find($tokenResult[0]);
+            ->find($tokenResult[0])
+        ;
         $model->plain_text_token = $tokenResult[1];
         $model->save();
 
-        activity('Created Personal Access Token: ' . $model->id, $request->input(), $model);
+        activity('Created Personal Access Token: '.$model->id, $request->input(), $model);
 
         return response()->json([
             'status' => 'success',
@@ -85,7 +90,7 @@ class UserPersonalAccessTokenController extends Controller
         $model = app(Sanctum::$personalAccessTokenModel)->query()->findOrFail($id);
         $model->delete();
 
-        activity('Deleted Personal Access Token: ' . $model->id, [], $model);
+        activity('Deleted Personal Access Token: '.$model->id, [], $model);
 
         return response()->json([
             'status' => 'success',

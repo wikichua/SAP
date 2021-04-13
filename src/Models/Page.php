@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
@@ -26,7 +25,7 @@ class Page extends Model
         'scripts',
         'published_at',
         'expired_at',
-        'status'
+        'status',
     ];
 
     protected $appends = [
@@ -34,7 +33,7 @@ class Page extends Model
         'readUrl',
     ];
 
-    protected $searchableFields = ['name','slug'];
+    protected $searchableFields = ['name', 'slug'];
 
     protected $casts = [
         'styles' => 'array',
@@ -69,18 +68,20 @@ class Page extends Model
     public function scopeFilterPublishedAt($query, $search)
     {
         $date = $this->getDateFilter($search);
+
         return $query->whereBetween('published_at', [
             $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
+            $this->inUserTimezone($date['stop_at']),
         ]);
     }
 
     public function scopeFilterExpiredAt($query, $search)
     {
         $date = $this->getDateFilter($search);
+
         return $query->whereBetween('expired_at', [
             $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
+            $this->inUserTimezone($date['stop_at']),
         ]);
     }
 

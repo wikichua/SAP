@@ -2,9 +2,6 @@
 
 namespace Wikichua\SAP\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
 class LogViewerController extends \Rap2hpoutre\LaravelLogViewer\LogViewerController
 {
     public function __construct()

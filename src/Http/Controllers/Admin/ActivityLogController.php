@@ -23,19 +23,21 @@ class ActivityLogController extends Controller
             $models = app(config('sap.models.activity_log'))->query()
                 ->filter($request->get('filters', ''))
                 ->sorting($request->get('sort', ''), $request->get('direction', ''))
-                ->with(['user']);
+                ->with(['user'])
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.activity_log.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('activity_log.list');
@@ -47,16 +49,18 @@ class ActivityLogController extends Controller
             ['title' => 'Message', 'data' => 'message'],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.activity_log.index', compact('html', 'getUrl'));
     }
 
     public function show($id)
     {
-        \Breadcrumbs::for('breadcrumb', function ($trail) use ($id) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Activity Log');
         });
         $model = app(config('sap.models.activity_log'))->query()->findOrFail($id);
+
         return view('sap::admin.activity_log.show', compact('model'));
     }
 
@@ -64,6 +68,7 @@ class ActivityLogController extends Controller
     {
         $model = app(config('sap.models.alert'))->query()->findOrFail($id);
         $model->update(['status' => 'r']);
+
         return $model->link;
     }
 }

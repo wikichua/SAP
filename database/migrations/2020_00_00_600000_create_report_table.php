@@ -23,6 +23,7 @@ class CreateReportTable extends Migration
             $table->softDeletes();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('reports');

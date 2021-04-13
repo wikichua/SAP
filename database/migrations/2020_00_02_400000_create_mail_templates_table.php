@@ -8,7 +8,7 @@ class CreateMailTemplatesTable extends Migration
 {
     public function up()
     {
-        cache()->tags(['fillable','mail_templates'])->flush();
+        cache()->tags(['fillable', 'mail_templates'])->flush();
         Schema::create('mail_templates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('mailable');
@@ -28,6 +28,7 @@ class CreateMailTemplatesTable extends Migration
             'text_template' => 'Hello, {{ name }}!',
         ]);*/
     }
+
     public function down()
     {
         app(config('sap.models.permission'))->whereIn('group', [

@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Versionizer extends Model
@@ -34,18 +33,22 @@ class Versionizer extends Model
         'data' => 'array',
         'changes' => 'array',
     ];
+
     public function brand()
     {
         return $this->belongsTo(config('sap.models.brand'))->withDefault(['name' => null]);
     }
+
     public function getRevertedAtAttribute($value)
     {
         return $this->inUserTimezone($value);
     }
+
     public function revertor()
     {
         return $this->belongsTo(config('sap.models.user'), 'reverted_by', 'id');
     }
+
     public function scopeFilterData($query, $search)
     {
         $searches = [
@@ -55,8 +58,10 @@ class Versionizer extends Model
             ucfirst($search),
             ucwords($search),
         ];
+
         return $query->whereRaw('`data` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
+
     public function scopeFilterDirty($query, $search)
     {
         $searches = [
@@ -66,6 +71,7 @@ class Versionizer extends Model
             ucfirst($search),
             ucwords($search),
         ];
+
         return $query->whereRaw('`dirty` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
 }

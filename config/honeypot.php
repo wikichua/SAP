@@ -1,4 +1,5 @@
 <?php
+
 return [
     /*
      * Here you can specify name of the honeypot field. Any requests that submit a non-empty
@@ -25,7 +26,7 @@ return [
      * if the form wasn't submitted too quickly. Make sure this name does not
      * collide with a form field that is actually used.
      */
-    'valid_from_field_name' => env('HONEYPOT_VALID_FROM', snake_case(strtolower(env('APP_NAME', 'my-name')) . '_valid_from')),
+    'valid_from_field_name' => env('HONEYPOT_VALID_FROM', snake_case(strtolower(env('APP_NAME', 'my-name')).'_valid_from')),
 
     /*
      * If the form is submitted faster than this amount of seconds
@@ -50,8 +51,6 @@ return [
      */
     'honeypot_fields_required_for_all_forms' => false,
 
-    /*
-     * This switch determines if the honeypot protection should be activated.
-     */
+    // This switch determines if the honeypot protection should be activated.
     'enabled' => env('HONEYPOT_ENABLED', true),
 ];

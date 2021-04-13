@@ -6,7 +6,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
@@ -135,7 +134,7 @@ class SAPServiceProvider extends ServiceProvider
             base_path('vendor/unisharp/laravel-filemanager/public') => public_path('vendor/laravel-filemanager'),
             // Lionix\SeoManager
             __DIR__.'/../config/seo-manager.php' => config_path('seo-manager.php'),
-            base_path('vendor/lionix/seo-manager/src/assets') =>  public_path('vendor/lionix'),
+            base_path('vendor/lionix/seo-manager/src/assets') => public_path('vendor/lionix'),
             // realrashid/sweet-alert
             base_path('vendor/realrashid/sweet-alert/src/config/sweetalert.php') => config_path('sweetalert.php'),
             // spatie/laravel-honeypot but using modified honeypot config as don't return blankpage
@@ -153,25 +152,29 @@ class SAPServiceProvider extends ServiceProvider
         $files = File::files(__DIR__.'/routes/');
         foreach ($files as $file) {
             Route::middleware('web')
-                ->group($file->getPathname());
+                ->group($file->getPathname())
+            ;
         }
         $files = File::files(__DIR__.'/routes/api');
         foreach ($files as $file) {
             Route::middleware('api')
-                ->group($file->getPathname());
+                ->group($file->getPathname())
+            ;
         }
         if (File::exists(app_path('../routes/sap'))) {
             $files = File::files(app_path('../routes/sap/'));
             foreach ($files as $file) {
                 Route::middleware('web')
-                    ->group($file->getPathname());
+                    ->group($file->getPathname())
+                ;
             }
         }
         if (File::exists(app_path('../routes/sap/api'))) {
             $files = File::files(app_path('../routes/sap/api'));
             foreach ($files as $file) {
                 Route::middleware('api')
-                    ->group($file->getPathname());
+                    ->group($file->getPathname())
+                ;
             }
         }
     }
@@ -228,7 +231,7 @@ class SAPServiceProvider extends ServiceProvider
         });
 
         Blade::directive('canBeImpersonated', function ($expression) {
-            $args = preg_split("/,(\s+)?/", $expression);
+            $args = preg_split('/,(\\s+)?/', $expression);
             $guard = $args[1] ?? null;
 
             return "<?php if (can_be_impersonated({$args[0]}, {$guard})) : ?>";

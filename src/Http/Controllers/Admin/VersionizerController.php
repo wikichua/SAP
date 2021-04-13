@@ -24,20 +24,22 @@ class VersionizerController extends Controller
         if ($request->ajax()) {
             $models = app(config('sap.models.versionizer'))->query()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.versionizer.actions', compact('model'))->render();
                 $model->changes = '<code>'.json_encode($model->changes, 1).'</code>';
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('versionizer.list');
@@ -49,16 +51,18 @@ class VersionizerController extends Controller
             ['title' => 'Changes', 'data' => 'changes', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.versionizer.index', compact('html', 'getUrl'));
     }
 
     public function show($id)
     {
-        \Breadcrumbs::for('breadcrumb', function ($trail) use ($id) {
+        \Breadcrumbs::for('breadcrumb', function ($trail) {
             $trail->parent('home');
             $trail->push('Show Versionizer');
         });
         $model = app(config('sap.models.versionizer'))->query()->findOrFail($id);
+
         return view('sap::admin.versionizer.show', compact('model'));
     }
 
@@ -67,7 +71,7 @@ class VersionizerController extends Controller
         $model = app(config('sap.models.versionizer'))->query()->findOrFail($id);
         $revertModel = app($model->model)->whereId($model->model_id);
         $checkModel = (clone $revertModel)->first();
-        if ($checkModel && $model->mode == 'Updated') {
+        if ($checkModel && 'Updated' == $model->mode) {
             $revertModel->update($model->data);
         } else {
             if (isset($model->data['deleted_at'])) {
@@ -80,6 +84,7 @@ class VersionizerController extends Controller
                 }
             }
         }
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Version Reverted.',
@@ -93,6 +98,7 @@ class VersionizerController extends Controller
     {
         $model = app(config('sap.models.versionizer'))->query()->findOrFail($id);
         $model->delete();
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Version Deleted.',

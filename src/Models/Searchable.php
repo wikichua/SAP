@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Searchable extends Model
@@ -17,12 +16,14 @@ class Searchable extends Model
     protected $searchableFields = [];
 
     protected $casts = [
-        'tags' => 'array'
+        'tags' => 'array',
     ];
+
     public function brand()
     {
         return $this->belongsTo(config('sap.models.brand'))->withDefault(['name' => null]);
     }
+
     public function scopeFilterTags($query, $search)
     {
         $searches = [
@@ -32,6 +33,7 @@ class Searchable extends Model
             ucfirst($search),
             ucwords($search),
         ];
+
         return $query->whereRaw('`tags` RLIKE ":\.*?('.implode('|', $searches).')\.*?"');
     }
 }

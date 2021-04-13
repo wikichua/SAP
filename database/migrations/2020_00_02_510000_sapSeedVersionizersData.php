@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class SapSeedVersionizersData extends Migration
@@ -10,10 +8,11 @@ class SapSeedVersionizersData extends Migration
     {
         app(config('sap.models.permission'))->createGroup('Versionizers', ['Read Versionizers', 'Revert Versionizers', 'Delete Versionizers'], 1);
     }
+
     public function down()
     {
         app(config('sap.models.permission'))->whereIn('group', [
-                'Versionizers',
-            ])->delete();
+            'Versionizers',
+        ])->delete();
     }
 }

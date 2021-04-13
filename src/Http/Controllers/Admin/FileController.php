@@ -7,8 +7,6 @@ use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\File;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -64,21 +62,23 @@ class FileController extends Controller
                 ];
             }
             $paginated = $this->paginate($files, $request->get('take', 25));
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            $links      = $paginated->onEachSide(5)->links()->render();
+            $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('file.list');
-        $html   = [
+        $html = [
             ['title' => 'Path', 'data' => 'path', 'sortable' => false],
             ['title' => 'Type', 'data' => 'extension', 'sortable' => false],
             ['title' => 'Size', 'data' => 'size', 'sortable' => false],
             ['title' => 'Modified', 'data' => 'last_modified', 'sortable' => false],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.file.index', compact('html', 'getUrl', 'path'));
     }
 
@@ -89,12 +89,12 @@ class FileController extends Controller
         $pathArray = explode('/', $path);
         $pathCount = count($pathArray);
         if ($pathCount >= 1) {
-            $currentDirectory = $pathArray[$pathCount - 1] != ''? $pathArray[$pathCount - 1]:'Top';
-            if ($currentDirectory != 'Top') {
+            $currentDirectory = '' != $pathArray[$pathCount - 1] ? $pathArray[$pathCount - 1] : 'Top';
+            if ('Top' != $currentDirectory) {
                 unset($pathArray[$pathCount - 1]);
                 $data = [
                     'path' => implode(':', $pathArray),
-                    'label' => count($pathArray) == 1? 'Top':last($pathArray),
+                    'label' => 1 == count($pathArray) ? 'Top' : last($pathArray),
                     'title' => 'Back',
                 ];
                 $directories[] = [
@@ -107,7 +107,7 @@ class FileController extends Controller
                 'label' => $currentDirectory,
                 'title' => 'Current directory <strong>'.$currentDirectory.'</strong>',
                 'dirname' => basename($path),
-                'dom_id' => 'currentPathId'
+                'dom_id' => 'currentPathId',
             ];
             $directories[] = [
                 'view' => view('sap::admin.file.directories', compact('data'))->render(),
@@ -125,16 +125,17 @@ class FileController extends Controller
                 'view' => view('sap::admin.file.directories', compact('data'))->render(),
             ];
         }
+
         return $directories;
     }
 
     public function upload(Request $request, $path = '')
     {
         $request->validate([
-            'files'     => 'required',
+            'files' => 'required',
         ]);
         $storagePath = str_replace(storage_path('app'), '', $this->storagePath);
-        if ($path != '') {
+        if ('' != $path) {
             $path = $storagePath.'/'.str_replace(':', '/', $path);
         } else {
             $path = $storagePath;
@@ -145,11 +146,12 @@ class FileController extends Controller
                 $upload_path = $request->file('files.'.$key)->storeAs($path, $name);
             }
         }
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'File Uploaded.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'File Uploaded.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
             'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
@@ -174,7 +176,7 @@ class FileController extends Controller
     {
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
         ]);
         $pathArray = explode('/', $path);
         unset($pathArray[count($pathArray) - 1]);
@@ -182,11 +184,12 @@ class FileController extends Controller
         $newPath = implode('/', $pathArray);
         File::copy($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'File Duplicated.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'File Duplicated.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
             'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
@@ -197,7 +200,7 @@ class FileController extends Controller
     {
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
         ]);
         $pathArray = explode('/', $path);
         unset($pathArray[count($pathArray) - 1]);
@@ -205,11 +208,12 @@ class FileController extends Controller
         $newPath = implode('/', $pathArray);
         File::move($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'File Renamed.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'File Renamed.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
             'currentUrl' => $request->fullUrl(),
             // 'redirect' => route('page.show', [$model->id]),
@@ -220,7 +224,7 @@ class FileController extends Controller
     {
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
         ]);
         $pathArray = explode('/', $path);
         unset($pathArray[count($pathArray) - 1]);
@@ -228,11 +232,12 @@ class FileController extends Controller
         $newPath = implode('/', $pathArray);
         File::move($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Folder Renamed.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Folder Renamed.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -241,7 +246,7 @@ class FileController extends Controller
     {
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
         ]);
         $pathArray = explode('/', $path);
         unset($pathArray[count($pathArray) - 1]);
@@ -249,11 +254,12 @@ class FileController extends Controller
         $newPath = implode('/', $pathArray);
         File::copyDirectory($path, $newPath);
         $newPath = str_replace('/', ':', $newPath);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Folder Duplicated.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Folder Duplicated.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -262,17 +268,18 @@ class FileController extends Controller
     {
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
         ]);
         $pathArray = explode('/', $path);
         $pathArray[] = $request->get('name');
         $newPath = implode('/', $pathArray);
         File::makeDirectory($newPath);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Folder Created.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Folder Created.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -280,11 +287,12 @@ class FileController extends Controller
     public function destroy($path)
     {
         File::delete($this->storagePath.'/'.str_replace(':', '/', $path));
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'File Deleted.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'File Deleted.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -294,11 +302,12 @@ class FileController extends Controller
         $path = $this->storagePath.'/'.str_replace(':', '/', $path);
         File::cleanDirectory($path);
         File::deleteDirectory($path);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Folder Deleted.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Folder Deleted.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -306,15 +315,16 @@ class FileController extends Controller
     protected function paginate($items, $perPage = 25, $page = null)
     {
         $pageName = 'page';
-        $page     = $page ?: (Paginator::resolveCurrentPage($pageName) ?: 1);
-        $items    = $items instanceof Collection ? $items : Collection::make($items);
+        $page = $page ?: (Paginator::resolveCurrentPage($pageName) ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
         return new LengthAwarePaginator(
             $items->forPage($page, $perPage)->values(),
             $items->count(),
             $perPage,
             $page,
             [
-                'path'     => Paginator::resolveCurrentPath(),
+                'path' => Paginator::resolveCurrentPath(),
                 'pageName' => $pageName,
             ]
         );

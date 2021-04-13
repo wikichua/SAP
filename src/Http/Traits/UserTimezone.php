@@ -34,9 +34,9 @@ trait UserTimezone
             $carbon->tz(auth()->user()->timezone);
 
             return $carbon->toDateTimeString();
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 
     public function creator()

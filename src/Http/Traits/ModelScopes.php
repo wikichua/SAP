@@ -12,10 +12,12 @@ trait ModelScopes
         if ($brand_id) {
             if (array_search('brand_id', $this->getFillable())) {
                 return $query->where('brand_id', $brand_id);
-            } elseif (class_basename($this) == 'Brand') {
+            }
+            if ('Brand' == class_basename($this)) {
                 return $query->where('id', $brand_id);
             }
         }
+
         return $query;
     }
 
@@ -27,10 +29,10 @@ trait ModelScopes
         parse_str($filters, $searches);
         if (count($searches)) {
             foreach ($searches as $field => $search) {
-                if ((is_array($search) && count($search)) || $search != '') {
+                if ((is_array($search) && count($search)) || '' != $search) {
                     $query->where(function ($Q) use ($search, $field) {
-                        $method = camel_case('scopeFilter_' . $field);
-                        $scope = camel_case('filter_' . $field);
+                        $method = camel_case('scopeFilter_'.$field);
+                        $scope = camel_case('filter_'.$field);
                         if (method_exists($this, $method)) {
                             $Q->{$scope}($search);
                         }
@@ -38,16 +40,18 @@ trait ModelScopes
                 }
             }
         }
+
         return $query;
     }
 
     public function scopeSorting($query, $sortBy, $sortDesc)
     {
-        if ($sortBy != '') {
+        if ('' != $sortBy) {
             $query->when($sortBy, function ($q) use ($sortDesc, $sortBy) {
                 return $q->orderBy($sortBy, $sortDesc);
             });
         }
+
         return $query;
     }
 
@@ -66,6 +70,7 @@ trait ModelScopes
             $start_at = Carbon::parse($search)->format('Y-m-d 00:00:00');
             $stop_at = Carbon::parse($search)->addDay()->format('Y-m-d 00:00:00');
         }
+
         return compact('start_at', 'stop_at');
     }
 }

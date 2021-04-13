@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
-    Route::group(['prefix' => 'user', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'), 'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
+    Route::group(['prefix' => 'user', 'namespace' => config('sap.controller_namespace').'\Admin'], function () {
         Route::match(['get', 'head'], 'list', 'UserController@index')->name('user.list');
 
         Route::match(['get', 'head'], '{user}/read', 'UserController@show')->name('user.show');
@@ -20,7 +20,7 @@ Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web'
         Route::match(['put', 'patch'], '{user}/updatePassword', 'UserController@updatePassword')->name('user.updatePassword');
 
         // pat => personal access token
-        Route::group(['prefix' => '{user}/pat', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
+        Route::group(['prefix' => '{user}/pat', 'namespace' => config('sap.controller_namespace').'\Admin'], function () {
             Route::match(['get', 'head'], 'list', 'UserPersonalAccessTokenController@index')->name('pat.list');
             Route::match(['get', 'head'], 'create', 'UserPersonalAccessTokenController@create')->name('pat.create');
             Route::match(['post'], 'store', 'UserPersonalAccessTokenController@store')->name('pat.store');

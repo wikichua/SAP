@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pusher extends Model
 {
     use \Wikichua\SAP\Http\Traits\AllModelTraits;
+    public $searchableFields = ['title', 'event'];
 
     protected $activity_logged = true;
     protected $snapshot = true;
@@ -23,24 +24,26 @@ class Pusher extends Model
         'link',
         'timeout',
         'scheduled_at',
-        'status'
+        'status',
     ];
 
-    protected $appends = ['status_name','event_name','readUrl'];
-    public $searchableFields = ['title', 'event'];
+    protected $appends = ['status_name', 'event_name', 'readUrl'];
 
     public function brand()
     {
         return $this->belongsTo(app(config('sap.models.brand')), 'brand_id', 'id');
     }
+
     public function getStatusNameAttribute($value)
     {
         return settings('pusher_status')[$this->attributes['status']];
     }
+
     public function getEventNameAttribute($value)
     {
         return settings('pusher_events')[$this->attributes['event']];
     }
+
     public function scopeFilterTitle($query, $search)
     {
         return $query->where('title', 'like', "%{$search}%");
@@ -56,6 +59,7 @@ class Pusher extends Model
         if (\Route::has('pusher.show')) {
             return $this->readUrl = route('pusher.show', $this->id);
         }
+
         return '';
     }
 }

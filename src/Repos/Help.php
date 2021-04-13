@@ -1,4 +1,5 @@
 <?php
+
 namespace Wikichua\SAP\Repos;
 
 use Illuminate\Support\Facades\File;
@@ -17,6 +18,7 @@ class Help
             }
             $url = sprintf('%s?%s', $url, implode('&', $qs));
         }
+
         return $url;
     }
 
@@ -27,28 +29,32 @@ class Help
 
     public function settings($name, $default = '')
     {
-        if (!is_array(config('settings.' . $name)) && json_decode(config('settings.' . $name), 1)) {
-            return json_decode(config('settings.' . $name), 1) ? json_decode(config('settings.' . $name), 1) : $default;
+        if (!is_array(config('settings.'.$name)) && json_decode(config('settings.'.$name), 1)) {
+            return json_decode(config('settings.'.$name), 1) ? json_decode(config('settings.'.$name), 1) : $default;
         }
-        return config('settings.' . $name, $default);
+
+        return config('settings.'.$name, $default);
     }
 
     public function rebuildUrl($url, $params = [])
     {
         if (count($params)) {
             $parsedUrl = parse_url($url);
-            if ($parsedUrl['path'] == null) {
+            if (null == $parsedUrl['path']) {
                 $url .= '/';
             }
-            $separator = ($parsedUrl['query'] == null) ? '?' : '&';
-            return $url .= $separator . http_build_query($params);
+            $separator = (null == $parsedUrl['query']) ? '?' : '&';
+
+            return $url .= $separator.http_build_query($params);
         }
+
         return $url;
     }
 
     public function findHashTag($string)
     {
-        preg_match_all("/#(\\w+)/", $string, $matches);
+        preg_match_all('/#(\\w+)/', $string, $matches);
+
         return $matches[1];
     }
 
@@ -59,11 +65,12 @@ class Help
             $path
         );
         foreach ($iterator as $item) {
-            if ($item->isReadable() && $item->isFile() && mb_strtolower($item->getExtension()) === 'php') {
+            if ($item->isReadable() && $item->isFile() && 'php' === mb_strtolower($item->getExtension())) {
                 // $out[] =  $namespace . str_replace("/", "\\", mb_substr($item->getRealPath(), mb_strlen($path), -4));
-                $out[] =  $namespace .'\\'. basename(str_replace('.'.$item->getExtension(), '', $item->getRealPath()));
+                $out[] = $namespace.'\\'.basename(str_replace('.'.$item->getExtension(), '', $item->getRealPath()));
             }
         }
+
         return $out;
     }
 
@@ -84,34 +91,37 @@ class Help
         $dirs = File::directories(base_path('brand'));
         foreach ($dirs as $dir) {
             if (File::isDirectory($dir.'/Models')) {
-                $namespace = str_replace(['brand','/'], ['Brand','\\'], (str_replace(base_path(), '', $dir.'/Models')));
+                $namespace = str_replace(['brand', '/'], ['Brand', '\\'], (str_replace(base_path(), '', $dir.'/Models')));
                 $models += $this->getModels($dir.'/Models', $namespace);
             }
         }
+
         return $models;
     }
 
     public function opendns()
     {
-        return trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+        return trim(shell_exec('dig +short myip.opendns.com @resolver1.opendns.com'));
     }
 
     public function iplocation($ip = '')
     {
-        if ($ip == '') {
+        if ('' == $ip) {
             $ip = $this->opendns();
         }
+
         return Cache::remember('iplocation:'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
             $fields = [
-                'status','message','continent','continentCode','country','countryCode','region','regionName','city','district','zip','lat','lon','timezone','offset','currency','isp','org','as','asname','reverse','mobile','proxy','hosting','query'
+                'status', 'message', 'continent', 'continentCode', 'country', 'countryCode', 'region', 'regionName', 'city', 'district', 'zip', 'lat', 'lon', 'timezone', 'offset', 'currency', 'isp', 'org', 'as', 'asname', 'reverse', 'mobile', 'proxy', 'hosting', 'query',
             ];
+
             return json_decode(\Http::get('//ip-api.com/json/'.$ip, ['fields' => implode(',', $fields)]), 1);
         }) + ['locale' => request()->route('locale')];
     }
 
     public function agent()
     {
-        return (new \Jenssegers\Agent\Agent);
+        return new \Jenssegers\Agent\Agent();
     }
 
     public function agents($key = '')
@@ -130,9 +140,10 @@ class Help
             'headers' => request()->headers->all(),
             'ips' => request()->ips(),
         ];
-        if ($key != '' && isset($data[$key])) {
+        if ('' != $key && isset($data[$key])) {
             return $data[$key];
         }
+
         return $data;
     }
 
@@ -144,7 +155,7 @@ class Help
                 unset($data[$unset_key]);
             }
         }
-        if ($ip == '') {
+        if ('' == $ip) {
             $ip = $this->opendns();
         }
 
@@ -170,15 +181,16 @@ class Help
                 $locales[] = $fileinfo->getFilename();
             }
         }
+
         return $locales;
     }
 
     public function pushered($data, $channel = '', $event = 'general', $locale = 'en', $driver = '')
     {
-        if ($driver == '') {
+        if ('' == $driver) {
             $driver = config('sap.custom_broadcast_driver');
         }
-        if ($driver == '') {
+        if ('' == $driver) {
             return false;
         }
         $actual_data = [];
@@ -193,39 +205,41 @@ class Help
             }
         }
         $actual_data['sender_id'] = sha1(
-            isset($data['sender_id'])? $data['sender_id']:(
-                auth()->check()? auth()->id():0
+            $data['sender_id'] ?? (
+                auth()->check() ? auth()->id() : 0
             )
         );
         if (is_array($data)) {
             if (isset($data['message'])) {
                 $actual_data = array_merge($actual_data, $data);
             } else {
-                $actual_data['message'] = implode("<br />", $data);
+                $actual_data['message'] = implode('<br />', $data);
             }
         }
 
-        $channel = sha1($channel != '' ? $channel : config("app.name"));
+        $channel = sha1('' != $channel ? $channel : config('app.name'));
         $event = sha1($event.'-'.$locale);
         $config = config('broadcasting.connections.'.$driver);
-        if ($driver == 'pusher') {
+        if ('pusher' == $driver) {
             $pusher = new \Pusher\Pusher(
                 $config['key'],
                 $config['secret'],
                 $config['app_id'],
                 $config['options'],
             );
+
             return $pusher->trigger($channel, $event, $actual_data);
         }
-        if ($driver == 'ably') {
+        if ('ably' == $driver) {
             $ably = new \Ably\AblyRest($config['key']);
+
             return $ably->channel($channel)->publish($event, $actual_data);
         }
     }
 
     public function isMenuActive($patterns = [])
     {
-        return preg_match('/'.(implode('|', $patterns)).'/', request()->route()->getName())? 'active':'';
+        return preg_match('/'.(implode('|', $patterns)).'/', request()->route()->getName()) ? 'active' : '';
     }
 
     public function viewRenderer($__php, $__data = [])
@@ -235,19 +249,23 @@ class Help
         $obLevel = ob_get_level();
         ob_start();
         extract($__data, EXTR_SKIP);
+
         try {
-            eval('?' . '>' . $__php);
+            eval('?'.'>'.$__php);
         } catch (Exception $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
             }
+
             throw $e;
         } catch (Throwable $e) {
             while (ob_get_level() > $obLevel) {
                 ob_end_clean();
             }
+
             throw new \Symfony\Component\Debug\Exception\FatalThrowableError($e);
         }
+
         return ob_get_clean();
     }
 
@@ -282,46 +300,51 @@ class Help
 
     public function route_slug($name, string $slug = '', array $parameters = [], $locale = '', $absolute = true)
     {
-        if ($locale == '') {
-            $locale = app()->getLocale() != ''? app()->getLocale():config('app.locale');
+        if ('' == $locale) {
+            $locale = '' != app()->getLocale() ? app()->getLocale() : config('app.locale');
         }
-        $string = $slug != ''? '.'.str_replace('/', '.', $slug):'';
+        $string = '' != $slug ? '.'.str_replace('/', '.', $slug) : '';
+
         return route($name.$string, array_merge([$locale], $parameters), $absolute);
     }
 
     public function getBrandNameByHost($domain = '')
     {
-        $configs =  Cache::tags('brand')->remember('brand-configs', (60*60*24), function () {
+        $configs = Cache::tags('brand')->remember('brand-configs', (60 * 60 * 24), function () {
             $configs = [];
             $dirs = File::directories(base_path('brand'));
             foreach ($dirs as $dir) {
                 $brand = basename($dir);
-                $config = require($dir.'/config/domains.php');
+                $config = require $dir.'/config/domains.php';
                 $configs[$config['main']] = $brand;
                 foreach ($config['aliases'] as $alias) {
                     $configs[$alias] = $brand;
                 }
             }
+
             return $configs;
         });
-        return $domain == ''? $configs:$configs[$domain];
+
+        return '' == $domain ? $configs : $configs[$domain];
     }
 
     public function getDomain($brandName = '')
     {
         $domains = $this->getBrandNameByHost();
-        $return = isset($domains[request()->getHost()])? request()->getHost():null;
-        if ($brandName != '' && $return == null) {
+        $return = isset($domains[request()->getHost()]) ? request()->getHost() : null;
+        if ('' != $brandName && null == $return) {
             $domains = array_flip($domains);
-            $return = isset($domains[$brandName])? (app()->runningInConsole()? $brandName:$domains[$brandName]):null;
+            $return = isset($domains[$brandName]) ? (app()->runningInConsole() ? $brandName : $domains[$brandName]) : null;
         }
+
         return $return;
     }
 
     public function brand($brandName = '')
     {
-        $brandName = $brandName != ''? $brandName:$this->getBrandNameByHost(request()->getHost());
-        return Cache::tags('brand')->remember('brand-'.$brandName, (60*60*24), function () use ($brandName) {
+        $brandName = '' != $brandName ? $brandName : $this->getBrandNameByHost(request()->getHost());
+
+        return Cache::tags('brand')->remember('brand-'.$brandName, (60 * 60 * 24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()->whereStatus('A')->whereName($brandName)->where('published_at', '<', date('Y-m-d 23:59:59'))->where('expired_at', '>', date('Y-m-d 23:59:59'))->first();
         });
     }
@@ -329,44 +352,51 @@ class Help
     public function queue_keys($driver = 'redis')
     {
         $keys = [];
-        if ($driver == 'redis') {
+        if ('redis' == $driver) {
             $keys = Queue::getRedis()->keys('*');
             $queues = [];
             foreach ($keys as $i => $key) {
                 $keys[$i] = str_replace([config('database.redis.options.prefix').'queues:'], '', $key);
             }
         }
+
         return $keys;
     }
 
     public function getBrand($brandName)
     {
-        $brand = cache()->tags('brand')->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
+        $brand = cache()->tags('brand')->remember('register-'.$brandName, (60 * 60 * 24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()
                 ->where('name', $brandName)->first();
         });
         \Config::set('main.brand', $brand);
+
         return $brand;
     }
+
     public function renderSlug($slug, $locale = '')
     {
         $model = app(config('sap.models.page'))->query()
             ->where('brand_id', config('main.brand')->id)
             ->where('locale', app()->getLocale())
             ->where('slug', strtolower($slug))
-            ->first();
+            ->first()
+        ;
+
         return $this->viewRenderer($model->blade);
     }
+
     public function subPathRoutes($brandName, $controller)
     {
-        $models = cache()->tags('page')->remember('page-'.$brandName, (60*60*24), function () use ($brandName) {
+        $models = cache()->tags('page')->remember('page-'.$brandName, (60 * 60 * 24), function () use ($brandName) {
             $brand = getBrand($brandName);
             if ($brand) {
                 return app(config('sap.models.page'))->query()
-                ->where('brand_id', $brand->id)
-                ->where('slug', 'not like', 'https://%')
-                ->where('slug', 'not like', 'http://%')
-                ->get();
+                    ->where('brand_id', $brand->id)
+                    ->where('slug', 'not like', 'https://%')
+                    ->where('slug', 'not like', 'http://%')
+                    ->get()
+                ;
             }
         });
         if ($models) {
@@ -376,10 +406,11 @@ class Help
             }
         }
     }
+
     public function sendAlert(array $data = [])
     {
         // brand_id,link,message,sender_id,receiver_id
-        if (count($data) && $data['receiver_id'] != auth()->id() && $data['receiver_id'] != 0) {
+        if (count($data) && $data['receiver_id'] != auth()->id() && 0 != $data['receiver_id']) {
             if (is_array($data['receiver_id'])) {
                 dispatch(function () use ($data) {
                     $receiver_ids = $data['receiver_id'];
@@ -394,11 +425,14 @@ class Help
                 app(config('sap.models.alert'))->create($data);
             }
         }
+
         return true;
     }
+
     public function permissionUserIds($permission, $brand_id = 0)
     {
         $permission = app(config('sap.models.permission'))->where('name', $permission)->first();
+
         return cache()->tags(['permissions'])->rememberForever('permission_users:'.$permission->id.':'.$brand_id, function () use ($permission, $brand_id) {
             $ids = [];
             $ids = app(config('sap.models.role'))->where('name', 'Admin')->first()->users()->whereNull('brand_id')->pluck('users.id')->toArray();
@@ -406,6 +440,7 @@ class Help
             foreach ($roles as $role) {
                 $ids = array_merge($ids, $role->users()->where('brand_id', $brand_id)->pluck('users.id')->toArray());
             }
+
             return $ids = array_unique($ids);
         });
     }

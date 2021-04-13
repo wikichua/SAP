@@ -1,7 +1,7 @@
 <?php
 
 return [
-    /* customization */
+    // customization
     'custom_model_namespace' => 'App\Models',
     'custom_model_dir' => 'Models',
     'custom_controller_namespace' => 'App\Http\Controllers\Admin',
@@ -18,7 +18,7 @@ return [
     'custom_facade_namespace' => 'App\Facades',
     'custom_facade_dir' => 'Facades',
     'custom_broadcast_driver' => 'ably', // pusher or ably or ''
-    /* end customization */
+    // end customization
 
     'hidden_auth_route_names' => [
         'password_email' => false,

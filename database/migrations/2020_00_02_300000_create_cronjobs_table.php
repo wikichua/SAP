@@ -8,7 +8,7 @@ class CreateCronjobsTable extends Migration
 {
     public function up()
     {
-        cache()->tags(['fillable','cronjobs'])->flush();
+        cache()->tags(['fillable', 'cronjobs'])->flush();
         Schema::create('cronjobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->default('');
@@ -23,13 +23,14 @@ class CreateCronjobsTable extends Migration
             $table->softDeletes();
         });
         app(config('sap.models.permission'))->createGroup('Cronjobs', ['Create Cronjobs', 'Read Cronjobs', 'Update Cronjobs', 'Delete Cronjobs'], 1);
-        app(config('sap.models.setting'))->create(['created_by' => 1, 'updated_by' => 1, 'key' => 'cronjob_status', 'value' => ["A" => "Active", "I" => "Inactive"], ]);
+        app(config('sap.models.setting'))->create(['created_by' => 1, 'updated_by' => 1, 'key' => 'cronjob_status', 'value' => ['A' => 'Active', 'I' => 'Inactive']]);
         app(config('sap.models.cronjob'))->query()->create([
             'name' => 'Inspire',
             'command' => 'inspire',
             'status' => 'A',
         ]);
     }
+
     public function down()
     {
         app(config('sap.models.permission'))->whereIn('group', [

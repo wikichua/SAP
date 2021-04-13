@@ -4,7 +4,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
@@ -17,7 +16,7 @@ class PermissionController extends Controller
         $this->middleware('can:Update Permissions')->only(['edit', 'update']);
         $this->middleware('can:Delete Permissions')->only('destroy');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Permission Listing', route('permission.list'));
         });
@@ -29,19 +28,21 @@ class PermissionController extends Controller
             $models = app(config('sap.models.permission'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.permission.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('permission.list');
@@ -50,6 +51,7 @@ class PermissionController extends Controller
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.permission.index', compact('html', 'getUrl'));
     }
 
@@ -59,6 +61,7 @@ class PermissionController extends Controller
             $trail->parent('home');
             $trail->push('Create Permission');
         });
+
         return view('sap::admin.permission.create');
     }
 
@@ -82,7 +85,7 @@ class PermissionController extends Controller
             'message' => 'New Permission Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -101,6 +104,7 @@ class PermissionController extends Controller
             $trail->push('Show Permission');
         });
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
+
         return view('sap::admin.permission.show', compact('model'));
     }
 
@@ -111,6 +115,7 @@ class PermissionController extends Controller
             $trail->push('Edit Permission');
         });
         $model = app(config('sap.models.permission'))->query()->findOrFail($id);
+
         return view('sap::admin.permission.edit', compact('model'));
     }
 
@@ -135,7 +140,7 @@ class PermissionController extends Controller
             'message' => 'Permission Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -156,9 +161,10 @@ class PermissionController extends Controller
             'message' => 'Permission Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => 0,
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Permission Deleted.',

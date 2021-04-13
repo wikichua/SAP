@@ -1,5 +1,7 @@
 <?php
+
 $redirectUrl = secure_url('/auth/login/{%provider%}/callback');
+
 return [
     'github' => [
         'client_id' => env('{%brand_capital%}_GITHUB_CLIENT_ID'),

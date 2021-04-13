@@ -4,7 +4,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class CronjobController extends Controller
 {
@@ -17,7 +16,7 @@ class CronjobController extends Controller
         $this->middleware('can:Update Cronjobs')->only(['edit', 'update']);
         $this->middleware('can:Delete Cronjobs')->only('destroy');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
 
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Cron Jobs Listing', route('cronjob.list'));
@@ -30,19 +29,21 @@ class CronjobController extends Controller
             $models = app(config('sap.models.cronjob'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.cronjob.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('cronjob.list');
@@ -54,6 +55,7 @@ class CronjobController extends Controller
             ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.cronjob.index', compact('html', 'getUrl'));
     }
 
@@ -63,6 +65,7 @@ class CronjobController extends Controller
             $trail->parent('home');
             $trail->push('Create Cron Job');
         });
+
         return view('sap::admin.cronjob.create');
     }
 
@@ -70,7 +73,7 @@ class CronjobController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            "status" => "required",
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -96,6 +99,7 @@ class CronjobController extends Controller
             $trail->push('Show Cron Job');
         });
         $model = app(config('sap.models.cronjob'))->query()->findOrFail($id);
+
         return view('sap::admin.cronjob.show', compact('model'));
     }
 
@@ -106,6 +110,7 @@ class CronjobController extends Controller
             $trail->push('Edit Cron Job');
         });
         $model = app(config('sap.models.cronjob'))->query()->findOrFail($id);
+
         return view('sap::admin.cronjob.edit', compact('model'));
     }
 
@@ -115,7 +120,7 @@ class CronjobController extends Controller
 
         $request->validate([
             'name' => 'required',
-            "status" => "required",
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -137,6 +142,7 @@ class CronjobController extends Controller
     {
         $model = app(config('sap.models.cronjob'))->query()->findOrFail($id);
         $model->delete();
+
         return response()->json([
             'status' => 'success',
             'flash' => 'Cronjob Deleted.',

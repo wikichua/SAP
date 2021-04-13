@@ -3,7 +3,6 @@
 namespace Wikichua\SAP\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\App;
 
 class PhpDebugBar
 {
@@ -14,6 +13,7 @@ class PhpDebugBar
         } else {
             \Debugbar::disable();
         }
+
         return $next($request);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Nav extends Model
@@ -35,7 +34,7 @@ class Nav extends Model
         'readUrl',
     ];
 
-    protected $searchableFields = ['name','route_slug','group_slug'];
+    protected $searchableFields = ['name', 'route_slug', 'group_slug'];
 
     protected $casts = [
         'route_params' => 'array',
@@ -43,7 +42,7 @@ class Nav extends Model
 
     public function getStatusNameAttribute($value)
     {
-        return isset($this->attributes['status'])? settings('nav_status')[$this->attributes['status']]:'';
+        return isset($this->attributes['status']) ? settings('nav_status')[$this->attributes['status']] : '';
     }
 
     public function scopeFilterName($query, $search)

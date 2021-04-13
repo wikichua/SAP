@@ -20,6 +20,11 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('sap::auth.register');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -36,10 +41,5 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-    }
-
-    public function showRegistrationForm()
-    {
-        return view('sap::auth.register');
     }
 }

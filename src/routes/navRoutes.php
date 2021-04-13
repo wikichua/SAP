@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
-    Route::group(['prefix' => 'nav', 'namespace' => config('sap.controller_namespace') . '\Admin'], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'), 'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
+    Route::group(['prefix' => 'nav', 'namespace' => config('sap.controller_namespace').'\Admin'], function () {
         Route::match(['get'], 'list', 'NavController@index')->name('nav.list');
 
         Route::match(['get'], '{nav}/read', 'NavController@show')->name('nav.show');

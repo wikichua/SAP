@@ -19,7 +19,7 @@ class ReportController extends Controller
         $this->middleware('can:Delete Reports')->only('destroy');
         $this->middleware('can:Export Reports')->only('export');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Report Listing', route('report.list'));
         });
@@ -31,20 +31,22 @@ class ReportController extends Controller
             $models = app(config('sap.models.report'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
-                $model->cache_status = Cache::get('report-'.str_slug($model->name)) == null? 'Processing':'Ready';
+                $model->cache_status = null == Cache::get('report-'.str_slug($model->name)) ? 'Processing' : 'Ready';
                 $model->actionsView = view('sap::admin.report.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('report.list');
@@ -56,6 +58,7 @@ class ReportController extends Controller
             ['title' => 'Next Run', 'data' => 'next_generate_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.report.index', compact('html', 'getUrl'));
     }
 
@@ -65,6 +68,7 @@ class ReportController extends Controller
             $trail->parent('home');
             $trail->push('Create Report');
         });
+
         return view('sap::admin.report.create');
     }
 
@@ -72,7 +76,7 @@ class ReportController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            "status" => "required",
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -87,7 +91,7 @@ class ReportController extends Controller
             'message' => 'New Report Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Reports'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -111,11 +115,13 @@ class ReportController extends Controller
         $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
             foreach ($model->queries as $sql) {
                 $models[] = array_map(function ($value) {
-                    return (array)$value;
+                    return (array) $value;
                 }, \DB::select($sql));
             }
+
             return $models;
         });
+
         return view('sap::admin.report.show', compact('model', 'models'));
     }
 
@@ -126,12 +132,14 @@ class ReportController extends Controller
         $models = Cache::get('report-'.str_slug($model->name), function () use ($model, $models) {
             foreach ($model->queries as $sql) {
                 $models[] = array_map(function ($value) {
-                    return (array)$value;
+                    return (array) $value;
                 }, \DB::select($sql));
             }
+
             return $models;
         });
         $sheets = new SheetCollection($models);
+
         return fastexcel()->data($sheets)->download(\Str::studly($model->name).'.xlsx');
     }
 
@@ -142,6 +150,7 @@ class ReportController extends Controller
             $trail->push('Edit Report');
         });
         $model = app(config('sap.models.report'))->query()->findOrFail($id);
+
         return view('sap::admin.report.edit', compact('model'));
     }
 
@@ -151,7 +160,7 @@ class ReportController extends Controller
 
         $request->validate([
             'name' => 'required',
-            "status" => "required",
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -165,7 +174,7 @@ class ReportController extends Controller
             'message' => 'Report Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Reports'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -187,7 +196,7 @@ class ReportController extends Controller
             'message' => 'Report Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Reports'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
 

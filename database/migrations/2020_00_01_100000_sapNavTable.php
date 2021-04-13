@@ -26,6 +26,7 @@ class SapNavTable extends Migration
             $table->softDeletes();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('navs');

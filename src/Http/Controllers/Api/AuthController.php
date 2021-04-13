@@ -19,21 +19,23 @@ class AuthController extends Controller
             if (!\Auth::once($credentials)) {
                 return response()->json([
                     'status_code' => 500,
-                    'message' => 'Unauthorized'
+                    'message' => 'Unauthorized',
                 ]);
             }
             $user = app(config('sap.models.user'))->query()->where('email', $request->email)->first();
             if (!\Hash::check($request->password, $user->password, [])) {
                 throw new \Exception('Error in Login');
             }
-            $permissions = $user->roles->contains('admin', true)? ['*']:$user->flatPermissions()->toArray();
+            $permissions = $user->roles->contains('admin', true) ? ['*'] : $user->flatPermissions()->toArray();
             // $user->tokens()->delete();
             $tokenResult = $user->createToken('authToken', $permissions)->plainTextToken;
             $tokenResult = explode('|', $tokenResult);
             $personalAccessTokenModel = app(Sanctum::$personalAccessTokenModel)->query()
-                ->find($tokenResult[0]);
+                ->find($tokenResult[0])
+            ;
             $personalAccessTokenModel->plain_text_token = $tokenResult[1];
             $personalAccessTokenModel->save();
+
             return response()->json([
                 'status_code' => 200,
                 'access_token' => $tokenResult[1],

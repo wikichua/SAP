@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Component extends Model
@@ -22,7 +21,6 @@ class Component extends Model
         'brand_id',
     ];
 
-
     protected $appends = [
         'readUrl',
         'brand_name',
@@ -31,7 +29,6 @@ class Component extends Model
     protected $searchableFields = ['name'];
 
     protected $casts = [
-
     ];
 
     public function scopeFilterName($query, $search)
@@ -51,7 +48,7 @@ class Component extends Model
 
     public function getBrandNameAttribute($value)
     {
-        return $this->brand_name = $this->brand? strtolower($this->brand->name):'sap';
+        return $this->brand_name = $this->brand ? strtolower($this->brand->name) : 'sap';
     }
 
     public function brand()

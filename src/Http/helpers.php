@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('cronjob_frequencies')) {
     function cronjob_frequencies()
     {

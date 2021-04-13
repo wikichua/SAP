@@ -1,4 +1,5 @@
 <?php
+
 namespace Wikichua\SAP\Commands;
 
 use ZipArchive;
@@ -15,9 +16,10 @@ class SapExport extends Command
         parent::__construct();
         $this->file = $file;
     }
+
     public function handle()
     {
-        $this->brand = $this->option('brand')? \Str::studly($this->option('brand')):null;
+        $this->brand = $this->option('brand') ? \Str::studly($this->option('brand')) : null;
         $this->setModelString();
         if ($this->brand) {
             $this->setBrandProperties();
@@ -36,6 +38,7 @@ class SapExport extends Command
         $this->export();
         $this->zip();
     }
+
     private function checkConfig()
     {
         if ($this->argument('path')) {
@@ -62,12 +65,13 @@ class SapExport extends Command
                 'dependencies' => [],
             ];
             $export_config['files'] = array_merge($export_config['files'], $this->resource_files);
-            $confContent = json_encode((object)$export_config, JSON_PRETTY_PRINT);
+            $confContent = json_encode((object) $export_config, JSON_PRETTY_PRINT);
             $this->error('Config file not found: <info>'.$this->export_json.'</info>');
             $this->file->put($this->export_json, $confContent);
             $this->info($this->export_json.' has been created. Please adjust it accordingly then rerun this artisan.');
         }
     }
+
     private function setDefaultProperties()
     {
         $this->base_path = base_path();
@@ -84,6 +88,7 @@ class SapExport extends Command
         preg_match('/^@can\(\'Read '.$this->permission_string.'\'\).+@endcan$/ms', $menu, $matches);
         $this->menu_content = $matches[0];
     }
+
     private function setBrandProperties()
     {
         $this->base_path = base_path('brand/'.$this->brand);
@@ -100,6 +105,7 @@ class SapExport extends Command
         preg_match('/^@can\(\'Read '.$this->permission_string.'\'\).+@endcan$/ms', $menu, $matches);
         $this->menu_content = $matches[0];
     }
+
     private function setModelString()
     {
         $this->model = $this->argument('model');
@@ -107,6 +113,7 @@ class SapExport extends Command
             $brand = app(config('sap.models.brand'))->query()->where('name', strtolower($this->brand))->first();
             if (!$brand) {
                 $this->error('Brand not found: <info>'.$this->brand.'</info>');
+
                 exit;
             }
             $this->model = $this->brand.(str_replace($this->brand, '', $this->model));
@@ -117,6 +124,7 @@ class SapExport extends Command
         $this->model_variables = strtolower(str_replace(' ', '_', $this->model_strings));
         $this->permission_string = $this->model_string;
     }
+
     private function export()
     {
         $config = json_decode($this->file->get($this->export_json), 1);
@@ -136,21 +144,22 @@ class SapExport extends Command
             'permission_string' => $this->permission_string,
         ];
         $this->import_json = $this->path.'/import.json';
-        $confContent = json_encode((object)$config, JSON_PRETTY_PRINT);
+        $confContent = json_encode((object) $config, JSON_PRETTY_PRINT);
         $this->file->put($this->import_json, $confContent);
     }
+
     private function zip()
     {
         $zip = new ZipArchive();
         $ret = $zip->open($this->path.'.zip', ZipArchive::CREATE);
-        if ($ret !== true) {
+        if (true !== $ret) {
             printf('Failed with code %d', $ret);
         } else {
             foreach ($this->file->allFiles($this->path) as $file) {
                 $zip->addFile($file->getRealPath(), $file->getRelativePathname());
             }
             $zip->close();
-            if ($this->option('deleteAfterZip') == 'yes') {
+            if ('yes' == $this->option('deleteAfterZip')) {
                 $this->file->deleteDirectory($this->path);
             }
             $this->info($this->path.'.zip has been created. To import, please run php artisan sap:import '.$this->path.'.zip');

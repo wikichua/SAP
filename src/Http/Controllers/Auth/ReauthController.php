@@ -15,7 +15,7 @@ class ReauthController extends Controller
     public function processReauth(Request $request)
     {
         $request->validate([
-            "password" => function ($attribute, $value, $fail) use ($request) {
+            'password' => function ($attribute, $value, $fail) use ($request) {
                 if (!\Hash::check($request->get('password'), $request->user()->password)) {
                     $fail('The '.$attribute.' is invalid.');
                 }
@@ -23,6 +23,7 @@ class ReauthController extends Controller
         ]);
         session()->put(str_slug(strtolower(config('app.name'))).'.reauth.last_auth', strtotime('now'));
         $url = session()->get(str_slug(strtolower(config('app.name'))).'.reauth.requested_url', '/');
+
         return redirect()->to($url);
     }
 }

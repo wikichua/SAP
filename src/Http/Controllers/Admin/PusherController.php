@@ -4,8 +4,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Cache;
 
 class PusherController extends Controller
 {
@@ -19,7 +17,7 @@ class PusherController extends Controller
         $this->middleware('can:Delete Pushers')->only('destroy');
         $this->middleware('can:Push Pushers')->only('push');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Pusher Listing', route('pusher.list'));
         });
@@ -32,23 +30,25 @@ class PusherController extends Controller
                 ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.pusher.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
-            $links      = $paginated->onEachSide(5)->links()->render();
+            $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('pusher.list');
-        $html   = [
+        $html = [
             ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => true],
             ['title' => 'Title', 'data' => 'title', 'sortable' => true],
             ['title' => 'Locale', 'data' => 'locale', 'sortable' => true],
@@ -58,6 +58,7 @@ class PusherController extends Controller
             ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.pusher.index', compact('html', 'getUrl'));
     }
 
@@ -67,19 +68,20 @@ class PusherController extends Controller
             $trail->parent('home');
             $trail->push('Create Pusher');
         });
+
         return view('sap::admin.pusher.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'locale'       => 'required',
-            'event'         => 'required',
-            'title'         => 'required',
-            "message" => "required",
-            "timeout"   => "required",
-            "scheduled_at"       => "required",
-            "status"       => "required",
+            'locale' => 'required',
+            'event' => 'required',
+            'title' => 'required',
+            'message' => 'required',
+            'timeout' => 'required',
+            'scheduled_at' => 'required',
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -95,14 +97,14 @@ class PusherController extends Controller
             'message' => 'New Pusher Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Pushers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Pusher Created.',
-            'reload'   => false,
-            'relist'   => false,
+            'status' => 'success',
+            'flash' => 'Pusher Created.',
+            'reload' => false,
+            'relist' => false,
             'redirect' => route('pusher.list'),
             // 'redirect' => route('pusher.show', [$model->id]),
         ]);
@@ -115,6 +117,7 @@ class PusherController extends Controller
             $trail->push('Show Pusher');
         });
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
+
         return view('sap::admin.pusher.show', compact('model'));
     }
 
@@ -125,6 +128,7 @@ class PusherController extends Controller
             $trail->push('Edit Pusher');
         });
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
+
         return view('sap::admin.pusher.edit', compact('model'));
     }
 
@@ -133,13 +137,13 @@ class PusherController extends Controller
         $model = app(config('sap.models.pusher'))->query()->findOrFail($id);
 
         $request->validate([
-            'locale'       => 'required',
-            'event'         => 'required',
-            'title'         => 'required',
-            "message" => "required",
-            "timeout"   => "required",
-            "scheduled_at"       => "required",
-            "status"       => "required",
+            'locale' => 'required',
+            'event' => 'required',
+            'title' => 'required',
+            'message' => 'required',
+            'timeout' => 'required',
+            'scheduled_at' => 'required',
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -154,14 +158,14 @@ class PusherController extends Controller
             'message' => 'Pusher Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Pushers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Pusher Updated.',
-            'reload'   => false,
-            'relist'   => false,
+            'status' => 'success',
+            'flash' => 'Pusher Updated.',
+            'reload' => false,
+            'relist' => false,
             'redirect' => route('pusher.edit', [$model->id]),
             // 'redirect' => route('pusher.show', [$model->id]),
         ]);
@@ -176,15 +180,15 @@ class PusherController extends Controller
             'message' => 'Pusher Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Pushers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Pusher Deleted.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Pusher Deleted.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -203,13 +207,14 @@ class PusherController extends Controller
             'message' => 'Pusher Executed. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Pushers'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
+
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Pusher Message Pushed.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Pusher Message Pushed.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }

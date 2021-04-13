@@ -19,8 +19,8 @@ class MenuItem extends Component
     {
         $this->menuActive = false;
 
-        if ($this->activePattern != '') {
-            $this->menuActive = preg_match('/'.($this->activePattern).'/', request()->route()->getName())? true:false;
+        if ('' != $this->activePattern) {
+            $this->menuActive = preg_match('/'.($this->activePattern).'/', request()->route()->getName()) ? true : false;
         }
 
         return view('sap::components.menu-item');

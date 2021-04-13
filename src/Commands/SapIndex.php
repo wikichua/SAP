@@ -3,7 +3,6 @@
 namespace Wikichua\SAP\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class SapIndex extends Command
 {

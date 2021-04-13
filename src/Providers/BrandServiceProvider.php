@@ -11,6 +11,7 @@ class BrandServiceProvider extends ServiceProvider
     public function register()
     {
     }
+
     public function boot()
     {
         $brand_path = base_path('brand');
@@ -44,6 +45,7 @@ class BrandServiceProvider extends ServiceProvider
             }
         }
     }
+
     protected function registerBrandServiceProviders($dir)
     {
         $brandName = basename($dir);
@@ -51,9 +53,9 @@ class BrandServiceProvider extends ServiceProvider
             $files = File::files($dir.'/Providers');
             foreach ($files as $file) {
                 if (str_contains($file->getFilename(), 'ServiceProvider.php')) {
-                    list($namespace, $class) = array_values(preg_grep('/class|namespace/', explode(PHP_EOL, File::get($file->getPathname()))));
+                    [$namespace, $class] = array_values(preg_grep('/class|namespace/', explode(PHP_EOL, File::get($file->getPathname()))));
                     $class = explode(' ', $class)[1];
-                    $namespace = '\\'.str_replace(['namespace ',';'], '', $namespace).'\\'.$class;
+                    $namespace = '\\'.str_replace(['namespace ', ';'], '', $namespace).'\\'.$class;
                     $this->app->register($namespace);
                 }
             }

@@ -26,6 +26,7 @@ class SapCarouselTable extends Migration
             $table->softDeletes();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('carousels');

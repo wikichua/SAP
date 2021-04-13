@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Carousel extends Eloquent
@@ -26,21 +25,20 @@ class Carousel extends Eloquent
         'tags',
         'published_at',
         'expired_at',
-        'status'
+        'status',
     ];
-
 
     protected $appends = [
         'status_name',
-        'readUrl'
+        'readUrl',
     ];
 
     protected $searchableFields = [
-        'slug'
+        'slug',
     ];
 
     protected $casts = [
-        'tags' => 'array'
+        'tags' => 'array',
     ];
 
     public function brand()
@@ -60,7 +58,7 @@ class Carousel extends Eloquent
 
     public function getStatusNameAttribute($value)
     {
-        return isset($this->attributes['status'])? settings('carousel_status')[$this->attributes['status']]:'';
+        return isset($this->attributes['status']) ? settings('carousel_status')[$this->attributes['status']] : '';
     }
 
     public function scopeFilterSlug($query, $search)
@@ -76,13 +74,15 @@ class Carousel extends Eloquent
     public function scopeFilterPublishedAt($query, $search)
     {
         $date = $this->getDateFilter($search);
-        return $query->whereBetween('published_at', [ $this->inUserTimezone($date['start_at']), $this->inUserTimezone($date['stop_at'])]);
+
+        return $query->whereBetween('published_at', [$this->inUserTimezone($date['start_at']), $this->inUserTimezone($date['stop_at'])]);
     }
 
     public function scopeFilterExpiredAt($query, $search)
     {
         $date = $this->getDateFilter($search);
-        return $query->whereBetween('expired_at', [ $this->inUserTimezone($date['start_at']), $this->inUserTimezone($date['stop_at'])]);
+
+        return $query->whereBetween('expired_at', [$this->inUserTimezone($date['start_at']), $this->inUserTimezone($date['stop_at'])]);
     }
 
     public function scopeFilterStatus($query, $search)

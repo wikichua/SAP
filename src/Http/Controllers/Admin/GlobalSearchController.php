@@ -18,6 +18,7 @@ class GlobalSearchController extends Controller
         ]);
         $queryStr = $request->input('q');
         $items = $this->search($queryStr);
+
         return view('sap::admin.dashboard.globalsearch')->with(compact('items'));
     }
 
@@ -39,12 +40,14 @@ class GlobalSearchController extends Controller
                 'desc' => implode('<br />', $desc),
             ];
         }
+
         return response()->json($data);
     }
 
     private function search(string $queryStr = '')
     {
         $searchable = app(config('sap.models.searchable'))->query();
+
         return $searchable->filterTags($queryStr)->paginate(20);
     }
 }

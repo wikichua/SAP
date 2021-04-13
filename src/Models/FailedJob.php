@@ -34,7 +34,7 @@ class FailedJob extends Model
 
         return $query->whereBetween('failed_at', [
             $this->inUserTimezone($start_at),
-            $this->inUserTimezone($stop_at)
+            $this->inUserTimezone($stop_at),
         ]);
     }
 }

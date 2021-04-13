@@ -5,7 +5,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
@@ -19,7 +18,7 @@ class PageController extends Controller
         $this->middleware('can:Delete Pages')->only('destroy');
         $this->middleware('can:Migrate Pages')->only('migration');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Page Listing', route('page.list'));
         });
@@ -32,23 +31,25 @@ class PageController extends Controller
                 ->with('brand')
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.page.actions', compact('model'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
-            $links      = $paginated->onEachSide(5)->links()->render();
+            $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('page.list');
-        $html   = [
+        $html = [
             ['title' => 'Brand', 'data' => 'brand.name', 'sortable' => true],
             ['title' => 'Name', 'data' => 'name', 'sortable' => true],
             ['title' => 'Locale', 'data' => 'locale', 'sortable' => true],
@@ -60,6 +61,7 @@ class PageController extends Controller
             ['title' => 'Created Date', 'data' => 'created_at', 'sortable' => false, 'filterable' => true],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.page.index', compact('html', 'getUrl'));
     }
 
@@ -69,19 +71,20 @@ class PageController extends Controller
             $trail->parent('home');
             $trail->push('Create Page');
         });
+
         return view('sap::admin.page.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'brand_id'     => 'required',
-            'locale'       => 'required',
-            'name'         => 'required',
-            'slug'         => 'required',
-            "published_at" => "required",
-            "expired_at"   => "required",
-            "status"       => "required",
+            'brand_id' => 'required',
+            'locale' => 'required',
+            'name' => 'required',
+            'slug' => 'required',
+            'published_at' => 'required',
+            'expired_at' => 'required',
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -97,14 +100,14 @@ class PageController extends Controller
             'message' => 'New Page Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Pages', $request->input('brand_id', 0)),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Page Created.',
-            'reload'   => false,
-            'relist'   => false,
+            'status' => 'success',
+            'flash' => 'Page Created.',
+            'reload' => false,
+            'relist' => false,
             'redirect' => route('page.list'),
             // 'redirect' => route('page.show', [$model->id]),
         ]);
@@ -117,6 +120,7 @@ class PageController extends Controller
             $trail->push('Show Page');
         });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
+
         return view('sap::admin.page.show', compact('model'));
     }
 
@@ -127,13 +131,13 @@ class PageController extends Controller
         $newModel->push();
         $newModel->locale = null;
         $newModel->saveQuietly();
-        activity('Replicated Page: ' . $newModel->id, [], $newModel);
+        activity('Replicated Page: '.$newModel->id, [], $newModel);
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Page Replicated.',
-            'reload'   => false,
-            'relist'   => false,
+            'status' => 'success',
+            'flash' => 'Page Replicated.',
+            'reload' => false,
+            'relist' => false,
             'redirect' => route('page.edit', [$newModel->id]),
         ]);
     }
@@ -145,7 +149,7 @@ class PageController extends Controller
             $trail->push('Preview Page');
         });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
-        if ($model->brand_id != 0) {
+        if (0 != $model->brand_id) {
             $brandName = strtolower($model->brand->name);
             \View::addNamespace($brandName, base_path('brand/'.$model->brand->name.'/resources/views'));
             \Blade::componentNamespace('\\Brand\\'.$model->brand->name.'\\Components', $brandName);
@@ -153,7 +157,7 @@ class PageController extends Controller
                 'brand_web' => [
                     'driver' => 'session',
                     'provider' => 'brand_users',
-                ]
+                ],
             ]);
             \Config::set('auth.providers', [
                 'brand_users' => [
@@ -162,6 +166,7 @@ class PageController extends Controller
                 ],
             ]);
         }
+
         return view($brandName.'::pages.page', compact('model'));
     }
 
@@ -172,6 +177,7 @@ class PageController extends Controller
             $trail->push('Edit Page');
         });
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
+
         return view('sap::admin.page.edit', compact('model'));
     }
 
@@ -180,13 +186,13 @@ class PageController extends Controller
         $model = app(config('sap.models.page'))->query()->findOrFail($id);
 
         $request->validate([
-            'brand_id'     => 'required',
-            'locale'       => 'required',
-            'name'         => 'required',
-            'slug'         => 'required',
-            "published_at" => "required",
-            "expired_at"   => "required",
-            "status"       => "required",
+            'brand_id' => 'required',
+            'locale' => 'required',
+            'name' => 'required',
+            'slug' => 'required',
+            'published_at' => 'required',
+            'expired_at' => 'required',
+            'status' => 'required',
         ]);
 
         $request->merge([
@@ -196,10 +202,10 @@ class PageController extends Controller
         $model->update($request->all());
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Page Updated.',
-            'reload'   => false,
-            'relist'   => false,
+            'status' => 'success',
+            'flash' => 'Page Updated.',
+            'reload' => false,
+            'relist' => false,
             'redirect' => route('page.edit', [$model->id]),
             // 'redirect' => route('page.show', [$model->id]),
         ]);
@@ -211,10 +217,10 @@ class PageController extends Controller
         $model->delete();
 
         return response()->json([
-            'status'   => 'success',
-            'flash'    => 'Page Deleted.',
-            'reload'   => false,
-            'relist'   => true,
+            'status' => 'success',
+            'flash' => 'Page Deleted.',
+            'reload' => false,
+            'relist' => true,
             'redirect' => false,
         ]);
     }
@@ -222,7 +228,7 @@ class PageController extends Controller
     public function templates($brand_id)
     {
         $templates = [];
-        if ($brand_id != '') {
+        if ('' != $brand_id) {
             $model = app(config('sap.models.brand'))->query()->findOrFail($brand_id);
             if ($model) {
                 \Config::set('brand', array_merge(
@@ -234,6 +240,7 @@ class PageController extends Controller
                 }
             }
         }
+
         return response()->json($templates);
     }
 
@@ -251,9 +258,10 @@ class PageController extends Controller
         $model->updated_by = 1;
         $code = str_replace('\'$brand->id\'', '$brand->id', var_export($model->getAttributes(), 1));
         $string = <<<EOL
-        \$brand = app(config('sap.models.brand'))->query()->where('name','{$brandString}')->first();
-        app(config('sap.models.page'))->query()->create({$code});
-        EOL;
+            \$brand = app(config('sap.models.brand'))->query()->where('name','{$brandString}')->first();
+            app(config('sap.models.page'))->query()->create({$code});
+            EOL;
+
         return view('sap::admin.page.migration', compact('string'));
     }
 }

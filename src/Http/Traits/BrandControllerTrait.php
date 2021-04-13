@@ -1,4 +1,5 @@
 <?php
+
 namespace Wikichua\SAP\Http\Traits;
 
 use Illuminate\Http\Request;
@@ -7,13 +8,15 @@ trait BrandControllerTrait
 {
     public function register($brandName)
     {
-        $this->brand = cache()->tags('brand')->remember('register-'.$brandName, (60*60*24), function () use ($brandName) {
+        $this->brand = cache()->tags('brand')->remember('register-'.$brandName, (60 * 60 * 24), function () use ($brandName) {
             return app(config('sap.models.brand'))->query()
                 ->where('name', $brandName)->first();
         });
         \Config::set('main.brand', $this->brand);
+
         return $this;
     }
+
     public function setLocale()
     {
         $locale = request()->route('locale');
@@ -21,8 +24,10 @@ trait BrandControllerTrait
             $locale = 'en';
         }
         app()->setLocale($locale);
+
         return $this;
     }
+
     public function slug(Request $request)
     {
         if (count($request->segments()) > 1) {
@@ -34,15 +39,19 @@ trait BrandControllerTrait
             ->where('brand_id', $this->brand->id)
             ->where('locale', app()->getLocale())
             ->where('slug', strtolower($slug))
-            ->first();
+            ->first()
+        ;
         if (!$model) {
             abort(404);
         }
+
         return $model;
     }
+
     public function page(Request $request, $locale)
     {
         $model = $this->slug($request);
+
         return $this->getViewPage($model->blade_file ?? 'page', compact('model'));
     }
 

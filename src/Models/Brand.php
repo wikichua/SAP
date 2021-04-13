@@ -2,7 +2,6 @@
 
 namespace Wikichua\SAP\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
@@ -22,19 +21,17 @@ class Brand extends Model
         'domain',
         'published_at',
         'expired_at',
-        'status'
+        'status',
     ];
-
 
     protected $appends = [
         'status_name',
         'readUrl',
     ];
 
-    protected $searchableFields = ['name','domain'];
+    protected $searchableFields = ['name', 'domain'];
 
     protected $casts = [
-
     ];
 
     public function getPublishedAtAttribute($value)
@@ -65,18 +62,20 @@ class Brand extends Model
     public function scopeFilterPublishedAt($query, $search)
     {
         $date = $this->getDateFilter($search);
+
         return $query->whereBetween('published_at', [
             $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
+            $this->inUserTimezone($date['stop_at']),
         ]);
     }
 
     public function scopeFilterExpiredAt($query, $search)
     {
         $date = $this->getDateFilter($search);
+
         return $query->whereBetween('expired_at', [
             $this->inUserTimezone($date['start_at']),
-            $this->inUserTimezone($date['stop_at'])
+            $this->inUserTimezone($date['stop_at']),
         ]);
     }
 
@@ -92,6 +91,6 @@ class Brand extends Model
 
     public function onCachedEvent()
     {
-        cache()->tags(['brand','page'])->flush();
+        cache()->tags(['brand', 'page'])->flush();
     }
 }

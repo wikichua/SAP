@@ -1,4 +1,5 @@
 <?php
+
 namespace Wikichua\SAP\Commands;
 
 use ZipArchive;
@@ -15,6 +16,7 @@ class SapImport extends Command
         parent::__construct();
         $this->file = $file;
     }
+
     public function handle()
     {
         if ($this->argument('path')) {
@@ -22,31 +24,35 @@ class SapImport extends Command
         }
         $this->unzip();
         $this->checkConfig();
-        $this->brand = $this->option('brand')? \Str::studly($this->option('brand')):$this->config['brand'];
+        $this->brand = $this->option('brand') ? \Str::studly($this->option('brand')) : $this->config['brand'];
         $this->setModelString();
         $this->import();
-        if ($this->option('deleteAfterUnzip') == 'yes') {
+        if ('yes' == $this->option('deleteAfterUnzip')) {
             $this->file->deleteDirectory($this->import_path);
         }
     }
+
     private function checkConfig()
     {
         $this->config = json_decode($this->file->get($this->import_path.'/import.json'), 1);
         $this->model = $this->config['model'];
     }
+
     private function setModelString()
     {
         $this->base_path = base_path();
         $this->menu_file = resource_path('views/vendor/sap/components/admin-menu.blade.php');
-        if ($this->config['brand'] != null) {
+        if (null != $this->config['brand']) {
             if ($this->brand) {
                 $brand = app(config('sap.models.brand'))->query()->where('name', strtolower($this->brand))->first();
                 if (!$brand) {
                     $this->error('Brand not found: <info>'.$this->brand.'</info>');
+
                     exit;
                 }
             } else {
                 $this->error('Brand module found: <info>Please input your desire Brand Name with option --brand=</info>');
+
                 exit;
             }
             $this->base_path = base_path('brand/'.$this->brand);
@@ -73,6 +79,7 @@ class SapImport extends Command
             'permission_string' => $this->permission_string,
         ];
     }
+
     private function import()
     {
         $this->oldModelStr = array_merge(['model' => $this->config['model']], $this->config['str']);
@@ -92,26 +99,29 @@ class SapImport extends Command
         }
         $menu_content = $this->file->get($this->menu_file);
         $this->config['menu'] = str_replace($this->oldModelStr, $this->newModelStr, $this->config['menu']);
-        if (strpos($menu_content, $this->config['menu']) === false) {
+        if (false === strpos($menu_content, $this->config['menu'])) {
             $menu_content = str_replace('<!--DoNotRemoveMe-->', $this->config['menu']."\n".'<!--DoNotRemoveMe-->', $menu_content);
             $this->file->replace($this->menu_file, $menu_content);
         }
     }
+
     private function unzip()
     {
         if ($this->file->exists($this->path) && $this->file->isReadable($this->path)) {
             $zip = new ZipArchive();
             $ret = $zip->open($this->path);
-            if ($ret !== true) {
+            if (true !== $ret) {
                 printf('Failed with code %d', $ret);
             } else {
                 $this->import_path = rtrim($this->path, '.zip');
                 $zip->extractTo($this->import_path);
                 $zip->close();
             }
+
             return true;
         }
         $this->error('Zip File not readable: <info>'.$this->path.'</info>');
+
         exit;
     }
 }

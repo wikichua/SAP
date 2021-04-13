@@ -4,7 +4,6 @@ namespace Wikichua\SAP\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
@@ -17,7 +16,7 @@ class RoleController extends Controller
         $this->middleware('can:Update Roles')->only(['edit', 'update']);
         $this->middleware('can:Delete Roles')->only('destroy');
 
-        $this->middleware('reauth_admin')->only(['edit','destroy']);
+        $this->middleware('reauth_admin')->only(['edit', 'destroy']);
         \Breadcrumbs::for('home', function ($trail) {
             $trail->push('Role Listing', route('role.list'));
         });
@@ -29,21 +28,23 @@ class RoleController extends Controller
             $models = app(config('sap.models.role'))->query()
                 ->checkBrand()
                 ->filter($request->get('filters', ''))
-                ->sorting($request->get('sort', ''), $request->get('direction', ''));
+                ->sorting($request->get('sort', ''), $request->get('direction', ''))
+            ;
             $paginated = $models->paginate($request->get('take', 25));
             foreach ($paginated as $model) {
                 $model->actionsView = view('sap::admin.role.actions', compact('model'))->render();
                 $permissions = $model->permissions()->pluck('name')->toArray();
                 $model->permissionsView = view('sap::admin.role.permissionList', compact('permissions'))->render();
             }
-            if ($request->get('filters', '') != '') {
+            if ('' != $request->get('filters', '')) {
                 $paginated->appends(['filters' => $request->get('filters', '')]);
             }
-            if ($request->get('sort', '') != '') {
+            if ('' != $request->get('sort', '')) {
                 $paginated->appends(['sort' => $request->get('sort', ''), 'direction' => $request->get('direction', 'asc')]);
             }
             $links = $paginated->onEachSide(5)->links()->render();
             $currentUrl = $request->fullUrl();
+
             return compact('paginated', 'links', 'currentUrl');
         }
         $getUrl = route('role.list');
@@ -53,6 +54,7 @@ class RoleController extends Controller
             ['title' => 'Permissions', 'data' => 'permissionsView'],
             ['title' => '', 'data' => 'actionsView'],
         ];
+
         return view('sap::admin.role.index', compact('html', 'getUrl'));
     }
 
@@ -62,13 +64,14 @@ class RoleController extends Controller
             $trail->parent('home');
             $trail->push('Create Role');
         });
-        $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
+        $permissions = app(config('sap.models.permission'))->select(['id', 'name', 'group'])->get()->groupBy('group');
         $group_permissions = [];
         foreach ($permissions as $group => $perms) {
             foreach ($perms as $perm) {
                 $group_permissions[$group][$perm->id] = $perm->name;
             }
         }
+
         return view('sap::admin.role.create', compact('group_permissions'));
     }
 
@@ -83,7 +86,7 @@ class RoleController extends Controller
         $request->merge([
             'created_by' => auth()->id(),
             'updated_by' => auth()->id(),
-            'permissions' => array_values($request->get('permissions', []))
+            'permissions' => array_values($request->get('permissions', [])),
         ]);
 
         $model = app(config('sap.models.role'))->create($request->all());
@@ -95,7 +98,7 @@ class RoleController extends Controller
             'message' => 'New Role Added. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Roles'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -114,6 +117,7 @@ class RoleController extends Controller
             $trail->push('Show Role');
         });
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
+
         return view('sap::admin.role.show', compact('model'));
     }
 
@@ -124,13 +128,14 @@ class RoleController extends Controller
             $trail->push('Edit Role');
         });
         $model = app(config('sap.models.role'))->query()->findOrFail($id);
-        $permissions = app(config('sap.models.permission'))->select(['id','name','group'])->get()->groupBy('group');
+        $permissions = app(config('sap.models.permission'))->select(['id', 'name', 'group'])->get()->groupBy('group');
         $group_permissions = [];
         foreach ($permissions as $group => $perms) {
             foreach ($perms as $perm) {
                 $group_permissions[$group][$perm->id] = $perm->name;
             }
         }
+
         return view('sap::admin.role.edit', compact('model', 'group_permissions'));
     }
 
@@ -145,7 +150,7 @@ class RoleController extends Controller
 
         $request->merge([
             'updated_by' => auth()->id(),
-            'permissions' => array_values($request->get('permissions', []))
+            'permissions' => array_values($request->get('permissions', [])),
         ]);
 
         $model->update($request->all());
@@ -157,7 +162,7 @@ class RoleController extends Controller
             'message' => 'Role Updated. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Roles'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
 
         return response()->json([
@@ -179,7 +184,7 @@ class RoleController extends Controller
             'message' => 'New Role Deleted. ('.$model->name.')',
             'sender_id' => auth()->id(),
             'receiver_id' => permissionUserIds('Read Roles'),
-            'icon' => $model->menu_icon
+            'icon' => $model->menu_icon,
         ]);
         $model->delete();
 

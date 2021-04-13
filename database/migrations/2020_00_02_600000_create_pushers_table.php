@@ -26,8 +26,8 @@ class CreatePushersTable extends Migration
             $table->string('status', 1)->nullable()->default('');
         });
         app(config('sap.models.permission'))->createGroup('Pushers', ['Read Pushers', 'Preview Pushers', 'Update Pushers', 'Delete Pushers', 'Push Pushers'], $user_id);
-        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'pusher_status','value' => ['A' => 'Active','I' => 'Inactive', 'S' => 'Sent']]);
-        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'pusher_events', 'value' => ["general" => "General"]]);
+        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'pusher_status', 'value' => ['A' => 'Active', 'I' => 'Inactive', 'S' => 'Sent']]);
+        app(config('sap.models.setting'))->create(['created_by' => $user_id, 'updated_by' => $user_id, 'key' => 'pusher_events', 'value' => ['general' => 'General']]);
     }
 
     public function down()

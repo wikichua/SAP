@@ -25,19 +25,6 @@ class LoginController extends Controller
         return view('sap::auth.login')->with(['loginUrl' => route('pub.login')]);
     }
 
-    protected function attemptLogin(Request $request)
-    {
-        return $this->guard('pub')->attempt(
-            $this->credentials($request),
-            $request->filled('remember')
-        );
-    }
-
-    protected function credentials(Request $request)
-    {
-        return $request->only($this->username(), 'password') + ['type' => 'User'];
-    }
-
     public function logout(Request $request)
     {
         $this->guard('pub')->logout();
@@ -54,6 +41,7 @@ class LoginController extends Controller
             ? new Response('', 204)
             : redirect(route('pub.index'));
     }
+
     public function redirectToProvider(string $provider)
     {
         try {
@@ -62,16 +50,19 @@ class LoginController extends Controller
             abort(404);
         }
     }
+
     public function handleProviderCallback(string $provider)
     {
         try {
             $data = Socialite::driver($provider)->user();
+
             return $this->handleSocialUser($provider, $data);
         } catch (\Exception $e) {
             return redirect(route('pub.login'))->withErrors(['authentication_deny' => 'Login with '.ucfirst($provider).' failed. Please try again.']);
         }
         // $user->token;
     }
+
     public function handleSocialUser(string $provider, object $data)
     {
         $user = app(config('sap.models.user'))->query()->where([
@@ -88,28 +79,30 @@ class LoginController extends Controller
         $social = $user->social;
         $social[$provider] = [
             'id' => $data->id,
-            'token' => $data->token
+            'token' => $data->token,
         ];
         $user->social = $social;
         $user->save();
+
         return $this->socialLogin($user);
     }
+
     public function createUserWithSocialData(string $provider, object $data)
     {
         try {
             $params = [
-                    'name' => $data->getName()? $data->getName():$data->getEmail(),
-                    'email' => $data->getEmail(),
-                    'avatar' => $data->getAvatar(),
-                    'password' => bcrypt($data->getEmail()),
-                    'type' => 'User',
-                    'social' => [
-                        $provider => [
-                            'id' => $data->id,
-                            'token' => $data->token,
-                        ],
+                'name' => $data->getName() ? $data->getName() : $data->getEmail(),
+                'email' => $data->getEmail(),
+                'avatar' => $data->getAvatar(),
+                'password' => bcrypt($data->getEmail()),
+                'type' => 'User',
+                'social' => [
+                    $provider => [
+                        'id' => $data->id,
+                        'token' => $data->token,
                     ],
-                ];
+                ],
+            ];
             $user = app(config('sap.models.user'))->query()->create($params);
             // Check support verify or not
 
@@ -117,14 +110,30 @@ class LoginController extends Controller
                 $user->markEmailAsVerified();
             }
             $user->save();
+
             return $this->socialLogin($user);
         } catch (Exception $e) {
             return redirect(route('pub.login'))->withErrors(['authentication_deny' => 'Login with '.ucfirst($provider).' failed. Please try again.']);
         }
     }
+
     public function socialLogin($user)
     {
         $this->guard('pub')->loginUsingId($user->id);
+
         return redirect($this->redirectTo);
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard('pub')->attempt(
+            $this->credentials($request),
+            $request->filled('remember')
+        );
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password') + ['type' => 'User'];
     }
 }

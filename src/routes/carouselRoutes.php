@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => config('sap.custom_admin_path'),'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
-    Route::group(['prefix' => 'carousel', 'namespace' => config('sap.controller_namespace'). '\Admin'], function () {
+Route::group(['prefix' => config('sap.custom_admin_path'), 'middleware' => ['web', 'auth_admin', 'can:Access Admin Panel']], function () {
+    Route::group(['prefix' => 'carousel', 'namespace' => config('sap.controller_namespace').'\Admin'], function () {
         Route::match(['get', 'head'], 'list', 'CarouselController@index')->name('carousel.list');
 
         Route::match(['get', 'head'], '{model}/read', 'CarouselController@show')->name('carousel.show');
