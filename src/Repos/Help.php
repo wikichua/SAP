@@ -107,7 +107,9 @@ class Help
     public function iplocation($ip = '')
     {
         if ('' == $ip) {
-            $ip = $this->opendns();
+            $ip = Cache::remember('sessions-ip:'.session()->getId(), (60 * 60 * 24 * 30), function () {
+                return $this->opendns();
+            });
         }
 
         return Cache::remember('iplocation:'.$ip, (60 * 60 * 24 * 30), function () use ($ip) {
