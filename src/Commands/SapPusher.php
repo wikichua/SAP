@@ -41,5 +41,6 @@ class SapPusher extends Command
             $pusher->status = 'S';
             $pusher->save();
         }
+        $this->line('Process Completed');
     }
 }

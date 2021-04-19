@@ -23,6 +23,7 @@ class Cronjob extends Eloquent
         'status',
         'created_by',
         'updated_by',
+        'output',
     ];
 
     protected $appends = [
@@ -34,7 +35,7 @@ class Cronjob extends Eloquent
         'name',
     ];
 
-    protected $casts = [];
+    protected $casts = ['output' => 'array'];
 
     public function scopeFilterName($query, $search)
     {

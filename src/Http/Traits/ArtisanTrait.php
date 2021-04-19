@@ -2,7 +2,9 @@
 
 namespace Wikichua\SAP\Http\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Stringable;
 
 trait ArtisanTrait
 {
@@ -24,15 +26,22 @@ trait ArtisanTrait
         });
         foreach ($cronjobs as $cronjob) {
             $frequency = $cronjob->frequency;
-            $param = '';
-            if ('everySeconds' == $frequency) {
-                $frequency = 'cron';
-                $param = '* * * * *';
-            }
+            $cron = app(config('sap.models.cronjob'))->find($cronjob->id);
+            $time = Carbon::now()->timezone($cron->timezone)->toDateTimeString();
+            $outputed = is_array($cron->output) ? $cron->output : [];
             if ('art' == $cronjob->mode) {
-                $schedule->command($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);
+                $schedule->command($cronjob->command)->{$frequency}()
+                    ->timezone($cronjob->timezone)
+                    ->onSuccess(function (Stringable $output) use ($cron, $time, $outputed) {
+                        $cron->output = array_merge([$time => $output], $outputed);
+                        $cron->save();
+                    })
+                    ->onFailure(function (Stringable $output) use ($cron, $time, $outputed) {
+                        $cron->output = array_merge([$time => $output], $outputed);
+                        $cron->save();
+                    });
             } else {
-                $schedule->exec($cronjob->command)->{$frequency}($param)->timezone($cronjob->timezone);
+                $schedule->exec($cronjob->command);
             }
         }
     }

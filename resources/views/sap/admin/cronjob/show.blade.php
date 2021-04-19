@@ -21,6 +21,7 @@
                 <x-sap::display-field type="text" name="created_by" id="created_by" label="Created By" :value="$model->creator->name"/>
                 <x-sap::display-field type="text" name="updated_at" id="updated_at" label="Updated At" :value="$model->updated_at"/>
                 <x-sap::display-field type="text" name="updated_by" id="updated_by" label="Updated By" :value="$model->modifier->name"/>
+                <x-sap::display-field type="json" name="output" id="output" label="Output" :value="$model->output"/>
         </div>
     </div>
 </div>

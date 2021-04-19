@@ -279,6 +279,7 @@ class Help
     public function cronjob_frequencies()
     {
         return [
+            // 'everySeconds' => 'Every Seconds',
             'everyMinute' => 'Every Minute',
             'everyTwoMinutes' => 'Every Two Minutes',
             'everyThreeMinutes' => 'Every Three Minutes',
