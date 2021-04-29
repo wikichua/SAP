@@ -3,13 +3,13 @@
 ### Add SAP Access Token
 
 ```bash
-composer config github-oauth.github.com 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
+composer config github-oauth.github.com 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
 ```
 
 OR 
 
 ```bash
-composer config http-basic.github.com wikichua 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
+composer config http-basic.github.com wikichua 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
 ```
 
 
