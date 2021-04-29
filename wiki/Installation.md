@@ -12,6 +12,8 @@ OR
 composer config http-basic.github.com wikichua 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
 ```
 
+Note: for now, not sure why when commit push auth.json to git, the PAT set will disappear
+
 
 ### Add Repositories in your composer.json
 
