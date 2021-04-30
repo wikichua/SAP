@@ -3,13 +3,13 @@
 ### Add SAP Access Token
 
 ```bash
-composer config github-oauth.github.com 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
+composer config github-oauth.github.com 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
 ```
 
 OR 
 
 ```bash
-composer config http-basic.github.com wikichua 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
+composer config http-basic.github.com wikichua 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
 ```
 
 Note: for now, not sure why when commit push auth.json to git, the PAT set will disappear
