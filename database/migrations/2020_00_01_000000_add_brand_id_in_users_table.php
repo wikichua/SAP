@@ -9,10 +9,14 @@ class AddBrandIdInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('id');
+            if (config('database.default') != 'sqlite') {
+                $table->dropColumn('id');
+            }
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->increments('id')->before('name');
+            if (config('database.default') != 'sqlite') {
+                $table->increments('id')->before('name');
+            }
             $table->integer('brand_id')->nullable()->default(null);
         });
     }

@@ -27,10 +27,14 @@ class CreateUsersColumns extends Migration
 
         if (Schema::hasTable('personal_access_tokens')) {
             Schema::table('personal_access_tokens', function (Blueprint $table) {
-                $table->dropColumn('id');
+                if (config('database.default') != 'sqlite') {
+                    $table->dropColumn('id');
+                }
             });
             Schema::table('personal_access_tokens', function (Blueprint $table) {
-                $table->increments('id')->before('tokenable');
+                if (config('database.default') != 'sqlite') {
+                    $table->increments('id')->before('tokenable');
+                }
                 $table->string('plain_text_token')->nullable()->index();
             });
         }
