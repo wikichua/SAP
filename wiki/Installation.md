@@ -6,7 +6,7 @@
 composer config github-oauth.github.com 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
 ```
 
-OR 
+OR
 
 ```bash
 composer config http-basic.github.com wikichua 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
@@ -21,9 +21,9 @@ Add this into your composer.json
 
 ```json
     "repositories": {
-        "wikichua/sap": {
+        "wikichua/iap": {
             "type": "vcs",
-            "url": "https://github.com/wikichua/sap.git"
+            "url": "https://github.com/wikichua/IAP.git"
         }
     }
 ```
